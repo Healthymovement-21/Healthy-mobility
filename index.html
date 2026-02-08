@@ -3,198 +3,308 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Empfehlungen für Regeneration & Alltag</title>
+  <title>Healthy Mobility – Empfehlungen</title>
   <style>
+    :root {
+      --bg: #0f172a;
+      --card: #020617;
+      --accent: #2563eb;
+      --accent-dark: #1e40af;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-      background: #0e0e10;
-      color: #f2f2f2;
+      background: radial-gradient(circle at top, #020617, #0f172a 70%);
+      color: var(--text);
     }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(2,6,23,0.85);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      z-index: 10;
+    }
+
+    .menu-btn {
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    .title {
+      margin-left: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .menu {
+      position: fixed;
+      inset: 0;
+      background: #020617;
+      display: none;
+      flex-direction: column;
+      padding: 2rem;
+    }
+
+    .menu a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .menu a:hover { color: var(--accent); }
+
     .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 40px 20px 80px;
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem 1rem 4rem;
     }
-    h1 {
-      font-size: 2.4rem;
-      margin-bottom: 10px;
-      letter-spacing: -0.5px;
-    }
-    .subtitle {
-      color: #b5b5b5;
-      max-width: 700px;
-      margin-bottom: 40px;
-      font-size: 1.05rem;
-    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
     }
+
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
     .card {
-      background: #18181c;
+      background: linear-gradient(180deg, #020617, #020617cc);
       border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      padding: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.6);
+
+    .card img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      background: #020617;
     }
-    .card h2 {
-      font-size: 1.25rem;
-      margin: 0 0 8px;
-    }
-    .price {
+
+    .card h3 {
+      margin: 0.2rem 0 0.4rem;
       font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #00e5a8;
     }
+
+    .price {
+      color: #60a5fa;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
     .card p {
-      font-size: 0.95rem;
-      color: #cfcfcf;
-      line-height: 1.5;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
       flex-grow: 1;
     }
-    .btn {
-      margin-top: 18px;
+
+    .card a {
       text-align: center;
-      padding: 12px 16px;
-      background: linear-gradient(135deg, #00e5a8, #00b7ff);
-      color: #0e0e10;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
       text-decoration: none;
-      font-weight: 600;
+      padding: 0.8rem;
       border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .btn:hover {
-      opacity: 0.9;
+
+    .card a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37,99,235,0.35);
     }
-    .disclaimer {
-      margin-top: 60px;
-      font-size: 0.85rem;
-      color: #9a9a9a;
-      max-width: 800px;
+
+    footer {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
     }
+
+    footer h3 { color: var(--text); }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Empfehlungen für Regeneration & Bewegung</h1>
-    <p class="subtitle">
-      Produkte, die im Alltag unterstützen können – ohne Heilversprechen. 
-      Transparente Empfehlungen, modern gedacht.
-    </p>
 
-    <div class="grid">
-      <div class="card">
-        <h2>Massagepistole</h2>
-        <div class="price">25,99 €</div>
-        <p>Zur Lockerung verspannter Muskulatur und zur Unterstützung der Regeneration nach Belastung.</p>
-        <a class="btn" href="https://amzn.to/45QvJM2" target="_blank">Bei Amazon ansehen</a>
-      </div>
+<header>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  <div class="title">Healthy Mobility</div>
+</header>
 
-      <div class="card">
-        <h2>Moorkissen / Wärmekissen</h2>
-        <div class="price">29,89 €</div>
-        <p>Angenehme Wärmeanwendung für Entspannung, z. B. im Rücken- oder Nackenbereich.</p>
-        <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank">Bei Amazon ansehen</a>
-      </div>
+<nav class="menu" id="menu">
+  <a href="#" onclick="toggleMenu()">Start</a>
+  <a href="#impressum" onclick="toggleMenu()">Impressum</a>
+  <a href="#datenschutz" onclick="toggleMenu()">Datenschutz</a>
+</nav>
 
-      <div class="card">
-        <h2>Knie-Kühlpack</h2>
-        <div class="price">17,89 €</div>
-        <p>Kühlende Anwendung nach Sport oder bei beanspruchten Gelenken.</p>
-        <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank">Bei Amazon ansehen</a>
-      </div>
+<div class="container">
+  <div class="grid">
 
-      <div class="card">
-        <h2>Retterspitz</h2>
-        <div class="price">26,14 €</div>
-        <p>Zur äußerlichen Anwendung bei müden oder belasteten Körperregionen.</p>
-        <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>MacDavid Bandage</h2>
-        <div class="price">44,95 €</div>
-        <p>Stabilisierende Unterstützung für Alltag und sportliche Belastung.</p>
-        <a class="btn" href="https://amzn.to/4tvfiin" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>Leukotape</h2>
-        <div class="price">9,99 €</div>
-        <p>Funktionelles Tape zur Unterstützung von Gelenken.</p>
-        <a class="btn" href="https://amzn.to/4kplTGW" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>Laufband (Treadmill)</h2>
-        <div class="price">94,99 €</div>
-        <p>Für einfache Bewegungseinheiten zu Hause – unabhängig vom Wetter.</p>
-        <a class="btn" href="https://amzn.to/3O9os3F" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>Thrombosestrümpfe</h2>
-        <div class="price">26,90 €</div>
-        <p>Zur Unterstützung der Durchblutung bei langem Sitzen oder Stehen.</p>
-        <a class="btn" href="https://amzn.to/4r3NY91" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>Wärmemessgerät</h2>
-        <div class="price">16,14 €</div>
-        <p>Zur einfachen Kontrolle von Oberflächentemperaturen bei Anwendungen.</p>
-        <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>Aloe Vera Gel</h2>
-        <div class="price">6,30 €</div>
-        <p>Pflegendes Gel zur äußerlichen Anwendung auf der Haut.</p>
-        <a class="btn" href="https://amzn.to/4rftMB6" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>Lymphmaßband</h2>
-        <div class="price">20,09 €</div>
-        <p>Hilfsmittel zur einfachen Verlaufskontrolle von Umfangsveränderungen.</p>
-        <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>Elektrischer Shaker</h2>
-        <div class="price">19,54 €</div>
-        <p>Praktisch für die schnelle Zubereitung von Getränken oder Shakes.</p>
-        <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>BAUERFEIND Fußbandage</h2>
-        <div class="price">47,43 €</div>
-        <p>Hochwertige Bandage zur funktionellen Unterstützung des Fußes.</p>
-        <a class="btn" href="https://amzn.to/3MchKJM" target="_blank">Bei Amazon ansehen</a>
-      </div>
-
-      <div class="card">
-        <h2>BAUERFEIND Armbandage</h2>
-        <div class="price">35,20 €</div>
-        <p>Unterstützung für Ellenbogen und Arm im Alltag.</p>
-        <a class="btn" href="https://amzn.to/4alA3nI" target="_blank">Bei Amazon ansehen</a>
-      </div>
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Massagepistole">
+      <h3>Massagepistole</h3>
+      <div class="price">25,99 €</div>
+      <p>Zur gezielten Muskelentspannung und Regeneration.</p>
+      <a href="https://amzn.to/45QvJM2" target="_blank">Bei Amazon ansehen</a>
     </div>
 
-    <div class="disclaimer">
-      <strong>Hinweis:</strong> Diese Seite enthält Affiliate-Links. Beim Kauf über einen Link erhalte ich eine kleine Provision. 
-      Für dich entstehen keine Mehrkosten. Die Inhalte stellen keine medizinische Beratung dar.
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Moorkissen">
+      <h3>Moorkissen</h3>
+      <div class="price">29,89 €</div>
+      <p>Wärmeanwendung zur Lockerung verspannter Muskulatur.</p>
+      <a href="https://amzn.to/4cgzQ7V" target="_blank">Bei Amazon ansehen</a>
     </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Knie Kühlpack">
+      <h3>Knie-Kühlpack</h3>
+      <div class="price">17,89 €</div>
+      <p>Kälteanwendung zur Unterstützung bei Reizzuständen.</p>
+      <a href="https://amzn.to/4qjoAuL" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Retterspitz">
+      <h3>Retterspitz äußerlich</h3>
+      <div class="price">26,14 €</div>
+      <p>Klassisches Hausmittel für Umschläge.</p>
+      <a href="https://amzn.to/3ZnEwRS" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="MacDavid Bandage">
+      <h3>MacDavid Bandage</h3>
+      <div class="price">44,95 €</div>
+      <p>Stabilisierende Bandage für Sport und Alltag.</p>
+      <a href="https://amzn.to/4tvfiin" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Leukotape">
+      <h3>Leukotape</h3>
+      <div class="price">9,99 €</div>
+      <p>Klassisches Tape für funktionelle Verbände.</p>
+      <a href="https://amzn.to/4kplTGW" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Laufband">
+      <h3>Laufband</h3>
+      <div class="price">94,99 €</div>
+      <p>Bewegung und Ausdauertraining für Zuhause.</p>
+      <a href="https://amzn.to/3O9os3F" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Thrombosestrumpf">
+      <h3>Thrombosestrumpf</h3>
+      <div class="price">26,90 €</div>
+      <p>Unterstützung der venösen Zirkulation.</p>
+      <a href="https://amzn.to/4r3NY91" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Wärmemessgerät">
+      <h3>Wärmemessgerät</h3>
+      <div class="price">16,14 €</div>
+      <p>Kontaktlose Temperaturmessung.</p>
+      <a href="https://amzn.to/4a6vNtq" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Aloe Vera Gel">
+      <h3>Aloe Vera Gel</h3>
+      <div class="price">6,30 €</div>
+      <p>Pflegegel für Haut und Regeneration.</p>
+      <a href="https://amzn.to/4rftMB6" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Lymphmaßband">
+      <h3>Lymphmaßband</h3>
+      <div class="price">20,09 €</div>
+      <p>Hilfsmittel zur Umfangskontrolle.</p>
+      <a href="https://amzn.to/3MvIhSn" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Elektrischer Shaker">
+      <h3>Elektrischer Shaker</h3>
+      <div class="price">19,54 €</div>
+      <p>Einfaches Mischen von Getränken.</p>
+      <a href="https://amzn.to/3MhQ1HB" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Bauerfeind Fußbandage">
+      <h3>BAUERFEIND Fußbandage</h3>
+      <div class="price">47,43 €</div>
+      <p>Stabilisierung und Entlastung im Alltag.</p>
+      <a href="https://amzn.to/3MchKJM" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
+    <div class="card">
+      <img src="HIER-BILD-URL" alt="Bauerfeind Armbandage">
+      <h3>BAUERFEIND Armbandage</h3>
+      <div class="price">35,20 €</div>
+      <p>Unterstützung für Ellenbogen und Arm.</p>
+      <a href="https://amzn.to/4alA3nI" target="_blank">Bei Amazon ansehen</a>
+    </div>
+
   </div>
+</div>
+
+<footer>
+  <section id="impressum">
+    <h3>Impressum</h3>
+    <p>
+      Angaben gemäß § 5 TMG<br><br>
+      <strong>NAME EINTRAGEN</strong><br>
+      STRASSE + HAUSNUMMER<br>
+      PLZ ORT<br><br>
+      E-Mail: EMAIL@ADRESSE.DE<br>
+      Gewerbeform: Einzelunternehmen<br><br>
+      Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: NAME
+    </p>
+  </section>
+
+  <section id="datenschutz">
+    <h3>Datenschutz</h3>
+    <p>
+      Diese Website verwendet keine Cookies, kein Tracking und keine Analyse-Tools.
+      Beim Klick auf Amazon-Links gelten die Datenschutzbestimmungen von Amazon.
+    </p>
+    <p>
+      Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.
+      Die Produktempfehlungen stellen keine medizinische Beratung dar.
+    </p>
+  </section>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  }
+</script>
+
 </body>
 </html>

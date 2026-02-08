@@ -1,315 +1,272 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Healthy Mobility – Produktempfehlungen</title>
+  <meta charset="UTF-8">
+  <title>Empfohlene Physio-Produkte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    :root {
-      --bg: #0b1220;
-      --card: #0f172a;
-      --accent: #3b82f6;       /* Option A – modernes Blau */
-      --accent-soft: #06b6d4;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-    }
-
-    * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-      background: radial-gradient(circle at top, #020617, #0b1220 70%);
-      color: var(--text);
+      background: #0b1220;
+      color: #e5e7eb;
     }
 
     header {
-      position: sticky;
-      top: 0;
-      background: rgba(2,6,23,0.85);
-      backdrop-filter: blur(10px);
+      padding: 20px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 1rem 1.2rem;
-      z-index: 10;
+      background: #020617;
+      border-bottom: 1px solid #1e293b;
     }
 
-    .menu-btn {
-      font-size: 1.7rem;
-      cursor: pointer;
-    }
-
-    .title {
-      margin-left: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.3px;
+    header h1 {
+      font-size: 20px;
+      margin: 0;
+      color: #38bdf8;
     }
 
     .menu {
-      position: fixed;
-      inset: 0;
-      background: #020617;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .dropdown {
       display: none;
-      flex-direction: column;
-      padding: 2.5rem;
-      z-index: 20;
+      position: absolute;
+      right: 20px;
+      top: 60px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      overflow: hidden;
     }
 
-    .menu a {
-      color: var(--text);
+    .dropdown a {
+      display: block;
+      padding: 12px 20px;
       text-decoration: none;
-      font-size: 1.3rem;
-      margin-bottom: 1.6rem;
+      color: #e5e7eb;
     }
 
-    .menu a:hover { color: var(--accent); }
+    .dropdown a:hover {
+      background: #1e293b;
+    }
 
     .container {
       max-width: 1100px;
       margin: auto;
-      padding: 2.5rem 1.2rem 4rem;
+      padding: 30px 20px;
     }
 
     .intro {
-      max-width: 780px;
-      margin-bottom: 2.8rem;
-      line-height: 1.7;
-      color: var(--muted);
+      margin-bottom: 40px;
+      line-height: 1.6;
     }
 
-    .intro h1 {
-      color: var(--text);
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
+    .intro h2 {
+      color: #38bdf8;
+      font-size: 26px;
     }
 
-    .grid {
+    .products {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.6rem;
-    }
-
-    @media (max-width: 700px) {
-      .grid { grid-template-columns: 1fr; }
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
     .card {
-      background: linear-gradient(180deg, #0f172a, #020617);
-      border-radius: 20px;
-      padding: 1.6rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
     }
 
     .card h3 {
-      margin: 0 0 0.4rem;
-      font-size: 1.1rem;
+      margin-top: 0;
+      color: #38bdf8;
     }
 
     .price {
-      color: #60a5fa;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
     }
 
     .card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      flex-grow: 1;
+      font-size: 14px;
+      color: #cbd5f5;
     }
 
     .card a {
+      margin-top: 15px;
+      padding: 12px;
       text-align: center;
-      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-      color: #020617;
+      border-radius: 10px;
+      background: #0284c7;
+      color: white;
       text-decoration: none;
-      padding: 0.85rem;
-      border-radius: 14px;
       font-weight: 600;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .card a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(59,130,246,0.35);
+      background: #0369a1;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #94a3b8;
+      text-align: center;
     }
   </style>
 </head>
+
 <body>
 
 <header>
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  <div class="title">Healthy Mobility</div>
+  <h1>Physio-Produktempfehlungen</h1>
+  <div class="menu" onclick="toggleMenu()">☰</div>
+  <div class="dropdown" id="menu">
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </div>
 </header>
-
-<nav class="menu" id="menu">
-  <a href="index.html" onclick="toggleMenu()">Start</a>
-  <a href="impressum.html">Impressum</a>
-  <a href="datenschutz.html">Datenschutz</a>
-</nav>
 
 <div class="container">
 
   <div class="intro">
-    <h1>Ausgewählte Produktempfehlungen rund um Bewegung & Regeneration</h1>
+    <h2>Ausgewählte Produktempfehlungen aus physiotherapeutischer Praxis</h2>
     <p>
-      Auf dieser Seite findest du sorgfältig ausgewählte Produkte aus den Bereichen
-      Bewegung, Regeneration, Wärme- und Kälteanwendungen sowie unterstützende Hilfsmittel
-      für Alltag, Sport und Prävention.
+      Auf dieser Seite findest du eine Auswahl an Produkten, die ich regelmäßig in der physiotherapeutischen Praxis einsetze
+      oder Patientinnen und Patienten für die Anwendung zu Hause empfehle.
+      Der Fokus liegt auf Funktion, Alltagstauglichkeit und einem fairen Preis-Leistungs-Verhältnis –
+      ohne unnötigen Schnickschnack.
     </p>
     <p>
-      Die Auswahl basiert auf praktischer Erfahrung, häufigen Fragen aus dem Alltag
-      sowie bewährten Anwendungen im Bereich Mobilität und körperliches Wohlbefinden.
-      Alle Produkte können unterstützend wirken, ersetzen jedoch keine individuelle
-      medizinische oder physiotherapeutische Beratung.
+      Die Links führen zu Amazon. Der Preis bleibt für dich gleich, ich erhalte eine kleine Provision zur Unterstützung dieser Seite.
     </p>
   </div>
 
-  <div class="grid">
+  <div class="products">
 
     <div class="card">
       <h3>Massagepistole</h3>
       <div class="price">25,99 €</div>
-      <p>Zur gezielten Lockerung verspannter Muskulatur, zur Unterstützung der Regeneration nach Belastung sowie zur Förderung der Durchblutung.</p>
+      <p>Zur Lockerung verspannter Muskulatur, ideal nach Sport oder bei sitzender Tätigkeit.</p>
       <a href="https://amzn.to/45QvJM2" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>Moorkissen</h3>
       <div class="price">29,89 €</div>
-      <p>Bewährte Wärmeanwendung zur Entspannung von Muskulatur und Bindegewebe, besonders angenehm im Rücken- und Nackenbereich.</p>
+      <p>Bewährt für Wärmeanwendungen bei Rücken- und Nackenbeschwerden.</p>
       <a href="https://amzn.to/4cgzQ7V" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>Knie-Kühlpack</h3>
       <div class="price">17,89 €</div>
-      <p>Kälteanwendung zur Unterstützung bei Reizzuständen, nach sportlicher Belastung oder bei akuten Überlastungen.</p>
+      <p>Zur Kältetherapie bei Reizzuständen oder nach Belastung.</p>
       <a href="https://amzn.to/4qjoAuL" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <h3>Retterspitz äußerlich</h3>
+      <h3>Retterspitz</h3>
       <div class="price">26,14 €</div>
-      <p>Klassisches Mittel für Umschläge und Wickel, häufig genutzt zur kühlenden oder entspannenden Anwendung.</p>
+      <p>Klassisches Mittel für Wickel und Umschläge.</p>
       <a href="https://amzn.to/3ZnEwRS" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>MacDavid Bandage</h3>
       <div class="price">44,95 €</div>
-      <p>Stabilisierende Bandage zur Unterstützung von Gelenken bei Sport, Arbeit und im Alltag.</p>
+      <p>Stabilisierende Bandage für Sport und Alltag.</p>
       <a href="https://amzn.to/4tvfiin" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>Leukotape</h3>
       <div class="price">9,99 €</div>
-      <p>Klassisches Tape für funktionelle Verbände und temporäre Unterstützung bei Bewegung.</p>
+      <p>Zur funktionellen Unterstützung von Gelenken und Muskulatur.</p>
       <a href="https://amzn.to/4kplTGW" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>Laufband</h3>
       <div class="price">94,99 €</div>
-      <p>Ermöglicht regelmäßige Bewegung und Ausdauertraining unabhängig von Wetter und Umgebung.</p>
+      <p>Für leichtes Ausdauertraining zu Hause.</p>
       <a href="https://amzn.to/3O9os3F" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <h3>Thrombosestrumpf</h3>
+      <h3>Thrombosestrümpfe</h3>
       <div class="price">26,90 €</div>
-      <p>Unterstützt die venöse Zirkulation, insbesondere bei längerem Sitzen oder Stehen.</p>
+      <p>Zur Unterstützung der venösen Zirkulation.</p>
       <a href="https://amzn.to/4r3NY91" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>Wärmemessgerät</h3>
       <div class="price">16,14 €</div>
-      <p>Kontaktlose Temperaturmessung zur schnellen Orientierung im Alltag.</p>
+      <p>Zur objektiven Temperaturkontrolle.</p>
       <a href="https://amzn.to/4a6vNtq" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <h3>Aloe Vera Gel</h3>
+      <h3>Aloe-Vera Gel</h3>
       <div class="price">6,30 €</div>
-      <p>Kühlendes Pflegegel zur Hautberuhigung, z. B. nach Wärme- oder Kälteanwendungen.</p>
+      <p>Pflegend und kühlend für Haut und Gewebe.</p>
       <a href="https://amzn.to/4rftMB6" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>Lymphmaßband</h3>
       <div class="price">20,09 €</div>
-      <p>Hilfsmittel zur Umfangsmessung und Verlaufskontrolle, z. B. bei Schwellungen.</p>
+      <p>Zur Verlaufskontrolle bei Ödemen.</p>
       <a href="https://amzn.to/3MvIhSn" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>Elektrischer Shaker</h3>
       <div class="price">19,54 €</div>
-      <p>Erleichtert das Mischen von Getränken, z. B. für Eiweißshakes oder Supplemente.</p>
+      <p>Praktisch für Eiweiß- oder Nahrungsshakes.</p>
       <a href="https://amzn.to/3MhQ1HB" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>BAUERFEIND Fußbandage</h3>
       <div class="price">47,43 €</div>
-      <p>Hochwertige Bandage zur Stabilisierung und Entlastung des Fußes im Alltag.</p>
+      <p>Unterstützung bei Fuß- und Sprunggelenksproblemen.</p>
       <a href="https://amzn.to/3MchKJM" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
       <h3>BAUERFEIND Armbandage</h3>
       <div class="price">35,20 €</div>
-      <p>Gezielte Unterstützung für Ellenbogen und Unterarm bei Belastung.</p>
+      <p>Stabilisierend bei Ellenbogenbeschwerden.</p>
       <a href="https://amzn.to/4alA3nI" target="_blank">Bei Amazon ansehen</a>
     </div>
 
   </div>
+
+  <footer>
+    * Affiliate-Links – Preis bleibt gleich
+  </footer>
+
 </div>
 
 <script>
   function toggleMenu() {
-    const menu = document.getElementById('menu');
-    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    const menu = document.getElementById("menu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
   }
 </script>
-
-<!--
-=========================================================
-VORLAGEN FÜR SEPARATE SEITEN
-
-1) impressum.html
----------------------------------------------------------
-<!DOCTYPE html>
-<html lang="de"><head><meta charset="UTF-8"><title>Impressum</title></head>
-<body>
-<h1>Impressum</h1>
-<p>
-NAME<br>
-ADRESSE<br>
-E-MAIL<br>
-Gewerbeform: Einzelunternehmen
-</p>
-</body></html>
-
-2) datenschutz.html
----------------------------------------------------------
-<!DOCTYPE html>
-<html lang="de"><head><meta charset="UTF-8"><title>Datenschutz</title></head>
-<body>
-<h1>Datenschutz</h1>
-<p>
-Diese Website verwendet keine Cookies oder Tracking-Tools.
-Beim Klick auf Amazon-Links gelten die Datenschutzbestimmungen von Amazon.
-</p>
-<p>Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
-</body></html>
-=========================================================
--->
 
 </body>
 </html>

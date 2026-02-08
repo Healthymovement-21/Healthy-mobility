@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Healthy Mobility – Empfehlungen</title>
+  <title>Healthy Mobility – Produktempfehlungen</title>
+
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #020617;
-      --accent: #2563eb;
-      --accent-dark: #1e40af;
+      --bg: #0b1220;
+      --card: #0f172a;
+      --accent: #3b82f6;       /* Option A – modernes Blau */
+      --accent-soft: #06b6d4;
       --text: #e5e7eb;
       --muted: #94a3b8;
     }
@@ -19,7 +20,7 @@
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-      background: radial-gradient(circle at top, #020617, #0f172a 70%);
+      background: radial-gradient(circle at top, #020617, #0b1220 70%);
       color: var(--text);
     }
 
@@ -30,12 +31,12 @@
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
-      padding: 1rem;
+      padding: 1rem 1.2rem;
       z-index: 10;
     }
 
     .menu-btn {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       cursor: pointer;
     }
 
@@ -51,14 +52,15 @@
       background: #020617;
       display: none;
       flex-direction: column;
-      padding: 2rem;
+      padding: 2.5rem;
+      z-index: 20;
     }
 
     .menu a {
       color: var(--text);
       text-decoration: none;
       font-size: 1.3rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
     }
 
     .menu a:hover { color: var(--accent); }
@@ -66,13 +68,26 @@
     .container {
       max-width: 1100px;
       margin: auto;
-      padding: 2rem 1rem 4rem;
+      padding: 2.5rem 1.2rem 4rem;
+    }
+
+    .intro {
+      max-width: 780px;
+      margin-bottom: 2.8rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .intro h1 {
+      color: var(--text);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 1.6rem;
     }
 
     @media (max-width: 700px) {
@@ -80,23 +95,16 @@
     }
 
     .card {
-      background: linear-gradient(180deg, #020617, #020617cc);
-      border-radius: 18px;
-      padding: 1.5rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      background: linear-gradient(180deg, #0f172a, #020617);
+      border-radius: 20px;
+      padding: 1.6rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.45);
       display: flex;
       flex-direction: column;
     }
 
-    .card img {
-      width: 100%;
-      border-radius: 14px;
-      margin-bottom: 1rem;
-      background: #020617;
-    }
-
     .card h3 {
-      margin: 0.2rem 0 0.4rem;
+      margin: 0 0 0.4rem;
       font-size: 1.1rem;
     }
 
@@ -108,37 +116,26 @@
 
     .card p {
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.4;
+      font-size: 0.95rem;
+      line-height: 1.5;
       flex-grow: 1;
     }
 
     .card a {
       text-align: center;
-      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #020617;
       text-decoration: none;
-      padding: 0.8rem;
-      border-radius: 12px;
+      padding: 0.85rem;
+      border-radius: 14px;
       font-weight: 600;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .card a:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(37,99,235,0.35);
+      box-shadow: 0 10px 25px rgba(59,130,246,0.35);
     }
-
-    footer {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem 1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    footer h3 { color: var(--text); }
   </style>
 </head>
 <body>
@@ -149,155 +146,130 @@
 </header>
 
 <nav class="menu" id="menu">
-  <a href="#" onclick="toggleMenu()">Start</a>
-  <a href="#impressum" onclick="toggleMenu()">Impressum</a>
-  <a href="#datenschutz" onclick="toggleMenu()">Datenschutz</a>
+  <a href="index.html" onclick="toggleMenu()">Start</a>
+  <a href="impressum.html">Impressum</a>
+  <a href="datenschutz.html">Datenschutz</a>
 </nav>
 
 <div class="container">
+
+  <div class="intro">
+    <h1>Ausgewählte Produktempfehlungen rund um Bewegung & Regeneration</h1>
+    <p>
+      Auf dieser Seite findest du sorgfältig ausgewählte Produkte aus den Bereichen
+      Bewegung, Regeneration, Wärme- und Kälteanwendungen sowie unterstützende Hilfsmittel
+      für Alltag, Sport und Prävention.
+    </p>
+    <p>
+      Die Auswahl basiert auf praktischer Erfahrung, häufigen Fragen aus dem Alltag
+      sowie bewährten Anwendungen im Bereich Mobilität und körperliches Wohlbefinden.
+      Alle Produkte können unterstützend wirken, ersetzen jedoch keine individuelle
+      medizinische oder physiotherapeutische Beratung.
+    </p>
+  </div>
+
   <div class="grid">
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Massagepistole">
       <h3>Massagepistole</h3>
       <div class="price">25,99 €</div>
-      <p>Zur gezielten Muskelentspannung und Regeneration.</p>
+      <p>Zur gezielten Lockerung verspannter Muskulatur, zur Unterstützung der Regeneration nach Belastung sowie zur Förderung der Durchblutung.</p>
       <a href="https://amzn.to/45QvJM2" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Moorkissen">
       <h3>Moorkissen</h3>
       <div class="price">29,89 €</div>
-      <p>Wärmeanwendung zur Lockerung verspannter Muskulatur.</p>
+      <p>Bewährte Wärmeanwendung zur Entspannung von Muskulatur und Bindegewebe, besonders angenehm im Rücken- und Nackenbereich.</p>
       <a href="https://amzn.to/4cgzQ7V" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Knie Kühlpack">
       <h3>Knie-Kühlpack</h3>
       <div class="price">17,89 €</div>
-      <p>Kälteanwendung zur Unterstützung bei Reizzuständen.</p>
+      <p>Kälteanwendung zur Unterstützung bei Reizzuständen, nach sportlicher Belastung oder bei akuten Überlastungen.</p>
       <a href="https://amzn.to/4qjoAuL" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Retterspitz">
       <h3>Retterspitz äußerlich</h3>
       <div class="price">26,14 €</div>
-      <p>Klassisches Hausmittel für Umschläge.</p>
+      <p>Klassisches Mittel für Umschläge und Wickel, häufig genutzt zur kühlenden oder entspannenden Anwendung.</p>
       <a href="https://amzn.to/3ZnEwRS" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="MacDavid Bandage">
       <h3>MacDavid Bandage</h3>
       <div class="price">44,95 €</div>
-      <p>Stabilisierende Bandage für Sport und Alltag.</p>
+      <p>Stabilisierende Bandage zur Unterstützung von Gelenken bei Sport, Arbeit und im Alltag.</p>
       <a href="https://amzn.to/4tvfiin" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Leukotape">
       <h3>Leukotape</h3>
       <div class="price">9,99 €</div>
-      <p>Klassisches Tape für funktionelle Verbände.</p>
+      <p>Klassisches Tape für funktionelle Verbände und temporäre Unterstützung bei Bewegung.</p>
       <a href="https://amzn.to/4kplTGW" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Laufband">
       <h3>Laufband</h3>
       <div class="price">94,99 €</div>
-      <p>Bewegung und Ausdauertraining für Zuhause.</p>
+      <p>Ermöglicht regelmäßige Bewegung und Ausdauertraining unabhängig von Wetter und Umgebung.</p>
       <a href="https://amzn.to/3O9os3F" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Thrombosestrumpf">
       <h3>Thrombosestrumpf</h3>
       <div class="price">26,90 €</div>
-      <p>Unterstützung der venösen Zirkulation.</p>
+      <p>Unterstützt die venöse Zirkulation, insbesondere bei längerem Sitzen oder Stehen.</p>
       <a href="https://amzn.to/4r3NY91" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Wärmemessgerät">
       <h3>Wärmemessgerät</h3>
       <div class="price">16,14 €</div>
-      <p>Kontaktlose Temperaturmessung.</p>
+      <p>Kontaktlose Temperaturmessung zur schnellen Orientierung im Alltag.</p>
       <a href="https://amzn.to/4a6vNtq" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Aloe Vera Gel">
       <h3>Aloe Vera Gel</h3>
       <div class="price">6,30 €</div>
-      <p>Pflegegel für Haut und Regeneration.</p>
+      <p>Kühlendes Pflegegel zur Hautberuhigung, z. B. nach Wärme- oder Kälteanwendungen.</p>
       <a href="https://amzn.to/4rftMB6" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Lymphmaßband">
       <h3>Lymphmaßband</h3>
       <div class="price">20,09 €</div>
-      <p>Hilfsmittel zur Umfangskontrolle.</p>
+      <p>Hilfsmittel zur Umfangsmessung und Verlaufskontrolle, z. B. bei Schwellungen.</p>
       <a href="https://amzn.to/3MvIhSn" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Elektrischer Shaker">
       <h3>Elektrischer Shaker</h3>
       <div class="price">19,54 €</div>
-      <p>Einfaches Mischen von Getränken.</p>
+      <p>Erleichtert das Mischen von Getränken, z. B. für Eiweißshakes oder Supplemente.</p>
       <a href="https://amzn.to/3MhQ1HB" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Bauerfeind Fußbandage">
       <h3>BAUERFEIND Fußbandage</h3>
       <div class="price">47,43 €</div>
-      <p>Stabilisierung und Entlastung im Alltag.</p>
+      <p>Hochwertige Bandage zur Stabilisierung und Entlastung des Fußes im Alltag.</p>
       <a href="https://amzn.to/3MchKJM" target="_blank">Bei Amazon ansehen</a>
     </div>
 
     <div class="card">
-      <img src="HIER-BILD-URL" alt="Bauerfeind Armbandage">
       <h3>BAUERFEIND Armbandage</h3>
       <div class="price">35,20 €</div>
-      <p>Unterstützung für Ellenbogen und Arm.</p>
+      <p>Gezielte Unterstützung für Ellenbogen und Unterarm bei Belastung.</p>
       <a href="https://amzn.to/4alA3nI" target="_blank">Bei Amazon ansehen</a>
     </div>
 
   </div>
 </div>
-
-<footer>
-  <section id="impressum">
-    <h3>Impressum</h3>
-    <p>
-      Angaben gemäß § 5 TMG<br><br>
-      <strong>NAME EINTRAGEN</strong><br>
-      STRASSE + HAUSNUMMER<br>
-      PLZ ORT<br><br>
-      E-Mail: EMAIL@ADRESSE.DE<br>
-      Gewerbeform: Einzelunternehmen<br><br>
-      Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: NAME
-    </p>
-  </section>
-
-  <section id="datenschutz">
-    <h3>Datenschutz</h3>
-    <p>
-      Diese Website verwendet keine Cookies, kein Tracking und keine Analyse-Tools.
-      Beim Klick auf Amazon-Links gelten die Datenschutzbestimmungen von Amazon.
-    </p>
-    <p>
-      Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.
-      Die Produktempfehlungen stellen keine medizinische Beratung dar.
-    </p>
-  </section>
-</footer>
 
 <script>
   function toggleMenu() {
@@ -305,6 +277,39 @@
     menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
   }
 </script>
+
+<!--
+=========================================================
+VORLAGEN FÜR SEPARATE SEITEN
+
+1) impressum.html
+---------------------------------------------------------
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><title>Impressum</title></head>
+<body>
+<h1>Impressum</h1>
+<p>
+NAME<br>
+ADRESSE<br>
+E-MAIL<br>
+Gewerbeform: Einzelunternehmen
+</p>
+</body></html>
+
+2) datenschutz.html
+---------------------------------------------------------
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><title>Datenschutz</title></head>
+<body>
+<h1>Datenschutz</h1>
+<p>
+Diese Website verwendet keine Cookies oder Tracking-Tools.
+Beim Klick auf Amazon-Links gelten die Datenschutzbestimmungen von Amazon.
+</p>
+<p>Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.</p>
+</body></html>
+=========================================================
+-->
 
 </body>
 </html>

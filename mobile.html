@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Healthy Mobility – Mobile</title>
+  <style>
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; height:100%; overflow:hidden; background:#0f1116; }
+    .swipe-wrap{
+      display:flex;
+      width:100vw;
+      height:100vh;
+      overflow-x:auto;
+      overflow-y:hidden;
+      scroll-snap-type:x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+    .panel{
+      flex:0 0 100vw;
+      height:100vh;
+      scroll-snap-align:start;
+      border:0;
+    }
+  </style>
+</head>
+<body>
+  <div class="swipe-wrap" id="swipeWrap">
+    <iframe class="panel" src="index.html?panel=1" title="Home"></iframe>
+    <iframe class="panel" src="shop.html?panel=1" title="Shop"></iframe>
+  </div>
+  <script>
+    const wrap = document.getElementById('swipeWrap');
+    if (location.hash === '#shop'){
+      requestAnimationFrame(()=>{ wrap.scrollLeft = window.innerWidth; });
+    }
+  </script>
+</body>
+</html>

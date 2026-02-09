@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12151b" media="(prefers-color-scheme: dark)">
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209p">
+  <link rel="stylesheet" href="style.css?v=20260209r">
 </head>
 
 <body>
@@ -144,6 +146,13 @@
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
     function go(url){ window.location.href = url; }
+
+    const params = new URLSearchParams(window.location.search);
+    const isPanel = params.get('panel') === '1';
+    if (isPanel){ document.documentElement.setAttribute('data-panel','1'); }
+    if (!isPanel && window.matchMedia('(max-width: 900px)').matches){
+      window.location.href = 'mobile.html';
+    }
 
     // Theme ALWAYS top-right
     const root = document.documentElement;

@@ -1,56 +1,127 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>Home – Produktempfehlungen</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home – Produktempfehlungen</title>
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    :root{
+      --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px 16px; /* mehr Rand links/rechts */
+    }
+
+    nav{
+      display:flex;
+      justify-content:center;
+      gap: 26px;
+      padding: 10px 0 18px;
+    }
+    nav a{
+      color:#bbb;
+      text-decoration:none;
+      font-weight:600;
+      white-space:nowrap;
+    }
+    nav a.active{
+      color:#fff;
+      border-bottom: 2px solid;
+      border-image: var(--ig) 1;
+      padding-bottom: 6px;
+    }
+
+    h1{
+      margin: 14px 0 18px;
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    p{
+      color:#ddd;
+      line-height: 1.7;
+      margin: 0 0 14px;
+    }
+
+    .home-button{
+      display:inline-block;
+      margin-top: 22px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight:800;
+      color:#000;
+      background:#fff;
+    }
+
+    /* Optional: schöner kleiner Akzent ohne “Blog-Look” */
+    .divider{
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 18px 0 6px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="shop.html">Shop</a>
+    </nav>
 
-<nav>
-  <a href="index.html" class="active">Home</a>
-  <a href="shop.html">Shop</a>
-</nav>
+    <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
 
-<section class="container">
-<h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
+    <p>
+      Auf dieser Seite findest du eine Auswahl an Produkten aus den Bereichen Bewegung,
+      Regeneration, Wärme, Kälte, Stabilität und unterstützendes Training.
+      Die Produktauswahl basiert auf physiotherapeutischem Fachwissen,
+      Erfahrungen aus dem Praxisalltag sowie Rückmeldungen von Patientinnen und Patienten.
+    </p>
 
-<p>
-Auf dieser Seite findest du eine Auswahl an Produkten aus den Bereichen Bewegung,
-Regeneration, Wärme, Kälte, Stabilität und unterstützendes Training.
-Die Produktauswahl basiert auf physiotherapeutischem Fachwissen,
-Erfahrungen aus dem Praxisalltag sowie Rückmeldungen von Patientinnen und Patienten.
-</p>
+    <p>
+      Die hier aufgeführten Produkte können eine physiotherapeutische Behandlung sinnvoll
+      ergänzen und unterstützen. Sie ersetzen jedoch weder eine individuelle Therapie
+      noch eine medizinische Diagnose oder Behandlung.
+    </p>
 
-<p>
-Die hier aufgeführten Produkte können eine physiotherapeutische Behandlung sinnvoll
-ergänzen und unterstützen. Sie ersetzen jedoch weder eine individuelle Therapie
-noch eine medizinische Diagnose oder Behandlung.
-</p>
+    <p>
+      Wichtig zu wissen: Nicht alle hier aufgeführten Produkte habe ich persönlich selbst getestet.
+      Die Empfehlungen ergeben sich aus fachlicher Einschätzung,
+      bewährten Anwendungen im therapeutischen Umfeld
+      sowie aus Erfahrungen und Rückmeldungen anderer Anwender.
+    </p>
 
-<p>
-Wichtig zu wissen: Nicht alle hier aufgeführten Produkte habe ich persönlich selbst getestet.
-Die Empfehlungen ergeben sich aus fachlicher Einschätzung,
-bewährten Anwendungen im therapeutischen Umfeld
-sowie aus Erfahrungen und Rückmeldungen anderer Anwender.
-</p>
+    <p>
+      Ob und welches Produkt sinnvoll ist, hängt immer von der individuellen Situation,
+      dem jeweiligen Beschwerdebild sowie den persönlichen Voraussetzungen ab.
+      In bestimmten Fällen kann es sinnvoll sein,
+      vor der Anwendung noch einmal Rücksprache zu halten.
+    </p>
 
-<p>
-Ob und welches Produkt sinnvoll ist, hängt immer von der individuellen Situation,
-dem jeweiligen Beschwerdebild sowie den persönlichen Voraussetzungen ab.
-In bestimmten Fällen kann es sinnvoll sein,
-vor der Anwendung noch einmal Rücksprache zu halten.
-</p>
+    <p>
+      Die Links auf dieser Website sind Affiliate-Links.
+      Für dich entstehen keine zusätzlichen Kosten.
+    </p>
 
-<p>
-Die Links auf dieser Website sind Affiliate-Links.
-Für dich entstehen keine zusätzlichen Kosten.
-</p>
+    <div class="divider"></div>
 
-<a href="shop.html" class="home-button">Zum Shop</a>
-</section>
-
+    <!-- Shop-Button wieder auf der Startseite -->
+    <a class="home-button" href="shop.html">Zum Shop</a>
+  </div>
 </body>
 </html>

@@ -197,7 +197,40 @@
     </div>
 
     <p class="topnote">Hinweis: Die Links sind Affiliate-Links. Für dich entstehen keine Mehrkosten.</p>
+<!-- FILTER / SORT (ADD-ON) -->
+<div class="controls">
+  <div class="controls-row">
+    <label class="ctrl">
+      <span>Sortierung</span>
+      <select id="sortMode">
+        <option value="default">Standard</option>
+        <option value="price-asc">Preis: aufsteigend</option>
+        <option value="price-desc">Preis: absteigend</option>
+        <option value="az">Alphabet: A–Z</option>
+        <option value="za">Alphabet: Z–A</option>
+      </select>
+    </label>
 
+    <button id="resetFilters" class="ctrl-btn" type="button">Reset</button>
+  </div>
+
+  <div class="controls-row">
+    <label class="ctrl">
+      <span>Preis von (€)</span>
+      <input id="minPrice" type="number" inputmode="decimal" placeholder="z.B. 10" min="0" step="0.01">
+    </label>
+
+    <label class="ctrl">
+      <span>bis (€)</span>
+      <input id="maxPrice" type="number" inputmode="decimal" placeholder="z.B. 50" min="0" step="0.01">
+    </label>
+
+    <button id="applyRange" class="ctrl-btn" type="button">Anwenden</button>
+  </div>
+
+  <div id="resultInfo" class="result-info"></div>
+</div>
+<!-- /FILTER / SORT (ADD-ON) -->
     <section class="product-grid">
 
       <div class="product">

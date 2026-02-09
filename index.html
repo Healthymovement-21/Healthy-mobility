@@ -9,7 +9,7 @@
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209w">
+  <link rel="stylesheet" href="style.css?v=20260209y">
 </head>
 
 <body>
@@ -181,9 +181,9 @@
       intro.remove();
     } else {
       sessionStorage.setItem("hm_intro_seen","1");
-      setTimeout(()=> intro.classList.add("hide"), 1400);
-      setTimeout(()=> { if (intro) intro.remove(); }, 2100);
-      setTimeout(()=> { const x=document.getElementById("intro"); if (x) x.remove(); }, 3000); // failsafe
+      setTimeout(()=> intro.classList.add("hide"), 1200);
+      setTimeout(()=> { if (intro) intro.remove(); }, 1500);
+      setTimeout(()=> { const x=document.getElementById("intro"); if (x) x.remove(); }, 2000); // failsafe
     }
 
     // Products catalog for overlay search

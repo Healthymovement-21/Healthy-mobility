@@ -34,12 +34,33 @@ html,body{
   overflow-x:hidden;
   font-size:14px;
   min-height:100dvh;
+  min-height:100svh;
+  height:100%;
   overscroll-behavior-y: none;
+  touch-action: pan-y;
 }
 body{
   position:relative;
   min-height:100dvh;
+  min-height:100svh;
   background:var(--bg);
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  z-index:-1;
+  pointer-events:none;
+}
+.page{
+  min-height:100vh;
+  min-height:100dvh;
+  width:100%;
+  background:var(--bg);
+}
+.overlay{
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
 }
 body::before{
   content:"";
@@ -670,4 +691,3 @@ body.scroll-anim .product.active{
 }
 .cat-item:active{ transform: translateY(1px); }
 .shop-spacer{ height:120px; }
-

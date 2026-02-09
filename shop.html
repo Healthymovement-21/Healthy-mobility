@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home – Produktempfehlungen</title>
+  <title>Shop – Produktempfehlungen</title>
 
   <style>
     *{ box-sizing:border-box; }
@@ -11,196 +11,503 @@
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 
-      /* Dark */
-      --bg: #000;
-      --text: #fff;
-      --muted: #ddd;
-      --card: #111;
-      --nav: #bbb;
+      --bg:#000;
+      --text:#fff;
+      --muted:#d7d7d7;
+      --card:#0f0f10;
+      --nav:#bbb;
       --line: rgba(255,255,255,0.10);
-      --btnHomeBg: #fff;
-      --btnHomeText:#000;
     }
 
     [data-theme="light"]{
-      --bg: #ffffff;
-      --text: #111;
-      --muted: #333;
-      --card: #f2f3f5;
-      --nav: #444;
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#333;
+      --card:#f2f3f5;
+      --nav:#444;
       --line: rgba(0,0,0,0.10);
-      --btnHomeBg: #111;
-      --btnHomeText:#fff;
     }
 
     html,body{
       margin:0; padding:0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
       overflow-x:hidden;
-      font-size: 15px; /* kleiner/kompakter */
+      font-size: 14px;
     }
 
     .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 34px 22px; /* mehr Rand */
+      max-width:980px;
+      margin:0 auto;
+      padding:34px 24px;
     }
 
     .topbar{
       display:flex;
       align-items:center;
-      justify-content:center;
-      position:relative;
-      padding: 10px 0 18px;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom: 10px;
     }
 
-    nav{
-      display:flex;
-      gap:26px;
-      justify-content:center;
-      align-items:center;
-    }
-
-    nav a{
-      color: var(--nav);
+    .nav-left a{
+      color:var(--nav);
       text-decoration:none;
-      font-weight:700;
+      font-weight:800;
       white-space:nowrap;
+      padding: 8px 10px;
+      border-radius: 10px;
+      outline: 1px solid transparent;
     }
+    .nav-left a:hover{ outline: 1px solid var(--line); }
 
-    nav a.active{
-      color: var(--text);
-      border-bottom: 2px solid;
-      border-image: var(--ig) 1;
-      padding-bottom: 6px;
-    }
-
-    .switch{
-      position:absolute;
-      right:0;
-      top:50%;
-      transform:translateY(-50%);
+    .right-controls{
       display:flex;
       align-items:center;
       gap:10px;
-      user-select:none;
+      position:relative;
     }
 
-    .switch button{
+    /* Shop dropdown (abgedunkelt) */
+    .shop-pill{
+      height:44px;
+      padding:0 12px;
+      border-radius:999px;
+      border:0;
+      cursor:pointer;
+      font-weight:900;
+      color:#fff;
+      background:var(--ig);
+      box-shadow:0 0 10px rgba(214,41,118,0.06);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+
+    .menu-panel{
+      position:absolute;
+      right:0;
+      top:52px;
+      width: min(220px, 80vw);
+      background:var(--card);
+      border-radius:14px;
+      padding:10px;
+      overflow:hidden;
+      z-index:60;
+    }
+    .menu-panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:14px;
+      background:var(--ig);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.22;
+    }
+
+    .menu-panel button{
+      width:100%;
+      border:0;
+      background:transparent;
+      color:var(--text);
+      text-align:left;
+      padding:10px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:900;
+      position:relative;
+      z-index:1;
+    }
+    .menu-panel button:hover{ outline:1px solid var(--line); }
+    .menu-panel button.active{
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 0 8px rgba(214,41,118,0.06);
+    }
+
+    /* Theme */
+    .theme-btn{
       border:0;
       padding:10px 12px;
       border-radius:999px;
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
       color: var(--text);
       background: transparent;
       outline: 1px solid var(--line);
+      height:44px;
     }
 
-    h1{
-      margin: 14px 0 16px;
-      font-size: 1.7rem; /* etwas kleiner */
-      letter-spacing: -0.02em;
+    /* NUR Suche (verbundener Block ohne Filter-Button) */
+    .search-row{
+      display:flex;
+      align-items:stretch;
+      margin: 12px 0 22px; /* Platz bis zum ersten Produkt */
     }
 
-    p{
-      color: var(--muted);
-      line-height: 1.65;
-      margin: 0 0 12px;
-      font-size: 0.95rem; /* kompakter */
+    .search-group{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      background: transparent;
     }
 
-    .divider{
-      height:1px;
-      background: var(--line);
-      margin: 18px 0 6px;
+    fieldset.searchbox{
+      border:0;
+      padding:8px 10px 10px;
+      margin:0;
+      min-width: 0;
+    }
+    fieldset.searchbox legend{
+      padding:0 8px;
+      color:var(--muted);
+      font-weight:900;
+      font-size:0.8rem;
+    }
+    .searchbox input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-weight:800;
+      font-size:0.9rem;
+      padding:6px 2px;
     }
 
-    .home-button{
+    /* Grid + cards */
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:24px;              /* mehr Abstand untereinander */
+      padding-top: 8px;
+    }
+    @media (max-width:760px){
+      .product-grid{ grid-template-columns:1fr; }
+    }
+
+    .product{
+      position:relative;
+      background:var(--card);
+      border-radius:16px;
+      padding:14px;
+      overflow:hidden;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .28s ease, transform .28s ease, box-shadow .35s ease;
+    }
+
+    .product::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:16px;
+      background:var(--ig);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.60; /* dezenter */
+    }
+
+    body.scroll-anim .product{
+      opacity:0;
+      transform:translateY(12px);
+      box-shadow:none;
+    }
+    body.scroll-anim .product.active{
+      opacity:1;
+      transform:translateY(0);
+      box-shadow:
+        0 0 8px rgba(214,41,118,0.10),
+        0 0 14px rgba(252,175,69,0.05);
+    }
+
+    .product h3{ margin:0 0 6px; font-size:0.95rem; letter-spacing:-0.01em; }
+    .product p{ margin:0 0 8px; color:var(--muted); line-height:1.5; font-size:0.9rem; }
+    .price{ display:block; margin:8px 0 10px; font-weight:900; color:var(--text); font-size:0.93rem; }
+
+    .btn{
       display:inline-block;
-      margin-top:22px;
-      padding:14px 22px;
+      padding:8px 11px;
       border-radius:999px;
       text-decoration:none;
       font-weight:900;
-      background: var(--btnHomeBg);
-      color: var(--btnHomeText);
+      color:#fff;
+      background:var(--ig);
+      box-shadow:0 0 8px rgba(214,41,118,0.08);
+      font-size:0.88rem;
+    }
+
+    .footnote{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      text-align: center;
+      opacity: 0.9;
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <nav>
-        <a href="index.html" class="active">Home</a>
-        <a href="shop.html">Shop</a>
-      </nav>
 
-      <div class="switch">
-        <button id="themeBtn" type="button">🌗</button>
+    <div class="topbar">
+      <div class="nav-left">
+        <a href="index.html">Home</a>
+      </div>
+
+      <div class="right-controls">
+        <button id="shopMenuToggle" class="shop-pill" type="button" aria-expanded="false" aria-label="Kategorien öffnen">
+          Shop <span id="shopCaret">▾</span>
+        </button>
+
+        <div id="shopMenu" class="menu-panel" hidden>
+          <button type="button" class="cat-item active" data-cat="all">Alle</button>
+          <button type="button" class="cat-item" data-cat="sport">Sport</button>
+          <button type="button" class="cat-item" data-cat="regeneration">Regeneration</button>
+          <button type="button" class="cat-item" data-cat="reha">Reha</button>
+        </div>
+
+        <button id="themeBtn" class="theme-btn" type="button">🌗</button>
       </div>
     </div>
 
-    <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
+    <!-- NUR Suche -->
+    <div class="search-row">
+      <div class="search-group">
+        <fieldset class="searchbox">
+          <legend>Suche</legend>
+          <input id="searchInput" type="search" placeholder="Produkt suchen…" autocomplete="off">
+        </fieldset>
+      </div>
+    </div>
 
-    <p>
-      Auf dieser Seite findest du eine Auswahl an Produkten aus den Bereichen Bewegung,
-      Regeneration, Wärme, Kälte, Stabilität und unterstützendes Training.
-      Die Produktauswahl basiert auf physiotherapeutischem Fachwissen,
-      Erfahrungen aus dem Praxisalltag sowie Rückmeldungen von Patientinnen und Patienten.
-    </p>
+    <section class="product-grid">
 
-    <p>
-      Die hier aufgeführten Produkte können eine physiotherapeutische Behandlung sinnvoll
-      ergänzen und unterstützen. Sie ersetzen jedoch weder eine individuelle Therapie
-      noch eine medizinische Diagnose oder Behandlung.
-    </p>
+      <div class="product" data-cats="regeneration">
+        <h3>Massagepistole</h3>
+        <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
+        <span class="price">25,99 €</span>
+        <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
 
-    <p>
-      Wichtig zu wissen: Nicht alle hier aufgeführten Produkte habe ich persönlich selbst getestet.
-      Die Empfehlungen ergeben sich aus fachlicher Einschätzung,
-      bewährten Anwendungen im therapeutischen Umfeld
-      sowie aus Erfahrungen und Rückmeldungen anderer Anwender.
-    </p>
+      <div class="product" data-cats="regeneration">
+        <h3>Moorkissen</h3>
+        <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
+        <span class="price">29,89 €</span>
+        <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
 
-    <p>
-      Ob und welches Produkt sinnvoll ist, hängt immer von der individuellen Situation,
-      dem jeweiligen Beschwerdebild sowie den persönlichen Voraussetzungen ab.
-      In bestimmten Fällen kann es sinnvoll sein,
-      vor der Anwendung noch einmal Rücksprache zu halten.
-    </p>
+      <div class="product" data-cats="regeneration reha">
+        <h3>Knie-Kühlpack</h3>
+        <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
+        <span class="price">17,89 €</span>
+        <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
 
-    <p>
-      Die Links auf dieser Website sind Affiliate-Links.
-      Für dich entstehen keine zusätzlichen Kosten.
-    </p>
+      <div class="product" data-cats="sport regeneration reha">
+        <h3>Retterspitz</h3>
+        <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
+        <span class="price">26,14 €</span>
+        <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
 
-    <div class="divider"></div>
+      <div class="product" data-cats="sport">
+        <h3>MacDavid Bandage</h3>
+        <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
+        <span class="price">44,95 €</span>
+        <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
 
-    <a class="home-button" href="shop.html">Zum Shop</a>
+      <div class="product" data-cats="sport">
+        <h3>Leukotape</h3>
+        <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
+        <span class="price">9,99 €</span>
+        <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="sport regeneration reha">
+        <h3>Laufband</h3>
+        <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
+        <span class="price">94,99 €</span>
+        <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="sport regeneration reha">
+        <h3>Thrombosestrumpf</h3>
+        <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
+        <span class="price">26,90 €</span>
+        <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="reha">
+        <h3>Wärmemessgerät</h3>
+        <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
+        <span class="price">16,14 €</span>
+        <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="reha">
+        <h3>Aloe-Vera-Gel</h3>
+        <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
+        <span class="price">6,30 €</span>
+        <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="reha">
+        <h3>Lymphmaßband</h3>
+        <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
+        <span class="price">20,09 €</span>
+        <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="sport">
+        <h3>Elektrischer Shaker</h3>
+        <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
+        <span class="price">19,54 €</span>
+        <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="sport">
+        <h3>BAUERFEIND Fußbandage</h3>
+        <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
+        <span class="price">47,43 €</span>
+        <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+      <div class="product" data-cats="sport">
+        <h3>BAUERFEIND Armbandage</h3>
+        <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
+        <span class="price">35,20 €</span>
+        <a class="btn" href="https://amzn.to/4alA3nI" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+      </div>
+
+    </section>
+
+    <div class="footnote">
+      Hinweis: Die Links auf dieser Website sind Affiliate-Links. Für dich entstehen keine zusätzlichen Kosten.
+      Preise können sich bei Amazon jederzeit ändern.
+    </div>
+
   </div>
 
   <script>
+    // Theme
     const root = document.documentElement;
-    const btn = document.getElementById("themeBtn");
+    const themeBtn = document.getElementById("themeBtn");
 
     const saved = localStorage.getItem("theme");
-    if (saved) {
-      root.setAttribute("data-theme", saved);
-    } else {
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
       const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
       root.setAttribute("data-theme", prefersLight ? "light" : "dark");
     }
 
-    btn.addEventListener("click", () => {
+    themeBtn.addEventListener("click", () => {
       const current = root.getAttribute("data-theme") || "dark";
       const next = current === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
     });
+
+    // Scroll Animation
+    const items = document.querySelectorAll(".product");
+    function checkVisibility(){
+      const triggerTop = window.innerHeight * 0.92;
+      items.forEach(el => {
+        if (el.style.display === "none") { el.classList.remove("active"); return; }
+        const top = el.getBoundingClientRect().top;
+        const bottom = el.getBoundingClientRect().bottom;
+        const inView = (top < triggerTop) && (bottom > 0);
+        if (inView) el.classList.add("active");
+        else el.classList.remove("active");
+      });
+    }
+    checkVisibility();
+    requestAnimationFrame(() => {
+      document.body.classList.add("scroll-anim");
+      checkVisibility();
+    });
+    window.addEventListener("scroll", checkVisibility, { passive:true });
+    window.addEventListener("resize", checkVisibility);
+
+    // Shop Category dropdown
+    const shopMenu = document.getElementById("shopMenu");
+    const shopToggle = document.getElementById("shopMenuToggle");
+    const shopCaret = document.getElementById("shopCaret");
+    const catItems = document.querySelectorAll(".cat-item");
+    let activeCat = "all";
+
+    function closeShopMenu(){
+      shopMenu.setAttribute("hidden","");
+      shopToggle.setAttribute("aria-expanded","false");
+      shopCaret.textContent = "▾";
+    }
+    function openShopMenu(){
+      shopMenu.removeAttribute("hidden");
+      shopToggle.setAttribute("aria-expanded","true");
+      shopCaret.textContent = "▴";
+    }
+    shopToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (shopMenu.hasAttribute("hidden")) openShopMenu();
+      else closeShopMenu();
+    });
+
+    document.addEventListener("click", () => {
+      if (!shopMenu.hasAttribute("hidden")) closeShopMenu();
+    });
+
+    // Search
+    const searchInput = document.getElementById("searchInput");
+    let searchQuery = "";
+
+    function matchesSearch(el){
+      if (!searchQuery) return true;
+      const t = (el.textContent || "").toLowerCase();
+      return t.includes(searchQuery);
+    }
+
+    function applyVisibility(){
+      items.forEach(el => {
+        const cats = (el.getAttribute("data-cats") || "").trim();
+        const catOk = (activeCat === "all") ? true : cats.split(/\s+/).includes(activeCat);
+        const searchOk = matchesSearch(el);
+        el.style.display = (catOk && searchOk) ? "" : "none";
+      });
+      checkVisibility();
+    }
+
+    function applyCategory(cat){
+      activeCat = cat;
+      catItems.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+      applyVisibility();
+    }
+
+    catItems.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        applyCategory(btn.dataset.cat);
+        closeShopMenu();
+      });
+    });
+
+    searchInput.addEventListener("input", () => {
+      searchQuery = (searchInput.value || "").trim().toLowerCase();
+      applyVisibility();
+    });
+
+    // init
+    applyVisibility();
   </script>
 </body>
 </html>

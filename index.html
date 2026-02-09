@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
@@ -10,19 +10,18 @@
 </head>
 
 <body>
-  <header class="header">
-    <div class="header-inner">
-      <nav class="nav" aria-label="Navigation">
-        <a href="index.html" class="active">Home</a>
-        <a href="shop.html" onclick="track('nav_shop','top')">Shop</a>
-        <a href="impressum.html" onclick="track('nav_impressum','top')">Impressum</a>
-        <a href="datenschutz.html" onclick="track('nav_datenschutz','top')">Datenschutz</a>
-      </nav>
-      <button class="theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+  <!-- Intro Animation (nur 1x pro Sitzung) -->
+  <div class="intro" id="intro" hidden>
+    <div class="logo">
+      <div class="shine"></div>
+      <div><span>Healthy</span><br><span>Mobility</span></div>
     </div>
-  </header>
+  </div>
 
-  <main class="wrap">
+  <!-- Theme Button (floating, gleich auf jeder Seite) -->
+  <button class="theme-mini" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+
+  <main class="page">
     <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
 
     <div class="card">
@@ -84,18 +83,53 @@
       <div id="popularList"></div>
     </div>
 
+    <!-- Impressum/Datenschutz nur hier (wie du wolltest) -->
     <div class="footer">
-      <a href="impressum.html" onclick="track('nav_impressum','footer')">Impressum</a> ·
-      <a href="datenschutz.html" onclick="track('nav_datenschutz','footer')">Datenschutz</a>
+      <a href="impressum.html" onclick="track('nav_impressum','home_footer')">Impressum</a> ·
+      <a href="datenschutz.html" onclick="track('nav_datenschutz','home_footer')">Datenschutz</a>
       <div style="margin-top:10px;">Hinweis: Inhalte stellen keine medizinische Beratung dar.</div>
     </div>
   </main>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
+    <div class="bar">
+      <button class="nav-btn active" type="button" onclick="go('index.html')">
+        <!-- home icon -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
+                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <div style="font-size:11px;">Home</div>
+      </button>
+
+      <button class="nav-btn" type="button" onclick="go('shop.html')">
+        <!-- grid/bag icon -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Shop</div>
+      </button>
+
+      <button class="nav-btn" type="button" onclick="go('shop.html#search')">
+        <!-- search icon -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Suche</div>
+      </button>
+    </div>
+  </div>
 
   <script>
     function track(eventName, label){
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
+    function go(url){ window.location.href = url; }
 
+    // Theme
     const root = document.documentElement;
     const saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
@@ -111,6 +145,17 @@
       track("theme_toggle", next);
     });
 
+    // Intro: only once per session
+    const intro = document.getElementById("intro");
+    const seen = sessionStorage.getItem("hm_intro_seen");
+    if (!seen){
+      intro.hidden = false;
+      sessionStorage.setItem("hm_intro_seen","1");
+      setTimeout(()=> intro.classList.add("hide"), 1400);
+      setTimeout(()=> intro.remove(), 2100);
+    }
+
+    // Popular list (based on local clicks stored from shop)
     const productLinks = {
       "Massagepistole": { url: "shop.html#massagepistole" },
       "Moorkissen": { url: "shop.html#moorkissen" },
@@ -138,7 +183,6 @@
     function renderPopular(){
       const host = document.getElementById("popularList");
       const counts = getClickCounts();
-
       const items = Object.keys(productLinks).map(name => ({
         name,
         count: counts[name] || 0,
@@ -148,19 +192,16 @@
       const top = items.filter(i => i.count > 0).slice(0, 6);
 
       if (top.length === 0){
-        host.innerHTML = `
-          <a class="cta" href="shop.html" onclick="track('popular_empty','go_shop')">Noch keine Klicks gespeichert → Shop öffnen</a>
-        `;
+        host.innerHTML = `<div class="cta-row"><a class="cta" href="shop.html">Noch keine Klicks → Shop öffnen</a></div>`;
         return;
       }
 
       host.innerHTML = top.map(i => `
         <div style="margin-top:10px;">
-          <a class="cta" href="${i.url}" onclick="track('popular_click','${i.name}')">${i.name} (${i.count} Klicks)</a>
+          <a class="cta" href="${i.url}">${i.name} (${i.count} Klicks)</a>
         </div>
       `).join("");
     }
-
     renderPopular();
   </script>
 </body>

@@ -1,17 +1,11 @@
-* {
-  box-sizing: border-box;
-}
-
-html, body {
+body {
   margin: 0;
-  padding: 0;
   background: #000;
-  color: #fff;
+  color: #fff; /* DAS IST DER WICHTIGE FIX */
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-  overflow-x: hidden;
 }
 
-/* NAVIGATION */
+/* Navigation */
 nav {
   display: flex;
   justify-content: center;
@@ -27,92 +21,53 @@ nav a {
 
 nav a.active {
   color: #fff;
-  border-bottom: 2px solid;
-  border-image: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5) 1;
 }
 
-/* HOME BUTTON (der den du behalten willst) */
-.home-button {
-  display: inline-block;
-  margin-top: 30px;
-  padding: 14px 26px;
-  background: #fff;
-  color: #000;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-/* SHOP GRID — zwei Spalten */
+/* Shop Layout */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
-  padding: 40px;
-  max-width: 1000px;
-  margin: 0 auto;
+  gap: 24px;
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
 }
 
-/* PRODUKTKARTEN — ORIGINAL STYLE */
+/* Produktkarten */
 .product {
-  padding: 25px;
-  border-radius: 18px;
   background: #111;
-  border: 1px solid transparent;
-  border-image: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5) 1;
+  padding: 24px;
+  border-radius: 16px;
+  color: #fff; /* sorgt dafür, dass alles sichtbar ist */
 }
 
 .product h3 {
-  margin-top: 0;
+  color: #fff;
 }
 
 .product p {
-  line-height: 1.6;
   color: #ddd;
 }
 
 .product span {
   display: block;
   margin: 12px 0;
-  font-weight: 700;
+  font-weight: bold;
 }
 
-/* INSTAGRAM BUTTON STYLE */
 .product a {
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #444;
+  border-radius: 18px;
   color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 }
 
-/* HOVER GLOW */
-.product:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 25px rgba(214,41,118,0.6);
-  transition: 0.3s;
-}
-
-/* SCROLL ANIMATION (passt zu deinem shop.html) */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: 0.6s;
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-  box-shadow: 0 0 30px rgba(214,41,118,0.5);
-}
-
-/* MOBILE */
-@media (max-width: 760px) {
+/* Mobile */
+@media (max-width: 700px) {
   .product-grid {
     grid-template-columns: 1fr;
-    padding: 20px;
   }
 }

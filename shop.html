@@ -15,112 +15,362 @@
 
   <style>
     *{ box-sizing:border-box; }
+
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-      --bg:#000; --text:#fff; --muted:#d7d7d7; --card:#0f0f10; --nav:#bbb; --line: rgba(255,255,255,0.10);
-    }
-    [data-theme="light"]{
-      --bg:#ffffff; --text:#111; --muted:#333; --card:#f2f3f5; --nav:#444; --line: rgba(0,0,0,0.10);
-    }
-    html,body{
-      margin:0; padding:0; background:var(--bg); color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-      overflow-x:hidden; font-size:14px;
-    }
-    .wrap{ max-width:980px; margin:0 auto; padding:34px 24px; }
 
-    /* Top */
-    .topbar{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:10px; }
+      --bg:#060606;
+      --text:#ffffff;
+      --muted: rgba(255,255,255,0.78);
+      --card:#0f0f10;
+      --nav: rgba(255,255,255,0.72);
+      --line: rgba(255,255,255,0.12);
+    }
+
+    [data-theme="light"]{
+      --bg:#ffffff;
+      --text:#0f0f10;
+      --muted: rgba(15,15,16,0.75);
+      --card:#f4f5f7;
+      --nav: rgba(15,15,16,0.70);
+      --line: rgba(0,0,0,0.10);
+    }
+
+    html,body{
+      margin:0; padding:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+      overflow-x:hidden;
+      font-size:14px;
+      scroll-behavior:smooth;
+    }
+
+    .wrap{
+      max-width:900px;
+      margin:0 auto;
+      padding:36px 24px 28px;
+    }
+
+    /* Topbar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:12px;
+    }
+
     .nav-left a{
-      color:var(--nav); text-decoration:none; font-weight:800; white-space:nowrap;
-      padding:8px 10px; border-radius:10px; outline:1px solid transparent;
+      color:var(--nav);
+      text-decoration:none;
+      font-weight:900;
+      white-space:nowrap;
+      padding:8px 10px;
+      border-radius:10px;
+      outline:1px solid transparent;
     }
     .nav-left a:hover{ outline:1px solid var(--line); }
 
-    .right-controls{ display:flex; align-items:center; gap:10px; position:relative; }
-    .shop-pill{
-      height:44px; padding:0 12px; border-radius:999px; border:0; cursor:pointer;
-      font-weight:900; color:#fff; background:var(--ig);
-      box-shadow:0 0 10px rgba(214,41,118,0.06);
-      display:flex; align-items:center; gap:8px; white-space:nowrap;
+    .right-controls{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      position:relative;
     }
+
+    /* Shop categories button (slightly dim) */
+    .shop-pill{
+      height:44px;
+      padding:0 12px;
+      border-radius:999px;
+      border:0;
+      cursor:pointer;
+      font-weight:950;
+      color:#fff;
+      background:var(--ig);
+      box-shadow:0 0 10px rgba(214,41,118,0.06);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+
     .menu-panel{
-      position:absolute; right:0; top:52px; width:min(220px,80vw);
-      background:var(--card); border-radius:14px; padding:10px; overflow:hidden; z-index:60;
+      position:absolute;
+      right:0;
+      top:52px;
+      width:min(220px,80vw);
+      background:var(--card);
+      border-radius:14px;
+      padding:10px;
+      overflow:hidden;
+      z-index:60;
+      outline:1px solid var(--line);
     }
     .menu-panel::before{
-      content:""; position:absolute; inset:0; padding:1.5px; border-radius:14px; background:var(--ig);
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:14px;
+      background:var(--ig);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude;
-      pointer-events:none; opacity:.22;
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.18;
     }
+
     .menu-panel button{
-      width:100%; border:0; background:transparent; color:var(--text); text-align:left;
-      padding:10px 10px; border-radius:10px; cursor:pointer; font-weight:900; position:relative; z-index:1;
+      width:100%;
+      border:0;
+      background:transparent;
+      color:var(--text);
+      text-align:left;
+      padding:10px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:950;
+      position:relative;
+      z-index:1;
     }
     .menu-panel button:hover{ outline:1px solid var(--line); }
-    .menu-panel button.active{ background:rgba(255,255,255,0.03); box-shadow:0 0 8px rgba(214,41,118,0.06); }
-
-    .theme-btn{
-      border:0; padding:10px 12px; border-radius:999px; font-weight:900; cursor:pointer;
-      color:var(--text); background:transparent; outline:1px solid var(--line); height:44px;
+    .menu-panel button.active{
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 0 8px rgba(214,41,118,0.06);
     }
 
-    /* Suche */
-    .search-row{ display:flex; align-items:stretch; margin:12px 0 14px; }
-    .search-group{ width:100%; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:transparent; }
-    fieldset.searchbox{ border:0; padding:8px 10px 10px; margin:0; min-width:0; }
-    fieldset.searchbox legend{ padding:0 8px; color:var(--muted); font-weight:900; font-size:0.8rem; }
+    .theme-btn{
+      border:0;
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:950;
+      cursor:pointer;
+      color:var(--text);
+      background:transparent;
+      outline:1px solid var(--line);
+      height:44px;
+      transition: transform .12s ease, filter .2s ease;
+    }
+    .theme-btn:active{ transform: translateY(1px); }
+    .theme-btn:hover{ filter: brightness(1.05); }
+
+    /* Search */
+    .search-row{
+      display:flex;
+      align-items:stretch;
+      margin:14px 0 10px;
+    }
+    .search-group{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      background: transparent;
+    }
+
+    fieldset.searchbox{
+      border:0;
+      padding:8px 10px 10px;
+      margin:0;
+      min-width:0;
+    }
+    fieldset.searchbox legend{
+      padding:0 8px;
+      color:var(--muted);
+      font-weight:950;
+      font-size:0.78rem;
+      letter-spacing:0.02em;
+    }
     .searchbox input{
-      width:100%; border:0; outline:none; background:transparent; color:var(--text);
-      font-weight:800; font-size:0.9rem; padding:6px 2px;
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-weight:850;
+      font-size:0.9rem;
+      padding:6px 2px;
     }
 
     /* Share */
-    .sharebar{ display:flex; gap:10px; margin:0 0 22px; flex-wrap:wrap; }
-    .sharebar button{
-      border:0; padding:8px 12px; border-radius:999px; font-weight:900; cursor:pointer;
-      background:var(--card); color:var(--text); outline:1px solid var(--line);
+    .sharebar{
+      display:flex;
+      gap:10px;
+      margin:0 0 18px;
+      flex-wrap:wrap;
     }
+    .sharebar button{
+      border:0;
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:950;
+      cursor:pointer;
+      background:var(--card);
+      color:var(--text);
+      outline:1px solid var(--line);
+      transition: transform .12s ease, filter .2s ease;
+    }
+    .sharebar button:hover{ filter: brightness(1.04); }
+    .sharebar button:active{ transform: translateY(1px); }
 
     /* Grid */
     .product-grid{
-      display:grid; grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:24px; padding-top:8px;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:28px;
+      padding-top:10px;
     }
-    @media (max-width:760px){ .product-grid{ grid-template-columns:1fr; } }
+    @media (max-width:760px){
+      .product-grid{ grid-template-columns:1fr; }
+    }
 
     .product{
-      position:relative; background:var(--card); border-radius:16px; padding:14px; overflow:hidden;
-      opacity:1; transform:translateY(0);
-      transition: opacity .28s ease, transform .28s ease, box-shadow .35s ease;
-    }
-    .product::before{
-      content:""; position:absolute; inset:0; padding:1.5px; border-radius:16px; background:var(--ig);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude;
-      pointer-events:none; opacity:.60;
-    }
-    body.scroll-anim .product{ opacity:0; transform:translateY(12px); box-shadow:none; }
-    body.scroll-anim .product.active{
-      opacity:1; transform:translateY(0);
-      box-shadow: 0 0 8px rgba(214,41,118,0.10), 0 0 14px rgba(252,175,69,0.05);
+      position:relative;
+      background:var(--card);
+      border-radius:18px;
+      padding:16px;
+      overflow:hidden;
+      outline:1px solid var(--line);
+
+      opacity:1;
+      transform:translateY(0);
+      transition: opacity .28s ease, transform .28s ease, box-shadow .35s ease, filter .2s ease;
     }
 
-    .product h3{ margin:0 0 6px; font-size:0.95rem; letter-spacing:-0.01em; }
-    .product p{ margin:0 0 8px; color:var(--muted); line-height:1.5; font-size:0.9rem; }
-    .price{ display:block; margin:8px 0 10px; font-weight:900; color:var(--text); font-size:0.93rem; }
+    /* gradient ring */
+    .product::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:18px;
+      background:var(--ig);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.42;  /* less flashy, more premium */
+    }
+
+    /* subtle color wash */
+    .product::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(500px 180px at 20% 0%, rgba(214,41,118,0.14), transparent 55%),
+        radial-gradient(500px 180px at 80% 0%, rgba(79,91,213,0.12), transparent 55%);
+      pointer-events:none;
+      opacity:0.55;
+    }
+
+    /* scroll reveal */
+    body.scroll-anim .product{
+      opacity:0;
+      transform:translateY(12px);
+      box-shadow:none;
+    }
+    body.scroll-anim .product.active{
+      opacity:1;
+      transform:translateY(0);
+      box-shadow:
+        0 0 10px rgba(214,41,118,0.10),
+        0 0 18px rgba(252,175,69,0.04);
+    }
+
+    /* Hover on desktop */
+    @media (hover:hover){
+      .product:hover{
+        transform: translateY(-2px);
+        box-shadow:
+          0 0 12px rgba(214,41,118,0.12),
+          0 0 22px rgba(252,175,69,0.05);
+        filter: brightness(1.02);
+      }
+    }
+
+    .product h3{
+      margin:0 0 8px;
+      font-size:0.95rem;
+      letter-spacing:-0.01em;
+      position:relative;
+      z-index:1;
+    }
+
+    /* clamp keeps it clean (text not deleted, only shown nicely) */
+    .product p{
+      margin:0 0 10px;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:0.9rem;
+      position:relative;
+      z-index:1;
+
+      display:-webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+    }
+
+    .price{
+      display:block;
+      margin:8px 0 12px;
+      font-weight:950;
+      color:var(--text);
+      font-size:0.93rem;
+      position:relative;
+      z-index:1;
+    }
 
     .btn{
-      display:inline-block; padding:8px 11px; border-radius:999px; text-decoration:none; font-weight:900;
-      color:#fff; background:var(--ig); box-shadow:0 0 8px rgba(214,41,118,0.08); font-size:0.88rem;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:950;
+      color:#fff;
+      background:var(--ig);
+      box-shadow:0 0 10px rgba(214,41,118,0.08);
+      font-size:0.88rem;
+      position:relative;
+      z-index:1;
+      transition: transform .12s ease, filter .2s ease;
     }
+    .btn:hover{ filter: brightness(1.05); }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Empty state */
+    .empty{
+      display:none;
+      margin: 18px 0 0;
+      padding:14px 14px;
+      border-radius:16px;
+      background:var(--card);
+      outline:1px solid var(--line);
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .empty strong{ color:var(--text); }
 
     footer{
-      margin-top:18px; padding-top:12px; border-top:1px solid var(--line);
-      color:var(--muted); font-size:0.88rem; line-height:1.55; text-align:center; opacity:0.95;
+      margin-top:18px;
+      padding-top:12px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:0.88rem;
+      line-height:1.55;
+      text-align:center;
+      opacity:0.95;
     }
-    footer a{ color:var(--muted); text-decoration:none; font-weight:900; }
+    footer a{
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:950;
+    }
     footer a:hover{ text-decoration:underline; }
   </style>
 </head>
@@ -149,7 +399,6 @@
       </div>
     </div>
 
-    <!-- Suche -->
     <div class="search-row">
       <div class="search-group">
         <fieldset class="searchbox">
@@ -159,128 +408,118 @@
       </div>
     </div>
 
-    <!-- Teilen -->
     <div class="sharebar">
       <button type="button" onclick="shareAny()">Teilen</button>
       <button type="button" onclick="shareWhatsApp()">WhatsApp</button>
       <button type="button" onclick="copyLink()">Link kopieren</button>
     </div>
 
-    <section class="product-grid">
+    <section class="product-grid" id="grid">
 
       <div class="product" data-cats="regeneration">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
         <span class="price">25,99 €</span>
-        <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener"
-           onclick="track('product_click','Massagepistole')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener" onclick="track('product_click','Massagepistole')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="regeneration">
         <h3>Moorkissen</h3>
         <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
         <span class="price">29,89 €</span>
-        <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener"
-           onclick="track('product_click','Moorkissen')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener" onclick="track('product_click','Moorkissen')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="regeneration reha">
         <h3>Knie-Kühlpack</h3>
         <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
         <span class="price">17,89 €</span>
-        <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener"
-           onclick="track('product_click','Knie-Kühlpack')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener" onclick="track('product_click','Knie-Kühlpack')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport regeneration reha">
         <h3>Retterspitz</h3>
         <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
         <span class="price">26,14 €</span>
-        <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener"
-           onclick="track('product_click','Retterspitz')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener" onclick="track('product_click','Retterspitz')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport">
         <h3>MacDavid Bandage</h3>
         <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
         <span class="price">44,95 €</span>
-        <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener"
-           onclick="track('product_click','MacDavid Bandage')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener" onclick="track('product_click','MacDavid Bandage')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport">
         <h3>Leukotape</h3>
         <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
         <span class="price">9,99 €</span>
-        <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener"
-           onclick="track('product_click','Leukotape')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener" onclick="track('product_click','Leukotape')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport regeneration reha">
         <h3>Laufband</h3>
         <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
         <span class="price">94,99 €</span>
-        <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener"
-           onclick="track('product_click','Laufband')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener" onclick="track('product_click','Laufband')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport regeneration reha">
         <h3>Thrombosestrumpf</h3>
         <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
         <span class="price">26,90 €</span>
-        <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener"
-           onclick="track('product_click','Thrombosestrumpf')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener" onclick="track('product_click','Thrombosestrumpf')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="reha">
         <h3>Wärmemessgerät</h3>
         <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
         <span class="price">16,14 €</span>
-        <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener"
-           onclick="track('product_click','Wärmemessgerät')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener" onclick="track('product_click','Wärmemessgerät')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="reha">
         <h3>Aloe-Vera-Gel</h3>
         <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
         <span class="price">6,30 €</span>
-        <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener"
-           onclick="track('product_click','Aloe-Vera-Gel')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener" onclick="track('product_click','Aloe-Vera-Gel')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="reha">
         <h3>Lymphmaßband</h3>
         <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
         <span class="price">20,09 €</span>
-        <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener"
-           onclick="track('product_click','Lymphmaßband')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener" onclick="track('product_click','Lymphmaßband')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport">
         <h3>Elektrischer Shaker</h3>
         <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
         <span class="price">19,54 €</span>
-        <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener"
-           onclick="track('product_click','Elektrischer Shaker')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener" onclick="track('product_click','Elektrischer Shaker')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport">
         <h3>BAUERFEIND Fußbandage</h3>
         <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
         <span class="price">47,43 €</span>
-        <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener"
-           onclick="track('product_click','BAUERFEIND Fußbandage')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener" onclick="track('product_click','BAUERFEIND Fußbandage')">Bei Amazon ansehen</a>
       </div>
 
       <div class="product" data-cats="sport">
         <h3>BAUERFEIND Armbandage</h3>
         <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
         <span class="price">35,20 €</span>
-        <a class="btn" href="https://amzn.to/4alA3nI" target="_blank" rel="noopener"
-           onclick="track('product_click','BAUERFEIND Armbandage')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4alA3nI" target="_blank" rel="noopener" onclick="track('product_click','BAUERFEIND Armbandage')">Bei Amazon ansehen</a>
       </div>
 
     </section>
+
+    <div class="empty" id="emptyState">
+      <strong>Keine Treffer.</strong><br>
+      Tipp: Suchbegriff ändern oder Kategorie auf „Alle“ stellen.
+    </div>
 
     <footer>
       <div>
@@ -349,7 +588,7 @@
       }
     }
 
-    // Scroll animation
+    // Scroll reveal
     const items = document.querySelectorAll(".product");
     function checkVisibility(){
       const triggerTop = window.innerHeight * 0.92;
@@ -394,8 +633,9 @@
     });
     document.addEventListener("click", () => { if (!shopMenu.hasAttribute("hidden")) closeShopMenu(); });
 
-    // Suche + Kategorie-Filter
+    // Suche + Kategorie-Filter + Empty State
     const searchInput = document.getElementById("searchInput");
+    const emptyState = document.getElementById("emptyState");
     let searchQuery = "";
 
     function matchesSearch(el){
@@ -405,12 +645,17 @@
     }
 
     function applyVisibility(){
+      let visibleCount = 0;
       items.forEach(el => {
         const cats = (el.getAttribute("data-cats") || "").trim();
         const catOk = (activeCat === "all") ? true : cats.split(/\s+/).includes(activeCat);
         const searchOk = matchesSearch(el);
-        el.style.display = (catOk && searchOk) ? "" : "none";
+        const show = (catOk && searchOk);
+        el.style.display = show ? "" : "none";
+        if (show) visibleCount++;
       });
+
+      emptyState.style.display = (visibleCount === 0) ? "block" : "none";
       checkVisibility();
     }
 

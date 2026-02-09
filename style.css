@@ -28,10 +28,10 @@
 
 html,body{
   margin:0; padding:0;
-  background:var(--bg);
+  background:var(--bg) !important;
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  overflow-x:hidden;
+  overflow:hidden;
   font-size:14px;
   min-height:100dvh;
   min-height:100svh;
@@ -43,7 +43,7 @@ body{
   position:relative;
   min-height:100dvh;
   min-height:100svh;
-  background:var(--bg);
+  background:var(--bg) !important;
 }
 body::before{
   content:"";
@@ -54,11 +54,15 @@ body::before{
   pointer-events:none;
 }
 .page{
-  min-height:100vh;
-  min-height:100dvh;
+  height:100svh;
   width:100%;
   background:var(--bg);
+  overflow-y:auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  scrollbar-width: none;
 }
+.page::-webkit-scrollbar{ width:0; height:0; }
 .overlay{
   background: color-mix(in srgb, var(--bg) 85%, transparent);
 }
@@ -223,6 +227,7 @@ p{
     calc(12px + var(--sal));
   z-index:9999;
   pointer-events:none;
+  background:transparent;
 }
 .bottom-nav .bar{
   pointer-events:auto;

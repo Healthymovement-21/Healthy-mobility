@@ -9,7 +9,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209y">
+  <link rel="stylesheet" href="style.css?v=20260209ac">
 </head>
 
 <body>
@@ -502,9 +502,11 @@
     }
     window.shareProduct = shareProduct;
 
-    // Scroll reveal
+    // Scroll reveal (use page container for mobile scrolling)
+    const scrollHost = document.querySelector(".page") || window;
     function checkVisibility(){
-      const trigger = window.innerHeight * 0.92;
+      const viewportH = (scrollHost === window) ? window.innerHeight : scrollHost.clientHeight;
+      const trigger = viewportH * 0.92;
       items.forEach(el=>{
         if (el.style.display === "none") { el.classList.remove("active"); return; }
         const top = el.getBoundingClientRect().top;
@@ -518,7 +520,8 @@
       document.body.classList.add("scroll-anim");
       checkVisibility();
     });
-    window.addEventListener("scroll", checkVisibility, { passive:true });
+    if (scrollHost === window) window.addEventListener("scroll", checkVisibility, { passive:true });
+    else scrollHost.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
     applySearch();

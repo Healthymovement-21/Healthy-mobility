@@ -37,10 +37,11 @@
       overflow-x:hidden;
     }
 
+    /* MEHR RAND */
     .wrap{
       max-width:980px;
       margin:0 auto;
-      padding:22px 16px; /* mehr Rand links/rechts */
+      padding:28px 20px; /* größer als vorher */
     }
 
     .topbar{
@@ -77,6 +78,9 @@
       right:0;
       top:50%;
       transform:translateY(-50%);
+      display:flex;
+      gap:10px;
+      align-items:center;
     }
 
     .switch button{
@@ -96,11 +100,66 @@
       line-height:1.6;
     }
 
+    /* KATEGORIEN-RASTER */
+    .cat-grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+      margin: 10px 0 14px;
+    }
+
+    @media (max-width:760px){
+      .cat-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+
+    .cat-btn{
+      position:relative;
+      border:0;
+      cursor:pointer;
+      padding:14px 12px;
+      border-radius:16px;
+      background:var(--card);
+      color:var(--text);
+      font-weight:900;
+      text-align:center;
+      overflow:hidden;
+    }
+
+    .cat-btn::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:16px;
+      background:var(--ig);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.55;
+    }
+
+    .cat-btn.active{
+      box-shadow:
+        0 0 18px rgba(214,41,118,0.25),
+        0 0 34px rgba(252,175,69,0.12);
+    }
+
+    .cat-sub{
+      display:block;
+      margin-top:6px;
+      font-weight:800;
+      font-size:0.85rem;
+      color:var(--muted);
+    }
+
     /* 2 Spalten */
     .product-grid{
       display:grid;
       grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:18px;
+      gap:14px;            /* kleiner */
       padding-top:6px;
     }
 
@@ -108,25 +167,25 @@
       .product-grid{ grid-template-columns:1fr; }
     }
 
-    /* Cards: SOFORT sichtbar (keine Verzögerung) */
+    /* KÄSTCHEN KLEINER */
     .product{
       position:relative;
       background:var(--card);
-      border-radius:18px;
-      padding:20px;
+      border-radius:16px;
+      padding:16px;        /* kleiner als vorher */
       overflow:hidden;
+
       opacity: 1;
       transform: translateY(0);
       transition: opacity .28s ease, transform .28s ease, box-shadow .35s ease;
     }
 
-    /* Instagram-Gradient-Frame */
     .product::before{
       content:"";
       position:absolute;
       inset:0;
       padding:1.5px;
-      border-radius:18px;
+      border-radius:16px;
       background:var(--ig);
       -webkit-mask:
         linear-gradient(#000 0 0) content-box,
@@ -137,51 +196,52 @@
       opacity:.95;
     }
 
-    /* Animation wird erst nach JS aktiv (damit nichts “leer” erscheint) */
     body.scroll-anim .product{
       opacity:0;
-      transform:translateY(16px);
+      transform:translateY(14px);
       box-shadow:none;
     }
     body.scroll-anim .product.active{
       opacity:1;
       transform:translateY(0);
       box-shadow:
-        0 0 22px rgba(214,41,118,0.35),
-        0 0 44px rgba(252,175,69,0.18);
+        0 0 18px rgba(214,41,118,0.30),
+        0 0 34px rgba(252,175,69,0.12);
     }
 
     .product h3{
-      margin:0 0 10px;
-      font-size:1.06rem;
+      margin:0 0 8px;
+      font-size:1.02rem; /* minimal kleiner */
       letter-spacing:-0.01em;
     }
 
     .product p{
-      margin:0 0 12px;
+      margin:0 0 10px;
       color:var(--muted);
-      line-height:1.6;
+      line-height:1.55;
+      font-size:0.96rem; /* minimal kleiner */
     }
 
     .price{
       display:block;
-      margin:10px 0 12px;
+      margin:8px 0 10px;
       font-weight:900;
       color:var(--text);
     }
 
     .btn{
       display:inline-block;
-      padding:10px 14px;
+      padding:9px 12px;
       border-radius:999px;
       text-decoration:none;
       font-weight:900;
       color:#fff;
       background:var(--ig);
-      box-shadow:0 0 18px rgba(214,41,118,0.25);
+      box-shadow:0 0 18px rgba(214,41,118,0.22);
+      font-size:0.95rem;
     }
 
-    /* ========= NUR HINZUGEFÜGT: FILTER (CSS ADD-ON) ========= */
+    /* ========= FILTER (wie vorher), aber BUTTON = NUR PFEIL ========= */
     .filterbar{
       display:flex;
       justify-content:flex-end;
@@ -190,7 +250,8 @@
     }
 
     .filter-pill{
-      padding:10px 14px;
+      width:44px;
+      height:44px;
       border-radius:999px;
       border:0;
       cursor:pointer;
@@ -198,12 +259,17 @@
       color:#fff;
       background:var(--ig);
       box-shadow:0 0 18px rgba(214,41,118,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      line-height:1;
     }
 
     .filter-panel{
       position:absolute;
       right:0;
-      top:48px;
+      top:52px;
       width:min(360px, 92vw);
       background:var(--card);
       border-radius:16px;
@@ -295,7 +361,6 @@
       font-weight:800;
       margin-left:auto;
     }
-    /* ========= /FILTER (CSS ADD-ON) ========= */
   </style>
 </head>
 
@@ -314,9 +379,25 @@
 
     <p class="topnote">Hinweis: Die Links sind Affiliate-Links. Für dich entstehen keine Mehrkosten.</p>
 
-    <!-- ========= NUR HINZUGEFÜGT: FILTER (HTML ADD-ON) ========= -->
+    <!-- KATEGORIEN -->
+    <div class="cat-grid">
+      <button class="cat-btn active" type="button" data-cat="all">
+        Alle <span class="cat-sub">alles anzeigen</span>
+      </button>
+      <button class="cat-btn" type="button" data-cat="sport">
+        Sport <span class="cat-sub">Bandagen + Tape</span>
+      </button>
+      <button class="cat-btn" type="button" data-cat="regeneration">
+        Regeneration <span class="cat-sub">Wärme + Recovery</span>
+      </button>
+      <button class="cat-btn" type="button" data-cat="reha">
+        Reha <span class="cat-sub">Messung + Verlauf</span>
+      </button>
+    </div>
+
+    <!-- FILTER BUTTON (PFEIL) -->
     <div class="filterbar">
-      <button id="filterToggle" class="filter-pill" type="button" aria-expanded="false">Filter ▾</button>
+      <button id="filterToggle" class="filter-pill" type="button" aria-expanded="false" aria-label="Filter öffnen">▾</button>
 
       <div id="filterPanel" class="filter-panel" hidden>
         <div class="filter-row">
@@ -351,102 +432,115 @@
         </div>
       </div>
     </div>
-    <!-- ========= /FILTER (HTML ADD-ON) ========= -->
 
     <section class="product-grid">
 
-      <div class="product">
+      <!-- Massagepistole (Regeneration) -->
+      <div class="product" data-cats="regeneration">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
         <span class="price">25,99 €</span>
         <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Moorkissen (Regeneration) -->
+      <div class="product" data-cats="regeneration">
         <h3>Moorkissen</h3>
         <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
         <span class="price">29,89 €</span>
         <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Knie-Kühlpack (Regeneration + Reha) -->
+      <div class="product" data-cats="regeneration reha">
         <h3>Knie-Kühlpack</h3>
         <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
         <span class="price">17,89 €</span>
         <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Retterspitz (nur Alle) -->
+      <div class="product" data-cats="">
         <h3>Retterspitz</h3>
         <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
         <span class="price">26,14 €</span>
         <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- MacDavid Bandage (Sport) -->
+      <div class="product" data-cats="sport">
         <h3>MacDavid Bandage</h3>
         <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
         <span class="price">44,95 €</span>
         <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Leukotape (Sport) -->
+      <div class="product" data-cats="sport">
         <h3>Leukotape</h3>
         <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
         <span class="price">9,99 €</span>
         <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Laufband (nur Alle) -->
+      <div class="product" data-cats="">
         <h3>Laufband</h3>
         <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
         <span class="price">94,99 €</span>
         <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Thrombosestrumpf (nur Alle) -->
+      <div class="product" data-cats="">
         <h3>Thrombosestrumpf</h3>
-        <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Mobilität.</p>
+        <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
         <span class="price">26,90 €</span>
         <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Wärmemessgerät (Reha) -->
+      <div class="product" data-cats="reha">
         <h3>Wärmemessgerät</h3>
         <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
         <span class="price">16,14 €</span>
         <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Aloe-Vera-Gel (Reha) -->
+      <div class="product" data-cats="reha">
         <h3>Aloe-Vera-Gel</h3>
         <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
         <span class="price">6,30 €</span>
         <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Lymphmaßband (Reha) -->
+      <div class="product" data-cats="reha">
         <h3>Lymphmaßband</h3>
         <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
         <span class="price">20,09 €</span>
         <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- Elektrischer Shaker (Sport) -->
+      <div class="product" data-cats="sport">
         <h3>Elektrischer Shaker</h3>
         <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
         <span class="price">19,54 €</span>
         <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- BAUERFEIND Fußbandage (Sport) -->
+      <div class="product" data-cats="sport">
         <h3>BAUERFEIND Fußbandage</h3>
         <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
         <span class="price">47,43 €</span>
         <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product">
+      <!-- BAUERFEIND Armbandage (Sport) -->
+      <div class="product" data-cats="sport">
         <h3>BAUERFEIND Armbandage</h3>
         <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
         <span class="price">35,20 €</span>
@@ -476,12 +570,15 @@
       localStorage.setItem("theme", next);
     });
 
-    // Scroll Animation: sofort aktiv, aber ohne "leeren" Start
+    // Scroll Animation: ein/aus
     const items = document.querySelectorAll(".product");
-
     function checkVisibility(){
       const triggerTop = window.innerHeight * 0.92;
       items.forEach(el => {
+        if (el.style.display === "none") {
+          el.classList.remove("active");
+          return;
+        }
         const top = el.getBoundingClientRect().top;
         const bottom = el.getBoundingClientRect().bottom;
         const inView = (top < triggerTop) && (bottom > 0);
@@ -489,141 +586,157 @@
         else el.classList.remove("active");
       });
     }
-
-    // Sofort initial anzeigen (keine Verzögerung)
     checkVisibility();
-
-    // Dann Animation einschalten + erneut checken
     requestAnimationFrame(() => {
       document.body.classList.add("scroll-anim");
       checkVisibility();
     });
-
     window.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
-    /* ========= NUR HINZUGEFÜGT: FILTER (JS ADD-ON) ========= */
-    (function(){
-      const grid = document.querySelector(".product-grid");
-      const panel = document.getElementById("filterPanel");
-      const toggle = document.getElementById("filterToggle");
-      const sortSelect = document.getElementById("sortSelect");
-      const minPrice = document.getElementById("minPrice");
-      const maxPrice = document.getElementById("maxPrice");
-      const applyBtn = document.getElementById("applyFilters");
-      const resetBtn = document.getElementById("resetFilters");
-      const info = document.getElementById("filterInfo");
+    /* FILTER PANEL */
+    const panel = document.getElementById("filterPanel");
+    const toggle = document.getElementById("filterToggle");
 
-      if(!grid || !panel || !toggle || !sortSelect || !minPrice || !maxPrice || !applyBtn || !resetBtn) return;
-
-      // Original-Reihenfolge merken
-      const original = Array.from(grid.querySelectorAll(".product")).map((el, idx) => ({ el, idx }));
-
-      function parsePrice(el){
-        const priceEl = el.querySelector(".price");
-        if(!priceEl) return NaN;
-        const raw = priceEl.textContent.replace(/\s/g,"").replace("€","").replace(",",".");
-        const val = parseFloat(raw);
-        return Number.isFinite(val) ? val : NaN;
+    toggle.addEventListener("click", () => {
+      const isHidden = panel.hasAttribute("hidden");
+      if (isHidden){
+        panel.removeAttribute("hidden");
+        toggle.setAttribute("aria-expanded","true");
+        toggle.textContent = "▴";
+      } else {
+        panel.setAttribute("hidden","");
+        toggle.setAttribute("aria-expanded","false");
+        toggle.textContent = "▾";
       }
+    });
 
-      function getTitle(el){
-        const h = el.querySelector("h3");
-        return (h ? h.textContent : "").trim().toLowerCase();
+    document.addEventListener("click", (e) => {
+      if (panel.hasAttribute("hidden")) return;
+      const within = panel.contains(e.target) || toggle.contains(e.target);
+      if (!within){
+        panel.setAttribute("hidden","");
+        toggle.setAttribute("aria-expanded","false");
+        toggle.textContent = "▾";
       }
+    });
 
-      function setVisible(el, yes){
-        el.style.display = yes ? "" : "none";
-      }
+    /* KATEGORIEN */
+    const catButtons = document.querySelectorAll(".cat-btn");
+    let activeCat = "all";
 
-      function updateInfo(){
-        const visibleCount = original.filter(({el}) => el.style.display !== "none").length;
-        info.textContent = `${visibleCount} / ${original.length}`;
-      }
+    function applyCategory(cat){
+      activeCat = cat;
 
-      function applyFilter(){
-        const min = minPrice.value ? parseFloat(minPrice.value) : -Infinity;
-        const max = maxPrice.value ? parseFloat(maxPrice.value) : Infinity;
+      catButtons.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
 
-        original.forEach(({el}) => {
-          const p = parsePrice(el);
-          const ok = Number.isFinite(p) ? (p >= min && p <= max) : true;
-          setVisible(el, ok);
-        });
-
-        updateInfo();
-      }
-
-      function applySort(){
-        const mode = sortSelect.value;
-
-        const visible = original.filter(({el}) => el.style.display !== "none");
-        const hidden  = original.filter(({el}) => el.style.display === "none");
-
-        let sorted = visible.slice();
-
-        if(mode === "default"){
-          sorted.sort((a,b) => a.idx - b.idx);
-        } else if(mode === "price-asc"){
-          sorted.sort((a,b) => parsePrice(a.el) - parsePrice(b.el));
-        } else if(mode === "price-desc"){
-          sorted.sort((a,b) => parsePrice(b.el) - parsePrice(a.el));
-        } else if(mode === "az"){
-          sorted.sort((a,b) => getTitle(a.el).localeCompare(getTitle(b.el), "de"));
-        } else if(mode === "za"){
-          sorted.sort((a,b) => getTitle(b.el).localeCompare(getTitle(a.el), "de"));
-        }
-
-        [...sorted, ...hidden].forEach(({el}) => grid.appendChild(el));
-
-        // Animation nach Sortierung sauber neu bewerten
-        checkVisibility();
-      }
-
-      function applyAll(){
-        applyFilter();
-        applySort();
-        checkVisibility();
-      }
-
-      // Panel auf/zu
-      toggle.addEventListener("click", () => {
-        const isHidden = panel.hasAttribute("hidden");
-        if(isHidden){
-          panel.removeAttribute("hidden");
-          toggle.setAttribute("aria-expanded", "true");
+      items.forEach(el => {
+        const cats = (el.getAttribute("data-cats") || "").trim();
+        if (cat === "all") {
+          el.style.display = "";
         } else {
-          panel.setAttribute("hidden", "");
-          toggle.setAttribute("aria-expanded", "false");
+          const ok = cats.split(/\s+/).includes(cat);
+          el.style.display = ok ? "" : "none";
         }
       });
 
-      // Klick außerhalb -> Panel schließen
-      document.addEventListener("click", (e) => {
-        if(panel.hasAttribute("hidden")) return;
-        const within = panel.contains(e.target) || toggle.contains(e.target);
-        if(!within){
-          panel.setAttribute("hidden", "");
-          toggle.setAttribute("aria-expanded", "false");
-        }
+      // Nach Kategorie-Filter Animation neu bewerten
+      checkVisibility();
+    }
+
+    catButtons.forEach(btn => {
+      btn.addEventListener("click", () => applyCategory(btn.dataset.cat));
+    });
+
+    /* SORT + PREISRANGE */
+    const grid = document.querySelector(".product-grid");
+    const sortSelect = document.getElementById("sortSelect");
+    const minPrice = document.getElementById("minPrice");
+    const maxPrice = document.getElementById("maxPrice");
+    const applyBtn = document.getElementById("applyFilters");
+    const resetBtn = document.getElementById("resetFilters");
+    const info = document.getElementById("filterInfo");
+
+    const original = Array.from(grid.querySelectorAll(".product")).map((el, idx) => ({ el, idx }));
+
+    function parsePrice(el){
+      const priceEl = el.querySelector(".price");
+      const raw = priceEl.textContent.replace(/\s/g,"").replace("€","").replace(",",".");
+      const val = parseFloat(raw);
+      return Number.isFinite(val) ? val : NaN;
+    }
+
+    function getTitle(el){
+      return (el.querySelector("h3")?.textContent || "").trim().toLowerCase();
+    }
+
+    function updateInfo(){
+      const visibleCount = original.filter(({el}) => el.style.display !== "none").length;
+      info.textContent = `${visibleCount} / ${original.length}`;
+    }
+
+    function applyPriceRangeOnly(){
+      const min = minPrice.value ? parseFloat(minPrice.value) : -Infinity;
+      const max = maxPrice.value ? parseFloat(maxPrice.value) : Infinity;
+
+      original.forEach(({el}) => {
+        // Kategorie bleibt aktiv
+        const cats = (el.getAttribute("data-cats") || "").trim();
+        const catOk = (activeCat === "all") ? true : cats.split(/\s+/).includes(activeCat);
+
+        const p = parsePrice(el);
+        const priceOk = Number.isFinite(p) ? (p >= min && p <= max) : true;
+
+        el.style.display = (catOk && priceOk) ? "" : "none";
       });
+    }
 
-      applyBtn.addEventListener("click", applyAll);
-      sortSelect.addEventListener("change", applySort);
+    function applySort(){
+      const mode = sortSelect.value;
 
-      resetBtn.addEventListener("click", () => {
-        minPrice.value = "";
-        maxPrice.value = "";
-        sortSelect.value = "default";
-        original.forEach(({el}) => setVisible(el, true));
-        original.sort((a,b) => a.idx - b.idx).forEach(({el}) => grid.appendChild(el));
-        updateInfo();
-        checkVisibility();
-      });
+      const visible = original.filter(({el}) => el.style.display !== "none");
+      const hidden  = original.filter(({el}) => el.style.display === "none");
 
+      let sorted = visible.slice();
+
+      if(mode === "default"){
+        sorted.sort((a,b) => a.idx - b.idx);
+      } else if(mode === "price-asc"){
+        sorted.sort((a,b) => parsePrice(a.el) - parsePrice(b.el));
+      } else if(mode === "price-desc"){
+        sorted.sort((a,b) => parsePrice(b.el) - parsePrice(a.el));
+      } else if(mode === "az"){
+        sorted.sort((a,b) => getTitle(a.el).localeCompare(getTitle(b.el), "de"));
+      } else if(mode === "za"){
+        sorted.sort((a,b) => getTitle(b.el).localeCompare(getTitle(a.el), "de"));
+      }
+
+      [...sorted, ...hidden].forEach(({el}) => grid.appendChild(el));
+    }
+
+    applyBtn.addEventListener("click", () => {
+      applyPriceRangeOnly();
+      applySort();
       updateInfo();
-    })();
-    /* ========= /FILTER (JS ADD-ON) ========= */
+      checkVisibility();
+    });
+
+    sortSelect.addEventListener("change", () => {
+      applySort();
+      checkVisibility();
+    });
+
+    resetBtn.addEventListener("click", () => {
+      minPrice.value = "";
+      maxPrice.value = "";
+      sortSelect.value = "default";
+      applyCategory("all");
+      original.sort((a,b) => a.idx - b.idx).forEach(({el}) => grid.appendChild(el));
+      updateInfo();
+      checkVisibility();
+    });
+
+    updateInfo();
   </script>
 </body>
 </html>

@@ -2,175 +2,157 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Shop – Produktempfehlungen</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop – Produktempfehlungen</title>
 
 <style>
-body {
-  margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+* { box-sizing: border-box; }
+
+body{
+margin:0;
+background:#000;
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 20px;
+/* INSTAGRAM GRADIENT */
+:root{
+--ig:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 }
 
-nav a {
-  color: #bbb;
-  text-decoration: none;
-  font-weight: 600;
+/* RAND LINKS/RECHTS */
+.wrap{
+max-width:900px;
+margin:auto;
+padding:20px;
 }
 
-nav a.active {
-  color: #fff;
+/* NAV */
+nav{
+display:flex;
+justify-content:center;
+gap:30px;
+padding:20px 0;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
+nav a{
+color:#bbb;
+text-decoration:none;
+font-weight:600;
 }
 
-.product {
-  background: #111;
-  padding: 20px;
-  border-radius: 16px;
+nav a.active{
+color:#fff;
+border-bottom:2px solid;
+border-image:var(--ig) 1;
 }
 
-.product p {
-  color: #ddd;
+/* GRID */
+.product-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
 }
 
-.product span {
-  display: block;
-  margin: 10px 0;
-  font-weight: bold;
+/* INSTAGRAM CARD */
+.product{
+background:#111;
+padding:20px;
+border-radius:18px;
+position:relative;
+overflow:hidden;
+
+opacity:0;
+transform:translateY(20px);
+transition:all .5s ease;
 }
 
-.product a {
-  display: inline-block;
-  padding: 8px 14px;
-  background: #444;
-  border-radius: 18px;
-  color: #fff;
-  text-decoration: none;
+/* Glow-Rahmen */
+.product::before{
+content:"";
+position:absolute;
+inset:0;
+padding:2px;
+border-radius:18px;
+background:var(--ig);
+-webkit-mask:
+linear-gradient(#000 0 0) content-box,
+linear-gradient(#000 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
 }
 
-@media (max-width: 700px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-  }
+/* Scroll sichtbar */
+.product.active{
+opacity:1;
+transform:translateY(0);
+box-shadow:0 0 25px rgba(214,41,118,.4);
+}
+
+.product p{color:#ddd;}
+
+.product span{
+display:block;
+margin:10px 0;
+font-weight:bold;
+}
+
+/* Instagram Button */
+.product a{
+display:inline-block;
+padding:8px 14px;
+border-radius:20px;
+background:var(--ig);
+color:#fff;
+text-decoration:none;
+font-weight:700;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+.product-grid{grid-template-columns:1fr;}
 }
 </style>
-
 </head>
 
 <body>
 
+<div class="wrap">
+
 <nav>
-  <a href="index.html">Home</a>
-  <a href="shop.html" class="active">Shop</a>
+<a href="index.html">Home</a>
+<a href="shop.html" class="active">Shop</a>
 </nav>
 
 <section class="product-grid">
 
-<div class="product">
-<h3>Massagepistole</h3>
-<p>Zur Lockerung verspannter Muskulatur nach Belastung oder im Alltag.</p>
-<span>25,99 €</span>
-<a href="https://amzn.to/45QvJM2" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Moorkissen</h3>
-<p>Lokale Wärmeanwendung für Rücken, Nacken oder Schulter.</p>
-<span>29,89 €</span>
-<a href="https://amzn.to/4cgzQ7V" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Knie-Kühlpack</h3>
-<p>Kühlung bei Reizzuständen oder nach Belastung.</p>
-<span>17,89 €</span>
-<a href="https://amzn.to/4qjoAuL" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Retterspitz</h3>
-<p>Unterstützende äußerliche Anwendung.</p>
-<span>26,14 €</span>
-<a href="https://amzn.to/3ZnEwRS" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>MacDavid Bandage</h3>
-<span>44,95 €</span>
-<a href="https://amzn.to/4tvfiin" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Leukotape</h3>
-<span>9,99 €</span>
-<a href="https://amzn.to/4kplTGW" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Laufband</h3>
-<span>94,99 €</span>
-<a href="https://amzn.to/3O9os3F" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Thrombosestrumpf</h3>
-<span>26,90 €</span>
-<a href="https://amzn.to/4r3NY91" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Wärmemessgerät</h3>
-<span>16,14 €</span>
-<a href="https://amzn.to/4a6vNtq" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Aloe Vera Gel</h3>
-<span>6,30 €</span>
-<a href="https://amzn.to/4rftMB6" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Lymphmaßband</h3>
-<span>20,09 €</span>
-<a href="https://amzn.to/3MvIhSn" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Elektrischer Shaker</h3>
-<span>19,54 €</span>
-<a href="https://amzn.to/3MhQ1HB" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Bauerfeind Fußbandage</h3>
-<span>47,43 €</span>
-<a href="https://amzn.to/3MchKJM" target="_blank">Bei Amazon ansehen</a>
-</div>
-
-<div class="product">
-<h3>Bauerfeind Armbandage</h3>
-<span>35,20 €</span>
-<a href="https://amzn.to/4alA3nI" target="_blank">Bei Amazon ansehen</a>
-</div>
+<div class="product"><h3>Massagepistole</h3><span>25,99 €</span><a href="https://amzn.to/45QvJM2" target="_blank">Bei Amazon ansehen</a></div>
+<div class="product"><h3>Moorkissen</h3><span>29,89 €</span><a href="https://amzn.to/4cgzQ7V" target="_blank">Bei Amazon ansehen</a></div>
+<div class="product"><h3>Knie-Kühlpack</h3><span>17,89 €</span><a href="https://amzn.to/4qjoAuL" target="_blank">Bei Amazon ansehen</a></div>
+<div class="product"><h3>Retterspitz</h3><span>26,14 €</span><a href="https://amzn.to/3ZnEwRS" target="_blank">Bei Amazon ansehen</a></div>
+<div class="product"><h3>MacDavid Bandage</h3><span>44,95 €</span><a href="https://amzn.to/4tvfiin" target="_blank">Bei Amazon ansehen</a></div>
+<div class="product"><h3>Leukotape</h3><span>9,99 €</span><a href="https://amzn.to/4kplTGW" target="_blank">Bei Amazon ansehen</a></div>
+<div class="product"><h3>Laufband</h3><span>94,99 €</span><a href="https://amzn.to/3O9os3F" target="_blank">Bei Amazon ansehen</a></div>
+<div class="product"><h3>Thrombosestrumpf</h3><span>26,90 €</span><a href="https://amzn.to/4r3NY91" target="_blank">Bei Amazon ansehen</a></div>
 
 </section>
+
+</div>
+
+<script>
+const items=document.querySelectorAll('.product');
+
+window.addEventListener('scroll',()=>{
+items.forEach(el=>{
+const top=el.getBoundingClientRect().top;
+if(top<window.innerHeight*0.85){
+el.classList.add('active');
+}else{
+el.classList.remove('active');
+}
+});
+});
+</script>
 
 </body>
 </html>

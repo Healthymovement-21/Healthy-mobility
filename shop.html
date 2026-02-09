@@ -18,6 +18,107 @@
       --card:#0f0f10;
       --nav:#bbb;
       --line: rgba(255,255,255,0.10);
+      <script>
+/* FILTER / SORT (ADD-ON) */
+(function(){
+  const grid = document.querySelector(".product-grid");
+  if(!grid) return;
+
+  const sortMode = document.getElementById("sortMode");
+  const minPrice = document.getElementById("minPrice");
+  const maxPrice = document.getElementById("maxPrice");
+  const applyRange = document.getElementById("applyRange");
+  const resetBtn = document.getElementById("resetFilters");
+  const info = document.getElementById("resultInfo");
+
+  // Original-Reihenfolge merken
+  const original = Array.from(grid.querySelectorAll(".product")).map((el, idx) => ({ el, idx }));
+
+  function parsePrice(el){
+    const priceEl = el.querySelector(".price") || el.querySelector("span");
+    if(!priceEl) return NaN;
+    // "25,99 €" -> 25.99
+    const raw = priceEl.textContent.replace(/\s/g,"").replace("€","").replace(",",".");
+    const val = parseFloat(raw);
+    return Number.isFinite(val) ? val : NaN;
+  }
+
+  function getTitle(el){
+    const h = el.querySelector("h3");
+    return (h ? h.textContent : "").trim().toLowerCase();
+  }
+
+  function setVisible(el, yes){
+    el.style.display = yes ? "" : "none";
+  }
+
+  function applyFilter(){
+    const min = minPrice.value ? parseFloat(minPrice.value) : -Infinity;
+    const max = maxPrice.value ? parseFloat(maxPrice.value) : Infinity;
+
+    let shown = 0;
+    original.forEach(({el}) => {
+      const p = parsePrice(el);
+      const ok = (Number.isFinite(p) ? (p >= min && p <= max) : true);
+      setVisible(el, ok);
+      if(ok) shown++;
+    });
+
+    info.textContent = `Angezeigt: ${shown} von ${original.length} Produkten`;
+  }
+
+  function applySort(){
+    const mode = sortMode.value;
+
+    // Nur sichtbare sortieren, versteckte bleiben hinten (oder bleiben wo sie sind)
+    const visible = original.filter(({el}) => el.style.display !== "none");
+    const hidden  = original.filter(({el}) => el.style.display === "none");
+
+    let sorted = visible.slice();
+
+    if(mode === "default"){
+      sorted.sort((a,b) => a.idx - b.idx);
+    } else if(mode === "price-asc"){
+      sorted.sort((a,b) => parsePrice(a.el) - parsePrice(b.el));
+    } else if(mode === "price-desc"){
+      sorted.sort((a,b) => parsePrice(b.el) - parsePrice(a.el));
+    } else if(mode === "az"){
+      sorted.sort((a,b) => getTitle(a.el).localeCompare(getTitle(b.el), "de"));
+    } else if(mode === "za"){
+      sorted.sort((a,b) => getTitle(b.el).localeCompare(getTitle(a.el), "de"));
+    }
+
+    // DOM neu anordnen (sichtbare zuerst, dann versteckte)
+    [...sorted, ...hidden].forEach(({el}) => grid.appendChild(el));
+
+    // Damit deine bestehende Scroll-Animation sofort wieder korrekt setzt:
+    window.dispatchEvent(new Event("scroll"));
+  }
+
+  function applyAll(){
+    applyFilter();
+    applySort();
+  }
+
+  applyRange.addEventListener("click", applyAll);
+  sortMode.addEventListener("change", applySort);
+
+  resetBtn.addEventListener("click", () => {
+    minPrice.value = "";
+    maxPrice.value = "";
+    sortMode.value = "default";
+    // alles sichtbar
+    original.forEach(({el}) => setVisible(el, true));
+    // Original-Reihenfolge wiederherstellen
+    original.sort((a,b) => a.idx - b.idx).forEach(({el}) => grid.appendChild(el));
+    info.textContent = `Angezeigt: ${original.length} von ${original.length} Produkten`;
+    window.dispatchEvent(new Event("scroll"));
+  });
+
+  // Initialer Info-Text
+  info.textContent = `Angezeigt: ${original.length} von ${original.length} Produkten`;
+})();
+</script>
     }
 
     [data-theme="light"]{

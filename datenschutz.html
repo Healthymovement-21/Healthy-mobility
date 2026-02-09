@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datenschutz</title>
+
+  <!-- Tracking (Plausible) -->
+  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
+
+  <style>
+    *{ box-sizing:border-box; }
+    :root{
+      --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+      --bg:#060606; --text:#fff; --muted: rgba(255,255,255,0.78);
+      --card:#0f0f10; --nav: rgba(255,255,255,0.72); --line: rgba(255,255,255,0.12);
+    }
+    [data-theme="light"]{
+      --bg:#fff; --text:#0f0f10; --muted: rgba(15,15,16,0.75);
+      --card:#f4f5f7; --nav: rgba(15,15,16,0.70); --line: rgba(0,0,0,0.10);
+    }
+    html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif; font-size:14px; }
+    .wrap{ max-width:900px; margin:0 auto; padding:36px 22px 28px; }
+    nav{ display:flex; gap:18px; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom:18px; }
+    nav a{ color:var(--nav); text-decoration:none; font-weight:950; padding:6px 6px; border-radius:10px; }
+    nav a:hover{ background:rgba(255,255,255,0.04); }
+    nav a.active{ color:var(--text); border-bottom:2px solid; border-image:var(--ig) 1; padding-bottom:6px; border-radius:0; background:transparent; }
+    h1{ margin:0 0 14px; font-size:1.5rem; letter-spacing:-0.02em; }
+    h2{ margin:18px 0 8px; font-size:1.05rem; }
+    p,li{ color:var(--muted); line-height:1.65; }
+    .box{
+      background:var(--card);
+      border-radius:18px;
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+      outline:1px solid var(--line);
+    }
+    .box::before{
+      content:"";
+      position:absolute; inset:0;
+      padding:1.5px; border-radius:18px; background:var(--ig);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+      pointer-events:none; opacity:.18;
+    }
+    .switch{ display:flex; justify-content:center; margin:16px 0 0; }
+    .switch button{
+      border:0; padding:10px 12px; border-radius:999px; font-weight:950; cursor:pointer;
+      color:var(--text); background:transparent; outline:1px solid var(--line);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html" class="active">Datenschutz</a>
+    </nav>
+
+    <h1>Datenschutzerklärung</h1>
+
+    <div class="box">
+      <h2>1. Verantwortlicher</h2>
+      <p>
+        Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br>
+        [Dein Name / Praxisname]<br>
+        [Adresse]<br>
+        E-Mail: [deine-email@domain.de]
+      </p>
+
+      <h2>2. Hosting</h2>
+      <p>
+        Diese Website wird über GitHub Pages bereitgestellt. Dabei können technisch bedingt Server-Logdaten
+        (z. B. IP-Adresse, Zeitpunkt, Browser, angefragte Seite) verarbeitet werden.
+        Weitere Informationen findest du in den Datenschutzhinweisen von GitHub.
+      </p>
+
+      <h2>3. Affiliate-Links / Amazon</h2>
+      <p>
+        Auf dieser Website werden Affiliate-Links (z. B. Amazon) verwendet. Wenn du auf einen Link klickst,
+        wirst du zu Amazon weitergeleitet. Beim Kauf kann eine Provision anfallen. Dabei gelten die
+        Datenschutzbestimmungen von Amazon.
+      </p>
+
+      <h2>4. Tracking (Plausible Analytics)</h2>
+      <p>
+        Diese Website nutzt Plausible Analytics zur statistischen Auswertung. Plausible arbeitet datenschutzfreundlich
+        und ohne Cookies. Es werden keine personenbezogenen Profile erstellt. Erfasst werden z. B. Seitenaufrufe
+        sowie anonyme Ereignisse (z. B. Produktklicks).
+      </p>
+
+      <h2>5. Deine Rechte</h2>
+      <p>
+        Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie Datenübertragbarkeit
+        im Rahmen der geltenden Gesetze. Außerdem hast du das Recht auf Beschwerde bei einer Datenschutzaufsichtsbehörde.
+      </p>
+
+      <h2>6. Kontakt</h2>
+      <p>
+        Wenn du Fragen zum Datenschutz hast, kontaktiere mich unter:<br>
+        [deine-email@domain.de]
+      </p>
+
+      <p style="margin-top:14px;">
+        Stand: [Datum eintragen]
+      </p>
+    </div>
+
+    <div class="switch">
+      <button id="themeBtn" type="button">🌗</button>
+    </div>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const themeBtn = document.getElementById("themeBtn");
+    const saved = localStorage.getItem("theme");
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+    themeBtn.addEventListener("click", () => {
+      const current = root.getAttribute("data-theme") || "dark";
+      const next = current === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    });
+  </script>
+</body>
+</html>

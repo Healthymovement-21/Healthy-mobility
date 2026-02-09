@@ -1,9 +1,21 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home – Produktempfehlungen</title>
+
+  <!-- Share Preview (ersetze YOURDOMAIN.DE + Bild, wenn du eins hast) -->
+  <meta name="description" content="Produktempfehlungen aus Physiotherapie & Alltag – Bewegung, Regeneration, Reha.">
+  <meta property="og:title" content="Produktempfehlungen – Home" />
+  <meta property="og:description" content="Ausgewählte Produktempfehlungen aus Physiotherapie & Alltag.">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://YOURDOMAIN.DE/index.html" />
+  <meta property="og:image" content="https://YOURDOMAIN.DE/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Tracking (Plausible) – ersetze YOUR_PLAUSIBLE_DOMAIN -->
+  <script defer data-domain="YOUR_PLAUSIBLE_DOMAIN" src="https://plausible.io/js/script.js"></script>
 
   <style>
     *{ box-sizing:border-box; }
@@ -11,25 +23,26 @@
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 
-      /* Dark */
-      --bg: #000;
-      --text: #fff;
-      --muted: #ddd;
-      --card: #111;
-      --nav: #bbb;
+      --bg:#000;
+      --text:#fff;
+      --muted:#d7d7d7;
+      --card:#0f0f10;
+      --nav:#bbb;
       --line: rgba(255,255,255,0.10);
-      --btnHomeBg: #fff;
+
+      --btnHomeBg:#fff;
       --btnHomeText:#000;
     }
 
     [data-theme="light"]{
-      --bg: #ffffff;
-      --text: #111;
-      --muted: #333;
-      --card: #f2f3f5;
-      --nav: #444;
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#333;
+      --card:#f2f3f5;
+      --nav:#444;
       --line: rgba(0,0,0,0.10);
-      --btnHomeBg: #111;
+
+      --btnHomeBg:#111;
       --btnHomeText:#fff;
     }
 
@@ -39,13 +52,13 @@
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
       overflow-x:hidden;
-      font-size: 15px; /* kleiner/kompakter */
+      font-size: 14px;
     }
 
     .wrap{
       max-width: 980px;
       margin: 0 auto;
-      padding: 34px 22px; /* mehr Rand */
+      padding: 34px 24px;
     }
 
     .topbar{
@@ -66,15 +79,15 @@
     nav a{
       color: var(--nav);
       text-decoration:none;
-      font-weight:700;
+      font-weight:800;
       white-space:nowrap;
     }
 
     nav a.active{
       color: var(--text);
-      border-bottom: 2px solid;
+      border-bottom:2px solid;
       border-image: var(--ig) 1;
-      padding-bottom: 6px;
+      padding-bottom:6px;
     }
 
     .switch{
@@ -82,17 +95,13 @@
       right:0;
       top:50%;
       transform:translateY(-50%);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      user-select:none;
     }
 
     .switch button{
       border:0;
       padding:10px 12px;
       border-radius:999px;
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
       color: var(--text);
       background: transparent;
@@ -101,26 +110,26 @@
 
     h1{
       margin: 14px 0 16px;
-      font-size: 1.7rem; /* etwas kleiner */
-      letter-spacing: -0.02em;
+      font-size: 1.7rem;
+      letter-spacing:-0.02em;
     }
 
     p{
       color: var(--muted);
       line-height: 1.65;
       margin: 0 0 12px;
-      font-size: 0.95rem; /* kompakter */
+      font-size: 0.95rem;
     }
 
     .divider{
       height:1px;
       background: var(--line);
-      margin: 18px 0 6px;
+      margin: 18px 0 14px;
     }
 
     .home-button{
       display:inline-block;
-      margin-top:22px;
+      margin-top:18px;
       padding:14px 22px;
       border-radius:999px;
       text-decoration:none;
@@ -128,11 +137,42 @@
       background: var(--btnHomeBg);
       color: var(--btnHomeText);
     }
+
+    .sharebar{
+      display:flex;
+      gap:10px;
+      margin-top: 12px;
+    }
+    .sharebar button{
+      border:0;
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:900;
+      cursor:pointer;
+      background:var(--card);
+      color:var(--text);
+      outline:1px solid var(--line);
+    }
+
+    .footnote{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      text-align: center;
+      opacity: 0.9;
+    }
+    .footnote a{
+      color: var(--muted);
+      text-decoration: underline;
+      font-weight: 800;
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
+
     <div class="topbar">
       <nav>
         <a href="index.html" class="active">Home</a>
@@ -140,7 +180,7 @@
       </nav>
 
       <div class="switch">
-        <button id="themeBtn" type="button">🌗</button>
+        <button id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
       </div>
     </div>
 
@@ -173,24 +213,50 @@
       vor der Anwendung noch einmal Rücksprache zu halten.
     </p>
 
-    <p>
-      Die Links auf dieser Website sind Affiliate-Links.
-      Für dich entstehen keine zusätzlichen Kosten.
-    </p>
-
     <div class="divider"></div>
 
-    <a class="home-button" href="shop.html">Zum Shop</a>
+    <a class="home-button" href="shop.html" onclick="track('Nav','Shop von Home')">Zum Shop</a>
+
+    <div class="sharebar">
+      <button type="button" onclick="shareWhatsApp()">WhatsApp teilen</button>
+      <button type="button" onclick="copyLink()">Link kopieren</button>
+    </div>
+
+    <div class="footnote">
+      <div>
+        Werbung / Affiliate-Links. <br>
+        <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+
   </div>
 
   <script>
+    // Tracking helper (Plausible)
+    function track(eventName, label){
+      try{
+        if (window.plausible) window.plausible(eventName, { props: { label }});
+      }catch(e){}
+    }
+
+    function shareWhatsApp(){
+      const url = window.location.href;
+      track("Share", "WhatsApp");
+      window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, "_blank");
+    }
+
+    function copyLink(){
+      track("Share", "CopyLink");
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link kopiert");
+    }
+
+    // Theme switch + store
     const root = document.documentElement;
     const btn = document.getElementById("themeBtn");
-
     const saved = localStorage.getItem("theme");
-    if (saved) {
-      root.setAttribute("data-theme", saved);
-    } else {
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
       const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
       root.setAttribute("data-theme", prefersLight ? "light" : "dark");
     }
@@ -200,6 +266,7 @@
       const next = current === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
+      track("Theme", next);
     });
   </script>
 </body>

@@ -9,11 +9,19 @@
   <title>Healthy Mobility – Mobile</title>
   <style>
     *{ box-sizing:border-box; }
-    html,body{ margin:0; padding:0; height:100dvh; overflow:hidden; background:#12151b; overscroll-behavior: none; }
+    html,body{
+      margin:0; padding:0;
+      height:100svh;
+      min-height:100svh;
+      overflow:hidden;
+      background:#12151b;
+      overscroll-behavior: none;
+    }
     .swipe-wrap{
       display:flex;
       width:100vw;
-      height:100dvh;
+      height:100svh;
+      min-height:100svh;
       overflow-x:auto;
       overflow-y:hidden;
       scroll-snap-type:x mandatory;
@@ -23,24 +31,34 @@
     }
     .panel{
       flex:0 0 100vw;
-      height:100dvh;
+      height:100svh;
+      min-height:100svh;
       scroll-snap-align:start;
       border:0;
       background:#12151b;
       display:block;
       padding-bottom:110px;
+      position:relative;
+      z-index:1;
+    }
+    .panel iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+      background:#12151b;
     }
     .bottom-nav{
       position:fixed;
       left:0; right:0;
       bottom:0;
-      padding: 10px 12px 12px;
+      padding: 10px 12px calc(12px + env(safe-area-inset-bottom));
       z-index:99999;
     }
     .bottom-nav .bar{
       max-width:520px;
       margin:0 auto;
-      background: rgba(0,0,0,0.45);
+      background: rgba(0,0,0,0.55);
       backdrop-filter: blur(12px);
       border:1px solid rgba(255,255,255,0.18);
       border-radius:18px;

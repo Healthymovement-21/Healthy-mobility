@@ -672,4 +672,5 @@ body.scroll-anim .product.active{
 .shop-spacer{ height:120px; }
 
 
+[data-panel="1"] .bottom-nav{ display:none; }
 [data-panel="1"] .theme-top{ display:none; }

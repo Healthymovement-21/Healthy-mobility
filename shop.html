@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop – Produktempfehlungen</title>
+  <title>Healthy Mobility – Shop</title>
 
   <meta name="description" content="Shop mit Produktempfehlungen aus Sport, Regeneration und Reha – mit Affiliate-Links." />
-  <meta property="og:title" content="Shop – Produktempfehlungen" />
+  <meta property="og:title" content="Healthy Mobility – Shop" />
   <meta property="og:description" content="Produkte aus Sport, Regeneration und Reha – direkt bei Amazon ansehen." />
   <meta property="og:type" content="website" />
 
-  <!-- Tracking (Plausible) – data-domain anpassen -->
-  <script defer data-domain="DEINE-DOMAIN.DE" src="https://plausible.io/js/script.js"></script>
+  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
 
   <style>
     *{ box-sizing:border-box; }
-
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-
       --bg:#060606;
       --text:#ffffff;
       --muted: rgba(255,255,255,0.78);
@@ -26,7 +23,6 @@
       --nav: rgba(255,255,255,0.72);
       --line: rgba(255,255,255,0.12);
     }
-
     [data-theme="light"]{
       --bg:#ffffff;
       --text:#0f0f10;
@@ -46,130 +42,105 @@
       scroll-behavior:smooth;
     }
 
-    .wrap{
-      max-width:900px;
-      margin:0 auto;
-      padding:36px 24px 28px;
+    /* ===== Einheitlicher Header (passt auf iPhone, kein Scroll) ===== */
+    .header{
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
     }
-
-    /* Topbar */
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom:12px;
+    .header-inner{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
     }
-
-    .nav-left a{
-      color:var(--nav);
+    .nav{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      align-items: center;
+    }
+    .nav a{
+      display:block;
+      text-align:center;
       text-decoration:none;
-      font-weight:900;
-      white-space:nowrap;
-      padding:8px 10px;
-      border-radius:10px;
-      outline:1px solid transparent;
-    }
-    .nav-left a:hover{ outline:1px solid var(--line); }
-
-    .right-controls{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      position:relative;
-    }
-
-    /* Shop categories button (slightly dim) */
-    .shop-pill{
-      height:44px;
-      padding:0 12px;
-      border-radius:999px;
-      border:0;
-      cursor:pointer;
+      color:var(--nav);
       font-weight:950;
-      color:#fff;
-      background:var(--ig);
-      box-shadow:0 0 10px rgba(214,41,118,0.06);
-      display:flex;
-      align-items:center;
-      gap:8px;
       white-space:nowrap;
+      line-height:1.1;
+      border-radius:12px;
+      padding:8px 6px;
+      font-size: clamp(11px, 3.1vw, 14px);
     }
+    .nav a:hover{ background:rgba(255,255,255,0.04); }
+    [data-theme="light"] .nav a:hover{ background:rgba(0,0,0,0.04); }
 
-    .menu-panel{
-      position:absolute;
-      right:0;
-      top:52px;
-      width:min(220px,80vw);
-      background:var(--card);
-      border-radius:14px;
-      padding:10px;
-      overflow:hidden;
-      z-index:60;
+    .nav a.active{
+      color:var(--text);
       outline:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
     }
-    .menu-panel::before{
+    .nav a.active::before{
       content:"";
       position:absolute;
       inset:0;
       padding:1.5px;
-      border-radius:14px;
+      border-radius:12px;
       background:var(--ig);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.18;
-    }
-
-    .menu-panel button{
-      width:100%;
-      border:0;
-      background:transparent;
-      color:var(--text);
-      text-align:left;
-      padding:10px 10px;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:950;
-      position:relative;
-      z-index:1;
-    }
-    .menu-panel button:hover{ outline:1px solid var(--line); }
-    .menu-panel button.active{
-      background: rgba(255,255,255,0.03);
-      box-shadow: 0 0 8px rgba(214,41,118,0.06);
+      opacity:.22;
     }
 
     .theme-btn{
+      height:40px;
+      min-width:44px;
       border:0;
-      padding:10px 12px;
+      padding:0 12px;
       border-radius:999px;
       font-weight:950;
       cursor:pointer;
       color:var(--text);
       background:transparent;
       outline:1px solid var(--line);
-      height:44px;
       transition: transform .12s ease, filter .2s ease;
     }
-    .theme-btn:active{ transform: translateY(1px); }
     .theme-btn:hover{ filter: brightness(1.05); }
+    .theme-btn:active{ transform: translateY(1px); }
+    /* ============================================================= */
 
-    /* Search */
-    .search-row{
-      display:flex;
-      align-items:stretch;
-      margin:14px 0 10px;
+    .wrap{
+      max-width:900px;
+      margin:0 auto;
+      padding:20px 16px 34px;
     }
+
+    /* Top controls row */
+    .shopbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:10px 0 14px;
+    }
+
+    /* Search (legend style) */
     .search-group{
-      width:100%;
+      flex:1;
       border:1px solid var(--line);
       border-radius:14px;
       overflow:hidden;
-      background: transparent;
+      background:transparent;
     }
-
     fieldset.searchbox{
       border:0;
       padding:8px 10px 10px;
@@ -192,6 +163,67 @@
       font-weight:850;
       font-size:0.9rem;
       padding:6px 2px;
+    }
+
+    /* Categories dropdown button (small) */
+    .catwrap{ position:relative; }
+    .catbtn{
+      height:44px;
+      padding:0 12px;
+      border-radius:999px;
+      border:0;
+      cursor:pointer;
+      font-weight:950;
+      color:#fff;
+      background:var(--ig);
+      box-shadow:0 0 10px rgba(214,41,118,0.06);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .catpanel{
+      position:absolute;
+      right:0;
+      top:50px;
+      width:min(220px,80vw);
+      background:var(--card);
+      border-radius:14px;
+      padding:10px;
+      z-index:60;
+      outline:1px solid var(--line);
+      overflow:hidden;
+    }
+    .catpanel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:14px;
+      background:var(--ig);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.18;
+    }
+    .catpanel button{
+      width:100%;
+      border:0;
+      background:transparent;
+      color:var(--text);
+      text-align:left;
+      padding:10px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:950;
+      position:relative;
+      z-index:1;
+    }
+    .catpanel button:hover{ outline:1px solid var(--line); }
+    .catpanel button.active{
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 0 8px rgba(214,41,118,0.06);
     }
 
     /* Share */
@@ -234,12 +266,10 @@
       overflow:hidden;
       outline:1px solid var(--line);
 
-      opacity:1;
-      transform:translateY(0);
       transition: opacity .28s ease, transform .28s ease, box-shadow .35s ease, filter .2s ease;
     }
 
-    /* gradient ring */
+    /* less “krell” glow */
     .product::before{
       content:"";
       position:absolute;
@@ -251,22 +281,21 @@
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.42;  /* less flashy, more premium */
+      opacity:.35;
     }
-
-    /* subtle color wash */
     .product::after{
       content:"";
       position:absolute;
       inset:-2px;
       background:
-        radial-gradient(500px 180px at 20% 0%, rgba(214,41,118,0.14), transparent 55%),
-        radial-gradient(500px 180px at 80% 0%, rgba(79,91,213,0.12), transparent 55%);
+        radial-gradient(520px 180px at 20% 0%, rgba(214,41,118,0.10), transparent 55%),
+        radial-gradient(520px 180px at 80% 0%, rgba(79,91,213,0.09), transparent 55%);
       pointer-events:none;
       opacity:0.55;
     }
+    .product > *{ position:relative; z-index:1; }
 
-    /* scroll reveal */
+    /* Scroll reveal (appear & disappear) */
     body.scroll-anim .product{
       opacity:0;
       transform:translateY(12px);
@@ -280,7 +309,6 @@
         0 0 18px rgba(252,175,69,0.04);
     }
 
-    /* Hover on desktop */
     @media (hover:hover){
       .product:hover{
         transform: translateY(-2px);
@@ -295,35 +323,19 @@
       margin:0 0 8px;
       font-size:0.95rem;
       letter-spacing:-0.01em;
-      position:relative;
-      z-index:1;
     }
-
-    /* clamp keeps it clean (text not deleted, only shown nicely) */
     .product p{
       margin:0 0 10px;
       color:var(--muted);
       line-height:1.55;
       font-size:0.9rem;
-      position:relative;
-      z-index:1;
-
-      display:-webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow:hidden;
     }
-
     .price{
       display:block;
       margin:8px 0 12px;
       font-weight:950;
-      color:var(--text);
       font-size:0.93rem;
-      position:relative;
-      z-index:1;
     }
-
     .btn{
       display:inline-flex;
       align-items:center;
@@ -336,8 +348,6 @@
       background:var(--ig);
       box-shadow:0 0 10px rgba(214,41,118,0.08);
       font-size:0.88rem;
-      position:relative;
-      z-index:1;
       transition: transform .12s ease, filter .2s ease;
     }
     .btn:hover{ filter: brightness(1.05); }
@@ -356,55 +366,55 @@
     }
     .empty strong{ color:var(--text); }
 
-    footer{
-      margin-top:18px;
-      padding-top:12px;
+    .footer{
+      max-width:900px;
+      margin:18px auto 0;
+      padding:14px 16px 0;
       border-top:1px solid var(--line);
       color:var(--muted);
-      font-size:0.88rem;
-      line-height:1.55;
       text-align:center;
-      opacity:0.95;
+      line-height:1.6;
+      font-size:0.9rem;
     }
-    footer a{
-      color:var(--muted);
-      text-decoration:none;
-      font-weight:950;
-    }
-    footer a:hover{ text-decoration:underline; }
+    .footer a{ color:var(--muted); text-decoration:none; font-weight:900; }
+    .footer a:hover{ text-decoration:underline; }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-
-    <div class="topbar">
-      <div class="nav-left">
+  <header class="header">
+    <div class="header-inner">
+      <nav class="nav" aria-label="Navigation">
         <a href="index.html" onclick="track('nav_home','top')">Home</a>
-      </div>
-
-      <div class="right-controls">
-        <button id="shopMenuToggle" class="shop-pill" type="button" aria-expanded="false" aria-label="Kategorien öffnen">
-          Shop <span id="shopCaret">▾</span>
-        </button>
-
-        <div id="shopMenu" class="menu-panel" hidden>
-          <button type="button" class="cat-item active" data-cat="all">Alle</button>
-          <button type="button" class="cat-item" data-cat="sport">Sport</button>
-          <button type="button" class="cat-item" data-cat="regeneration">Regeneration</button>
-          <button type="button" class="cat-item" data-cat="reha">Reha</button>
-        </div>
-
-        <button id="themeBtn" class="theme-btn" type="button" aria-label="Theme wechseln">🌗</button>
-      </div>
+        <a href="shop.html" class="active">Shop</a>
+        <a href="impressum.html" onclick="track('nav_impressum','top')">Impressum</a>
+        <a href="datenschutz.html" onclick="track('nav_datenschutz','top')">Datenschutz</a>
+      </nav>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
     </div>
+  </header>
 
-    <div class="search-row">
+  <main class="wrap">
+
+    <div class="shopbar">
       <div class="search-group">
         <fieldset class="searchbox">
           <legend>Suche</legend>
           <input id="searchInput" type="search" placeholder="Produkt suchen…" autocomplete="off" />
         </fieldset>
+      </div>
+
+      <div class="catwrap">
+        <button id="catToggle" class="catbtn" type="button" aria-expanded="false" aria-label="Kategorien öffnen">
+          Shop <span id="catCaret">▾</span>
+        </button>
+
+        <div id="catPanel" class="catpanel" hidden>
+          <button type="button" class="cat-item active" data-cat="all">Alle</button>
+          <button type="button" class="cat-item" data-cat="sport">Sport</button>
+          <button type="button" class="cat-item" data-cat="regeneration">Regeneration</button>
+          <button type="button" class="cat-item" data-cat="reha">Reha</button>
+        </div>
       </div>
     </div>
 
@@ -416,102 +426,116 @@
 
     <section class="product-grid" id="grid">
 
-      <div class="product" data-cats="regeneration">
+      <div class="product" id="massagepistole" data-cats="regeneration">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
         <span class="price">25,99 €</span>
-        <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener" onclick="track('product_click','Massagepistole')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener"
+           onclick="productClick('Massagepistole')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="regeneration">
+      <div class="product" id="moorkissen" data-cats="regeneration">
         <h3>Moorkissen</h3>
         <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
         <span class="price">29,89 €</span>
-        <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener" onclick="track('product_click','Moorkissen')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener"
+           onclick="productClick('Moorkissen')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="regeneration reha">
+      <div class="product" id="knie-kuehlpack" data-cats="regeneration reha">
         <h3>Knie-Kühlpack</h3>
         <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
         <span class="price">17,89 €</span>
-        <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener" onclick="track('product_click','Knie-Kühlpack')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener"
+           onclick="productClick('Knie-Kühlpack')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport regeneration reha">
+      <div class="product" id="retterspitz" data-cats="sport regeneration reha">
         <h3>Retterspitz</h3>
         <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
         <span class="price">26,14 €</span>
-        <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener" onclick="track('product_click','Retterspitz')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener"
+           onclick="productClick('Retterspitz')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport">
+      <div class="product" id="macdavid-bandage" data-cats="sport">
         <h3>MacDavid Bandage</h3>
         <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
         <span class="price">44,95 €</span>
-        <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener" onclick="track('product_click','MacDavid Bandage')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener"
+           onclick="productClick('MacDavid Bandage')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport">
+      <div class="product" id="leukotape" data-cats="sport">
         <h3>Leukotape</h3>
         <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
         <span class="price">9,99 €</span>
-        <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener" onclick="track('product_click','Leukotape')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener"
+           onclick="productClick('Leukotape')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport regeneration reha">
+      <div class="product" id="laufband" data-cats="sport regeneration reha">
         <h3>Laufband</h3>
         <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
         <span class="price">94,99 €</span>
-        <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener" onclick="track('product_click','Laufband')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener"
+           onclick="productClick('Laufband')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport regeneration reha">
+      <div class="product" id="thrombosestrumpf" data-cats="sport regeneration reha">
         <h3>Thrombosestrumpf</h3>
         <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
         <span class="price">26,90 €</span>
-        <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener" onclick="track('product_click','Thrombosestrumpf')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener"
+           onclick="productClick('Thrombosestrumpf')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="reha">
+      <div class="product" id="waermemessgeraet" data-cats="reha">
         <h3>Wärmemessgerät</h3>
         <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
         <span class="price">16,14 €</span>
-        <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener" onclick="track('product_click','Wärmemessgerät')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener"
+           onclick="productClick('Wärmemessgerät')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="reha">
+      <div class="product" id="aloe-vera-gel" data-cats="reha">
         <h3>Aloe-Vera-Gel</h3>
         <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
         <span class="price">6,30 €</span>
-        <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener" onclick="track('product_click','Aloe-Vera-Gel')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener"
+           onclick="productClick('Aloe-Vera-Gel')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="reha">
+      <div class="product" id="lymphmassband" data-cats="reha">
         <h3>Lymphmaßband</h3>
         <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
         <span class="price">20,09 €</span>
-        <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener" onclick="track('product_click','Lymphmaßband')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener"
+           onclick="productClick('Lymphmaßband')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport">
+      <div class="product" id="elektrischer-shaker" data-cats="sport">
         <h3>Elektrischer Shaker</h3>
         <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
         <span class="price">19,54 €</span>
-        <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener" onclick="track('product_click','Elektrischer Shaker')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener"
+           onclick="productClick('Elektrischer Shaker')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport">
+      <div class="product" id="bauerfeind-fussbandage" data-cats="sport">
         <h3>BAUERFEIND Fußbandage</h3>
         <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
         <span class="price">47,43 €</span>
-        <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener" onclick="track('product_click','BAUERFEIND Fußbandage')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener"
+           onclick="productClick('BAUERFEIND Fußbandage')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" data-cats="sport">
+      <div class="product" id="bauerfeind-armbandage" data-cats="sport">
         <h3>BAUERFEIND Armbandage</h3>
         <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
         <span class="price">35,20 €</span>
-        <a class="btn" href="https://amzn.to/4alA3nI" target="_blank" rel="noopener" onclick="track('product_click','BAUERFEIND Armbandage')">Bei Amazon ansehen</a>
+        <a class="btn" href="https://amzn.to/4alA3nI" target="_blank" rel="noopener"
+           onclick="productClick('BAUERFEIND Armbandage')">Bei Amazon ansehen</a>
       </div>
 
     </section>
@@ -521,7 +545,7 @@
       Tipp: Suchbegriff ändern oder Kategorie auf „Alle“ stellen.
     </div>
 
-    <footer>
+    <div class="footer">
       <div>
         Werbung / Affiliate-Links: Diese Seite enthält Affiliate-Links. Wenn du darüber einkaufst, erhalte ich ggf. eine Provision.
         Für dich entstehen keine zusätzlichen Kosten.
@@ -536,30 +560,26 @@
         <a href="impressum.html" onclick="track('nav_impressum','footer')">Impressum</a> ·
         <a href="datenschutz.html" onclick="track('nav_datenschutz','footer')">Datenschutz</a>
       </div>
-    </footer>
+    </div>
 
-  </div>
+  </main>
 
   <script>
-    // Tracking Helper (Plausible)
     function track(eventName, label){
-      try{
-        if (window.plausible) window.plausible(eventName, { props: { label } });
-      }catch(e){}
+      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
 
-    // Theme
+    // Theme (global)
     const root = document.documentElement;
-    const themeBtn = document.getElementById("themeBtn");
     const saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
     else {
       const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
       root.setAttribute("data-theme", prefersLight ? "light" : "dark");
     }
-    themeBtn.addEventListener("click", () => {
-      const current = root.getAttribute("data-theme") || "dark";
-      const next = current === "dark" ? "light" : "dark";
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
       track("theme_toggle", next);
@@ -588,52 +608,47 @@
       }
     }
 
-    // Scroll reveal
-    const items = document.querySelectorAll(".product");
-    function checkVisibility(){
-      const triggerTop = window.innerHeight * 0.92;
-      items.forEach(el => {
-        if (el.style.display === "none") { el.classList.remove("active"); return; }
-        const top = el.getBoundingClientRect().top;
-        const bottom = el.getBoundingClientRect().bottom;
-        const inView = (top < triggerTop) && (bottom > 0);
-        if (inView) el.classList.add("active");
-        else el.classList.remove("active");
-      });
+    // Local click counts for “Beliebte Empfehlungen”
+    function bumpLocalClick(name){
+      try{
+        const raw = localStorage.getItem("hm_clicks_v1");
+        const obj = raw ? JSON.parse(raw) : {};
+        obj[name] = (obj[name] || 0) + 1;
+        localStorage.setItem("hm_clicks_v1", JSON.stringify(obj));
+      }catch(e){}
     }
-    checkVisibility();
-    requestAnimationFrame(() => {
-      document.body.classList.add("scroll-anim");
-      checkVisibility();
-    });
-    window.addEventListener("scroll", checkVisibility, { passive:true });
-    window.addEventListener("resize", checkVisibility);
 
-    // Kategorien Dropdown
-    const shopMenu = document.getElementById("shopMenu");
-    const shopToggle = document.getElementById("shopMenuToggle");
-    const shopCaret = document.getElementById("shopCaret");
+    // Product click handler (tracks + stores)
+    function productClick(name){
+      bumpLocalClick(name);
+      track("product_click", name);
+    }
+    window.productClick = productClick;
+
+    // Categories dropdown
+    const catPanel = document.getElementById("catPanel");
+    const catToggle = document.getElementById("catToggle");
+    const catCaret = document.getElementById("catCaret");
     const catItems = document.querySelectorAll(".cat-item");
     let activeCat = "all";
 
-    function closeShopMenu(){
-      shopMenu.setAttribute("hidden","");
-      shopToggle.setAttribute("aria-expanded","false");
-      shopCaret.textContent = "▾";
+    function closeCats(){
+      catPanel.setAttribute("hidden","");
+      catToggle.setAttribute("aria-expanded","false");
+      catCaret.textContent = "▾";
     }
-    function openShopMenu(){
-      shopMenu.removeAttribute("hidden");
-      shopToggle.setAttribute("aria-expanded","true");
-      shopCaret.textContent = "▴";
+    function openCats(){
+      catPanel.removeAttribute("hidden");
+      catToggle.setAttribute("aria-expanded","true");
+      catCaret.textContent = "▴";
     }
-    shopToggle.addEventListener("click", (e) => {
+    catToggle.addEventListener("click",(e)=>{
       e.stopPropagation();
-      if (shopMenu.hasAttribute("hidden")) openShopMenu();
-      else closeShopMenu();
+      if (catPanel.hasAttribute("hidden")) openCats(); else closeCats();
     });
-    document.addEventListener("click", () => { if (!shopMenu.hasAttribute("hidden")) closeShopMenu(); });
+    document.addEventListener("click",()=>{ if (!catPanel.hasAttribute("hidden")) closeCats(); });
 
-    // Suche + Kategorie-Filter + Empty State
+    const items = document.querySelectorAll(".product");
     const searchInput = document.getElementById("searchInput");
     const emptyState = document.getElementById("emptyState");
     let searchQuery = "";
@@ -645,42 +660,60 @@
     }
 
     function applyVisibility(){
-      let visibleCount = 0;
-      items.forEach(el => {
+      let visible = 0;
+      items.forEach(el=>{
         const cats = (el.getAttribute("data-cats") || "").trim();
         const catOk = (activeCat === "all") ? true : cats.split(/\s+/).includes(activeCat);
         const searchOk = matchesSearch(el);
-        const show = (catOk && searchOk);
+        const show = catOk && searchOk;
         el.style.display = show ? "" : "none";
-        if (show) visibleCount++;
+        if (show) visible++;
       });
-
-      emptyState.style.display = (visibleCount === 0) ? "block" : "none";
+      emptyState.style.display = (visible === 0) ? "block" : "none";
       checkVisibility();
     }
 
     function applyCategory(cat){
       activeCat = cat;
-      catItems.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+      catItems.forEach(b=>b.classList.toggle("active", b.dataset.cat === cat));
       applyVisibility();
       track("category_select", cat);
     }
 
-    catItems.forEach(btn => {
-      btn.addEventListener("click", (e) => {
+    catItems.forEach(btn=>{
+      btn.addEventListener("click",(e)=>{
         e.stopPropagation();
         applyCategory(btn.dataset.cat);
-        closeShopMenu();
+        closeCats();
       });
     });
 
-    searchInput.addEventListener("input", () => {
+    searchInput.addEventListener("input",()=>{
       searchQuery = (searchInput.value || "").trim().toLowerCase();
       applyVisibility();
       track("search", searchQuery ? "typed" : "cleared");
     });
 
-    // init
+    // Scroll reveal (appear/disappear)
+    function checkVisibility(){
+      const trigger = window.innerHeight * 0.92;
+      items.forEach(el=>{
+        if (el.style.display === "none") { el.classList.remove("active"); return; }
+        const top = el.getBoundingClientRect().top;
+        const bottom = el.getBoundingClientRect().bottom;
+        const inView = (top < trigger) && (bottom > 0);
+        if (inView) el.classList.add("active"); else el.classList.remove("active");
+      });
+    }
+
+    checkVisibility();
+    requestAnimationFrame(()=>{
+      document.body.classList.add("scroll-anim");
+      checkVisibility();
+    });
+    window.addEventListener("scroll", checkVisibility, { passive:true });
+    window.addEventListener("resize", checkVisibility);
+
     applyVisibility();
   </script>
 </body>

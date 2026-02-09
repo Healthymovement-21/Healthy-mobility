@@ -34,7 +34,7 @@
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
       overflow-x:hidden;
-      font-size: 15px;
+      font-size: 14px; /* Text etwas kleiner */
     }
 
     .wrap{
@@ -69,7 +69,7 @@
       position:relative;
     }
 
-    /* Shop dropdown */
+    /* Shop dropdown (Farben abgedunkelt: weniger Glow/Opacity) */
     .shop-pill{
       height:44px;
       padding:0 12px;
@@ -79,7 +79,7 @@
       font-weight:900;
       color:#fff;
       background:var(--ig);
-      box-shadow:0 0 12px rgba(214,41,118,0.10);
+      box-shadow:0 0 10px rgba(214,41,118,0.06); /* dunkler/dezenter */
       display:flex;
       align-items:center;
       gap:8px;
@@ -108,7 +108,7 @@
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.35;
+      opacity:.22; /* dunkler */
     }
 
     .menu-panel button{
@@ -127,7 +127,7 @@
     .menu-panel button:hover{ outline:1px solid var(--line); }
     .menu-panel button.active{
       background: rgba(255,255,255,0.03);
-      box-shadow: 0 0 10px rgba(214,41,118,0.08);
+      box-shadow: 0 0 8px rgba(214,41,118,0.06); /* dunkler */
     }
 
     /* Theme */
@@ -143,19 +143,28 @@
       height:44px;
     }
 
-    /* Suche + Filter in einer Zeile */
+    /* Suche + Filter als EINHEITLICHER Block */
     .search-row{
       display:flex;
-      gap:10px;
       align-items:stretch;
-      margin: 12px 0 18px; /* mehr Abstand nach unten */
+      margin: 12px 0 22px; /* mehr Luft zum Grid */
     }
 
-    fieldset.searchbox{
-      flex: 1 1 auto;
+    .search-group{
+      display:flex;
+      align-items:stretch;
+      width:100%;
       border:1px solid var(--line);
       border-radius:14px;
-      padding:10px 12px 12px;
+      overflow:hidden;
+      background: transparent;
+    }
+
+    /* Fieldset optisch neutral, Legend bleibt */
+    fieldset.searchbox{
+      flex: 1 1 auto;
+      border:0;
+      padding:8px 10px 10px;  /* Suchleiste kleiner */
       margin:0;
       min-width: 0;
     }
@@ -163,7 +172,7 @@
       padding:0 8px;
       color:var(--muted);
       font-weight:900;
-      font-size:0.85rem;
+      font-size:0.8rem; /* kleiner */
     }
     .searchbox input{
       width:100%;
@@ -172,108 +181,48 @@
       background:transparent;
       color:var(--text);
       font-weight:800;
-      font-size:0.95rem;
-      padding:8px 2px;
+      font-size:0.9rem; /* kleiner */
+      padding:6px 2px;  /* kleiner */
     }
 
-    /* Filter (nur aufsteigend/absteigend) */
-    .filterbar{ position:relative; flex: 0 0 auto; }
-
-    .filter-pill{
-      width:44px; height:44px;
-      border-radius:999px;
+    /* Filter Button = Sofort-Umschalter (kein Popup) */
+    .sort-btn{
+      flex: 0 0 auto;
       border:0;
-      cursor:pointer;
-      font-weight:900;
-      color:#fff;
-      background:var(--ig);
-      box-shadow:0 0 12px rgba(214,41,118,0.10);
+      width:48px;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:18px;
-      line-height:1;
-    }
-
-    .filter-panel{
-      position:absolute;
-      right:0;
-      top:52px;
-      width:min(220px, 80vw);
-      background:var(--card);
-      border-radius:14px;
-      padding:12px;
-      overflow:hidden;
-      z-index:70;
-    }
-    .filter-panel::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      padding:1.5px;
-      border-radius:14px;
-      background:var(--ig);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      pointer-events:none;
-      opacity:.35;
-    }
-
-    .filter-label{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      position:relative;
-      z-index:1;
-    }
-    .filter-label span{
-      color:var(--muted);
-      font-weight:900;
-      font-size:0.85rem;
-    }
-    .filter-label select{
-      width:100%;
-      padding:10px 12px;
-      border-radius:12px;
-      background:transparent;
-      color:var(--text);
-      border:1px solid var(--line);
-      outline:none;
-      font-weight:900;
-    }
-
-    .filter-actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      margin-top:10px;
-      position:relative;
-      z-index:1;
-    }
-    .filter-reset{
-      padding:10px 12px;
-      border-radius:999px;
-      border:0;
       cursor:pointer;
+      color:#fff;
       font-weight:900;
-      background:transparent;
-      color:var(--text);
-      outline:1px solid var(--line);
+      background:var(--ig);
+      box-shadow: inset 0 0 0 999px rgba(0,0,0,0.18); /* abgedunkelt */
     }
-    .filter-info{
+
+    .sort-btn:active{
+      transform: translateY(1px);
+    }
+
+    /* kleine Anzeige neben Button (optional, sehr dezent) */
+    .sort-indicator{
+      flex: 0 0 auto;
+      display:flex;
+      align-items:center;
+      padding:0 10px;
       color:var(--muted);
       font-weight:900;
-      font-size:0.85rem;
+      font-size:0.82rem;
+      border-left:1px solid var(--line);
+      white-space:nowrap;
     }
 
     /* Grid + cards */
     .product-grid{
       display:grid;
       grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:22px;            /* DEUTLICH mehr Abstand zwischen Produkten */
-      padding-top: 10px;   /* zusätzlich Luft vor dem Grid */
+      gap:24px;              /* mehr Abstand untereinander */
+      padding-top: 8px;      /* extra Luft nach Suchzeile */
     }
     @media (max-width:760px){
       .product-grid{ grid-template-columns:1fr; }
@@ -302,7 +251,7 @@
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.75; /* dezenter Rahmen */
+      opacity:.60; /* weniger knallig */
     }
 
     body.scroll-anim .product{
@@ -314,27 +263,27 @@
       opacity:1;
       transform:translateY(0);
       box-shadow:
-        0 0 10px rgba(214,41,118,0.14),
-        0 0 18px rgba(252,175,69,0.06);
+        0 0 8px rgba(214,41,118,0.10),
+        0 0 14px rgba(252,175,69,0.05); /* dezenter */
     }
 
     .product h3{
       margin:0 0 6px;
-      font-size:0.98rem;
+      font-size:0.95rem; /* kleiner */
       letter-spacing:-0.01em;
     }
     .product p{
       margin:0 0 8px;
       color:var(--muted);
       line-height:1.5;
-      font-size:0.92rem;
+      font-size:0.9rem; /* kleiner */
     }
     .price{
       display:block;
       margin:8px 0 10px;
       font-weight:900;
       color:var(--text);
-      font-size:0.95rem;
+      font-size:0.93rem;
     }
     .btn{
       display:inline-block;
@@ -344,14 +293,14 @@
       font-weight:900;
       color:#fff;
       background:var(--ig);
-      box-shadow:0 0 10px rgba(214,41,118,0.10);
-      font-size:0.9rem;
+      box-shadow:0 0 8px rgba(214,41,118,0.08); /* dunkler */
+      font-size:0.88rem;
     }
 
     .footnote{
       margin-top: 18px;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       line-height: 1.5;
       text-align: center;
       opacity: 0.9;
@@ -383,30 +332,19 @@
       </div>
     </div>
 
-    <!-- Suche + Filter nebeneinander -->
+    <!-- Suche + Sofort-Sort Button (verbunden) -->
     <div class="search-row">
-      <fieldset class="searchbox">
-        <legend>Suche</legend>
-        <input id="searchInput" type="search" placeholder="Produkt suchen…" autocomplete="off">
-      </fieldset>
+      <div class="search-group">
+        <fieldset class="searchbox">
+          <legend>Suche</legend>
+          <input id="searchInput" type="search" placeholder="Produkt suchen…" autocomplete="off">
+        </fieldset>
 
-      <div class="filterbar">
-        <button id="filterToggle" class="filter-pill" type="button" aria-expanded="false" aria-label="Sortierung öffnen">▾</button>
+        <button id="sortToggle" class="sort-btn" type="button" aria-label="Sortierung umschalten" title="Sortierung umschalten">
+          ⇅
+        </button>
 
-        <div id="filterPanel" class="filter-panel" hidden>
-          <label class="filter-label">
-            <span>Sortierung</span>
-            <select id="sortSelect">
-              <option value="price-asc">aufsteigend</option>
-              <option value="price-desc">absteigend</option>
-            </select>
-          </label>
-
-          <div class="filter-actions">
-            <button id="resetFilters" class="filter-reset" type="button">Reset</button>
-            <div id="filterInfo" class="filter-info"></div>
-          </div>
-        </div>
+        <div id="sortIndicator" class="sort-indicator">billig → teuer</div>
       </div>
     </div>
 
@@ -581,40 +519,20 @@
       else closeShopMenu();
     });
 
-    // Filter (sort only)
-    const filterPanel = document.getElementById("filterPanel");
-    const filterToggle = document.getElementById("filterToggle");
-    const sortSelect = document.getElementById("sortSelect");
-    const resetBtn = document.getElementById("resetFilters");
-    const info = document.getElementById("filterInfo");
-    const grid = document.querySelector(".product-grid");
-
-    function closeFilter(){
-      filterPanel.setAttribute("hidden","");
-      filterToggle.setAttribute("aria-expanded","false");
-      filterToggle.textContent = "▾";
-    }
-    function openFilter(){
-      filterPanel.removeAttribute("hidden");
-      filterToggle.setAttribute("aria-expanded","true");
-      filterToggle.textContent = "▴";
-    }
-    filterToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (filterPanel.hasAttribute("hidden")) openFilter();
-      else closeFilter();
-    });
-
     document.addEventListener("click", () => {
       if (!shopMenu.hasAttribute("hidden")) closeShopMenu();
-      if (!filterPanel.hasAttribute("hidden")) closeFilter();
     });
 
     // Search
     const searchInput = document.getElementById("searchInput");
     let searchQuery = "";
 
-    // Original order
+    // Sorting toggle (sofort)
+    const sortToggle = document.getElementById("sortToggle");
+    const sortIndicator = document.getElementById("sortIndicator");
+    let sortMode = "price-asc"; // default billig -> teuer
+
+    const grid = document.querySelector(".product-grid");
     const original = Array.from(grid.querySelectorAll(".product")).map((el, idx) => ({ el, idx }));
 
     function parsePrice(el){
@@ -622,6 +540,7 @@
       const val = parseFloat(raw);
       return Number.isFinite(val) ? val : NaN;
     }
+
     function matchesSearch(el){
       if (!searchQuery) return true;
       const t = (el.textContent || "").toLowerCase();
@@ -635,8 +554,6 @@
         const searchOk = matchesSearch(el);
         el.style.display = (catOk && searchOk) ? "" : "none";
       });
-      updateInfo();
-      checkVisibility();
     }
 
     function applyCategory(cat){
@@ -644,6 +561,7 @@
       catItems.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
       applyVisibility();
       applySort();
+      checkVisibility();
     }
 
     catItems.forEach(btn => {
@@ -654,21 +572,15 @@
       });
     });
 
-    function updateInfo(){
-      const visibleCount = original.filter(({el}) => el.style.display !== "none").length;
-      info.textContent = `${visibleCount}`;
-    }
-
     function applySort(){
-      const mode = sortSelect.value;
-
       const visible = original.filter(({el}) => el.style.display !== "none");
       const hidden  = original.filter(({el}) => el.style.display === "none");
+
       let sorted = visible.slice();
 
-      if(mode === "price-asc"){
+      if (sortMode === "price-asc"){
         sorted.sort((a,b) => parsePrice(a.el) - parsePrice(b.el));
-      } else if(mode === "price-desc"){
+      } else if (sortMode === "price-desc"){
         sorted.sort((a,b) => parsePrice(b.el) - parsePrice(a.el));
       }
 
@@ -676,25 +588,24 @@
       checkVisibility();
     }
 
-    sortSelect.addEventListener("change", applySort);
-
-    resetBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      // Reset = Originalreihenfolge (bei aktueller Kategorie + Suche)
-      original.sort((a,b) => a.idx - b.idx).forEach(({el}) => grid.appendChild(el));
-      closeFilter();
-      checkVisibility();
+    // Klick = sofort umschalten + sortieren (kein Popup)
+    sortToggle.addEventListener("click", () => {
+      sortMode = (sortMode === "price-asc") ? "price-desc" : "price-asc";
+      sortIndicator.textContent = (sortMode === "price-asc") ? "billig → teuer" : "teuer → billig";
+      applySort();
     });
 
     searchInput.addEventListener("input", () => {
       searchQuery = (searchInput.value || "").trim().toLowerCase();
       applyVisibility();
       applySort();
+      checkVisibility();
     });
 
     // init
     applyVisibility();
-    updateInfo();
+    applySort();
+    checkVisibility();
   </script>
 </body>
 </html>

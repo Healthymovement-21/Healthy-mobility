@@ -6,18 +6,39 @@
   <title>Home – Produktempfehlungen</title>
 
   <style>
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      overflow-x: hidden;
-    }
+    *{ box-sizing:border-box; }
 
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
+
+      /* Dark */
+      --bg: #000;
+      --text: #fff;
+      --muted: #ddd;
+      --card: #111;
+      --nav: #bbb;
+      --line: rgba(255,255,255,0.10);
+      --btnHomeBg: #fff;
+      --btnHomeText:#000;
+    }
+
+    [data-theme="light"]{
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #333;
+      --card: #f2f3f5;
+      --nav: #444;
+      --line: rgba(0,0,0,0.10);
+      --btnHomeBg: #111;
+      --btnHomeText:#fff;
+    }
+
+    html,body{
+      margin:0; padding:0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow-x:hidden;
     }
 
     .wrap{
@@ -26,23 +47,55 @@
       padding: 22px 16px; /* mehr Rand links/rechts */
     }
 
-    nav{
+    .topbar{
       display:flex;
+      align-items:center;
       justify-content:center;
-      gap: 26px;
+      position:relative;
       padding: 10px 0 18px;
     }
+
+    nav{
+      display:flex;
+      gap:26px;
+      justify-content:center;
+      align-items:center;
+    }
+
     nav a{
-      color:#bbb;
+      color: var(--nav);
       text-decoration:none;
-      font-weight:600;
+      font-weight:700;
       white-space:nowrap;
     }
+
     nav a.active{
-      color:#fff;
+      color: var(--text);
       border-bottom: 2px solid;
       border-image: var(--ig) 1;
       padding-bottom: 6px;
+    }
+
+    .switch{
+      position:absolute;
+      right:0;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+
+    .switch button{
+      border:0;
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
+      color: var(--text);
+      background: transparent;
+      outline: 1px solid var(--line);
     }
 
     h1{
@@ -52,37 +105,42 @@
     }
 
     p{
-      color:#ddd;
+      color: var(--muted);
       line-height: 1.7;
       margin: 0 0 14px;
     }
 
-    .home-button{
-      display:inline-block;
-      margin-top: 22px;
-      padding: 14px 22px;
-      border-radius: 999px;
-      text-decoration:none;
-      font-weight:800;
-      color:#000;
-      background:#fff;
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 18px 0 6px;
     }
 
-    /* Optional: schöner kleiner Akzent ohne “Blog-Look” */
-    .divider{
-      height: 1px;
-      background: rgba(255,255,255,0.08);
-      margin: 18px 0 6px;
+    .home-button{
+      display:inline-block;
+      margin-top:22px;
+      padding:14px 22px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:900;
+      background: var(--btnHomeBg);
+      color: var(--btnHomeText);
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="shop.html">Shop</a>
-    </nav>
+    <div class="topbar">
+      <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="shop.html">Shop</a>
+      </nav>
+
+      <div class="switch">
+        <button id="themeBtn" type="button">🌗</button>
+      </div>
+    </div>
 
     <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
 
@@ -120,8 +178,30 @@
 
     <div class="divider"></div>
 
-    <!-- Shop-Button wieder auf der Startseite -->
     <a class="home-button" href="shop.html">Zum Shop</a>
   </div>
+
+  <script>
+    // Light/Dark Switch (merkt sich Einstellung)
+    const root = document.documentElement;
+    const btn = document.getElementById("themeBtn");
+
+    const saved = localStorage.getItem("theme");
+    if (saved) {
+      root.setAttribute("data-theme", saved);
+    } else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+
+    function toggleTheme(){
+      const current = root.getAttribute("data-theme") || "dark";
+      const next = current === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+
+    btn.addEventListener("click", toggleTheme);
+  </script>
 </body>
 </html>

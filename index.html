@@ -5,233 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Healthy Mobility – Home</title>
 
-  <meta name="description" content="Ausgewählte Produktempfehlungen aus Bewegung, Regeneration und Reha – mit Affiliate-Links." />
-  <meta property="og:title" content="Healthy Mobility – Produktempfehlungen" />
-  <meta property="og:description" content="Shop mit Produktempfehlungen aus Bewegung, Regeneration und Reha." />
-  <meta property="og:type" content="website" />
-
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-
-  <style>
-    *{ box-sizing:border-box; }
-    :root{
-      --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-      --bg:#060606;
-      --text:#ffffff;
-      --muted: rgba(255,255,255,0.78);
-      --card:#0f0f10;
-      --nav: rgba(255,255,255,0.72);
-      --line: rgba(255,255,255,0.12);
-      --btnBg:#ffffff;
-      --btnText:#000000;
-    }
-    [data-theme="light"]{
-      --bg:#ffffff;
-      --text:#0f0f10;
-      --muted: rgba(15,15,16,0.75);
-      --card:#f4f5f7;
-      --nav: rgba(15,15,16,0.70);
-      --line: rgba(0,0,0,0.10);
-      --btnBg:#0f0f10;
-      --btnText:#ffffff;
-    }
-
-    html,body{
-      margin:0; padding:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-      overflow-x:hidden;
-      font-size:14px;
-      scroll-behavior:smooth;
-    }
-
-    /* ===== Einheitlicher Header (passt auf iPhone, kein Scroll) ===== */
-    .header{
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
-    }
-    .header-inner{
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 10px 16px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
-    }
-    .nav{
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 6px;
-      align-items: center;
-    }
-    .nav a{
-      display:block;
-      text-align:center;
-      text-decoration:none;
-      color:var(--nav);
-      font-weight:950;
-      white-space:nowrap;
-      line-height:1.1;
-      border-radius:12px;
-      padding:8px 6px;
-      font-size: clamp(11px, 3.1vw, 14px);
-    }
-    .nav a:hover{ background:rgba(255,255,255,0.04); }
-    [data-theme="light"] .nav a:hover{ background:rgba(0,0,0,0.04); }
-
-    .nav a.active{
-      color:var(--text);
-      outline:1px solid var(--line);
-      position:relative;
-      overflow:hidden;
-    }
-    .nav a.active::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      padding:1.5px;
-      border-radius:12px;
-      background:var(--ig);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      pointer-events:none;
-      opacity:.22;
-    }
-
-    .theme-btn{
-      height:40px;
-      min-width:44px;
-      border:0;
-      padding:0 12px;
-      border-radius:999px;
-      font-weight:950;
-      cursor:pointer;
-      color:var(--text);
-      background:transparent;
-      outline:1px solid var(--line);
-      transition: transform .12s ease, filter .2s ease;
-    }
-    .theme-btn:hover{ filter: brightness(1.05); }
-    .theme-btn:active{ transform: translateY(1px); }
-    /* ============================================================= */
-
-    .wrap{
-      max-width:900px;
-      margin:0 auto;
-      padding:20px 16px 34px;
-    }
-
-    h1{
-      margin:10px 0 14px;
-      font-size:1.65rem;
-      letter-spacing:-0.02em;
-      line-height:1.15;
-    }
-
-    .card{
-      background:var(--card);
-      border-radius:18px;
-      padding:16px;
-      outline:1px solid var(--line);
-      position:relative;
-      overflow:hidden;
-    }
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(600px 220px at 30% 0%, rgba(214,41,118,0.18), transparent 55%),
-        radial-gradient(600px 220px at 70% 0%, rgba(79,91,213,0.16), transparent 55%);
-      pointer-events:none;
-      opacity:0.85;
-    }
-    .card > *{ position:relative; z-index:1; }
-
-    p{
-      color:var(--muted);
-      line-height:1.7;
-      margin:0 0 12px;
-      font-size:0.95rem;
-    }
-
-    .cta-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-    .cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:12px 18px;
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:950;
-      background:var(--btnBg);
-      color:var(--btnText);
-      transition: transform .12s ease, filter .2s ease;
-    }
-    .cta:hover{ filter: brightness(1.02); }
-    .cta:active{ transform: translateY(1px); }
-
-    .section{
-      margin-top:18px;
-      background:var(--card);
-      border-radius:18px;
-      padding:16px;
-      outline:1px solid var(--line);
-    }
-    .section h2{
-      margin:0 0 10px;
-      font-size:1.05rem;
-      letter-spacing:-0.01em;
-    }
-
-    .popular{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    .popular a{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      text-decoration:none;
-      color:var(--text);
-      background:rgba(255,255,255,0.03);
-      border-radius:14px;
-      padding:12px 12px;
-      outline:1px solid var(--line);
-    }
-    [data-theme="light"] .popular a{ background:rgba(0,0,0,0.03); }
-    .popular .name{ font-weight:950; font-size:0.95rem; }
-    .popular .meta{ color:var(--muted); font-weight:900; font-size:0.85rem; white-space:nowrap; }
-
-    .footer{
-      max-width:900px;
-      margin:18px auto 0;
-      padding:14px 16px 0;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      text-align:center;
-      line-height:1.6;
-      font-size:0.9rem;
-    }
-    .footer a{ color:var(--muted); text-decoration:none; font-weight:900; }
-    .footer a:hover{ text-decoration:underline; }
-  </style>
+  <link rel="stylesheet" href="style.css?v=20260209">
 </head>
 
 <body>
@@ -250,7 +25,6 @@
   <main class="wrap">
     <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
 
-    <!-- Dein vollständiger Home-Text (nicht gekürzt) -->
     <div class="card">
       <p>
         Auf dieser Seite findest du eine Auswahl an Produkten aus den Bereichen Bewegung,
@@ -289,9 +63,7 @@
       </div>
     </div>
 
-    <!-- Home länger + sinnvoller Content -->
-    <div class="section">
-      <h2>Wie du die Produkte nutzt</h2>
+    <div class="card" style="margin-top:18px;">
       <p>
         Tipp: Nutze Produkte nie nach dem Motto „viel hilft viel“. Gerade bei Wärme/Kälte,
         Bandagen oder intensiver Selbstbehandlung gilt: dosiert, individuell und sinnvoll einsetzen.
@@ -303,21 +75,19 @@
       </p>
     </div>
 
-    <div class="section">
-      <h2>Beliebte Empfehlungen</h2>
+    <div class="card" style="margin-top:18px;">
+      <p><strong>Beliebte Empfehlungen</strong></p>
       <p>
         Hier siehst du automatisch die Produkte, die am häufigsten angeklickt wurden.
         (Die Klicks werden lokal im Browser gespeichert.)
       </p>
-      <div class="popular" id="popularList"></div>
+      <div id="popularList"></div>
     </div>
 
     <div class="footer">
       <a href="impressum.html" onclick="track('nav_impressum','footer')">Impressum</a> ·
       <a href="datenschutz.html" onclick="track('nav_datenschutz','footer')">Datenschutz</a>
-      <div style="margin-top:10px;">
-        Hinweis: Inhalte stellen keine medizinische Beratung dar.
-      </div>
+      <div style="margin-top:10px;">Hinweis: Inhalte stellen keine medizinische Beratung dar.</div>
     </div>
   </main>
 
@@ -326,7 +96,6 @@
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
 
-    // Theme (global)
     const root = document.documentElement;
     const saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
@@ -342,7 +111,6 @@
       track("theme_toggle", next);
     });
 
-    // Popular list (based on local clicks stored from shop)
     const productLinks = {
       "Massagepistole": { url: "shop.html#massagepistole" },
       "Moorkissen": { url: "shop.html#moorkissen" },
@@ -368,7 +136,7 @@
     }
 
     function renderPopular(){
-      const list = document.getElementById("popularList");
+      const host = document.getElementById("popularList");
       const counts = getClickCounts();
 
       const items = Object.keys(productLinks).map(name => ({
@@ -380,20 +148,16 @@
       const top = items.filter(i => i.count > 0).slice(0, 6);
 
       if (top.length === 0){
-        list.innerHTML = `
-          <a href="shop.html" onclick="track('popular_empty','go_shop')">
-            <span class="name">Noch keine Klicks gespeichert → Shop öffnen</span>
-            <span class="meta">→</span>
-          </a>
+        host.innerHTML = `
+          <a class="cta" href="shop.html" onclick="track('popular_empty','go_shop')">Noch keine Klicks gespeichert → Shop öffnen</a>
         `;
         return;
       }
 
-      list.innerHTML = top.map(i => `
-        <a href="${i.url}" onclick="track('popular_click','${i.name}')">
-          <span class="name">${i.name}</span>
-          <span class="meta">${i.count} Klicks</span>
-        </a>
+      host.innerHTML = top.map(i => `
+        <div style="margin-top:10px;">
+          <a class="cta" href="${i.url}" onclick="track('popular_click','${i.name}')">${i.name} (${i.count} Klicks)</a>
+        </div>
       `).join("");
     }
 

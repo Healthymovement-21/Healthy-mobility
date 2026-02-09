@@ -16,98 +16,100 @@
 
 <section class="product-grid">
 
-<div class="product">
+
+
+<div class="product reveal">
 <h3>Massagepistole</h3>
 <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
 <span>25,99 €</span>
 <a href="https://amzn.to/45QvJM2" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Moorkissen</h3>
 <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
 <span>29,89 €</span>
 <a href="https://amzn.to/4cgzQ7V" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Knie-Kühlpack</h3>
 <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
 <span>17,89 €</span>
 <a href="https://amzn.to/4qjoAuL" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Retterspitz</h3>
 <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
 <span>26,14 €</span>
 <a href="https://amzn.to/3ZnEwRS" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>MacDavid Bandage</h3>
 <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
 <span>44,95 €</span>
 <a href="https://amzn.to/4tvfiin" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Leukotape</h3>
 <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
 <span>9,99 €</span>
 <a href="https://amzn.to/4kplTGW" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Laufband</h3>
 <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
 <span>94,99 €</span>
 <a href="https://amzn.to/3O9os3F" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Thrombosestrumpf</h3>
 <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
 <span>26,90 €</span>
 <a href="https://amzn.to/4r3NY91" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Wärmemessgerät</h3>
 <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
 <span>16,14 €</span>
 <a href="https://amzn.to/4a6vNtq" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Aloe-Vera-Gel</h3>
 <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
 <span>6,30 €</span>
 <a href="https://amzn.to/4rftMB6" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Lymphmaßband</h3>
 <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
 <span>20,09 €</span>
 <a href="https://amzn.to/3MvIhSn" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>Elektrischer Shaker</h3>
 <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
 <span>19,54 €</span>
 <a href="https://amzn.to/3MhQ1HB" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>BAUERFEIND Fußbandage</h3>
 <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
 <span>47,43 €</span>
 <a href="https://amzn.to/3MchKJM" target="_blank">Bei Amazon ansehen</a>
 </div>
 
-<div class="product">
+<div class="product reveal">
 <h3>BAUERFEIND Armbandage</h3>
 <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
 <span>35,20 €</span>
@@ -115,6 +117,22 @@
 </div>
 
 </section>
+
+<script>
+
+const reveals = document.querySelectorAll('.reveal');
+window.addEventListener('scroll', () => {
+  const triggerBottom = window.innerHeight * 0.9;
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < triggerBottom) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+});
+</script>
 
 </body>
 </html>

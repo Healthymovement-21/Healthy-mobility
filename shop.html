@@ -10,8 +10,8 @@
 </head>
 
 <body>
-  <!-- Theme Button -->
-  <button class="theme-mini" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+  <!-- THEME: ALWAYS top-right -->
+  <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
   <main class="page">
     <h1>Shop</h1>
@@ -25,14 +25,7 @@
       </div>
     </div>
 
-    <div class="sharebar">
-      <button type="button" onclick="shareAny()">Teilen</button>
-      <button type="button" onclick="shareWhatsApp()">WhatsApp</button>
-      <button type="button" onclick="copyLink()">Link kopieren</button>
-    </div>
-
     <section class="product-grid" id="grid">
-      <!-- Alle Produkte vollständig -->
       <div class="product" id="massagepistole">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
@@ -186,7 +179,7 @@
     }
     function go(url){ window.location.href = url; }
 
-    // Theme
+    // Theme ALWAYS top-right
     const root = document.documentElement;
     const saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
@@ -202,15 +195,15 @@
       track("theme_toggle", next);
     });
 
-    // Search
+    // Search behavior in shop
     const searchInput = document.getElementById("searchInput");
     const items = document.querySelectorAll(".product");
     const emptyState = document.getElementById("emptyState");
 
     function focusSearch(){
       document.getElementById("search").scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(()=> searchInput.focus(), 350);
-      track("search_focus", "bottom_nav");
+      setTimeout(()=> searchInput.focus(), 250);
+      track("search_focus","shop");
     }
     window.focusSearch = focusSearch;
 
@@ -226,7 +219,6 @@
       emptyState.style.display = (visible === 0) ? "block" : "none";
       checkVisibility();
     }
-
     searchInput.addEventListener("input", applySearch);
 
     // local click counts for popular
@@ -244,33 +236,7 @@
     }
     window.productClick = productClick;
 
-    // Share
-    function shareWhatsApp(){
-      const url = window.location.href;
-      window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, "_blank");
-      track("share", "whatsapp");
-    }
-    async function copyLink(){
-      await navigator.clipboard.writeText(window.location.href);
-      alert("Link kopiert");
-      track("share", "copylink");
-    }
-    async function shareAny(){
-      const url = window.location.href;
-      if (navigator.share) {
-        try{
-          await navigator.share({ title: document.title, text: "Schau dir das mal an:", url });
-          track("share", "native");
-        }catch(e){}
-      } else {
-        shareWhatsApp();
-      }
-    }
-    window.shareWhatsApp = shareWhatsApp;
-    window.copyLink = copyLink;
-    window.shareAny = shareAny;
-
-    // Scroll reveal appear/disappear
+    // Scroll reveal
     function checkVisibility(){
       const trigger = window.innerHeight * 0.92;
       items.forEach(el=>{
@@ -281,7 +247,6 @@
         if (inView) el.classList.add("active"); else el.classList.remove("active");
       });
     }
-
     checkVisibility();
     requestAnimationFrame(()=>{
       document.body.classList.add("scroll-anim");

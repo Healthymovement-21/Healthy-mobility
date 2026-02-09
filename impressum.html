@@ -3,90 +3,197 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Impressum</title>
+  <title>Healthy Mobility – Impressum</title>
 
-  <!-- Tracking (Plausible) -->
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
 
   <style>
     *{ box-sizing:border-box; }
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-      --bg:#060606; --text:#fff; --muted: rgba(255,255,255,0.78);
-      --card:#0f0f10; --nav: rgba(255,255,255,0.72); --line: rgba(255,255,255,0.12);
+      --bg:#060606;
+      --text:#ffffff;
+      --muted: rgba(255,255,255,0.78);
+      --card:#0f0f10;
+      --nav: rgba(255,255,255,0.72);
+      --line: rgba(255,255,255,0.12);
     }
     [data-theme="light"]{
-      --bg:#fff; --text:#0f0f10; --muted: rgba(15,15,16,0.75);
-      --card:#f4f5f7; --nav: rgba(15,15,16,0.70); --line: rgba(0,0,0,0.10);
+      --bg:#ffffff;
+      --text:#0f0f10;
+      --muted: rgba(15,15,16,0.75);
+      --card:#f4f5f7;
+      --nav: rgba(15,15,16,0.70);
+      --line: rgba(0,0,0,0.10);
     }
-    html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif; font-size:14px; }
-    .wrap{ max-width:900px; margin:0 auto; padding:36px 22px 28px; }
-    nav{ display:flex; gap:18px; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom:18px; }
-    nav a{ color:var(--nav); text-decoration:none; font-weight:950; padding:6px 6px; border-radius:10px; }
-    nav a:hover{ background:rgba(255,255,255,0.04); }
-    nav a.active{ color:var(--text); border-bottom:2px solid; border-image:var(--ig) 1; padding-bottom:6px; border-radius:0; background:transparent; }
-    h1{ margin:0 0 14px; font-size:1.5rem; letter-spacing:-0.02em; }
-    p{ margin:0 0 10px; color:var(--muted); line-height:1.65; }
-    .box{
+
+    html,body{
+      margin:0; padding:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+      overflow-x:hidden;
+      font-size:14px;
+      scroll-behavior:smooth;
+    }
+
+    .header{
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .nav{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      align-items: center;
+    }
+    .nav a{
+      display:block;
+      text-align:center;
+      text-decoration:none;
+      color:var(--nav);
+      font-weight:950;
+      white-space:nowrap;
+      line-height:1.1;
+      border-radius:12px;
+      padding:8px 6px;
+      font-size: clamp(11px, 3.1vw, 14px);
+    }
+    .nav a:hover{ background:rgba(255,255,255,0.04); }
+    [data-theme="light"] .nav a:hover{ background:rgba(0,0,0,0.04); }
+    .nav a.active{
+      color:var(--text);
+      outline:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+    }
+    .nav a.active::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:12px;
+      background:var(--ig);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.22;
+    }
+    .theme-btn{
+      height:40px;
+      min-width:44px;
+      border:0;
+      padding:0 12px;
+      border-radius:999px;
+      font-weight:950;
+      cursor:pointer;
+      color:var(--text);
+      background:transparent;
+      outline:1px solid var(--line);
+      transition: transform .12s ease, filter .2s ease;
+    }
+    .theme-btn:hover{ filter: brightness(1.05); }
+    .theme-btn:active{ transform: translateY(1px); }
+
+    .wrap{
+      max-width:900px;
+      margin:0 auto;
+      padding:20px 16px 34px;
+    }
+    .card{
       background:var(--card);
       border-radius:18px;
       padding:16px;
+      outline:1px solid var(--line);
       position:relative;
       overflow:hidden;
-      outline:1px solid var(--line);
     }
-    .box::before{
+    .card::before{
       content:"";
-      position:absolute; inset:0;
-      padding:1.5px; border-radius:18px; background:var(--ig);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude;
-      pointer-events:none; opacity:.18;
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(600px 220px at 30% 0%, rgba(214,41,118,0.18), transparent 55%),
+        radial-gradient(600px 220px at 70% 0%, rgba(79,91,213,0.16), transparent 55%);
+      pointer-events:none;
+      opacity:0.75;
     }
-    .switch{ display:flex; justify-content:center; margin:16px 0 0; }
-    .switch button{
-      border:0; padding:10px 12px; border-radius:999px; font-weight:950; cursor:pointer;
-      color:var(--text); background:transparent; outline:1px solid var(--line);
+    .card > *{ position:relative; z-index:1; }
+
+    h1{ margin:10px 0 12px; font-size:1.5rem; letter-spacing:-0.02em; }
+    p{ color:var(--muted); line-height:1.7; margin:0 0 12px; }
+
+    .footer{
+      max-width:900px;
+      margin:18px auto 0;
+      padding:14px 16px 0;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      text-align:center;
+      line-height:1.6;
+      font-size:0.9rem;
     }
+    .footer a{ color:var(--muted); text-decoration:none; font-weight:900; }
+    .footer a:hover{ text-decoration:underline; }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="impressum.html" class="active">Impressum</a>
-      <a href="datenschutz.html">Datenschutz</a>
-    </nav>
+  <header class="header">
+    <div class="header-inner">
+      <nav class="nav" aria-label="Navigation">
+        <a href="index.html" onclick="track('nav_home','top')">Home</a>
+        <a href="shop.html" onclick="track('nav_shop','top')">Shop</a>
+        <a href="impressum.html" class="active">Impressum</a>
+        <a href="datenschutz.html" onclick="track('nav_datenschutz','top')">Datenschutz</a>
+      </nav>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+    </div>
+  </header>
 
+  <main class="wrap">
     <h1>Impressum</h1>
 
-    <div class="box">
+    <div class="card">
       <p><strong>Angaben gemäß § 5 TMG</strong></p>
+
       <p>
         <strong>Betreiber / Verantwortlicher:</strong><br>
-        [Dein Name / Praxisname]<br>
-        [Straße, Hausnummer]<br>
-        [PLZ Ort]<br>
+        NAME NACHNAME / PRAXISNAME<br>
+        STRASSE HAUSNUMMER<br>
+        PLZ ORT<br>
         Deutschland
       </p>
 
       <p>
         <strong>Kontakt:</strong><br>
-        E-Mail: [deine-email@domain.de]<br>
-        Telefon: [optional]
+        E-Mail: DEINE-EMAIL@DOMAIN.DE<br>
+        Telefon: (optional)
       </p>
 
       <p>
         <strong>Umsatzsteuer:</strong><br>
-        [USt-IdNr. falls vorhanden / sonst weglassen]
+        USt-IdNr. (falls vorhanden) / ansonsten entfernen
       </p>
 
       <p>
         <strong>Haftungshinweis:</strong><br>
-        Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für Inhalte externer Links.
-        Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.
+        Trotz sorgfältiger inhaltlicher Kontrolle übernehme ich keine Haftung für die Inhalte externer Links.
+        Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
       </p>
 
       <p>
@@ -101,25 +208,31 @@
       </p>
     </div>
 
-    <div class="switch">
-      <button id="themeBtn" type="button">🌗</button>
+    <div class="footer">
+      <a href="impressum.html">Impressum</a> ·
+      <a href="datenschutz.html" onclick="track('nav_datenschutz','footer')">Datenschutz</a>
     </div>
-  </div>
+  </main>
 
   <script>
+    function track(eventName, label){
+      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
+    }
+
     const root = document.documentElement;
-    const themeBtn = document.getElementById("themeBtn");
     const saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
     else {
       const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
       root.setAttribute("data-theme", prefersLight ? "light" : "dark");
     }
-    themeBtn.addEventListener("click", () => {
-      const current = root.getAttribute("data-theme") || "dark";
-      const next = current === "dark" ? "light" : "dark";
+
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
+      track("theme_toggle", next);
     });
   </script>
 </body>

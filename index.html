@@ -9,7 +9,7 @@
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209u">
+  <link rel="stylesheet" href="style.css?v=20260209v">
 </head>
 
 <body>
@@ -154,6 +154,12 @@
     if (!isPanel && window.matchMedia('(max-width: 900px)').matches){
       window.location.href = 'mobile.html';
     }
+    if (isPanel){
+      const nav = document.querySelector(".bottom-nav");
+      const theme = document.querySelector(".theme-top");
+      if (nav) nav.remove();
+      if (theme) theme.remove();
+    }
 
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
@@ -254,6 +260,7 @@
     document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
 
     overlayInput.addEventListener("input", ()=> renderSuggest(overlayInput.value));
+    window.addEventListener("message",(e)=>{ if(e.data === "openSearch") openOverlay(); });
 
     // Popular list
     const productLinks = products.reduce((acc,p)=>{ acc[p.name]={url:`shop.html#${p.id}`}; return acc; },{});

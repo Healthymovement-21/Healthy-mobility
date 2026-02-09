@@ -58,20 +58,20 @@
     .bottom-nav .bar{
       max-width:520px;
       margin:0 auto;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(12px);
-      border:1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(0,0,0,0.08);
       border-radius:18px;
       padding:10px 10px;
       display:grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap:8px;
     }
     .nav-btn{
       border:0;
       background:transparent;
-      color:#ddd;
-      font-weight:900;
+      color:#444;
+      font-weight:800;
       border-radius:14px;
       padding:10px 8px;
       display:flex;
@@ -84,8 +84,8 @@
     }
     .nav-btn svg{ width:22px; height:22px; display:block; }
     .nav-btn.active{
-      color:#fff;
-      outline-color: rgba(255,255,255,0.22);
+      color:#111;
+      outline-color: rgba(0,0,0,0.12);
     }
   </style>
 </head>
@@ -102,6 +102,13 @@
                 stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
         </svg>
         <div style="font-size:11px;">Home</div>
+      </button>
+      <button class="nav-btn" id="navSearch" type="button">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Suche</div>
       </button>
       <button class="nav-btn" id="navShop" type="button">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -129,6 +136,7 @@
     const wrap = document.getElementById('swipeWrap');
     const navHome = document.getElementById('navHome');
     const navShop = document.getElementById('navShop');
+    const navSearch = document.getElementById('navSearch');
     function setActive(which){
       navHome.classList.toggle('active', which === 'home');
       navShop.classList.toggle('active', which === 'shop');
@@ -138,6 +146,11 @@
     }
     navHome.addEventListener('click', ()=>{ wrap.scrollTo({ left: 0, behavior:'smooth' }); setActive('home'); });
     navShop.addEventListener('click', ()=>{ wrap.scrollTo({ left: window.innerWidth, behavior:'smooth' }); setActive('shop'); });
+    navSearch.addEventListener('click', ()=>{
+      const active = (wrap.scrollLeft > window.innerWidth/2) ? 'shop' : 'home';
+      const frame = active === 'shop' ? wrap.children[1] : wrap.children[0];
+      if (frame && frame.contentWindow){ frame.contentWindow.postMessage('openSearch','*'); }
+    });
     let snapTimer = null;
     wrap.addEventListener('scroll', ()=>{
       if (snapTimer) clearTimeout(snapTimer);

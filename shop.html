@@ -9,7 +9,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209u">
+  <link rel="stylesheet" href="style.css?v=20260209v">
 </head>
 
 <body>
@@ -340,6 +340,12 @@
     if (!isPanel && window.matchMedia('(max-width: 900px)').matches){
       window.location.href = 'mobile.html#shop';
     }
+    if (isPanel){
+      const nav = document.querySelector(".bottom-nav");
+      const theme = document.querySelector(".theme-top");
+      if (nav) nav.remove();
+      if (theme) theme.remove();
+    }
 
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
@@ -459,6 +465,7 @@
     if (overlayClose) overlayClose.addEventListener("click", closeOverlay);
     if (overlay) overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
     document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
+    window.addEventListener("message",(e)=>{ if(e.data === "openSearch") openOverlay(); });
 
     if (shopTitle) shopTitle.addEventListener("click", ()=>{
       if (shopCats.classList.contains("open")) closeCategories(); else openCategories();

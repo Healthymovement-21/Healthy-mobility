@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
@@ -10,38 +10,18 @@
 </head>
 
 <body>
-  <header class="header">
-    <div class="header-inner">
-      <nav class="nav" aria-label="Navigation">
-        <a href="index.html" onclick="track('nav_home','top')">Home</a>
-        <a href="shop.html" class="active">Shop</a>
-        <a href="impressum.html" onclick="track('nav_impressum','top')">Impressum</a>
-        <a href="datenschutz.html" onclick="track('nav_datenschutz','top')">Datenschutz</a>
-      </nav>
-      <button class="theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
-    </div>
-  </header>
+  <!-- Theme Button -->
+  <button class="theme-mini" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
-  <main class="wrap">
-    <div class="shopbar">
+  <main class="page">
+    <h1>Shop</h1>
+
+    <div class="shopbar" id="search">
       <div class="search-group">
         <fieldset class="searchbox">
           <legend>Suche</legend>
           <input id="searchInput" type="search" placeholder="Produkt suchen…" autocomplete="off" />
         </fieldset>
-      </div>
-
-      <div class="catwrap">
-        <button id="catToggle" class="catbtn" type="button" aria-expanded="false" aria-label="Kategorien öffnen">
-          Shop <span id="catCaret">▾</span>
-        </button>
-
-        <div id="catPanel" class="catpanel" hidden>
-          <button type="button" class="cat-item active" data-cat="all">Alle</button>
-          <button type="button" class="cat-item" data-cat="sport">Sport</button>
-          <button type="button" class="cat-item" data-cat="regeneration">Regeneration</button>
-          <button type="button" class="cat-item" data-cat="reha">Reha</button>
-        </div>
       </div>
     </div>
 
@@ -52,98 +32,99 @@
     </div>
 
     <section class="product-grid" id="grid">
-      <div class="product" id="massagepistole" data-cats="regeneration">
+      <!-- Alle Produkte vollständig -->
+      <div class="product" id="massagepistole">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
         <span class="price">25,99 €</span>
         <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener" onclick="productClick('Massagepistole')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="moorkissen" data-cats="regeneration">
+      <div class="product" id="moorkissen">
         <h3>Moorkissen</h3>
         <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
         <span class="price">29,89 €</span>
         <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener" onclick="productClick('Moorkissen')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="knie-kuehlpack" data-cats="regeneration reha">
+      <div class="product" id="knie-kuehlpack">
         <h3>Knie-Kühlpack</h3>
         <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
         <span class="price">17,89 €</span>
         <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener" onclick="productClick('Knie-Kühlpack')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="retterspitz" data-cats="sport regeneration reha">
+      <div class="product" id="retterspitz">
         <h3>Retterspitz</h3>
         <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
         <span class="price">26,14 €</span>
         <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener" onclick="productClick('Retterspitz')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="macdavid-bandage" data-cats="sport">
+      <div class="product" id="macdavid-bandage">
         <h3>MacDavid Bandage</h3>
         <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
         <span class="price">44,95 €</span>
         <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener" onclick="productClick('MacDavid Bandage')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="leukotape" data-cats="sport">
+      <div class="product" id="leukotape">
         <h3>Leukotape</h3>
         <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
         <span class="price">9,99 €</span>
         <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener" onclick="productClick('Leukotape')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="laufband" data-cats="sport regeneration reha">
+      <div class="product" id="laufband">
         <h3>Laufband</h3>
         <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
         <span class="price">94,99 €</span>
         <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener" onclick="productClick('Laufband')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="thrombosestrumpf" data-cats="sport regeneration reha">
+      <div class="product" id="thrombosestrumpf">
         <h3>Thrombosestrumpf</h3>
         <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
         <span class="price">26,90 €</span>
         <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener" onclick="productClick('Thrombosestrumpf')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="waermemessgeraet" data-cats="reha">
+      <div class="product" id="waermemessgeraet">
         <h3>Wärmemessgerät</h3>
         <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
         <span class="price">16,14 €</span>
         <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener" onclick="productClick('Wärmemessgerät')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="aloe-vera-gel" data-cats="reha">
+      <div class="product" id="aloe-vera-gel">
         <h3>Aloe-Vera-Gel</h3>
         <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
         <span class="price">6,30 €</span>
         <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener" onclick="productClick('Aloe-Vera-Gel')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="lymphmassband" data-cats="reha">
+      <div class="product" id="lymphmassband">
         <h3>Lymphmaßband</h3>
         <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
         <span class="price">20,09 €</span>
         <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener" onclick="productClick('Lymphmaßband')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="elektrischer-shaker" data-cats="sport">
+      <div class="product" id="elektrischer-shaker">
         <h3>Elektrischer Shaker</h3>
         <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
         <span class="price">19,54 €</span>
         <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener" onclick="productClick('Elektrischer Shaker')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="bauerfeind-fussbandage" data-cats="sport">
+      <div class="product" id="bauerfeind-fussbandage">
         <h3>BAUERFEIND Fußbandage</h3>
         <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
         <span class="price">47,43 €</span>
         <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener" onclick="productClick('BAUERFEIND Fußbandage')">Bei Amazon ansehen</a>
       </div>
 
-      <div class="product" id="bauerfeind-armbandage" data-cats="sport">
+      <div class="product" id="bauerfeind-armbandage">
         <h3>BAUERFEIND Armbandage</h3>
         <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
         <span class="price">35,20 €</span>
@@ -153,7 +134,7 @@
 
     <div class="empty" id="emptyState">
       <strong>Keine Treffer.</strong><br>
-      Tipp: Suchbegriff ändern oder Kategorie auf „Alle“ stellen.
+      Tipp: Suchbegriff ändern.
     </div>
 
     <div class="footer">
@@ -167,17 +148,43 @@
       <div style="margin-top:10px;">
         Medizinischer Hinweis: Inhalte stellen keine medizinische Beratung dar und ersetzen keine individuelle Behandlung/Diagnostik.
       </div>
-      <div style="margin-top:12px;">
-        <a href="impressum.html" onclick="track('nav_impressum','footer')">Impressum</a> ·
-        <a href="datenschutz.html" onclick="track('nav_datenschutz','footer')">Datenschutz</a>
-      </div>
     </div>
   </main>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
+    <div class="bar">
+      <button class="nav-btn" type="button" onclick="go('index.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
+                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <div style="font-size:11px;">Home</div>
+      </button>
+
+      <button class="nav-btn active" type="button" onclick="go('shop.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Shop</div>
+      </button>
+
+      <button class="nav-btn" type="button" onclick="focusSearch()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Suche</div>
+      </button>
+    </div>
+  </div>
 
   <script>
     function track(eventName, label){
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
+    function go(url){ window.location.href = url; }
 
     // Theme
     const root = document.documentElement;
@@ -194,6 +201,48 @@
       localStorage.setItem("theme", next);
       track("theme_toggle", next);
     });
+
+    // Search
+    const searchInput = document.getElementById("searchInput");
+    const items = document.querySelectorAll(".product");
+    const emptyState = document.getElementById("emptyState");
+
+    function focusSearch(){
+      document.getElementById("search").scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(()=> searchInput.focus(), 350);
+      track("search_focus", "bottom_nav");
+    }
+    window.focusSearch = focusSearch;
+
+    function applySearch(){
+      const q = (searchInput.value || "").trim().toLowerCase();
+      let visible = 0;
+      items.forEach(el=>{
+        const t = (el.textContent || "").toLowerCase();
+        const show = !q || t.includes(q);
+        el.style.display = show ? "" : "none";
+        if (show) visible++;
+      });
+      emptyState.style.display = (visible === 0) ? "block" : "none";
+      checkVisibility();
+    }
+
+    searchInput.addEventListener("input", applySearch);
+
+    // local click counts for popular
+    function bumpLocalClick(name){
+      try{
+        const raw = localStorage.getItem("hm_clicks_v1");
+        const obj = raw ? JSON.parse(raw) : {};
+        obj[name] = (obj[name] || 0) + 1;
+        localStorage.setItem("hm_clicks_v1", JSON.stringify(obj));
+      }catch(e){}
+    }
+    function productClick(name){
+      bumpLocalClick(name);
+      track("product_click", name);
+    }
+    window.productClick = productClick;
 
     // Share
     function shareWhatsApp(){
@@ -221,91 +270,6 @@
     window.copyLink = copyLink;
     window.shareAny = shareAny;
 
-    // local clicks for popular
-    function bumpLocalClick(name){
-      try{
-        const raw = localStorage.getItem("hm_clicks_v1");
-        const obj = raw ? JSON.parse(raw) : {};
-        obj[name] = (obj[name] || 0) + 1;
-        localStorage.setItem("hm_clicks_v1", JSON.stringify(obj));
-      }catch(e){}
-    }
-    function productClick(name){
-      bumpLocalClick(name);
-      track("product_click", name);
-    }
-    window.productClick = productClick;
-
-    // Categories dropdown
-    const catPanel = document.getElementById("catPanel");
-    const catToggle = document.getElementById("catToggle");
-    const catCaret = document.getElementById("catCaret");
-    const catItems = document.querySelectorAll(".cat-item");
-    let activeCat = "all";
-
-    function closeCats(){
-      catPanel.setAttribute("hidden","");
-      catToggle.setAttribute("aria-expanded","false");
-      catCaret.textContent = "▾";
-    }
-    function openCats(){
-      catPanel.removeAttribute("hidden");
-      catToggle.setAttribute("aria-expanded","true");
-      catCaret.textContent = "▴";
-    }
-    catToggle.addEventListener("click",(e)=>{
-      e.stopPropagation();
-      if (catPanel.hasAttribute("hidden")) openCats(); else closeCats();
-    });
-    document.addEventListener("click",()=>{ if (!catPanel.hasAttribute("hidden")) closeCats(); });
-
-    // Search + filter
-    const items = document.querySelectorAll(".product");
-    const searchInput = document.getElementById("searchInput");
-    const emptyState = document.getElementById("emptyState");
-    let searchQuery = "";
-
-    function matchesSearch(el){
-      if (!searchQuery) return true;
-      const t = (el.textContent || "").toLowerCase();
-      return t.includes(searchQuery);
-    }
-
-    function applyVisibility(){
-      let visible = 0;
-      items.forEach(el=>{
-        const cats = (el.getAttribute("data-cats") || "").trim();
-        const catOk = (activeCat === "all") ? true : cats.split(/\s+/).includes(activeCat);
-        const searchOk = matchesSearch(el);
-        const show = catOk && searchOk;
-        el.style.display = show ? "" : "none";
-        if (show) visible++;
-      });
-      emptyState.style.display = (visible === 0) ? "block" : "none";
-      checkVisibility();
-    }
-
-    function applyCategory(cat){
-      activeCat = cat;
-      catItems.forEach(b=>b.classList.toggle("active", b.dataset.cat === cat));
-      applyVisibility();
-      track("category_select", cat);
-    }
-
-    catItems.forEach(btn=>{
-      btn.addEventListener("click",(e)=>{
-        e.stopPropagation();
-        applyCategory(btn.dataset.cat);
-        closeCats();
-      });
-    });
-
-    searchInput.addEventListener("input",()=>{
-      searchQuery = (searchInput.value || "").trim().toLowerCase();
-      applyVisibility();
-      track("search", searchQuery ? "typed" : "cleared");
-    });
-
     // Scroll reveal appear/disappear
     function checkVisibility(){
       const trigger = window.innerHeight * 0.92;
@@ -326,7 +290,7 @@
     window.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
-    applyVisibility();
+    applySearch();
   </script>
 </body>
 </html>

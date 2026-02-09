@@ -11,7 +11,6 @@
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 
-      /* Dark */
       --bg:#000;
       --text:#fff;
       --muted:#d7d7d7;
@@ -35,17 +34,15 @@
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
       overflow-x:hidden;
-      font-size: 15px; /* kleiner/kompakter */
+      font-size: 15px; /* kompakter */
     }
 
-    /* MEHR RAND */
     .wrap{
       max-width:980px;
       margin:0 auto;
-      padding:34px 24px; /* größer als vorher */
+      padding:34px 24px; /* mehr Rand */
     }
 
-    /* Topbar: Home links, rechts Controls (Shop-Dropdown + Filter + Theme) */
     .topbar{
       display:flex;
       align-items:center;
@@ -63,10 +60,7 @@
       border-radius: 10px;
       outline: 1px solid transparent;
     }
-
-    .nav-left a:hover{
-      outline: 1px solid var(--line);
-    }
+    .nav-left a:hover{ outline: 1px solid var(--line); }
 
     .right-controls{
       display:flex;
@@ -75,7 +69,7 @@
       position:relative;
     }
 
-    /* Shop button (Dropdown Trigger) */
+    /* Shop dropdown */
     .shop-pill{
       height:44px;
       padding:0 12px;
@@ -85,14 +79,13 @@
       font-weight:900;
       color:#fff;
       background:var(--ig);
-      box-shadow:0 0 18px rgba(214,41,118,0.18);
+      box-shadow:0 0 12px rgba(214,41,118,0.10); /* dezenter */
       display:flex;
       align-items:center;
       gap:8px;
       white-space:nowrap;
     }
 
-    /* Dropdown Panel for categories */
     .menu-panel{
       position:absolute;
       right:0;
@@ -104,7 +97,6 @@
       overflow:hidden;
       z-index:60;
     }
-
     .menu-panel::before{
       content:"";
       position:absolute;
@@ -112,13 +104,11 @@
       padding:1.5px;
       border-radius:14px;
       background:var(--ig);
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.55;
+      opacity:.35; /* dezenter */
     }
 
     .menu-panel button{
@@ -134,32 +124,23 @@
       position:relative;
       z-index:1;
     }
-
-    .menu-panel button:hover{
-      outline:1px solid var(--line);
-    }
-
+    .menu-panel button:hover{ outline:1px solid var(--line); }
     .menu-panel button.active{
-      outline:2px solid transparent;
-      background: rgba(255,255,255,0.04);
-      box-shadow: 0 0 14px rgba(214,41,118,0.18);
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 0 10px rgba(214,41,118,0.08); /* dezenter */
     }
 
-    /* Filter arrow (only sort) */
-    .filterbar{
-      position:relative;
-    }
-
+    /* Filter (sort only) */
+    .filterbar{ position:relative; }
     .filter-pill{
-      width:44px;
-      height:44px;
+      width:44px; height:44px;
       border-radius:999px;
       border:0;
       cursor:pointer;
       font-weight:900;
       color:#fff;
       background:var(--ig);
-      box-shadow:0 0 18px rgba(214,41,118,0.18);
+      box-shadow:0 0 12px rgba(214,41,118,0.10); /* dezenter */
       display:flex;
       align-items:center;
       justify-content:center;
@@ -178,7 +159,6 @@
       overflow:hidden;
       z-index:70;
     }
-
     .filter-panel::before{
       content:"";
       position:absolute;
@@ -186,13 +166,11 @@
       padding:1.5px;
       border-radius:14px;
       background:var(--ig);
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.55;
+      opacity:.35; /* dezenter */
     }
 
     .filter-label{
@@ -202,13 +180,11 @@
       position:relative;
       z-index:1;
     }
-
     .filter-label span{
       color:var(--muted);
       font-weight:800;
       font-size:0.9rem;
     }
-
     .filter-label select{
       width:100%;
       padding:10px 12px;
@@ -229,7 +205,6 @@
       position:relative;
       z-index:1;
     }
-
     .filter-reset{
       padding:10px 12px;
       border-radius:999px;
@@ -240,14 +215,12 @@
       color:var(--text);
       outline:1px solid var(--line);
     }
-
     .filter-info{
       color:var(--muted);
       font-weight:900;
       font-size:0.9rem;
     }
 
-    /* Theme button */
     .theme-btn{
       border:0;
       padding:10px 12px;
@@ -260,24 +233,49 @@
       height:44px;
     }
 
-    /* 2 Spalten */
+    /* Suche (fieldset + legend) */
+    .search-wrap{
+      margin: 12px 0 6px;
+    }
+    fieldset.searchbox{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px 12px;
+      margin:0;
+    }
+    fieldset.searchbox legend{
+      padding:0 8px;
+      color:var(--muted);
+      font-weight:900;
+      font-size:0.85rem;
+    }
+    .searchbox input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-weight:800;
+      font-size:0.95rem;
+      padding:8px 2px;
+    }
+
+    /* Grid + cards */
     .product-grid{
       display:grid;
       grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:12px;            /* kompakter */
+      gap:12px;
       padding-top:10px;
     }
-
     @media (max-width:760px){
       .product-grid{ grid-template-columns:1fr; }
     }
 
-    /* Kästchen kleiner */
     .product{
       position:relative;
       background:var(--card);
       border-radius:16px;
-      padding:14px;        /* kleiner */
+      padding:14px;
       overflow:hidden;
 
       opacity: 1;
@@ -292,16 +290,13 @@
       padding:1.5px;
       border-radius:16px;
       background:var(--ig);
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.95;
+      opacity:.75; /* dezenter Rahmen */
     }
 
-    /* Scroll Animation */
     body.scroll-anim .product{
       opacity:0;
       transform:translateY(12px);
@@ -311,23 +306,21 @@
       opacity:1;
       transform:translateY(0);
       box-shadow:
-        0 0 16px rgba(214,41,118,0.28),
-        0 0 28px rgba(252,175,69,0.10);
+        0 0 10px rgba(214,41,118,0.14),
+        0 0 18px rgba(252,175,69,0.06); /* dezenter Glow */
     }
 
     .product h3{
       margin:0 0 6px;
-      font-size:0.98rem; /* kleiner */
+      font-size:0.98rem;
       letter-spacing:-0.01em;
     }
-
     .product p{
       margin:0 0 8px;
       color:var(--muted);
       line-height:1.5;
-      font-size:0.92rem; /* kleiner */
+      font-size:0.92rem;
     }
-
     .price{
       display:block;
       margin:8px 0 10px;
@@ -335,7 +328,6 @@
       color:var(--text);
       font-size:0.95rem;
     }
-
     .btn{
       display:inline-block;
       padding:8px 11px;
@@ -344,11 +336,10 @@
       font-weight:900;
       color:#fff;
       background:var(--ig);
-      box-shadow:0 0 14px rgba(214,41,118,0.18);
+      box-shadow:0 0 10px rgba(214,41,118,0.10); /* dezenter */
       font-size:0.9rem;
     }
 
-    /* Footer Hinweis unten */
     .footnote{
       margin-top: 18px;
       color: var(--muted);
@@ -369,7 +360,6 @@
       </div>
 
       <div class="right-controls">
-        <!-- SHOP Dropdown (Kategorien) -->
         <button id="shopMenuToggle" class="shop-pill" type="button" aria-expanded="false" aria-label="Kategorien öffnen">
           Shop <span id="shopCaret">▾</span>
         </button>
@@ -381,7 +371,6 @@
           <button type="button" class="cat-item" data-cat="reha">Reha</button>
         </div>
 
-        <!-- Filter (nur Sortierung) -->
         <div class="filterbar">
           <button id="filterToggle" class="filter-pill" type="button" aria-expanded="false" aria-label="Sortierung öffnen">▾</button>
 
@@ -404,14 +393,20 @@
           </div>
         </div>
 
-        <!-- Theme -->
         <button id="themeBtn" class="theme-btn" type="button">🌗</button>
       </div>
     </div>
 
+    <!-- Suche als Legend/Fieldset -->
+    <div class="search-wrap">
+      <fieldset class="searchbox">
+        <legend>Suche</legend>
+        <input id="searchInput" type="search" placeholder="Produkt suchen…" autocomplete="off">
+      </fieldset>
+    </div>
+
     <section class="product-grid">
 
-      <!-- Massagepistole (Regeneration) -->
       <div class="product" data-cats="regeneration">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
@@ -419,7 +414,6 @@
         <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Moorkissen (Regeneration) -->
       <div class="product" data-cats="regeneration">
         <h3>Moorkissen</h3>
         <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
@@ -427,7 +421,6 @@
         <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Knie-Kühlpack (Regeneration + Reha) -->
       <div class="product" data-cats="regeneration reha">
         <h3>Knie-Kühlpack</h3>
         <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
@@ -435,7 +428,6 @@
         <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Retterspitz (ALLE Kategorien) -->
       <div class="product" data-cats="sport regeneration reha">
         <h3>Retterspitz</h3>
         <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
@@ -443,7 +435,6 @@
         <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- MacDavid Bandage (Sport) -->
       <div class="product" data-cats="sport">
         <h3>MacDavid Bandage</h3>
         <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
@@ -451,7 +442,6 @@
         <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Leukotape (Sport) -->
       <div class="product" data-cats="sport">
         <h3>Leukotape</h3>
         <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
@@ -459,7 +449,6 @@
         <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Laufband (ALLE Kategorien) -->
       <div class="product" data-cats="sport regeneration reha">
         <h3>Laufband</h3>
         <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
@@ -467,7 +456,6 @@
         <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Thrombosestrumpf (ALLE Kategorien) -->
       <div class="product" data-cats="sport regeneration reha">
         <h3>Thrombosestrumpf</h3>
         <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
@@ -475,7 +463,6 @@
         <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Wärmemessgerät (Reha) -->
       <div class="product" data-cats="reha">
         <h3>Wärmemessgerät</h3>
         <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
@@ -483,7 +470,6 @@
         <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Aloe-Vera-Gel (Reha) -->
       <div class="product" data-cats="reha">
         <h3>Aloe-Vera-Gel</h3>
         <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
@@ -491,7 +477,6 @@
         <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Lymphmaßband (Reha) -->
       <div class="product" data-cats="reha">
         <h3>Lymphmaßband</h3>
         <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
@@ -499,7 +484,6 @@
         <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Elektrischer Shaker (Sport) -->
       <div class="product" data-cats="sport">
         <h3>Elektrischer Shaker</h3>
         <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
@@ -507,7 +491,6 @@
         <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- BAUERFEIND Fußbandage (Sport) -->
       <div class="product" data-cats="sport">
         <h3>BAUERFEIND Fußbandage</h3>
         <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
@@ -515,7 +498,6 @@
         <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- BAUERFEIND Armbandage (Sport) -->
       <div class="product" data-cats="sport">
         <h3>BAUERFEIND Armbandage</h3>
         <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
@@ -532,14 +514,13 @@
   </div>
 
   <script>
-    // Theme (speichert Einstellung)
+    // Theme
     const root = document.documentElement;
     const themeBtn = document.getElementById("themeBtn");
 
     const saved = localStorage.getItem("theme");
-    if (saved) {
-      root.setAttribute("data-theme", saved);
-    } else {
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
       const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
       root.setAttribute("data-theme", prefersLight ? "light" : "dark");
     }
@@ -572,7 +553,7 @@
     window.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
-    // Category dropdown (Shop button)
+    // Shop Category dropdown
     const shopMenu = document.getElementById("shopMenu");
     const shopToggle = document.getElementById("shopMenuToggle");
     const shopCaret = document.getElementById("shopCaret");
@@ -589,7 +570,6 @@
       shopToggle.setAttribute("aria-expanded","true");
       shopCaret.textContent = "▴";
     }
-
     shopToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       if (shopMenu.hasAttribute("hidden")) openShopMenu();
@@ -614,7 +594,6 @@
       filterToggle.setAttribute("aria-expanded","true");
       filterToggle.textContent = "▴";
     }
-
     filterToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       if (filterPanel.hasAttribute("hidden")) openFilter();
@@ -626,6 +605,10 @@
       if (!filterPanel.hasAttribute("hidden")) closeFilter();
     });
 
+    // Search
+    const searchInput = document.getElementById("searchInput");
+    let searchQuery = "";
+
     // Original order
     const original = Array.from(grid.querySelectorAll(".product")).map((el, idx) => ({ el, idx }));
 
@@ -634,34 +617,36 @@
       const val = parseFloat(raw);
       return Number.isFinite(val) ? val : NaN;
     }
-
     function getTitle(el){
       return (el.querySelector("h3")?.textContent || "").trim().toLowerCase();
     }
+    function matchesSearch(el){
+      if (!searchQuery) return true;
+      const t = (el.textContent || "").toLowerCase();
+      return t.includes(searchQuery);
+    }
 
     function updateInfo(){
-      const visibleCount = original.length; // sort-only: counts always total shown for current category
+      const visibleCount = original.filter(({el}) => el.style.display !== "none").length;
       info.textContent = `${visibleCount}`;
     }
-    updateInfo();
+
+    function applyVisibility(){
+      items.forEach(el => {
+        const cats = (el.getAttribute("data-cats") || "").trim();
+        const catOk = (activeCat === "all") ? true : cats.split(/\s+/).includes(activeCat);
+        const searchOk = matchesSearch(el);
+        el.style.display = (catOk && searchOk) ? "" : "none";
+      });
+      updateInfo();
+      checkVisibility();
+    }
 
     function applyCategory(cat){
       activeCat = cat;
-
       catItems.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
-
-      items.forEach(el => {
-        const cats = (el.getAttribute("data-cats") || "").trim();
-        if (cat === "all") {
-          el.style.display = "";
-        } else {
-          const ok = cats.split(/\s+/).includes(cat);
-          el.style.display = ok ? "" : "none";
-        }
-      });
-
-      applySort();       // keep chosen sort after category switch
-      checkVisibility();
+      applyVisibility();
+      applySort();
     }
 
     catItems.forEach(btn => {
@@ -679,17 +664,11 @@
       const hidden  = original.filter(({el}) => el.style.display === "none");
       let sorted = visible.slice();
 
-      if(mode === "default"){
-        sorted.sort((a,b) => a.idx - b.idx);
-      } else if(mode === "price-asc"){
-        sorted.sort((a,b) => parsePrice(a.el) - parsePrice(b.el));
-      } else if(mode === "price-desc"){
-        sorted.sort((a,b) => parsePrice(b.el) - parsePrice(a.el));
-      } else if(mode === "az"){
-        sorted.sort((a,b) => getTitle(a.el).localeCompare(getTitle(b.el), "de"));
-      } else if(mode === "za"){
-        sorted.sort((a,b) => getTitle(b.el).localeCompare(getTitle(a.el), "de"));
-      }
+      if(mode === "default") sorted.sort((a,b) => a.idx - b.idx);
+      else if(mode === "price-asc") sorted.sort((a,b) => parsePrice(a.el) - parsePrice(b.el));
+      else if(mode === "price-desc") sorted.sort((a,b) => parsePrice(b.el) - parsePrice(a.el));
+      else if(mode === "az") sorted.sort((a,b) => getTitle(a.el).localeCompare(getTitle(b.el), "de"));
+      else if(mode === "za") sorted.sort((a,b) => getTitle(b.el).localeCompare(getTitle(a.el), "de"));
 
       [...sorted, ...hidden].forEach(({el}) => grid.appendChild(el));
       checkVisibility();
@@ -700,13 +679,21 @@
     resetBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       sortSelect.value = "default";
-      // reset: keep current category, but restore default order within it
-      const visible = original.filter(({el}) => el.style.display !== "none").sort((a,b) => a.idx - b.idx);
-      const hidden  = original.filter(({el}) => el.style.display === "none").sort((a,b) => a.idx - b.idx);
-      [...visible, ...hidden].forEach(({el}) => grid.appendChild(el));
+      // Reihenfolge zurück (ohne Kategorie & Suche zu zerstören)
+      original.sort((a,b) => a.idx - b.idx).forEach(({el}) => grid.appendChild(el));
       closeFilter();
       checkVisibility();
     });
+
+    searchInput.addEventListener("input", () => {
+      searchQuery = (searchInput.value || "").trim().toLowerCase();
+      applyVisibility();
+      applySort();
+    });
+
+    // init
+    applyVisibility();
+    updateInfo();
   </script>
 </body>
 </html>

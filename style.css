@@ -1,31 +1,26 @@
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #000;
-  color: #fff;
+* {
+  box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-  overflow-x: hidden; /* verhindert seitliches rausziehen */
-  width: 100%;
-  max-width: 100%;
 }
 
-/* NAV: immer mittig, darf nicht “wandern” */
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+}
+
 nav {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 30px;
-  padding: 20px 16px;
-  width: 100%;
+  padding: 20px;
+  background: #000;
 }
 
 nav a {
   color: #bbb;
   text-decoration: none;
   font-weight: 600;
-  white-space: nowrap;
 }
 
 nav a.active {
@@ -34,36 +29,29 @@ nav a.active {
   border-image: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5) 1;
 }
 
-/* SHOP GRID: zwei Spalten, ohne Layout-Sprengung */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* WICHTIG: verhindert Überbreite */
+  grid-template-columns: repeat(2, 1fr); /* ZWEI SPALTEN */
   gap: 25px;
-  padding: 40px 16px;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
+  padding: 40px;
 }
 
-/* Produktkarte – STYLE WIE VORHER (NICHT UMBGEBAUT!) */
 .product {
   padding: 25px;
   border-radius: 18px;
   background: #111;
   border: 1px solid transparent;
   border-image: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5) 1;
-  min-width: 0; /* verhindert, dass Texte/Elemente die Karte verbreitern */
+  transition: transform 0.3s, box-shadow 0.5s;
+}
+
+.product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(214,41,118,0.6);
 }
 
 .product h3 {
   margin-top: 0;
-}
-
-.product p {
-  line-height: 1.7;
-  margin-bottom: 16px;
-  color: #ddd;
-  overflow-wrap: anywhere; /* killt Layout-Overflow durch lange Wörter */
 }
 
 .product span {
@@ -83,14 +71,7 @@ nav a.active {
   background: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 }
 
-/* Hover Glow wie davor */
-.product:hover {
-  box-shadow: 0 0 25px rgba(214,41,118,0.6);
-  transform: translateY(-2px);
-  transition: 0.25s;
-}
-
-/* Scroll Glow Animation – passt zu deinem shop.html (reveal/active) */
+/* Glow Animation beim Scrollen */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -100,15 +81,7 @@ nav a.active {
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
-  box-shadow: 0 0 30px rgba(255, 0, 255, 0.35),
-              0 0 60px rgba(255, 165, 0, 0.25),
-              0 0 90px rgba(255, 0, 255, 0.15);
-}
-
-/* Mobile: eine Spalte */
-@media (max-width: 760px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-    padding: 24px 16px;
-  }
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.4),
+              0 0 60px rgba(255, 165, 0, 0.3),
+              0 0 90px rgba(255, 0, 255, 0.2);
 }

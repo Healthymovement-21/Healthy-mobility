@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Healthy Mobility – Home</title>
+
+  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260209b">
+</head>
+
+<body>
+  <!-- Intro Animation -->
+  <div class="intro" id="intro">
+    <div class="logo">
+      <div class="shine"></div>
+      <div><span>Healthy</span><br><span>Mobility</span></div>
+    </div>
+  </div>
+
+  <!-- THEME: ALWAYS top-right -->
+  <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+
+  <!-- Search overlay (opens from bottom search icon) -->
+  <div class="overlay" id="searchOverlay" aria-hidden="true">
+    <div class="overlay-panel">
+      <div class="overlay-top">
+        <input id="overlayInput" type="search" placeholder="Produkt suchen…" autocomplete="off">
+        <button id="overlayClose" type="button">Schließen</button>
+      </div>
+      <div class="suggest" id="suggestList"></div>
+    </div>
+  </div>
+
+
+  <main class="page">
+    <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
+    <p class="hero-sub">Praktische Tools, die Therapie, Training und Alltag sinnvoll unterstützen.</p>
+
+    <div class="card" style="margin-top:18px;">
+      <p>
+        Auf dieser Seite findest du eine Auswahl an Produkten aus den Bereichen Bewegung,
+        Regeneration, Wärme, Kälte, Stabilität und unterstützendes Training.
+        Die Produktauswahl basiert auf physiotherapeutischem Fachwissen,
+        Erfahrungen aus dem Praxisalltag sowie Rückmeldungen von Patientinnen und Patienten.
+      </p>
+
+      <p>
+        Die hier aufgeführten Produkte können eine physiotherapeutische Behandlung sinnvoll
+        ergänzen und unterstützen. Sie ersetzen jedoch weder eine individuelle Therapie
+        noch eine medizinische Diagnose oder Behandlung.
+      </p>
+
+      <p>
+        Wichtig zu wissen: Nicht alle hier aufgeführten Produkte habe ich persönlich selbst getestet.
+        Die Empfehlungen ergeben sich aus fachlicher Einschätzung,
+        bewährten Anwendungen im therapeutischen Umfeld
+        sowie aus Erfahrungen und Rückmeldungen anderer Anwender.
+      </p>
+
+      <p>
+        Ich achte dabei besonders auf einfache Anwendung, sinnvollen Nutzen und gute Alltagstauglichkeit.
+        So hast du praktische Tools, die dich wirklich unterstützen – ohne unnötigen Aufwand.
+      </p>
+
+      <p>
+        Ob und welches Produkt sinnvoll ist, hängt immer von der individuellen Situation,
+        dem jeweiligen Beschwerdebild sowie den persönlichen Voraussetzungen ab.
+        In bestimmten Fällen kann es sinnvoll sein,
+        vor der Anwendung noch einmal Rücksprache zu halten.
+      </p>
+
+      <p>
+        Werbung / Affiliate-Links: Wenn du über Links einkaufst, erhalte ich ggf. eine Provision.
+        Für dich entstehen keine zusätzlichen Kosten.
+      </p>
+
+      <div class="cta-row">
+        <a class="cta" href="shop.html" onclick="track('nav_shop','home_cta')">Zum Shop →</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <p>
+        Tipp: Nutze Produkte nie nach dem Motto „viel hilft viel“. Gerade bei Wärme/Kälte,
+        Bandagen oder intensiver Selbstbehandlung gilt: dosiert, individuell und sinnvoll einsetzen.
+        Wenn du dir unsicher bist, klären wir lieber kurz ab, was bei deiner Situation wirklich passt.
+      </p>
+      <p>
+        Ziel ist nicht „mehr kaufen“, sondern die passenden Tools zu haben, um Therapie, Training und Alltag
+        besser zu unterstützen – ohne unnötigen Quatsch.
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <p><strong>Beliebte Empfehlungen</strong></p>
+      <p>
+        Hier siehst du automatisch die Produkte, die am häufigsten angeklickt wurden.
+        (Die Klicks werden lokal im Browser gespeichert.)
+      </p>
+      <div id="popularList"></div>
+    </div>
+
+    <!-- Impressum/Datenschutz nur hier -->
+    <div class="footer">
+      <a href="impressum.html" onclick="track('nav_impressum','home_footer')">Impressum</a> ·
+      <a href="datenschutz.html" onclick="track('nav_datenschutz','home_footer')">Datenschutz</a>
+      <div style="margin-top:10px;">Hinweis: Inhalte stellen keine medizinische Beratung dar.</div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
+    <div class="bar">
+      <button class="nav-btn active" type="button" onclick="go('index.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
+                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <div style="font-size:11px;">Home</div>
+      </button>
+
+      <button class="nav-btn" type="button" onclick="go('shop.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Shop</div>
+      </button>
+
+      <!-- SEARCH opens overlay, not scroll -->
+      <button class="nav-btn" type="button" id="openSearchBtn">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Suche</div>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function track(eventName, label){
+      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
+    }
+    function go(url){ window.location.href = url; }
+
+    // Theme ALWAYS top-right
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      track("theme_toggle", next);
+    });
+
+    // Intro FIX: always disappears + failsafe remove
+    const intro = document.getElementById("intro");
+    const seen = sessionStorage.getItem("hm_intro_seen");
+    if (seen){
+      intro.remove();
+    } else {
+      sessionStorage.setItem("hm_intro_seen","1");
+      setTimeout(()=> intro.classList.add("hide"), 1400);
+      setTimeout(()=> { if (intro) intro.remove(); }, 2100);
+      setTimeout(()=> { const x=document.getElementById("intro"); if (x) x.remove(); }, 3000); // failsafe
+    }
+
+    // Products catalog for overlay search
+    const products = [
+      { name:"Massagepistole", id:"massagepistole", price:"25,99 €" },
+      { name:"Moorkissen", id:"moorkissen", price:"29,89 €" },
+      { name:"Knie-Kühlpack", id:"knie-kuehlpack", price:"17,89 €" },
+      { name:"Retterspitz", id:"retterspitz", price:"26,14 €" },
+      { name:"MacDavid Bandage", id:"macdavid-bandage", price:"44,95 €" },
+      { name:"Leukotape", id:"leukotape", price:"9,99 €" },
+      { name:"Laufband", id:"laufband", price:"94,99 €" },
+      { name:"Thrombosestrumpf", id:"thrombosestrumpf", price:"26,90 €" },
+      { name:"Wärmemessgerät", id:"waermemessgeraet", price:"16,14 €" },
+      { name:"Aloe-Vera-Gel", id:"aloe-vera-gel", price:"6,30 €" },
+      { name:"Lymphmaßband", id:"lymphmassband", price:"20,09 €" },
+      { name:"Elektrischer Shaker", id:"elektrischer-shaker", price:"19,54 €" },
+      { name:"BAUERFEIND Fußbandage", id:"bauerfeind-fussbandage", price:"47,43 €" },
+      { name:"BAUERFEIND Armbandage", id:"bauerfeind-armbandage", price:"35,20 €" }
+    ];
+
+    // Overlay Search
+    const overlay = document.getElementById("searchOverlay");
+    const openSearchBtn = document.getElementById("openSearchBtn");
+    const overlayInput = document.getElementById("overlayInput");
+    const overlayClose = document.getElementById("overlayClose");
+    const suggestList = document.getElementById("suggestList");
+
+    function openOverlay(){
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden","false");
+      overlayInput.value = "";
+      renderSuggest("");
+      setTimeout(()=> overlayInput.focus(), 50);
+      track("search_overlay_open","home");
+    }
+    function closeOverlay(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden","true");
+      track("search_overlay_close","home");
+    }
+    function renderSuggest(q){
+      const query = (q||"").trim().toLowerCase();
+      const results = products
+        .filter(p => !query || (p.name.toLowerCase().includes(query)))
+        .slice(0, 10);
+
+      if (results.length === 0){
+        suggestList.innerHTML = `<div style="color:var(--muted);padding:10px 2px;">Keine Treffer.</div>`;
+        return;
+      }
+      suggestList.innerHTML = results.map(p => `
+        <a href="shop.html#${p.id}" onclick="track('search_select','${p.name}')">
+          <span class="name">${p.name}</span>
+          <span class="meta">${p.price}</span>
+        </a>
+      `).join("");
+    }
+
+    openSearchBtn.addEventListener("click", openOverlay);
+    overlayClose.addEventListener("click", closeOverlay);
+    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
+    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
+
+    overlayInput.addEventListener("input", ()=> renderSuggest(overlayInput.value));
+
+    // Popular list
+    const productLinks = products.reduce((acc,p)=>{ acc[p.name]={url:`shop.html#${p.id}`}; return acc; },{});
+
+    function getClickCounts(){
+      try{
+        const raw = localStorage.getItem("hm_clicks_v1");
+        return raw ? JSON.parse(raw) : {};
+      }catch(e){ return {}; }
+    }
+    function renderPopular(){
+      const host = document.getElementById("popularList");
+      const counts = getClickCounts();
+
+      const items = Object.keys(productLinks).map(name => ({
+        name,
+        count: counts[name] || 0,
+        url: productLinks[name].url
+      })).sort((a,b) => b.count - a.count);
+
+      const top = items.filter(i => i.count > 0).slice(0, 6);
+
+      if (top.length === 0){
+        host.innerHTML = `<div class="cta-row"><a class="cta" href="shop.html">Noch keine Klicks → Shop öffnen</a></div>`;
+        return;
+      }
+
+      host.innerHTML = top.map(i => `
+        <div style="margin-top:10px;">
+          <a class="cta" href="${i.url}">${i.name} (${i.count} Klicks)</a>
+        </div>
+      `).join("");
+    }
+    renderPopular();
+
+  </script>
+</body>
+</html>

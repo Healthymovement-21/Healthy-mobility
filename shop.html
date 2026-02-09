@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Healthy Mobility – Shop</title>
+
+  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260209b">
+</head>
+
+<body>
+  <!-- THEME: ALWAYS top-right -->
+  <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+
+  <!-- Search overlay (opens from bottom search icon) -->
+  <div class="overlay" id="searchOverlay" aria-hidden="true">
+    <div class="overlay-panel">
+      <div class="overlay-top">
+        <input id="overlayInput" type="search" placeholder="Produkt suchen…" autocomplete="off">
+        <button id="overlayClose" type="button">Schließen</button>
+      </div>
+      <div class="suggest" id="suggestList"></div>
+    </div>
+  </div>
+
+  <main class="page">
+    <div class="shop-head">
+      <h1 id="shopTitle">Shop</h1>
+      <button class="cat-btn" id="catToggle" type="button" aria-expanded="false">Kategorien</button>
+    </div>
+
+    <div class="cat-panel" id="catPanel" aria-hidden="true">
+      <button class="cat-link" type="button" data-target="cat-regeneration">Regeneration</button>
+      <button class="cat-link" type="button" data-target="cat-sport">Sport</button>
+      <button class="cat-link" type="button" data-target="cat-reha">Reha</button>
+    </div>
+
+                <section class="category" id="cat-regeneration">
+      <div class="cat-head">
+        <h2>Regeneration</h2>
+        <p class="cat-desc">Regeneration für Alltag & Erholung.</p>
+      </div>
+      <div class="product-grid">
+
+        <div class="product" id="massagepistole" data-category="Regeneration">
+          <h3>Massagepistole</h3>
+          <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
+          <p class="why">Kurz nach Belastung zur schnellen Lockerung.</p>
+          <span class="price">25,99 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/45QvJM2" target="_blank" rel="noopener" onclick="productClick('Massagepistole')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Massagepistole','https://amzn.to/45QvJM2')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="moorkissen" data-category="Wärme">
+          <h3>Moorkissen</h3>
+          <p>Zur lokalen Wärmeanwendung im Bereich Rücken, Nacken oder Schulter. Wärme kann entspannend wirken und die Durchblutung fördern.</p>
+          <p class="why">Sanfte Tiefenwärme für Rücken, Nacken, Schulter.</p>
+          <span class="price">29,89 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4cgzQ7V" target="_blank" rel="noopener" onclick="productClick('Moorkissen')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Moorkissen','https://amzn.to/4cgzQ7V')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="knie-kuehlpack" data-category="Kälte">
+          <h3>Knie-Kühlpack</h3>
+          <p>Zur Kühlung bei akuten Reizzuständen oder nach Belastung. Anwendung individuell und zeitlich begrenzt.</p>
+          <p class="why">Akut kühlen bei Reizzuständen oder nach Sport.</p>
+          <span class="price">17,89 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener" onclick="productClick('Knie-Kühlpack')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Knie-Kühlpack','https://amzn.to/4qjoAuL')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="retterspitz" data-category="Regeneration">
+          <h3>Retterspitz</h3>
+          <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
+          <p class="why">Klassiker zur äußerlichen Unterstützung bei Reizung.</p>
+          <span class="price">26,14 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/3ZnEwRS" target="_blank" rel="noopener" onclick="productClick('Retterspitz')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Retterspitz','https://amzn.to/3ZnEwRS')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="thrombosestrumpf" data-category="Regeneration">
+          <h3>Thrombosestrumpf</h3>
+          <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
+          <p class="why">Unterstützt den venösen Rückfluss bei Ruhe.</p>
+          <span class="price">26,90 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4r3NY91" target="_blank" rel="noopener" onclick="productClick('Thrombosestrumpf')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Thrombosestrumpf','https://amzn.to/4r3NY91')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="category" id="cat-sport">
+      <div class="cat-head">
+        <h2>Sport</h2>
+        <p class="cat-desc">Für Training, Sport und Stabilität.</p>
+      </div>
+      <div class="product-grid">
+
+        <div class="product" id="elektrischer-shaker" data-category="Training">
+          <h3>Elektrischer Shaker</h3>
+          <p>Zur unkomplizierten Zubereitung von Getränken oder Nahrungsergänzungen im Alltag.</p>
+          <p class="why">Einfacher Alltag für Shakes & Supplements.</p>
+          <span class="price">19,54 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/3MhQ1HB" target="_blank" rel="noopener" onclick="productClick('Elektrischer Shaker')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Elektrischer Shaker','https://amzn.to/3MhQ1HB')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="laufband" data-category="Training">
+          <h3>Laufband</h3>
+          <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
+          <p class="why">Bewegung zu Hause – wetterunabhängig.</p>
+          <span class="price">94,99 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener" onclick="productClick('Laufband')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Laufband','https://amzn.to/3O9os3F')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="macdavid-bandage" data-category="Stabilität">
+          <h3>MacDavid Bandage</h3>
+          <p>Zur Unterstützung und Stabilisierung von Gelenken bei sportlicher oder alltäglicher Belastung.</p>
+          <p class="why">Gibt Gelenken Halt bei Bewegung.</p>
+          <span class="price">44,95 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4tvfiin" target="_blank" rel="noopener" onclick="productClick('MacDavid Bandage')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('MacDavid Bandage','https://amzn.to/4tvfiin')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="bauerfeind-fussbandage" data-category="Stabilität">
+          <h3>BAUERFEIND Fußbandage</h3>
+          <p>Zur Stabilisierung und Entlastung des Fußes bei Belastung im Alltag oder Sport.</p>
+          <p class="why">Stützt den Fuß bei Alltag & Sport.</p>
+          <span class="price">47,43 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/3MchKJM" target="_blank" rel="noopener" onclick="productClick('BAUERFEIND Fußbandage')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('BAUERFEIND Fußbandage','https://amzn.to/3MchKJM')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="bauerfeind-armbandage" data-category="Stabilität">
+          <h3>BAUERFEIND Armbandage</h3>
+          <p>Zur Unterstützung des Ellenbogens bei Belastung oder Überlastung.</p>
+          <p class="why">Entlastet den Ellenbogen bei Belastung.</p>
+          <span class="price">35,20 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4alA3nI" target="_blank" rel="noopener" onclick="productClick('BAUERFEIND Armbandage')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('BAUERFEIND Armbandage','https://amzn.to/4alA3nI')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="leukotape" data-category="Stabilität">
+          <h3>Leukotape</h3>
+          <p>Zur funktionellen Unterstützung von Gelenken oder zur gezielten Bewegungsführung.</p>
+          <p class="why">Gezielte Führung und Unterstützung von Gelenken.</p>
+          <span class="price">9,99 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener" onclick="productClick('Leukotape')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Leukotape','https://amzn.to/4kplTGW')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="category" id="cat-reha">
+      <div class="cat-head">
+        <h2>Reha</h2>
+        <p class="cat-desc">Rehabilitation & Verlaufskontrolle.</p>
+      </div>
+      <div class="product-grid">
+
+        <div class="product" id="waermemessgeraet" data-category="Diagnostik">
+          <h3>Wärmemessgerät</h3>
+          <p>Zur objektiveren Einschätzung von Temperaturunterschieden, z. B. im Verlauf nach Belastung.</p>
+          <p class="why">Vergleicht Temperaturunterschiede objektiv.</p>
+          <span class="price">16,14 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4a6vNtq" target="_blank" rel="noopener" onclick="productClick('Wärmemessgerät')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Wärmemessgerät','https://amzn.to/4a6vNtq')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="aloe-vera-gel" data-category="Pflege">
+          <h3>Aloe-Vera-Gel</h3>
+          <p>Zur äußerlichen Hautpflege, insbesondere nach thermischen Anwendungen oder bei sensibler Haut.</p>
+          <p class="why">Beruhigt die Haut nach Wärme/Kälte.</p>
+          <span class="price">6,30 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/4rftMB6" target="_blank" rel="noopener" onclick="productClick('Aloe-Vera-Gel')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Aloe-Vera-Gel','https://amzn.to/4rftMB6')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="product" id="lymphmassband" data-category="Diagnostik">
+          <h3>Lymphmaßband</h3>
+          <p>Zur Verlaufskontrolle von Umfangsveränderungen bei Schwellungen oder Ödemen.</p>
+          <p class="why">Umfang im Verlauf schnell dokumentieren.</p>
+          <span class="price">20,09 €</span>
+          <div class="product-actions">
+            <a class="btn" href="https://amzn.to/3MvIhSn" target="_blank" rel="noopener" onclick="productClick('Lymphmaßband')">Bei Amazon ansehen</a>
+            <button class="share-btn" type="button" aria-label="Teilen" onclick="shareProduct('Lymphmaßband','https://amzn.to/3MvIhSn')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8.5 6.5 12 3l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 13v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="empty" id="emptyState">
+            <strong>Keine Treffer.</strong><br>
+            Tipp: Suchbegriff ändern.
+          </div>
+      
+          <div class="footer">
+            <div>
+              Werbung / Affiliate-Links: Diese Seite enthält Affiliate-Links. Wenn du darüber einkaufst, erhalte ich ggf. eine Provision.
+              Für dich entstehen keine zusätzlichen Kosten.
+            </div>
+            <div style="margin-top:10px;">
+              Preise können sich bei Amazon jederzeit ändern. Maßgeblich ist der Preis auf Amazon zum Zeitpunkt des Kaufs.
+            </div>
+            <div style="margin-top:10px;">
+              Medizinischer Hinweis: Inhalte stellen keine medizinische Beratung dar und ersetzen keine individuelle Behandlung/Diagnostik.
+            </div>
+          </div>
+        </main>
+      
+        <!-- Bottom Nav -->
+        <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
+          <div class="bar">
+            <button class="nav-btn" type="button" onclick="go('index.html')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
+                      stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+              <div style="font-size:11px;">Home</div>
+            </button>
+      
+            <button class="nav-btn active" type="button" onclick="go('shop.html')">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <div style="font-size:11px;">Shop</div>
+            </button>
+      
+            <button class="nav-btn" type="button" id="openSearchBtn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <div style="font-size:11px;">Suche</div>
+            </button>
+          </div>
+        </div>
+      
+        <script>
+          function track(eventName, label){
+            try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
+          }
+          function go(url){ window.location.href = url; }
+      
+          // Theme ALWAYS top-right
+          const root = document.documentElement;
+          const saved = localStorage.getItem("theme");
+          if (saved) root.setAttribute("data-theme", saved);
+          else {
+            const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+            root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+          }
+          document.getElementById("themeBtn").addEventListener("click", () => {
+            const cur = root.getAttribute("data-theme") || "dark";
+            const next = cur === "dark" ? "light" : "dark";
+            root.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
+            track("theme_toggle", next);
+          });
+      
+          // Search overlay + filters in shop
+          const items = Array.from(document.querySelectorAll(".product"));
+          const emptyState = document.getElementById("emptyState");
+          const overlay = document.getElementById("searchOverlay");
+          const openSearchBtn = document.getElementById("openSearchBtn");
+          const overlayInput = document.getElementById("overlayInput");
+          const overlayClose = document.getElementById("overlayClose");
+          const suggestList = document.getElementById("suggestList");
+          const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
+          let activeCategory = "all";
+      
+          const products = items.map(el => ({
+            id: el.id,
+            name: (el.querySelector("h3")?.textContent || "").trim(),
+            price: (el.querySelector(".price")?.textContent || "").trim(),
+            category: el.getAttribute("data-category") || "All"
+          }));
+      
+          function setActiveFilter(value){
+            activeCategory = value;
+            filterButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.filter === value));
+            applySearch();
+            track("filter_select", value);
+          }
+      
+          function openOverlay(){
+            overlay.classList.add("open");
+            overlay.setAttribute("aria-hidden","false");
+            overlayInput.value = "";
+            renderSuggest("");
+            setTimeout(()=> overlayInput.focus(), 50);
+            track("search_overlay_open","shop");
+          }
+          function closeOverlay(){
+            overlay.classList.remove("open");
+            overlay.setAttribute("aria-hidden","true");
+            track("search_overlay_close","shop");
+          }
+      
+          function applySearch(){
+            const q = (overlayInput.value || "").trim().toLowerCase();
+            let visible = 0;
+            items.forEach(el=>{
+              const t = (el.textContent || "").toLowerCase();
+              const cat = el.getAttribute("data-category") || "All";
+              const matchesCat = (activeCategory === "all") || (cat === activeCategory);
+              const matchesQuery = !q || t.includes(q);
+              const show = matchesCat && matchesQuery;
+              el.style.display = show ? "" : "none";
+              if (show) visible++;
+            });
+            emptyState.style.display = (visible === 0) ? "block" : "none";
+            checkVisibility();
+          }
+      
+          function renderSuggest(q){
+            const query = (q||"").trim().toLowerCase();
+            const results = products
+              .filter(p => !query || p.name.toLowerCase().includes(query))
+              .slice(0, 10);
+      
+            if (results.length === 0){
+              suggestList.innerHTML = `<div style="color:var(--muted);padding:10px 2px;">Keine Treffer.</div>`;
+              return;
+            }
+            suggestList.innerHTML = results.map(p => `
+              <button type="button" class="suggest-item" data-id="${p.id}">
+                <span class="name">${p.name}</span>
+                <span class="meta">${p.price}</span>
+              </button>
+            `).join("");
+          }
+      
+          suggestList.addEventListener("click", (e)=>{
+            const btn = e.target.closest(".suggest-item");
+            if (!btn) return;
+            const id = btn.getAttribute("data-id");
+            const target = document.getElementById(id);
+            if (target){
+              closeOverlay();
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+              track("search_select", id);
+            }
+          });
+      
+          overlayInput.addEventListener("input", ()=> { renderSuggest(overlayInput.value); applySearch(); });
+          openSearchBtn.addEventListener("click", openOverlay);
+          overlayClose.addEventListener("click", closeOverlay);
+          overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
+          document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
+          filterButtons.forEach(btn => btn.addEventListener("click", ()=> setActiveFilter(btn.dataset.filter)));
+      
+          // local click counts for popular
+          function bumpLocalClick(name){
+            try{
+              const raw = localStorage.getItem("hm_clicks_v1");
+              const obj = raw ? JSON.parse(raw) : {};
+              obj[name] = (obj[name] || 0) + 1;
+              localStorage.setItem("hm_clicks_v1", JSON.stringify(obj));
+            }catch(e){}
+          }
+          function productClick(name){
+            bumpLocalClick(name);
+            track("product_click", name);
+          }
+          window.productClick = productClick;
+      
+          async function shareProduct(name, url){
+            try{
+              if (navigator.share){
+                await navigator.share({ title: name, text: "Schau dir das mal an:", url });
+                track("share_product", name);
+                return;
+              }
+            }catch(e){}
+            try{
+              await navigator.clipboard.writeText(url);
+              alert("Link kopiert");
+              track("share_product_copy", name);
+            }catch(e){
+              prompt("Link kopieren:", url);
+            }
+          }
+          window.shareProduct = shareProduct;
+      
+          // Scroll reveal
+          function checkVisibility(){
+            const trigger = window.innerHeight * 0.92;
+            items.forEach(el=>{
+              if (el.style.display === "none") { el.classList.remove("active"); return; }
+              const top = el.getBoundingClientRect().top;
+              const bottom = el.getBoundingClientRect().bottom;
+              const inView = (top < trigger) && (bottom > 0);
+              if (inView) el.classList.add("active"); else el.classList.remove("active");
+            });
+          }
+          checkVisibility();
+          requestAnimationFrame(()=>{
+            document.body.classList.add("scroll-anim");
+            checkVisibility();
+          });
+          window.addEventListener("scroll", checkVisibility, { passive:true });
+          window.addEventListener("resize", checkVisibility);
+      
+          applySearch();
+        </script>
+      </body>
+      </html>
+            </div>
+      </div>
+    </section>
+
+    <div class="empty" id="emptyState">
+      <strong>Keine Treffer.</strong><br>
+      Tipp: Suchbegriff ändern.
+    </div>
+
+    <div class="footer">
+      <div>
+        Werbung / Affiliate-Links: Diese Seite enthält Affiliate-Links. Wenn du darüber einkaufst, erhalte ich ggf. eine Provision.
+        Für dich entstehen keine zusätzlichen Kosten.
+      </div>
+      <div style="margin-top:10px;">
+        Preise können sich bei Amazon jederzeit ändern. Maßgeblich ist der Preis auf Amazon zum Zeitpunkt des Kaufs.
+      </div>
+      <div style="margin-top:10px;">
+        Medizinischer Hinweis: Inhalte stellen keine medizinische Beratung dar und ersetzen keine individuelle Behandlung/Diagnostik.
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
+    <div class="bar">
+      <button class="nav-btn" type="button" onclick="go('index.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
+                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <div style="font-size:11px;">Home</div>
+      </button>
+
+      <button class="nav-btn active" type="button" onclick="go('shop.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Shop</div>
+      </button>
+
+      <button class="nav-btn" type="button" id="openSearchBtn" onclick="openOverlay()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Suche</div>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function track(eventName, label){
+      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
+    }
+    function go(url){ window.location.href = url; }
+
+    // Theme ALWAYS top-right
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      track("theme_toggle", next);
+    });
+
+    // Search overlay + filters in shop
+    const items = Array.from(document.querySelectorAll(".product"));
+    const emptyState = document.getElementById("emptyState");
+    const overlay = document.getElementById("searchOverlay");
+    const openSearchBtn = document.getElementById("openSearchBtn");
+    const overlayInput = document.getElementById("overlayInput");
+    const overlayClose = document.getElementById("overlayClose");
+    const suggestList = document.getElementById("suggestList");
+    const catToggle = document.getElementById("catToggle");
+    const catPanel = document.getElementById("catPanel");
+    const catLinks = Array.from(document.querySelectorAll(".cat-link"));
+    const shopTitle = document.getElementById("shopTitle");
+
+    const products = items.map(el => ({
+      id: el.id,
+      name: (el.querySelector("h3")?.textContent || "").trim(),
+      price: (el.querySelector(".price")?.textContent || "").trim(),
+      category: el.getAttribute("data-category") || "All"
+    }));
+
+    function toggleCategories(force){
+      const open = typeof force === "boolean" ? force : !catPanel.classList.contains("open");
+      catPanel.classList.toggle("open", open);
+      catPanel.setAttribute("aria-hidden", open ? "false" : "true");
+      catToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      track(open ? "cat_open" : "cat_close","shop");
+    }
+
+    function openOverlay(){
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden","false");
+      overlayInput.value = "";
+      renderSuggest("");
+      setTimeout(()=> overlayInput.focus(), 50);
+      track("search_overlay_open","shop");
+    }
+    function closeOverlay(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden","true");
+      track("search_overlay_close","shop");
+    }
+    window.openOverlay = openOverlay;
+
+    function applySearch(){
+      const q = (overlayInput.value || "").trim().toLowerCase();
+      let visible = 0;
+      items.forEach(el=>{
+        const t = (el.textContent || "").toLowerCase();
+        const matchesQuery = !q || t.includes(q);
+        const show = matchesQuery;
+        el.style.display = show ? "" : "none";
+        if (show) visible++;
+      });
+      document.querySelectorAll(".category").forEach(sec=>{
+        const anyVisible = Array.from(sec.querySelectorAll(".product")).some(p => p.style.display !== \"none\");
+        sec.style.display = anyVisible ? \"\" : \"none\";
+      });
+      emptyState.style.display = (visible === 0) ? "block" : "none";
+      checkVisibility();
+    }
+
+    function renderSuggest(q){
+      const query = (q||"").trim().toLowerCase();
+      const results = products
+        .filter(p => !query || p.name.toLowerCase().includes(query))
+        .slice(0, 10);
+
+      if (results.length === 0){
+        suggestList.innerHTML = `<div style="color:var(--muted);padding:10px 2px;">Keine Treffer.</div>`;
+        return;
+      }
+      suggestList.innerHTML = results.map(p => `
+        <button type="button" class="suggest-item" data-id="${p.id}">
+          <span class="name">${p.name}</span>
+          <span class="meta">${p.price}</span>
+        </button>
+      `).join("");
+    }
+
+    suggestList.addEventListener("click", (e)=>{
+      const btn = e.target.closest(".suggest-item");
+      if (!btn) return;
+      const id = btn.getAttribute("data-id");
+      const target = document.getElementById(id);
+      if (target){
+        closeOverlay();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        track("search_select", id);
+      }
+    });
+
+    overlayInput.addEventListener("input", ()=> { renderSuggest(overlayInput.value); applySearch(); });
+    if (openSearchBtn) openSearchBtn.addEventListener("click", openOverlay);
+    if (overlayClose) overlayClose.addEventListener("click", closeOverlay);
+    if (overlay) overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
+    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
+    catToggle.addEventListener("click", ()=> toggleCategories());
+    shopTitle.addEventListener("click", ()=> toggleCategories());
+    catLinks.forEach(btn => btn.addEventListener("click", ()=>{
+      const id = btn.getAttribute("data-target");
+      const target = document.getElementById(id);
+      if (target){
+        toggleCategories(false);
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }));
+    document.addEventListener("click", (e)=>{
+      if (!catPanel.contains(e.target) && !catToggle.contains(e.target) && !shopTitle.contains(e.target)){
+        toggleCategories(false);
+      }
+    });
+
+    // local click counts for popular
+    function bumpLocalClick(name){
+      try{
+        const raw = localStorage.getItem("hm_clicks_v1");
+        const obj = raw ? JSON.parse(raw) : {};
+        obj[name] = (obj[name] || 0) + 1;
+        localStorage.setItem("hm_clicks_v1", JSON.stringify(obj));
+      }catch(e){}
+    }
+    function productClick(name){
+      bumpLocalClick(name);
+      track("product_click", name);
+    }
+    window.productClick = productClick;
+
+    async function shareProduct(name, url){
+      try{
+        if (navigator.share){
+          await navigator.share({ title: name, text: "Schau dir das mal an:", url });
+          track("share_product", name);
+          return;
+        }
+      }catch(e){}
+      try{
+        await navigator.clipboard.writeText(url);
+        alert("Link kopiert");
+        track("share_product_copy", name);
+      }catch(e){
+        prompt("Link kopieren:", url);
+      }
+    }
+    window.shareProduct = shareProduct;
+
+    // Scroll reveal
+    function checkVisibility(){
+      const trigger = window.innerHeight * 0.92;
+      items.forEach(el=>{
+        if (el.style.display === "none") { el.classList.remove("active"); return; }
+        const top = el.getBoundingClientRect().top;
+        const bottom = el.getBoundingClientRect().bottom;
+        const inView = (top < trigger) && (bottom > 0);
+        if (inView) el.classList.add("active"); else el.classList.remove("active");
+      });
+    }
+    checkVisibility();
+    requestAnimationFrame(()=>{
+      document.body.classList.add("scroll-anim");
+      checkVisibility();
+    });
+    window.addEventListener("scroll", checkVisibility, { passive:true });
+    window.addEventListener("resize", checkVisibility);
+
+    applySearch();
+  </script>
+</body>
+</html>

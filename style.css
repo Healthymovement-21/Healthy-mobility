@@ -671,6 +671,3 @@ body.scroll-anim .product.active{
 .cat-item:active{ transform: translateY(1px); }
 .shop-spacer{ height:120px; }
 
-
-[data-panel="1"] .bottom-nav{ display:none; }
-[data-panel="1"] .theme-top{ display:none; }

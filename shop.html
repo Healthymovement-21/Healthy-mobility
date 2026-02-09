@@ -35,102 +35,82 @@
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
       overflow-x:hidden;
+      font-size: 15px; /* kleiner/kompakter */
     }
 
     /* MEHR RAND */
     .wrap{
       max-width:980px;
       margin:0 auto;
-      padding:28px 20px; /* größer als vorher */
+      padding:34px 24px; /* größer als vorher */
     }
 
+    /* Topbar: Home links, rechts Controls (Shop-Dropdown + Filter + Theme) */
     .topbar{
       display:flex;
       align-items:center;
-      justify-content:center;
-      position:relative;
-      padding: 10px 0 18px;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom: 10px;
     }
 
-    nav{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:26px;
-    }
-
-    nav a{
+    .nav-left a{
       color:var(--nav);
       text-decoration:none;
       font-weight:800;
       white-space:nowrap;
+      padding: 8px 10px;
+      border-radius: 10px;
+      outline: 1px solid transparent;
     }
 
-    nav a.active{
-      color:var(--text);
-      border-bottom:2px solid;
-      border-image:var(--ig) 1;
-      padding-bottom:6px;
-    }
-
-    .switch{
-      position:absolute;
-      right:0;
-      top:50%;
-      transform:translateY(-50%);
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-
-    .switch button{
-      border:0;
-      padding:10px 12px;
-      border-radius:999px;
-      font-weight:900;
-      cursor:pointer;
-      color: var(--text);
-      background: transparent;
+    .nav-left a:hover{
       outline: 1px solid var(--line);
     }
 
-    .topnote{
-      color:var(--muted);
-      margin: 0 0 14px;
-      line-height:1.6;
-    }
-
-    /* KATEGORIEN-RASTER */
-    .cat-grid{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 12px;
-      margin: 10px 0 14px;
-    }
-
-    @media (max-width:760px){
-      .cat-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-    }
-
-    .cat-btn{
+    .right-controls{
+      display:flex;
+      align-items:center;
+      gap:10px;
       position:relative;
+    }
+
+    /* Shop button (Dropdown Trigger) */
+    .shop-pill{
+      height:44px;
+      padding:0 12px;
+      border-radius:999px;
       border:0;
       cursor:pointer;
-      padding:14px 12px;
-      border-radius:16px;
-      background:var(--card);
-      color:var(--text);
       font-weight:900;
-      text-align:center;
-      overflow:hidden;
+      color:#fff;
+      background:var(--ig);
+      box-shadow:0 0 18px rgba(214,41,118,0.18);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
     }
 
-    .cat-btn::before{
+    /* Dropdown Panel for categories */
+    .menu-panel{
+      position:absolute;
+      right:0;
+      top:52px;
+      width: min(220px, 80vw);
+      background:var(--card);
+      border-radius:14px;
+      padding:10px;
+      overflow:hidden;
+      z-index:60;
+    }
+
+    .menu-panel::before{
       content:"";
       position:absolute;
       inset:0;
       padding:1.5px;
-      border-radius:16px;
+      border-radius:14px;
       background:var(--ig);
       -webkit-mask:
         linear-gradient(#000 0 0) content-box,
@@ -141,112 +121,33 @@
       opacity:.55;
     }
 
-    .cat-btn.active{
-      box-shadow:
-        0 0 18px rgba(214,41,118,0.25),
-        0 0 34px rgba(252,175,69,0.12);
-    }
-
-    .cat-sub{
-      display:block;
-      margin-top:6px;
-      font-weight:800;
-      font-size:0.85rem;
-      color:var(--muted);
-    }
-
-    /* 2 Spalten */
-    .product-grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:14px;            /* kleiner */
-      padding-top:6px;
-    }
-
-    @media (max-width:760px){
-      .product-grid{ grid-template-columns:1fr; }
-    }
-
-    /* KÄSTCHEN KLEINER */
-    .product{
-      position:relative;
-      background:var(--card);
-      border-radius:16px;
-      padding:16px;        /* kleiner als vorher */
-      overflow:hidden;
-
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity .28s ease, transform .28s ease, box-shadow .35s ease;
-    }
-
-    .product::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      padding:1.5px;
-      border-radius:16px;
-      background:var(--ig);
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      pointer-events:none;
-      opacity:.95;
-    }
-
-    body.scroll-anim .product{
-      opacity:0;
-      transform:translateY(14px);
-      box-shadow:none;
-    }
-    body.scroll-anim .product.active{
-      opacity:1;
-      transform:translateY(0);
-      box-shadow:
-        0 0 18px rgba(214,41,118,0.30),
-        0 0 34px rgba(252,175,69,0.12);
-    }
-
-    .product h3{
-      margin:0 0 8px;
-      font-size:1.02rem; /* minimal kleiner */
-      letter-spacing:-0.01em;
-    }
-
-    .product p{
-      margin:0 0 10px;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:0.96rem; /* minimal kleiner */
-    }
-
-    .price{
-      display:block;
-      margin:8px 0 10px;
-      font-weight:900;
+    .menu-panel button{
+      width:100%;
+      border:0;
+      background:transparent;
       color:var(--text);
-    }
-
-    .btn{
-      display:inline-block;
-      padding:9px 12px;
-      border-radius:999px;
-      text-decoration:none;
+      text-align:left;
+      padding:10px 10px;
+      border-radius:10px;
+      cursor:pointer;
       font-weight:900;
-      color:#fff;
-      background:var(--ig);
-      box-shadow:0 0 18px rgba(214,41,118,0.22);
-      font-size:0.95rem;
+      position:relative;
+      z-index:1;
     }
 
-    /* ========= FILTER (wie vorher), aber BUTTON = NUR PFEIL ========= */
+    .menu-panel button:hover{
+      outline:1px solid var(--line);
+    }
+
+    .menu-panel button.active{
+      outline:2px solid transparent;
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 0 14px rgba(214,41,118,0.18);
+    }
+
+    /* Filter arrow (only sort) */
     .filterbar{
-      display:flex;
-      justify-content:flex-end;
-      margin: 6px 0 14px;
-      position: relative;
+      position:relative;
     }
 
     .filter-pill{
@@ -270,15 +171,121 @@
       position:absolute;
       right:0;
       top:52px;
-      width:min(360px, 92vw);
+      width:min(260px, 86vw);
       background:var(--card);
-      border-radius:16px;
-      padding:14px;
+      border-radius:14px;
+      padding:12px;
       overflow:hidden;
-      z-index:50;
+      z-index:70;
     }
 
     .filter-panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1.5px;
+      border-radius:14px;
+      background:var(--ig);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+      opacity:.55;
+    }
+
+    .filter-label{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      position:relative;
+      z-index:1;
+    }
+
+    .filter-label span{
+      color:var(--muted);
+      font-weight:800;
+      font-size:0.9rem;
+    }
+
+    .filter-label select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      background:transparent;
+      color:var(--text);
+      border:1px solid var(--line);
+      outline:none;
+      font-weight:800;
+    }
+
+    .filter-actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .filter-reset{
+      padding:10px 12px;
+      border-radius:999px;
+      border:0;
+      cursor:pointer;
+      font-weight:900;
+      background:transparent;
+      color:var(--text);
+      outline:1px solid var(--line);
+    }
+
+    .filter-info{
+      color:var(--muted);
+      font-weight:900;
+      font-size:0.9rem;
+    }
+
+    /* Theme button */
+    .theme-btn{
+      border:0;
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:900;
+      cursor:pointer;
+      color: var(--text);
+      background: transparent;
+      outline: 1px solid var(--line);
+      height:44px;
+    }
+
+    /* 2 Spalten */
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;            /* kompakter */
+      padding-top:10px;
+    }
+
+    @media (max-width:760px){
+      .product-grid{ grid-template-columns:1fr; }
+    }
+
+    /* Kästchen kleiner */
+    .product{
+      position:relative;
+      background:var(--card);
+      border-radius:16px;
+      padding:14px;        /* kleiner */
+      overflow:hidden;
+
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .28s ease, transform .28s ease, box-shadow .35s ease;
+    }
+
+    .product::before{
       content:"";
       position:absolute;
       inset:0;
@@ -291,145 +298,114 @@
       -webkit-mask-composite:xor;
       mask-composite:exclude;
       pointer-events:none;
-      opacity:.65;
+      opacity:.95;
     }
 
-    .filter-row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      position:relative;
-      z-index:1;
+    /* Scroll Animation */
+    body.scroll-anim .product{
+      opacity:0;
+      transform:translateY(12px);
+      box-shadow:none;
+    }
+    body.scroll-anim .product.active{
+      opacity:1;
+      transform:translateY(0);
+      box-shadow:
+        0 0 16px rgba(214,41,118,0.28),
+        0 0 28px rgba(252,175,69,0.10);
     }
 
-    .filter-label{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      flex:1 1 160px;
-      min-width:140px;
+    .product h3{
+      margin:0 0 6px;
+      font-size:0.98rem; /* kleiner */
+      letter-spacing:-0.01em;
     }
 
-    .filter-label span{
+    .product p{
+      margin:0 0 8px;
       color:var(--muted);
-      font-weight:800;
-      font-size:0.9rem;
+      line-height:1.5;
+      font-size:0.92rem; /* kleiner */
     }
 
-    .filter-label select,
-    .filter-label input{
-      width:100%;
-      padding:10px 12px;
-      border-radius:12px;
-      background:transparent;
+    .price{
+      display:block;
+      margin:8px 0 10px;
+      font-weight:900;
       color:var(--text);
-      border:1px solid var(--line);
-      outline:none;
+      font-size:0.95rem;
     }
 
-    .filter-actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      margin-top:10px;
-      position:relative;
-      z-index:1;
-    }
-
-    .filter-apply,
-    .filter-reset{
-      padding:10px 14px;
+    .btn{
+      display:inline-block;
+      padding:8px 11px;
       border-radius:999px;
-      border:0;
-      cursor:pointer;
+      text-decoration:none;
       font-weight:900;
       color:#fff;
       background:var(--ig);
-      box-shadow:0 0 18px rgba(214,41,118,0.18);
+      box-shadow:0 0 14px rgba(214,41,118,0.18);
+      font-size:0.9rem;
     }
 
-    .filter-reset{
-      background:transparent;
-      color:var(--text);
-      outline:1px solid var(--line);
-      box-shadow:none;
-    }
-
-    .filter-info{
-      color:var(--muted);
-      font-weight:800;
-      margin-left:auto;
+    /* Footer Hinweis unten */
+    .footnote{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      text-align: center;
+      opacity: 0.9;
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
+
     <div class="topbar">
-      <nav>
+      <div class="nav-left">
         <a href="index.html">Home</a>
-        <a href="shop.html" class="active">Shop</a>
-      </nav>
-
-      <div class="switch">
-        <button id="themeBtn" type="button">🌗</button>
       </div>
-    </div>
 
-    <p class="topnote">Hinweis: Die Links sind Affiliate-Links. Für dich entstehen keine Mehrkosten.</p>
+      <div class="right-controls">
+        <!-- SHOP Dropdown (Kategorien) -->
+        <button id="shopMenuToggle" class="shop-pill" type="button" aria-expanded="false" aria-label="Kategorien öffnen">
+          Shop <span id="shopCaret">▾</span>
+        </button>
 
-    <!-- KATEGORIEN -->
-    <div class="cat-grid">
-      <button class="cat-btn active" type="button" data-cat="all">
-        Alle <span class="cat-sub">alles anzeigen</span>
-      </button>
-      <button class="cat-btn" type="button" data-cat="sport">
-        Sport <span class="cat-sub">Bandagen + Tape</span>
-      </button>
-      <button class="cat-btn" type="button" data-cat="regeneration">
-        Regeneration <span class="cat-sub">Wärme + Recovery</span>
-      </button>
-      <button class="cat-btn" type="button" data-cat="reha">
-        Reha <span class="cat-sub">Messung + Verlauf</span>
-      </button>
-    </div>
-
-    <!-- FILTER BUTTON (PFEIL) -->
-    <div class="filterbar">
-      <button id="filterToggle" class="filter-pill" type="button" aria-expanded="false" aria-label="Filter öffnen">▾</button>
-
-      <div id="filterPanel" class="filter-panel" hidden>
-        <div class="filter-row">
-          <label class="filter-label">
-            <span>Sortierung</span>
-            <select id="sortSelect">
-              <option value="default">Standard</option>
-              <option value="price-asc">Preis: niedrig → hoch</option>
-              <option value="price-desc">Preis: hoch → niedrig</option>
-              <option value="az">Alphabet: A → Z</option>
-              <option value="za">Alphabet: Z → A</option>
-            </select>
-          </label>
+        <div id="shopMenu" class="menu-panel" hidden>
+          <button type="button" class="cat-item active" data-cat="all">Alle</button>
+          <button type="button" class="cat-item" data-cat="sport">Sport</button>
+          <button type="button" class="cat-item" data-cat="regeneration">Regeneration</button>
+          <button type="button" class="cat-item" data-cat="reha">Reha</button>
         </div>
 
-        <div class="filter-row" style="margin-top:10px;">
-          <label class="filter-label">
-            <span>Preis von (€)</span>
-            <input id="minPrice" type="number" inputmode="decimal" placeholder="z.B. 10" min="0" step="0.01">
-          </label>
+        <!-- Filter (nur Sortierung) -->
+        <div class="filterbar">
+          <button id="filterToggle" class="filter-pill" type="button" aria-expanded="false" aria-label="Sortierung öffnen">▾</button>
 
-          <label class="filter-label">
-            <span>bis (€)</span>
-            <input id="maxPrice" type="number" inputmode="decimal" placeholder="z.B. 50" min="0" step="0.01">
-          </label>
+          <div id="filterPanel" class="filter-panel" hidden>
+            <label class="filter-label">
+              <span>Sortierung</span>
+              <select id="sortSelect">
+                <option value="default">Standard</option>
+                <option value="price-asc">Preis: niedrig → hoch</option>
+                <option value="price-desc">Preis: hoch → niedrig</option>
+                <option value="az">Alphabet: A → Z</option>
+                <option value="za">Alphabet: Z → A</option>
+              </select>
+            </label>
+
+            <div class="filter-actions">
+              <button id="resetFilters" class="filter-reset" type="button">Reset</button>
+              <div id="filterInfo" class="filter-info"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="filter-actions">
-          <button id="applyFilters" class="filter-apply" type="button">Anwenden</button>
-          <button id="resetFilters" class="filter-reset" type="button">Reset</button>
-          <div id="filterInfo" class="filter-info"></div>
-        </div>
+        <!-- Theme -->
+        <button id="themeBtn" class="theme-btn" type="button">🌗</button>
       </div>
     </div>
 
@@ -459,8 +435,8 @@
         <a class="btn" href="https://amzn.to/4qjoAuL" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Retterspitz (nur Alle) -->
-      <div class="product" data-cats="">
+      <!-- Retterspitz (ALLE Kategorien) -->
+      <div class="product" data-cats="sport regeneration reha">
         <h3>Retterspitz</h3>
         <p>Äußerlich anwendbar als unterstützende Maßnahme bei gereizten oder entzündlichen Strukturen.</p>
         <span class="price">26,14 €</span>
@@ -483,16 +459,16 @@
         <a class="btn" href="https://amzn.to/4kplTGW" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Laufband (nur Alle) -->
-      <div class="product" data-cats="">
+      <!-- Laufband (ALLE Kategorien) -->
+      <div class="product" data-cats="sport regeneration reha">
         <h3>Laufband</h3>
         <p>Für moderates Ausdauertraining zu Hause, wetterunabhängig oder bei eingeschränkter Mobilität.</p>
         <span class="price">94,99 €</span>
         <a class="btn" href="https://amzn.to/3O9os3F" target="_blank" rel="noopener">Bei Amazon ansehen</a>
       </div>
 
-      <!-- Thrombosestrumpf (nur Alle) -->
-      <div class="product" data-cats="">
+      <!-- Thrombosestrumpf (ALLE Kategorien) -->
+      <div class="product" data-cats="sport regeneration reha">
         <h3>Thrombosestrumpf</h3>
         <p>Zur Unterstützung des venösen Rückflusses bei längeren Ruhephasen oder eingeschränkter Bewegung.</p>
         <span class="price">26,90 €</span>
@@ -548,12 +524,17 @@
       </div>
 
     </section>
+
+    <div class="footnote">
+      Hinweis: Die Links auf dieser Website sind Affiliate-Links. Für dich entstehen keine zusätzlichen Kosten.
+    </div>
+
   </div>
 
   <script>
     // Theme (speichert Einstellung)
     const root = document.documentElement;
-    const btn = document.getElementById("themeBtn");
+    const themeBtn = document.getElementById("themeBtn");
 
     const saved = localStorage.getItem("theme");
     if (saved) {
@@ -563,22 +544,19 @@
       root.setAttribute("data-theme", prefersLight ? "light" : "dark");
     }
 
-    btn.addEventListener("click", () => {
+    themeBtn.addEventListener("click", () => {
       const current = root.getAttribute("data-theme") || "dark";
       const next = current === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
     });
 
-    // Scroll Animation: ein/aus
+    // Scroll Animation
     const items = document.querySelectorAll(".product");
     function checkVisibility(){
       const triggerTop = window.innerHeight * 0.92;
       items.forEach(el => {
-        if (el.style.display === "none") {
-          el.classList.remove("active");
-          return;
-        }
+        if (el.style.display === "none") { el.classList.remove("active"); return; }
         const top = el.getBoundingClientRect().top;
         const bottom = el.getBoundingClientRect().bottom;
         const inView = (top < triggerTop) && (bottom > 0);
@@ -594,41 +572,83 @@
     window.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
-    /* FILTER PANEL */
-    const panel = document.getElementById("filterPanel");
-    const toggle = document.getElementById("filterToggle");
-
-    toggle.addEventListener("click", () => {
-      const isHidden = panel.hasAttribute("hidden");
-      if (isHidden){
-        panel.removeAttribute("hidden");
-        toggle.setAttribute("aria-expanded","true");
-        toggle.textContent = "▴";
-      } else {
-        panel.setAttribute("hidden","");
-        toggle.setAttribute("aria-expanded","false");
-        toggle.textContent = "▾";
-      }
-    });
-
-    document.addEventListener("click", (e) => {
-      if (panel.hasAttribute("hidden")) return;
-      const within = panel.contains(e.target) || toggle.contains(e.target);
-      if (!within){
-        panel.setAttribute("hidden","");
-        toggle.setAttribute("aria-expanded","false");
-        toggle.textContent = "▾";
-      }
-    });
-
-    /* KATEGORIEN */
-    const catButtons = document.querySelectorAll(".cat-btn");
+    // Category dropdown (Shop button)
+    const shopMenu = document.getElementById("shopMenu");
+    const shopToggle = document.getElementById("shopMenuToggle");
+    const shopCaret = document.getElementById("shopCaret");
+    const catItems = document.querySelectorAll(".cat-item");
     let activeCat = "all";
+
+    function closeShopMenu(){
+      shopMenu.setAttribute("hidden","");
+      shopToggle.setAttribute("aria-expanded","false");
+      shopCaret.textContent = "▾";
+    }
+    function openShopMenu(){
+      shopMenu.removeAttribute("hidden");
+      shopToggle.setAttribute("aria-expanded","true");
+      shopCaret.textContent = "▴";
+    }
+
+    shopToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (shopMenu.hasAttribute("hidden")) openShopMenu();
+      else closeShopMenu();
+    });
+
+    // Filter (sort only)
+    const filterPanel = document.getElementById("filterPanel");
+    const filterToggle = document.getElementById("filterToggle");
+    const sortSelect = document.getElementById("sortSelect");
+    const resetBtn = document.getElementById("resetFilters");
+    const info = document.getElementById("filterInfo");
+    const grid = document.querySelector(".product-grid");
+
+    function closeFilter(){
+      filterPanel.setAttribute("hidden","");
+      filterToggle.setAttribute("aria-expanded","false");
+      filterToggle.textContent = "▾";
+    }
+    function openFilter(){
+      filterPanel.removeAttribute("hidden");
+      filterToggle.setAttribute("aria-expanded","true");
+      filterToggle.textContent = "▴";
+    }
+
+    filterToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (filterPanel.hasAttribute("hidden")) openFilter();
+      else closeFilter();
+    });
+
+    document.addEventListener("click", () => {
+      if (!shopMenu.hasAttribute("hidden")) closeShopMenu();
+      if (!filterPanel.hasAttribute("hidden")) closeFilter();
+    });
+
+    // Original order
+    const original = Array.from(grid.querySelectorAll(".product")).map((el, idx) => ({ el, idx }));
+
+    function parsePrice(el){
+      const raw = el.querySelector(".price").textContent.replace(/\s/g,"").replace("€","").replace(",",".");
+      const val = parseFloat(raw);
+      return Number.isFinite(val) ? val : NaN;
+    }
+
+    function getTitle(el){
+      return (el.querySelector("h3")?.textContent || "").trim().toLowerCase();
+    }
+
+    function updateInfo(){
+      const visibleCount = original.length; // sort-only: counts always total shown for current category
+      info.textContent = `${visibleCount}`;
+    }
+    updateInfo();
 
     function applyCategory(cat){
       activeCat = cat;
 
-      catButtons.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+      catItems.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
 
       items.forEach(el => {
         const cats = (el.getAttribute("data-cats") || "").trim();
@@ -640,63 +660,23 @@
         }
       });
 
-      // Nach Kategorie-Filter Animation neu bewerten
+      applySort();       // keep chosen sort after category switch
       checkVisibility();
     }
 
-    catButtons.forEach(btn => {
-      btn.addEventListener("click", () => applyCategory(btn.dataset.cat));
-    });
-
-    /* SORT + PREISRANGE */
-    const grid = document.querySelector(".product-grid");
-    const sortSelect = document.getElementById("sortSelect");
-    const minPrice = document.getElementById("minPrice");
-    const maxPrice = document.getElementById("maxPrice");
-    const applyBtn = document.getElementById("applyFilters");
-    const resetBtn = document.getElementById("resetFilters");
-    const info = document.getElementById("filterInfo");
-
-    const original = Array.from(grid.querySelectorAll(".product")).map((el, idx) => ({ el, idx }));
-
-    function parsePrice(el){
-      const priceEl = el.querySelector(".price");
-      const raw = priceEl.textContent.replace(/\s/g,"").replace("€","").replace(",",".");
-      const val = parseFloat(raw);
-      return Number.isFinite(val) ? val : NaN;
-    }
-
-    function getTitle(el){
-      return (el.querySelector("h3")?.textContent || "").trim().toLowerCase();
-    }
-
-    function updateInfo(){
-      const visibleCount = original.filter(({el}) => el.style.display !== "none").length;
-      info.textContent = `${visibleCount} / ${original.length}`;
-    }
-
-    function applyPriceRangeOnly(){
-      const min = minPrice.value ? parseFloat(minPrice.value) : -Infinity;
-      const max = maxPrice.value ? parseFloat(maxPrice.value) : Infinity;
-
-      original.forEach(({el}) => {
-        // Kategorie bleibt aktiv
-        const cats = (el.getAttribute("data-cats") || "").trim();
-        const catOk = (activeCat === "all") ? true : cats.split(/\s+/).includes(activeCat);
-
-        const p = parsePrice(el);
-        const priceOk = Number.isFinite(p) ? (p >= min && p <= max) : true;
-
-        el.style.display = (catOk && priceOk) ? "" : "none";
+    catItems.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        applyCategory(btn.dataset.cat);
+        closeShopMenu();
       });
-    }
+    });
 
     function applySort(){
       const mode = sortSelect.value;
 
       const visible = original.filter(({el}) => el.style.display !== "none");
       const hidden  = original.filter(({el}) => el.style.display === "none");
-
       let sorted = visible.slice();
 
       if(mode === "default"){
@@ -712,31 +692,21 @@
       }
 
       [...sorted, ...hidden].forEach(({el}) => grid.appendChild(el));
+      checkVisibility();
     }
 
-    applyBtn.addEventListener("click", () => {
-      applyPriceRangeOnly();
-      applySort();
-      updateInfo();
-      checkVisibility();
-    });
+    sortSelect.addEventListener("change", applySort);
 
-    sortSelect.addEventListener("change", () => {
-      applySort();
-      checkVisibility();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      minPrice.value = "";
-      maxPrice.value = "";
+    resetBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       sortSelect.value = "default";
-      applyCategory("all");
-      original.sort((a,b) => a.idx - b.idx).forEach(({el}) => grid.appendChild(el));
-      updateInfo();
+      // reset: keep current category, but restore default order within it
+      const visible = original.filter(({el}) => el.style.display !== "none").sort((a,b) => a.idx - b.idx);
+      const hidden  = original.filter(({el}) => el.style.display === "none").sort((a,b) => a.idx - b.idx);
+      [...visible, ...hidden].forEach(({el}) => grid.appendChild(el));
+      closeFilter();
       checkVisibility();
     });
-
-    updateInfo();
   </script>
 </body>
 </html>

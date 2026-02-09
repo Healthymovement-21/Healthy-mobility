@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#12151b" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#12151b" id="themeColorMeta">
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209s">
+  <link rel="stylesheet" href="style.css?v=20260209t">
 </head>
 
 <body>
@@ -154,6 +155,13 @@
       window.location.href = 'mobile.html';
     }
 
+    const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
+    function setThemeMeta(){
+      if (!themeMeta) return;
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      themeMeta.setAttribute("content", cur === "light" ? "#ffffff" : "#12151b");
+    }
+
     // Theme ALWAYS top-right
     const root = document.documentElement;
     const saved = localStorage.getItem("theme");
@@ -168,7 +176,9 @@
       root.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
       track("theme_toggle", next);
+      setThemeMeta();
     });
+    setThemeMeta();
 
     // Intro FIX: always disappears + failsafe remove
     const intro = document.getElementById("intro");

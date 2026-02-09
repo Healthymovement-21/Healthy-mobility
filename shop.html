@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop – Produktempfehlungen</title>
+  <title>Home – Produktempfehlungen</title>
 
   <style>
     *{ box-sizing:border-box; }
@@ -11,17 +11,196 @@
     :root{
       --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
 
-      --bg:#000;
-      --text:#fff;
-      --muted:#d7d7d7;
-      --card:#0f0f10;
-      --nav:#bbb;
+      /* Dark */
+      --bg: #000;
+      --text: #fff;
+      --muted: #ddd;
+      --card: #111;
+      --nav: #bbb;
       --line: rgba(255,255,255,0.10);
+      --btnHomeBg: #fff;
+      --btnHomeText:#000;
     }
 
     [data-theme="light"]{
-      --bg:#ffffff;
-      --text:#111;
-      --muted:#333;
-      --card:#f2f3f5;
-      --nav:#444;
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #333;
+      --card: #f2f3f5;
+      --nav: #444;
+      --line: rgba(0,0,0,0.10);
+      --btnHomeBg: #111;
+      --btnHomeText:#fff;
+    }
+
+    html,body{
+      margin:0; padding:0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow-x:hidden;
+      font-size: 15px; /* kleiner/kompakter */
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 34px 22px; /* mehr Rand */
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      padding: 10px 0 18px;
+    }
+
+    nav{
+      display:flex;
+      gap:26px;
+      justify-content:center;
+      align-items:center;
+    }
+
+    nav a{
+      color: var(--nav);
+      text-decoration:none;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    nav a.active{
+      color: var(--text);
+      border-bottom: 2px solid;
+      border-image: var(--ig) 1;
+      padding-bottom: 6px;
+    }
+
+    .switch{
+      position:absolute;
+      right:0;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+
+    .switch button{
+      border:0;
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
+      color: var(--text);
+      background: transparent;
+      outline: 1px solid var(--line);
+    }
+
+    h1{
+      margin: 14px 0 16px;
+      font-size: 1.7rem; /* etwas kleiner */
+      letter-spacing: -0.02em;
+    }
+
+    p{
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0 0 12px;
+      font-size: 0.95rem; /* kompakter */
+    }
+
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 18px 0 6px;
+    }
+
+    .home-button{
+      display:inline-block;
+      margin-top:22px;
+      padding:14px 22px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:900;
+      background: var(--btnHomeBg);
+      color: var(--btnHomeText);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="shop.html">Shop</a>
+      </nav>
+
+      <div class="switch">
+        <button id="themeBtn" type="button">🌗</button>
+      </div>
+    </div>
+
+    <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
+
+    <p>
+      Auf dieser Seite findest du eine Auswahl an Produkten aus den Bereichen Bewegung,
+      Regeneration, Wärme, Kälte, Stabilität und unterstützendes Training.
+      Die Produktauswahl basiert auf physiotherapeutischem Fachwissen,
+      Erfahrungen aus dem Praxisalltag sowie Rückmeldungen von Patientinnen und Patienten.
+    </p>
+
+    <p>
+      Die hier aufgeführten Produkte können eine physiotherapeutische Behandlung sinnvoll
+      ergänzen und unterstützen. Sie ersetzen jedoch weder eine individuelle Therapie
+      noch eine medizinische Diagnose oder Behandlung.
+    </p>
+
+    <p>
+      Wichtig zu wissen: Nicht alle hier aufgeführten Produkte habe ich persönlich selbst getestet.
+      Die Empfehlungen ergeben sich aus fachlicher Einschätzung,
+      bewährten Anwendungen im therapeutischen Umfeld
+      sowie aus Erfahrungen und Rückmeldungen anderer Anwender.
+    </p>
+
+    <p>
+      Ob und welches Produkt sinnvoll ist, hängt immer von der individuellen Situation,
+      dem jeweiligen Beschwerdebild sowie den persönlichen Voraussetzungen ab.
+      In bestimmten Fällen kann es sinnvoll sein,
+      vor der Anwendung noch einmal Rücksprache zu halten.
+    </p>
+
+    <p>
+      Die Links auf dieser Website sind Affiliate-Links.
+      Für dich entstehen keine zusätzlichen Kosten.
+    </p>
+
+    <div class="divider"></div>
+
+    <a class="home-button" href="shop.html">Zum Shop</a>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById("themeBtn");
+
+    const saved = localStorage.getItem("theme");
+    if (saved) {
+      root.setAttribute("data-theme", saved);
+    } else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+
+    btn.addEventListener("click", () => {
+      const current = root.getAttribute("data-theme") || "dark";
+      const next = current === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    });
+  </script>
+</body>
+</html>

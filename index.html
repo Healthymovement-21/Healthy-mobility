@@ -6,7 +6,7 @@
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209b">
+  <link rel="stylesheet" href="style.css?v=20260209p">
 </head>
 
 <body>
@@ -269,6 +269,30 @@
       `).join("");
     }
     renderPopular();
+
+    function initMobileSwipe(){
+      const mq = window.matchMedia("(max-width: 900px)");
+      if (!mq.matches) return;
+      let startX = 0, startY = 0, tracking = false;
+      document.addEventListener("touchstart", (e)=>{
+        if (e.touches.length !== 1) return;
+        const ov = document.getElementById("searchOverlay");
+        if (ov && ov.classList.contains("open")) return;
+        const t = e.touches[0];
+        startX = t.clientX; startY = t.clientY; tracking = true;
+      }, { passive:true });
+      document.addEventListener("touchmove", (e)=>{
+        if (!tracking) return;
+        const t = e.touches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+        if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
+          tracking = false;
+          if (dx < 0) go("shop.html");
+        }
+      }, { passive:true });
+    }
+    initMobileSwipe();
 
   </script>
 </body>

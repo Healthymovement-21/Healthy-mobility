@@ -2,11 +2,11 @@
 
 :root{
   --ig: linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-  --bg:#0b0d12;
+  --bg:#12151b;
   --text:#ffffff;
-  --muted: rgba(255,255,255,0.80);
-  --card:#151821;
-  --line: rgba(255,255,255,0.18);
+  --muted: rgba(255,255,255,0.82);
+  --card:#1b212c;
+  --line: rgba(255,255,255,0.22);
   --btnBg:#ffffff;
   --btnText:#000000;
 
@@ -33,34 +33,37 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   overflow-x:hidden;
   font-size:14px;
-  min-height:100%;
+  min-height:100dvh;
 }
 body{
   position:relative;
+  min-height:100dvh;
+  background:var(--bg);
 }
 body::before{
   content:"";
-  position:fixed;
-  inset:-20% -10% auto -10%;
-  height:60vh;
-  background:
-    radial-gradient(600px 220px at 15% 10%, rgba(214,41,118,0.18), transparent 60%),
-    radial-gradient(700px 260px at 85% 0%, rgba(79,91,213,0.16), transparent 60%);
-  pointer-events:none;
-  z-index:0;
+  display:none;
 }
 .page, .bottom-nav, .theme-top{ position:relative; z-index:1; }
 
 /* Full-bleed layout */
 .page{
   min-height:100vh;
+  min-height:100dvh;
+  width:100%;
   padding:
     calc(12px + var(--sat))
     calc(14px + var(--sar))
     calc(90px + var(--sab))
     calc(14px + var(--sal));
-  max-width:1100px;
+  max-width:1200px;
   margin:0 auto;
+  position:relative;
+}
+.page::before,
+.page::after{
+  content:"";
+  display:none;
 }
 
 /* Always top-right theme button */
@@ -134,6 +137,15 @@ p{
       calc(28px + var(--sar))
       calc(110px + var(--sab))
       calc(28px + var(--sal));
+  }
+}
+@media (max-width: 900px){
+  .page{
+    padding:
+      calc(28px + var(--sat))
+      calc(32px + var(--sar))
+      calc(120px + var(--sab))
+      calc(32px + var(--sal));
   }
 }
 
@@ -610,75 +622,49 @@ body.scroll-anim .product.active{
   gap:12px;
   margin-bottom:6px;
   position:relative;
+  flex-direction:column;
 }
 .shop-head h1{
   margin:0;
   cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
 }
-.cat-btn{
-  border:0;
-  padding:9px 14px;
-  border-radius:999px;
-  background: color-mix(in srgb, var(--bg) 70%, transparent);
-  color:var(--text);
-  outline:1px solid var(--line);
-  font-weight:900;
-  cursor:pointer;
-  transition: transform .12s ease, filter .2s ease;
-  position:absolute;
-  right:0;
+.shop-caret{
+  font-size:1.6rem;
+  opacity:0.85;
 }
-.cat-btn:active{ transform: translateY(1px); }
-.cat-panel{
-  display:none;
-  margin: 10px auto 22px;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-  background: color-mix(in srgb, var(--bg) 75%, transparent);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:12px;
-  max-width:720px;
-  transition: transform .22s ease, opacity .22s ease;
-  transform: translateY(-6px);
-  opacity:0;
-}
-.cat-panel.open{
-  display:flex;
-  transform: translateY(0);
-  opacity:1;
-}
-.cat-link{
-  border:0;
-  padding:10px 14px;
-  border-radius:14px;
-  background:transparent;
-  color:var(--muted);
-  outline:1px solid var(--line);
-  font-weight:900;
-  cursor:pointer;
-  transition: transform .12s ease, filter .2s ease, color .2s ease;
-}
-.cat-link:hover{ color:var(--text); }
-.cat-link:active{ transform: translateY(1px); }
-
-.category{
-  margin-top:26px;
-}
-.cat-head{
+.shop-cats{
   display:flex;
   flex-direction:column;
-  gap:4px;
-  margin-bottom:12px;
+  gap:8px;
+  margin: 8px auto 0;
+  max-width:240px;
+  padding:0;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transform: translateY(-6px);
+  transition: max-height .24s ease, opacity .24s ease, transform .24s ease;
 }
-.cat-head h2{
-  margin:0;
-  font-size:1.1rem;
-  letter-spacing:-0.01em;
+.shop-cats.open{
+  max-height:240px;
+  opacity:1;
+  transform: translateY(0);
 }
-.cat-desc{
-  margin:0;
-  color:var(--muted);
-  font-size:0.95rem;
+.cat-item{
+  border:0;
+  border-radius:0;
+  padding:6px 8px;
+  background: transparent;
+  outline:0;
+  color:var(--text);
+  font-weight:500;
+  font-size:0.85rem;
+  cursor:pointer;
+  transition: transform .12s ease, filter .2s ease, color .2s ease;
+  text-align:center;
 }
+.cat-item:active{ transform: translateY(1px); }
+.shop-spacer{ height:120px; }

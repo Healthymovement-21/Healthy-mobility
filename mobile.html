@@ -58,21 +58,22 @@
     .bottom-nav .bar{
       max-width:520px;
       margin:0 auto;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
-      border:1px solid rgba(0,0,0,0.08);
-      border-radius:18px;
-      padding:10px 10px;
+      background: rgba(12,12,14,0.88);
+      backdrop-filter: blur(16px);
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:20px;
+      padding:10px 12px;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap:8px;
+      gap:10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
     }
     .nav-btn{
       border:0;
       background:transparent;
-      color:#444;
+      color:#cfd2d8;
       font-weight:800;
-      border-radius:14px;
+      border-radius:16px;
       padding:10px 8px;
       display:flex;
       flex-direction:column;
@@ -81,11 +82,12 @@
       gap:6px;
       cursor:pointer;
       outline:1px solid transparent;
+      transition: color .2s ease, outline-color .2s ease;
     }
     .nav-btn svg{ width:22px; height:22px; display:block; }
     .nav-btn.active{
-      color:#111;
-      outline-color: rgba(0,0,0,0.12);
+      color:#ffffff;
+      outline-color: rgba(255,255,255,0.22);
     }
   </style>
 </head>

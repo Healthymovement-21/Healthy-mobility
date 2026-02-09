@@ -3,24 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12151b" media="(prefers-color-scheme: dark)">
   <title>Healthy Mobility – Mobile</title>
   <style>
     *{ box-sizing:border-box; }
-    html,body{ margin:0; padding:0; height:100%; overflow:hidden; background:#0f1116; }
+    html,body{ margin:0; padding:0; height:100dvh; overflow:hidden; background:#12151b; }
     .swipe-wrap{
       display:flex;
       width:100vw;
-      height:100vh;
+      height:100dvh;
       overflow-x:auto;
       overflow-y:hidden;
-      scroll-snap-type:x proximity;
+      scroll-snap-type:x mandatory;
+      scroll-snap-stop:always;
       -webkit-overflow-scrolling: touch;
+      background:#12151b;
     }
     .panel{
       flex:0 0 100vw;
-      height:100vh;
+      height:100dvh;
       scroll-snap-align:start;
       border:0;
+      background:#12151b;
     }
   </style>
 </head>
@@ -34,6 +39,15 @@
     if (location.hash === '#shop'){
       requestAnimationFrame(()=>{ wrap.scrollLeft = window.innerWidth; });
     }
+    let snapTimer = null;
+    wrap.addEventListener('scroll', ()=>{
+      if (snapTimer) clearTimeout(snapTimer);
+      snapTimer = setTimeout(()=>{
+        const w = window.innerWidth;
+        const target = (wrap.scrollLeft > w/2) ? w : 0;
+        wrap.scrollTo({ left: target, behavior: 'smooth' });
+      }, 120);
+    }, { passive:true });
   </script>
 </body>
 </html>

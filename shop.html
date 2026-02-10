@@ -7,14 +7,14 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209ad3">
+  <link rel="stylesheet" href="style.css?v=20260209ad">
 </head>
 
 <body>
   <!-- THEME: ALWAYS top-right -->
   <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
-  <!-- Search overlay -->
+  <!-- Search overlay (opens from bottom search icon) -->
   <div class="overlay" id="searchOverlay" aria-hidden="true">
     <div class="overlay-panel">
       <div class="overlay-top">
@@ -23,6 +23,7 @@
       </div>
       <div class="suggest" id="suggestList"></div>
     </div>
+  </div>
   </div>
 
   <main class="page">
@@ -37,9 +38,7 @@
     </div>
 
     <div class="shop-spacer"></div>
-
     <section class="product-grid" id="grid">
-      <!-- Produkte: unverändert -->
       <div class="product" id="massagepistole" data-category="Regeneration">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
@@ -298,7 +297,7 @@
     </div>
   </main>
 
-  <!-- Bottom Nav (WIEDER wie vorher: fixed in deinem CSS) -->
+  <!-- Bottom Nav -->
   <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
     <div class="bar">
       <button class="nav-btn" type="button" onclick="go('index.html')">
@@ -317,7 +316,7 @@
         <div style="font-size:11px;">Shop</div>
       </button>
 
-      <button class="nav-btn" type="button" id="openSearchBtn">
+      <button class="nav-btn" type="button" id="openSearchBtn" onclick="openOverlay()">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
           <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -332,6 +331,7 @@
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
     function go(url){ window.location.href = url; }
+
 
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
@@ -358,16 +358,14 @@
     });
     setThemeMeta();
 
-    // Elements
+    // Search overlay in shop
     const items = Array.from(document.querySelectorAll(".product"));
     const emptyState = document.getElementById("emptyState");
-
     const overlay = document.getElementById("searchOverlay");
+    const openSearchBtn = document.getElementById("openSearchBtn");
     const overlayInput = document.getElementById("overlayInput");
     const overlayClose = document.getElementById("overlayClose");
     const suggestList = document.getElementById("suggestList");
-    const openSearchBtn = document.getElementById("openSearchBtn");
-
     const shopTitle = document.getElementById("shopTitle");
     const shopCats = document.getElementById("shopCats");
     const catItems = Array.from(document.querySelectorAll(".cat-item"));
@@ -379,15 +377,7 @@
       category: el.getAttribute("data-category") || "All"
     }));
 
-    // --- CLOSE HELPERS (damit "das Ding" IMMER weggeht)
-    function closeOverlay(){
-      overlay.classList.remove("open");
-      overlay.setAttribute("aria-hidden","true");
-    }
     function openOverlay(){
-      // Kategorien immer schließen, damit nix übereinander liegt
-      closeCategories();
-
       overlay.classList.add("open");
       overlay.setAttribute("aria-hidden","false");
       overlayInput.value = "";
@@ -395,42 +385,24 @@
       setTimeout(()=> overlayInput.focus(), 50);
       track("search_overlay_open","shop");
     }
+    function closeOverlay(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden","true");
+      track("search_overlay_close","shop");
+    }
+    window.openOverlay = openOverlay;
 
+    function openCategories(){
+      shopCats.classList.add("open");
+      shopCats.setAttribute("aria-hidden","false");
+      track("cat_open","shop");
+    }
     function closeCategories(){
       shopCats.classList.remove("open");
       shopCats.setAttribute("aria-hidden","true");
-    }
-    function toggleCategories(){
-      // Suche immer schließen
-      closeOverlay();
-
-      const isOpen = shopCats.classList.contains("open");
-      if (isOpen) closeCategories();
-      else {
-        shopCats.classList.add("open");
-        shopCats.setAttribute("aria-hidden","false");
-        track("cat_open","shop");
-      }
+      track("cat_close","shop");
     }
 
-    // Overlay closing
-    overlayClose.addEventListener("click", ()=>{ closeOverlay(); track("search_overlay_close","shop"); });
-    overlay.addEventListener("click", (e)=>{ if (e.target === overlay) closeOverlay(); });
-    document.addEventListener("keydown",(e)=>{
-      if(e.key==="Escape"){ closeOverlay(); closeCategories(); }
-    });
-
-    // Outside click closes categories
-    document.addEventListener("click",(e)=>{
-      const clickedInsideCats = shopCats.contains(e.target) || shopTitle.contains(e.target);
-      if (!clickedInsideCats) closeCategories();
-    });
-
-    // Open buttons
-    if (openSearchBtn) openSearchBtn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openOverlay(); });
-    if (shopTitle) shopTitle.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); toggleCategories(); });
-
-    // Search filtering + suggestions
     function applySearch(){
       const q = (overlayInput.value || "").trim().toLowerCase();
       let visible = 0;
@@ -475,17 +447,24 @@
     });
 
     overlayInput.addEventListener("input", ()=> { renderSuggest(overlayInput.value); applySearch(); });
+    if (openSearchBtn) openSearchBtn.addEventListener("click", openOverlay);
+    if (overlayClose) overlayClose.addEventListener("click", closeOverlay);
+    if (overlay) overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
+    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
 
-    // Category buttons: scroll to first matching item
-    catItems.forEach(btn => btn.addEventListener("click", (e)=>{
-      e.stopPropagation();
+    if (shopTitle) shopTitle.addEventListener("click", ()=>{
+      if (shopCats.classList.contains("open")) closeCategories(); else openCategories();
+    });
+    catItems.forEach(btn => btn.addEventListener("click", ()=>{
       const cat = btn.getAttribute("data-cat");
       let target = null;
       if (cat === "Regeneration") target = items.find(el => (el.getAttribute("data-category") || "") === "Regeneration");
       if (cat === "Sport & Freizeit") target = items.find(el => (el.getAttribute("data-category") || "") === "Training") || items.find(el => (el.getAttribute("data-category") || "") === "Stabilität");
       if (cat === "Rehabilitation") target = items.find(el => (el.getAttribute("data-category") || "") === "Diagnostik") || items.find(el => (el.getAttribute("data-category") || "") === "Pflege");
       closeCategories();
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target){
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }));
 
     // local click counts for popular
@@ -521,9 +500,11 @@
     }
     window.shareProduct = shareProduct;
 
-    // Scroll reveal
+    // Scroll reveal (use page container for mobile scrolling)
+    const scrollHost = document.querySelector(".page") || window;
     function checkVisibility(){
-      const trigger = window.innerHeight * 0.92;
+      const viewportH = (scrollHost === window) ? window.innerHeight : scrollHost.clientHeight;
+      const trigger = viewportH * 0.92;
       items.forEach(el=>{
         if (el.style.display === "none") { el.classList.remove("active"); return; }
         const top = el.getBoundingClientRect().top;
@@ -537,10 +518,39 @@
       document.body.classList.add("scroll-anim");
       checkVisibility();
     });
-    window.addEventListener("scroll", checkVisibility, { passive:true });
+    if (scrollHost === window) window.addEventListener("scroll", checkVisibility, { passive:true });
+    else scrollHost.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
     applySearch();
+
+    function initMobileSwipe(){
+      const mq = window.matchMedia("(max-width: 900px)");
+      if (!mq.matches) return;
+      let startX = 0, startY = 0, tracking = false;
+      document.addEventListener("touchstart", (e)=>{
+        if (e.touches.length !== 1) return;
+        if (overlay.classList.contains("open")) return;
+        if (shopCats.classList.contains("open")) return;
+        const t = e.touches[0];
+        startX = t.clientX; startY = t.clientY; tracking = true;
+      }, { passive:true });
+      document.addEventListener("touchmove", (e)=>{
+        if (!tracking) return;
+        const t = e.touches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+        if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
+          tracking = false;
+          if (dx > 0) go("index.html");
+        }
+      }, { passive:true });
+    }
+    initMobileSwipe();
   </script>
 </body>
 </html>
+
+
+
+

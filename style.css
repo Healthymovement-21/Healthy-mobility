@@ -696,3 +696,28 @@ body.scroll-anim .product.active{
 }
 .cat-item:active{ transform: translateY(1px); }
 .shop-spacer{ height:120px; }
+
+/* ===== FULL-BLEED BACKGROUND LAYER (wie Home "durchgezogen") ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+
+  /* weicher IG/Glow-Hintergrund statt "schwarz rand" */
+  background:
+    radial-gradient(900px 380px at 18% 0%, rgba(214,41,118,0.16), transparent 62%),
+    radial-gradient(900px 380px at 82% 0%, rgba(79,91,213,0.14), transparent 62%),
+    radial-gradient(900px 420px at 50% 110%, rgba(250,126,30,0.08), transparent 65%),
+    var(--bg);
+}
+
+/* Light Mode: dezenter */
+[data-theme="light"] body::before{
+  background:
+    radial-gradient(900px 380px at 18% 0%, rgba(214,41,118,0.10), transparent 62%),
+    radial-gradient(900px 380px at 82% 0%, rgba(79,91,213,0.10), transparent 62%),
+    radial-gradient(900px 420px at 50% 110%, rgba(250,126,30,0.06), transparent 65%),
+    var(--bg);
+}

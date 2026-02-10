@@ -801,3 +801,26 @@ body {
 .page, main, .overlay {
   background: transparent;
 }
+
+/* --- iOS: Bottom Safe-Area / Black Bar Fix --- */
+html, body {
+  height: 100%;
+  background: var(--bg, #050506);
+}
+
+body {
+  min-height: 100dvh;   /* neuere iOS */
+  min-height: 100svh;   /* stabil auf iOS */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* falls du einen "page"-Scroller hast */
+.page {
+  min-height: 100svh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 12px);
+}
+
+/* Bottom-Navigation sitzt über dem Home-Indicator */
+.bottom-nav {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 8px) !important;
+}

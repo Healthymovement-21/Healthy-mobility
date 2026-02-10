@@ -7,10 +7,10 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209ad2">
+  <link rel="stylesheet" href="style.css?v=20260209ad3">
 </head>
 
-<body class="shop-flow">
+<body>
   <!-- THEME: ALWAYS top-right -->
   <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
@@ -39,7 +39,7 @@
     <div class="shop-spacer"></div>
 
     <section class="product-grid" id="grid">
-
+      <!-- Produkte: unverändert -->
       <div class="product" id="massagepistole" data-category="Regeneration">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
@@ -277,7 +277,6 @@
           </button>
         </div>
       </div>
-
     </section>
 
     <div class="empty" id="emptyState">
@@ -297,37 +296,36 @@
         Medizinischer Hinweis: Inhalte stellen keine medizinische Beratung dar und ersetzen keine individuelle Behandlung/Diagnostik.
       </div>
     </div>
-
-    <!-- NAVIGATION JETZT IM NORMALEN FLOW (nicht fixed!) -->
-    <div class="bottom-nav static-nav" role="navigation" aria-label="Bottom Navigation">
-      <div class="bar">
-        <button class="nav-btn" type="button" onclick="go('index.html')">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
-                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
-          <div style="font-size:11px;">Home</div>
-        </button>
-
-        <button class="nav-btn active" type="button" onclick="go('shop.html')">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <div style="font-size:11px;">Shop</div>
-        </button>
-
-        <button class="nav-btn" type="button" id="openSearchBtn" onclick="openOverlay()">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
-            <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <div style="font-size:11px;">Suche</div>
-        </button>
-      </div>
-    </div>
-
   </main>
+
+  <!-- Bottom Nav (WIEDER wie vorher: fixed in deinem CSS) -->
+  <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
+    <div class="bar">
+      <button class="nav-btn" type="button" onclick="go('index.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
+                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <div style="font-size:11px;">Home</div>
+      </button>
+
+      <button class="nav-btn active" type="button" onclick="go('shop.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Shop</div>
+      </button>
+
+      <button class="nav-btn" type="button" id="openSearchBtn">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:11px;">Suche</div>
+      </button>
+    </div>
+  </div>
 
   <script>
     function track(eventName, label){
@@ -342,7 +340,7 @@
       themeMeta.setAttribute("content", cur === "light" ? "#ffffff" : "#12151b");
     }
 
-    // Theme
+    // Theme ALWAYS top-right
     const root = document.documentElement;
     const saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
@@ -360,13 +358,16 @@
     });
     setThemeMeta();
 
-    // Search overlay in shop
+    // Elements
     const items = Array.from(document.querySelectorAll(".product"));
     const emptyState = document.getElementById("emptyState");
+
     const overlay = document.getElementById("searchOverlay");
     const overlayInput = document.getElementById("overlayInput");
     const overlayClose = document.getElementById("overlayClose");
     const suggestList = document.getElementById("suggestList");
+    const openSearchBtn = document.getElementById("openSearchBtn");
+
     const shopTitle = document.getElementById("shopTitle");
     const shopCats = document.getElementById("shopCats");
     const catItems = Array.from(document.querySelectorAll(".cat-item"));
@@ -378,7 +379,15 @@
       category: el.getAttribute("data-category") || "All"
     }));
 
+    // --- CLOSE HELPERS (damit "das Ding" IMMER weggeht)
+    function closeOverlay(){
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden","true");
+    }
     function openOverlay(){
+      // Kategorien immer schließen, damit nix übereinander liegt
+      closeCategories();
+
       overlay.classList.add("open");
       overlay.setAttribute("aria-hidden","false");
       overlayInput.value = "";
@@ -386,24 +395,42 @@
       setTimeout(()=> overlayInput.focus(), 50);
       track("search_overlay_open","shop");
     }
-    function closeOverlay(){
-      overlay.classList.remove("open");
-      overlay.setAttribute("aria-hidden","true");
-      track("search_overlay_close","shop");
-    }
-    window.openOverlay = openOverlay;
 
-    function openCategories(){
-      shopCats.classList.add("open");
-      shopCats.setAttribute("aria-hidden","false");
-      track("cat_open","shop");
-    }
     function closeCategories(){
       shopCats.classList.remove("open");
       shopCats.setAttribute("aria-hidden","true");
-      track("cat_close","shop");
+    }
+    function toggleCategories(){
+      // Suche immer schließen
+      closeOverlay();
+
+      const isOpen = shopCats.classList.contains("open");
+      if (isOpen) closeCategories();
+      else {
+        shopCats.classList.add("open");
+        shopCats.setAttribute("aria-hidden","false");
+        track("cat_open","shop");
+      }
     }
 
+    // Overlay closing
+    overlayClose.addEventListener("click", ()=>{ closeOverlay(); track("search_overlay_close","shop"); });
+    overlay.addEventListener("click", (e)=>{ if (e.target === overlay) closeOverlay(); });
+    document.addEventListener("keydown",(e)=>{
+      if(e.key==="Escape"){ closeOverlay(); closeCategories(); }
+    });
+
+    // Outside click closes categories
+    document.addEventListener("click",(e)=>{
+      const clickedInsideCats = shopCats.contains(e.target) || shopTitle.contains(e.target);
+      if (!clickedInsideCats) closeCategories();
+    });
+
+    // Open buttons
+    if (openSearchBtn) openSearchBtn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); openOverlay(); });
+    if (shopTitle) shopTitle.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); toggleCategories(); });
+
+    // Search filtering + suggestions
     function applySearch(){
       const q = (overlayInput.value || "").trim().toLowerCase();
       let visible = 0;
@@ -448,14 +475,10 @@
     });
 
     overlayInput.addEventListener("input", ()=> { renderSuggest(overlayInput.value); applySearch(); });
-    if (overlayClose) overlayClose.addEventListener("click", closeOverlay);
-    if (overlay) overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
-    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
 
-    if (shopTitle) shopTitle.addEventListener("click", ()=>{
-      if (shopCats.classList.contains("open")) closeCategories(); else openCategories();
-    });
-    catItems.forEach(btn => btn.addEventListener("click", ()=>{
+    // Category buttons: scroll to first matching item
+    catItems.forEach(btn => btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
       const cat = btn.getAttribute("data-cat");
       let target = null;
       if (cat === "Regeneration") target = items.find(el => (el.getAttribute("data-category") || "") === "Regeneration");
@@ -465,6 +488,7 @@
       if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     }));
 
+    // local click counts for popular
     function bumpLocalClick(name){
       try{
         const raw = localStorage.getItem("hm_clicks_v1");
@@ -497,6 +521,7 @@
     }
     window.shareProduct = shareProduct;
 
+    // Scroll reveal
     function checkVisibility(){
       const trigger = window.innerHeight * 0.92;
       items.forEach(el=>{

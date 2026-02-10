@@ -721,3 +721,20 @@ body::before{
     radial-gradient(900px 420px at 50% 110%, rgba(250,126,30,0.06), transparent 65%),
     var(--bg);
 }
+/* ===== Shop: gleicher Fullscreen-Flow wie Home (kein fixed Overlay) ===== */
+.flow-layout .bottom-nav{
+  position: static !important;     /* statt fixed */
+  left:auto; right:auto; bottom:auto;
+  padding: 18px 0 0 !important;
+  pointer-events: auto !important;
+}
+
+.flow-layout .bottom-nav .bar{
+  max-width: 980px;               /* Desktop schöner */
+  margin: 0 auto;
+  box-shadow: none;               /* weniger "schwebend" */
+}
+
+.flow-layout .page{
+  padding-bottom: calc(24px + var(--sab)) !important; /* nicht mehr 90px Platz für fixed nav */
+}

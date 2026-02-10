@@ -7,14 +7,14 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209ad">
+  <link rel="stylesheet" href="style.css?v=20260209ad2">
 </head>
 
-<body>
+<body class="shop-flow">
   <!-- THEME: ALWAYS top-right -->
   <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
-  <!-- Search overlay (opens from bottom search icon) -->
+  <!-- Search overlay -->
   <div class="overlay" id="searchOverlay" aria-hidden="true">
     <div class="overlay-panel">
       <div class="overlay-top">
@@ -23,7 +23,6 @@
       </div>
       <div class="suggest" id="suggestList"></div>
     </div>
-  </div>
   </div>
 
   <main class="page">
@@ -38,7 +37,9 @@
     </div>
 
     <div class="shop-spacer"></div>
+
     <section class="product-grid" id="grid">
+
       <div class="product" id="massagepistole" data-category="Regeneration">
         <h3>Massagepistole</h3>
         <p>Zur Lockerung verspannter Muskulatur, z. B. nach sportlicher Belastung oder bei muskulären Verspannungen durch Alltag oder Beruf.</p>
@@ -276,6 +277,7 @@
           </button>
         </div>
       </div>
+
     </section>
 
     <div class="empty" id="emptyState">
@@ -295,43 +297,43 @@
         Medizinischer Hinweis: Inhalte stellen keine medizinische Beratung dar und ersetzen keine individuelle Behandlung/Diagnostik.
       </div>
     </div>
-  </main>
 
-  <!-- Bottom Nav -->
-  <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
-    <div class="bar">
-      <button class="nav-btn" type="button" onclick="go('index.html')">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
-                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-        </svg>
-        <div style="font-size:11px;">Home</div>
-      </button>
+    <!-- NAVIGATION JETZT IM NORMALEN FLOW (nicht fixed!) -->
+    <div class="bottom-nav static-nav" role="navigation" aria-label="Bottom Navigation">
+      <div class="bar">
+        <button class="nav-btn" type="button" onclick="go('index.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-size:11px;">Home</div>
+        </button>
 
-      <button class="nav-btn active" type="button" onclick="go('shop.html')">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <div style="font-size:11px;">Shop</div>
-      </button>
+        <button class="nav-btn active" type="button" onclick="go('shop.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div style="font-size:11px;">Shop</div>
+        </button>
 
-      <button class="nav-btn" type="button" id="openSearchBtn" onclick="openOverlay()">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
-          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <div style="font-size:11px;">Suche</div>
-      </button>
+        <button class="nav-btn" type="button" id="openSearchBtn" onclick="openOverlay()">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div style="font-size:11px;">Suche</div>
+        </button>
+      </div>
     </div>
-  </div>
+
+  </main>
 
   <script>
     function track(eventName, label){
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
     function go(url){ window.location.href = url; }
-
 
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
@@ -340,7 +342,7 @@
       themeMeta.setAttribute("content", cur === "light" ? "#ffffff" : "#12151b");
     }
 
-    // Theme ALWAYS top-right
+    // Theme
     const root = document.documentElement;
     const saved = localStorage.getItem("theme");
     if (saved) root.setAttribute("data-theme", saved);
@@ -362,7 +364,6 @@
     const items = Array.from(document.querySelectorAll(".product"));
     const emptyState = document.getElementById("emptyState");
     const overlay = document.getElementById("searchOverlay");
-    const openSearchBtn = document.getElementById("openSearchBtn");
     const overlayInput = document.getElementById("overlayInput");
     const overlayClose = document.getElementById("overlayClose");
     const suggestList = document.getElementById("suggestList");
@@ -447,7 +448,6 @@
     });
 
     overlayInput.addEventListener("input", ()=> { renderSuggest(overlayInput.value); applySearch(); });
-    if (openSearchBtn) openSearchBtn.addEventListener("click", openOverlay);
     if (overlayClose) overlayClose.addEventListener("click", closeOverlay);
     if (overlay) overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
     document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
@@ -462,12 +462,9 @@
       if (cat === "Sport & Freizeit") target = items.find(el => (el.getAttribute("data-category") || "") === "Training") || items.find(el => (el.getAttribute("data-category") || "") === "Stabilität");
       if (cat === "Rehabilitation") target = items.find(el => (el.getAttribute("data-category") || "") === "Diagnostik") || items.find(el => (el.getAttribute("data-category") || "") === "Pflege");
       closeCategories();
-      if (target){
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     }));
 
-    // local click counts for popular
     function bumpLocalClick(name){
       try{
         const raw = localStorage.getItem("hm_clicks_v1");
@@ -500,11 +497,8 @@
     }
     window.shareProduct = shareProduct;
 
-    // Scroll reveal (use page container for mobile scrolling)
-    const scrollHost = document.querySelector(".page") || window;
     function checkVisibility(){
-      const viewportH = (scrollHost === window) ? window.innerHeight : scrollHost.clientHeight;
-      const trigger = viewportH * 0.92;
+      const trigger = window.innerHeight * 0.92;
       items.forEach(el=>{
         if (el.style.display === "none") { el.classList.remove("active"); return; }
         const top = el.getBoundingClientRect().top;
@@ -518,35 +512,10 @@
       document.body.classList.add("scroll-anim");
       checkVisibility();
     });
-    if (scrollHost === window) window.addEventListener("scroll", checkVisibility, { passive:true });
-    else scrollHost.addEventListener("scroll", checkVisibility, { passive:true });
+    window.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
     applySearch();
-
-    function initMobileSwipe(){
-      const mq = window.matchMedia("(max-width: 900px)");
-      if (!mq.matches) return;
-      let startX = 0, startY = 0, tracking = false;
-      document.addEventListener("touchstart", (e)=>{
-        if (e.touches.length !== 1) return;
-        if (overlay.classList.contains("open")) return;
-        if (shopCats.classList.contains("open")) return;
-        const t = e.touches[0];
-        startX = t.clientX; startY = t.clientY; tracking = true;
-      }, { passive:true });
-      document.addEventListener("touchmove", (e)=>{
-        if (!tracking) return;
-        const t = e.touches[0];
-        const dx = t.clientX - startX;
-        const dy = t.clientY - startY;
-        if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
-          tracking = false;
-          if (dx > 0) go("index.html");
-        }
-      }, { passive:true });
-    }
-    initMobileSwipe();
   </script>
 </body>
 </html>

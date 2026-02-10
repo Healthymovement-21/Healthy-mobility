@@ -738,3 +738,32 @@ body::before{
 .flow-layout .page{
   padding-bottom: calc(24px + var(--sab)) !important; /* nicht mehr 90px Platz für fixed nav */
 }
+
+/* ===== SHOP: Navigation NICHT fixed (normaler Page-Flow) ===== */
+.bottom-nav.static-nav{
+  position: static !important;
+  left:auto !important; right:auto !important; bottom:auto !important;
+  padding: 18px 0 calc(18px + var(--sab)) !important;
+  pointer-events: auto !important;
+}
+
+.bottom-nav.static-nav .bar{
+  max-width: 980px;
+  margin: 0 auto;
+  box-shadow: none !important;
+}
+
+/* Shop-Seite: nicht so viel Platz unten reservieren (weil kein fixed Overlay) */
+body.shop-flow .page{
+  padding-bottom: calc(24px + var(--sab)) !important;
+}
+
+/* Optional: wenn du den Theme-Button im Shop nicht "overlay" willst:
+   (ich lasse ihn standardmäßig FIXED, weil du das immer oben rechts wolltest)
+*/
+/*
+body.shop-flow .theme-top{
+  position: sticky !important;
+  top: calc(12px + var(--sat));
+}
+*/

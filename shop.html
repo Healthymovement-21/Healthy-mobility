@@ -339,8 +339,9 @@
     function track(eventName, label){
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
-    function go(url){ window.location.href = url; }
-
+    function go(url){
+  window.location.assign(url);
+}
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
       if (!themeMeta) return;

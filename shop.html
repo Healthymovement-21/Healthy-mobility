@@ -1,8 +1,16 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- PWA / iOS Standalone (IDENTISCH auf allen Seiten) -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
   <meta name="theme-color" content="#ffffff" id="themeColorMeta">
   <title>Healthy Mobility – Shop</title>
 
@@ -24,7 +32,7 @@
       <div class="suggest" id="suggestList"></div>
     </div>
   </div>
-  </div>
+  <!-- (FIX) das extra </div> war hier zu viel und ist entfernt -->
 
   <main class="page">
     <div class="shop-head">
@@ -38,6 +46,7 @@
     </div>
 
     <div class="shop-spacer"></div>
+
     <section class="product-grid" id="grid">
       <div class="product" id="massagepistole" data-category="Regeneration">
         <h3>Massagepistole</h3>
@@ -332,7 +341,6 @@
     }
     function go(url){ window.location.href = url; }
 
-
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
       if (!themeMeta) return;
@@ -550,7 +558,3 @@
   </script>
 </body>
 </html>
-
-
-
-

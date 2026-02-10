@@ -765,5 +765,39 @@ body.shop-flow .page{
 body.shop-flow .theme-top{
   position: sticky !important;
   top: calc(12px + var(--sat));
+
 }
 */
+
+/* --- iOS Safe-Area / Black-Bars Fix (ADD ONLY) --- */
+html, body {
+  height: 100%;
+  background: var(--bg, #050506);
+}
+
+/* moderner als 100vh auf iOS */
+body {
+  min-height: 100svh;
+}
+
+/* Safe-Area oben/unten mit Hintergrund füllen */
+:root {
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+}
+
+/* Dein Top-Theme-Button bleibt oben rechts, aber unter der Notch */
+.theme-top {
+  top: calc(var(--sat) + 10px) !important;
+}
+
+/* Bottom-Bar sitzt nicht auf dem Home-Indicator, sondern darüber */
+.bottom-nav {
+  padding-bottom: calc(var(--sab) + 8px) !important;
+  background: transparent;
+}
+
+/* Wenn irgendein Wrapper transparent ist, bleibt trotzdem BG gefüllt */
+.page, main, .overlay {
+  background: transparent;
+}

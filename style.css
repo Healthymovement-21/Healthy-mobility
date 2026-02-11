@@ -86,6 +86,16 @@ body::before{
     calc(12px + var(--sal));
   pointer-events:none;
 }
+.top-nav::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-14px;
+  height:18px;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 55%, transparent), transparent);
+  pointer-events:none;
+}
 .top-nav .row{
   pointer-events:auto;
   max-width:980px;
@@ -183,6 +193,12 @@ body::before{
 .has-top-nav .bottom-nav,
 .has-top-nav .theme-top{
   display:none !important;
+}
+
+.has-top-nav .theme-top{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
 }
 
 /* Full-bleed layout */

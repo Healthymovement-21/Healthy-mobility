@@ -54,14 +54,13 @@ body::before{
   pointer-events:none;
 }
 .page{
-  height:100svh;
+  height:auto;
+  min-height:100dvh;
   width:100%;
   background:var(--bg);
-  overflow-y:auto;
-  -webkit-overflow-scrolling: touch;
+  overflow:visible;
   overscroll-behavior-y: auto;
   scrollbar-width: none;
-  scroll-padding-bottom: calc(220px + var(--sab));
 }
 .page::-webkit-scrollbar{ width:0; height:0; }
 .overlay{
@@ -174,6 +173,7 @@ body::before{
 }
 .has-top-nav .page{
   padding-top: calc(92px + var(--sat));
+  padding-bottom: calc(36px + var(--sab));
 }
 .has-top-nav .bottom-nav,
 .has-top-nav .theme-top{
@@ -189,7 +189,7 @@ body::before{
   padding:
     calc(12px + var(--sat))
     calc(14px + var(--sar))
-    calc(150px + var(--sab))
+    calc(36px + var(--sab))
     calc(14px + var(--sal));
   max-width:1200px;
   margin:0 auto;
@@ -198,11 +198,7 @@ body::before{
 .page::before,
 .page::after{
   content:"";
-  display:block;
-}
-.page::after{
-  height: calc(140px + var(--sab));
-  width:100%;
+  display:none;
 }
 
 /* Always top-right theme button */
@@ -274,7 +270,7 @@ p{
     padding:
       calc(26px + var(--sat))
       calc(28px + var(--sar))
-      calc(150px + var(--sab))
+      calc(36px + var(--sab))
       calc(28px + var(--sal));
   }
 }
@@ -283,7 +279,7 @@ p{
     padding:
       calc(28px + var(--sat))
       calc(32px + var(--sar))
-      calc(170px + var(--sab))
+      calc(44px + var(--sab))
       calc(32px + var(--sal));
   }
 }

@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209am">
+  <link rel="stylesheet" href="style.css?v=20260209an">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -554,8 +554,8 @@
     }
     window.shareProduct = shareProduct;
 
-    // Scroll reveal (use page container for mobile scrolling)
-    const scrollHost = document.querySelector(".page") || window;
+    // Scroll reveal (window scroll for full-screen page flow)
+    const scrollHost = window;
     function checkVisibility(){
       const viewportH = (scrollHost === window) ? window.innerHeight : scrollHost.clientHeight;
       const trigger = viewportH * 0.92;
@@ -572,20 +572,17 @@
       document.body.classList.add("scroll-anim");
       checkVisibility();
     });
-    if (scrollHost === window) window.addEventListener("scroll", checkVisibility, { passive:true });
-    else scrollHost.addEventListener("scroll", checkVisibility, { passive:true });
+    window.addEventListener("scroll", checkVisibility, { passive:true });
     window.addEventListener("resize", checkVisibility);
 
     applySearch();
 
     function initLogoHideOnScroll(){
-      const host = document.querySelector(".page");
-      if (!host) return;
       const update = () => {
-        if (host.scrollTop > 8) document.body.classList.add("logo-hidden");
+        if (window.scrollY > 8) document.body.classList.add("logo-hidden");
         else document.body.classList.remove("logo-hidden");
       };
-      host.addEventListener("scroll", update, { passive:true });
+      window.addEventListener("scroll", update, { passive:true });
       update();
     }
     initLogoHideOnScroll();

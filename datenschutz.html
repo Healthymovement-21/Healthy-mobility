@@ -61,6 +61,7 @@
       display:flex;
       align-items:center;
       gap:10px;
+      padding-left: clamp(120px, 26vw, 180px);
     }
     .top-nav .bar{
       pointer-events:auto;
@@ -101,21 +102,24 @@
       padding:8px 0;
     }
     .brand-mark{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:54px;
-      padding:0 14px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background: color-mix(in srgb, var(--bg) 78%, transparent);
-      backdrop-filter: blur(14px);
+      position:fixed;
+      top: calc(10px + var(--sat));
+      left: calc(14px + var(--sal));
+      z-index:100003;
       text-decoration:none;
       font-weight:1000;
       letter-spacing:-0.02em;
-      font-size: clamp(14px, 3.6vw, 17px);
+      font-size: clamp(14px, 3.7vw, 17px);
       color:var(--text);
-      line-height:1.05;
+      line-height:0.98;
+      display:inline-flex;
+      flex-direction:column;
+      align-items:flex-start;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+    .brand-mark span:last-child{
+      margin-top:-4px;
+      margin-left:12px;
     }
     .brand-mark .glow{
       background:var(--ig);
@@ -177,7 +181,7 @@
 <body>
   <div class="top-nav" role="navigation" aria-label="Top Navigation">
     <div class="row">
-      <a class="brand-mark" href="index.html"><span class="glow">Healthy</span> Mobility</a>
+      <a class="brand-mark" href="index.html"><span class="glow">Healthy</span><span>Mobility</span></a>
       <div class="bar">
         <button class="top-btn" type="button" onclick="go('index.html')">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">

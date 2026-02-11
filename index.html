@@ -11,7 +11,7 @@
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209ap">
+  <link rel="stylesheet" href="style.css?v=20260209aq">
 </head>
 
 <body class="has-top-nav">
@@ -318,11 +318,14 @@
     renderPopular();
 
     function initLogoHideOnScroll(){
+      const pageHost = document.querySelector(".page");
       const update = () => {
-        if (window.scrollY > 8) document.body.classList.add("logo-hidden");
+        const y = Math.max(window.scrollY || 0, pageHost ? pageHost.scrollTop : 0);
+        if (y > 8) document.body.classList.add("logo-hidden");
         else document.body.classList.remove("logo-hidden");
       };
       window.addEventListener("scroll", update, { passive:true });
+      if (pageHost) pageHost.addEventListener("scroll", update, { passive:true });
       update();
     }
     initLogoHideOnScroll();

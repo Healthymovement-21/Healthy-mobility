@@ -116,6 +116,7 @@
       flex-direction:column;
       align-items:flex-start;
       text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      transition: opacity .2s ease, transform .2s ease;
     }
     .brand-mark span:last-child{
       margin-top:-4px;
@@ -126,6 +127,11 @@
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
+    }
+    .logo-hidden .brand-mark{
+      opacity:0;
+      transform: translateY(-10px);
+      pointer-events:none;
     }
 
     .wrap{
@@ -293,6 +299,16 @@
       localStorage.setItem("theme", next);
       track("theme_toggle", next);
     });
+
+    function initLogoHideOnScroll(){
+      const update = () => {
+        if ((window.scrollY || 0) > 8) document.body.classList.add("logo-hidden");
+        else document.body.classList.remove("logo-hidden");
+      };
+      window.addEventListener("scroll", update, { passive:true });
+      update();
+    }
+    initLogoHideOnScroll();
   </script>
 </body>
 </html>

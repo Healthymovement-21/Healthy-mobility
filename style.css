@@ -143,6 +143,23 @@ body::before{
   font-size:18px;
   padding:8px 0;
 }
+@media (max-width: 900px){
+  .top-nav .row{
+    padding-right:56px;
+  }
+  .top-btn.theme-btn{
+    position:fixed;
+    top: calc(10px + var(--sat));
+    right: calc(12px + var(--sar));
+    z-index:100004;
+    min-width:44px;
+    padding:8px 10px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(14px);
+  }
+}
 .brand-mark{
   position:fixed;
   top: calc(10px + var(--sat));

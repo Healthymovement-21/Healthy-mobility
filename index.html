@@ -11,10 +11,10 @@
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209al">
+  <link rel="stylesheet" href="style.css?v=20260209am">
 </head>
 
-<body>
+<body class="has-top-nav">
   <!-- Intro Animation -->
   <div class="intro" id="intro">
     <div class="logo">
@@ -22,9 +22,6 @@
       <div><span>Healthy</span><br><span>Mobility</span></div>
     </div>
   </div>
-
-  <!-- THEME: ALWAYS top-right -->
-  <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
   <!-- Search overlay (opens from bottom search icon) -->
   <div class="overlay" id="searchOverlay" aria-hidden="true">
@@ -36,6 +33,35 @@
       <div class="suggest" id="suggestList"></div>
     </div>
   </div>
+
+  <div class="top-nav" role="navigation" aria-label="Top Navigation">
+    <div class="row">
+      <a class="brand-mark" href="index.html" onclick="track('brand_click','home')"><span class="glow">Healthy</span><span>Mobility</span></a>
+      <div class="bar">
+      <button class="top-btn active" type="button" onclick="go('index.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="top-btn" type="button" onclick="go('shop.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Shop</span>
+      </button>
+      <button class="top-btn" type="button" onclick="openOverlay()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Suche</span>
+      </button>
+      </div>
+    </div>
+  </div>
+  <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
 
   <main class="page">
@@ -76,7 +102,7 @@
       </p>
 
       <p>
-        Werbung / Affiliate-Links: Wenn du über Links einkaufst, erhalte ich ggf. eine Provision.
+        Werbung / Affiliate-Links: Wenn du über Links einkaufst, erhalte ich eine Provision.
         Für dich entstehen keine zusätzlichen Kosten.
       </p>
 
@@ -110,7 +136,7 @@
     <div class="footer">
       <a href="impressum.html" onclick="track('nav_impressum','home_footer')">Impressum</a> ·
       <a href="datenschutz.html" onclick="track('nav_datenschutz','home_footer')">Datenschutz</a>
-      <div style="margin-top:10px;">Hinweis: Inhalte stellen keine medizinische Beratung dar.</div>
+      <div style="margin-top:10px;">Hinweis: Die Inhalte stellen keine medizinische Beratung dar.</div>
     </div>
   </main>
 
@@ -149,14 +175,6 @@
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
     function go(url){ window.location.href = url; }
-    let swipeNavigating = false;
-    function swipeGo(url, dir){
-      if (swipeNavigating) return;
-      swipeNavigating = true;
-      document.body.classList.add(dir === "left" ? "swipe-out-left" : "swipe-out-right");
-      setTimeout(()=>{ window.location.href = url; }, 180);
-    }
-
 
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
@@ -235,14 +253,21 @@
     }
     function renderSuggest(q){
       const query = (q||"").trim().toLowerCase();
+      if (!query){
+        suggestList.innerHTML = "";
+        suggestList.style.display = "none";
+        return;
+      }
       const results = products
-        .filter(p => !query || (p.name.toLowerCase().includes(query)))
+        .filter(p => p.name.toLowerCase().includes(query))
         .slice(0, 10);
 
       if (results.length === 0){
-        suggestList.innerHTML = `<div style="color:var(--muted);padding:10px 2px;">Keine Treffer.</div>`;
+        suggestList.innerHTML = "";
+        suggestList.style.display = "none";
         return;
       }
+      suggestList.style.display = "grid";
       suggestList.innerHTML = results.map(p => `
         <a href="shop.html#${p.id}" onclick="track('search_select','${p.name}')">
           <span class="name">${p.name}</span>
@@ -292,6 +317,18 @@
     }
     renderPopular();
 
+    function initLogoHideOnScroll(){
+      const host = document.querySelector(".page");
+      if (!host) return;
+      const update = () => {
+        if (host.scrollTop > 8) document.body.classList.add("logo-hidden");
+        else document.body.classList.remove("logo-hidden");
+      };
+      host.addEventListener("scroll", update, { passive:true });
+      update();
+    }
+    initLogoHideOnScroll();
+
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");
       if (!mq.matches) return;
@@ -310,7 +347,7 @@
         const dy = t.clientY - startY;
         if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
           tracking = false;
-          if (dx < 0) swipeGo("shop.html", "left");
+          if (dx < 0) go("shop.html");
         }
       }, { passive:true });
       document.addEventListener("touchend", ()=>{ tracking = false; }, { passive:true });

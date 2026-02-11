@@ -15,10 +15,10 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209al">
+  <link rel="stylesheet" href="style.css?v=20260209am">
 </head>
 
-<body class="shop-page">
+<body class="shop-page has-top-nav">
   <!-- THEME: ALWAYS top-right -->
   <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
@@ -33,6 +33,34 @@
     </div>
   </div>
   <!-- (FIX) das extra </div> war hier zu viel und ist entfernt -->
+
+  <div class="top-nav" role="navigation" aria-label="Top Navigation">
+    <div class="row">
+      <a class="brand-mark" href="index.html" onclick="track('brand_click','shop')"><span class="glow">Healthy</span><span>Mobility</span></a>
+      <div class="bar">
+      <button class="top-btn" type="button" onclick="go('index.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="top-btn active" type="button" onclick="go('shop.html')">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Shop</span>
+      </button>
+      <button class="top-btn" type="button" onclick="openOverlay()">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Suche</span>
+      </button>
+      </div>
+    </div>
+  </div>
 
   <main class="page">
     <div class="shop-head">
@@ -295,14 +323,14 @@
 
     <div class="footer">
       <div>
-        Werbung / Affiliate-Links: Diese Seite enthält Affiliate-Links. Wenn du darüber einkaufst, erhalte ich ggf. eine Provision.
+        Werbung / Affiliate-Links: Diese Seite enthält Affiliate-Links. Wenn du darüber einkaufst, erhalte ich eine Provision.
         Für dich entstehen keine zusätzlichen Kosten.
       </div>
       <div style="margin-top:10px;">
         Preise können sich bei Amazon jederzeit ändern. Maßgeblich ist der Preis auf Amazon zum Zeitpunkt des Kaufs.
       </div>
       <div style="margin-top:10px;">
-        Medizinischer Hinweis: Inhalte stellen keine medizinische Beratung dar und ersetzen keine individuelle Behandlung/Diagnostik.
+        Medizinischer Hinweis: Die Inhalte stellen keine medizinische Beratung dar.
       </div>
     </div>
   </main>
@@ -343,13 +371,6 @@
     function go(url){
   window.location.assign(url);
 }
-    let swipeNavigating = false;
-    function swipeGo(url, dir){
-      if (swipeNavigating) return;
-      swipeNavigating = true;
-      document.body.classList.add(dir === "left" ? "swipe-out-left" : "swipe-out-right");
-      setTimeout(()=>{ window.location.assign(url); }, 180);
-    }
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
       if (!themeMeta) return;
@@ -557,6 +578,18 @@
 
     applySearch();
 
+    function initLogoHideOnScroll(){
+      const host = document.querySelector(".page");
+      if (!host) return;
+      const update = () => {
+        if (host.scrollTop > 8) document.body.classList.add("logo-hidden");
+        else document.body.classList.remove("logo-hidden");
+      };
+      host.addEventListener("scroll", update, { passive:true });
+      update();
+    }
+    initLogoHideOnScroll();
+
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");
       if (!mq.matches) return;
@@ -575,7 +608,7 @@
         const dy = t.clientY - startY;
         if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
           tracking = false;
-          if (dx > 0) swipeGo("index.html", "right");
+          if (dx > 0) go("index.html");
         }
       }, { passive:true });
       document.addEventListener("touchend", ()=>{ tracking = false; }, { passive:true });

@@ -317,8 +317,8 @@ fieldset.searchbox legend{
 .product-grid{
   display:grid;
   grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:30px;
-  padding-top:14px;
+  gap:22px;
+  padding-top:10px;
 }
 @media (max-width:760px){
   .product-grid{ grid-template-columns:1fr; }
@@ -326,13 +326,13 @@ fieldset.searchbox legend{
 .product{
   position:relative;
   background:var(--card);
-  border-radius:18px;
-  padding:16px;
+  border-radius:16px;
+  padding:14px;
   overflow:hidden;
   outline:1px solid color-mix(in srgb, var(--text) 16%, transparent);
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:6px;
   box-shadow:
     0 20px 34px rgba(0,0,0,0.22),
     0 8px 16px rgba(0,0,0,0.16),
@@ -344,7 +344,7 @@ fieldset.searchbox legend{
   content:"";
   position:absolute;
   inset:1px;
-  border-radius:18px;
+  border-radius:16px;
   background:
     linear-gradient(160deg, rgba(255,255,255,0.28), rgba(255,255,255,0.06) 44%, rgba(255,255,255,0.12) 100%);
   pointer-events:none;
@@ -378,17 +378,17 @@ body.scroll-anim .product.active{
     inset 0 1px 0 rgba(255,255,255,0.20),
     inset 0 -1px 0 rgba(255,255,255,0.06);
 }
-.product h3{ margin:0 0 10px; font-size:1.24rem; font-weight:900; letter-spacing:-0.015em; line-height:1.2; }
-.product p{ margin:0 0 10px; color:var(--muted); line-height:1.55; font-size:0.9rem; }
+.product h3{ margin:0 0 8px; font-size:1.08rem; font-weight:900; letter-spacing:-0.012em; line-height:1.2; }
+.product p{ margin:0 0 8px; color:var(--muted); line-height:1.45; font-size:0.84rem; }
 .product .why{
   display:none;
 }
-.price{ display:block; margin:8px 0 12px; font-weight:950; font-size:0.93rem; }
+.price{ display:block; margin:6px 0 10px; font-weight:950; font-size:0.86rem; }
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  padding:9px 12px;
+  padding:8px 11px;
   border-radius:999px;
   text-decoration:none;
   font-weight:950;
@@ -399,7 +399,7 @@ body.scroll-anim .product.active{
   box-shadow:
     0 10px 18px rgba(0,0,0,0.14),
     inset 0 1px 0 rgba(255,255,255,0.32);
-  font-size:0.88rem;
+  font-size:0.82rem;
   transition: transform .12s ease, filter .2s ease;
 }
 .btn:hover{ filter: brightness(1.05); }
@@ -407,14 +407,14 @@ body.scroll-anim .product.active{
 .product-actions{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   flex-wrap:wrap;
   margin-top:auto;
 }
 .share-btn{
   border:0;
   border-radius:999px;
-  padding:8px 10px;
+  padding:7px 9px;
   background: color-mix(in srgb, var(--bg) 72%, transparent);
   backdrop-filter: blur(10px);
   color:var(--text);
@@ -423,7 +423,7 @@ body.scroll-anim .product.active{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-height:36px;
+  min-height:34px;
   transition: transform .12s ease, filter .2s ease;
 }
 .share-btn svg{ width:18px; height:18px; display:block; }
@@ -654,8 +654,8 @@ body.scroll-anim .product.active{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:12px;
-  margin-bottom:6px;
+  gap:8px;
+  margin-bottom:4px;
   position:relative;
   flex-direction:column;
 }
@@ -665,16 +665,17 @@ body.scroll-anim .product.active{
   display:inline-flex;
   align-items:center;
   gap:6px;
+  font-size:1.6rem;
 }
 .shop-caret{
-  font-size:1.6rem;
+  font-size:1.35rem;
   opacity:0.85;
 }
 .shop-cats{
   display:flex;
   flex-direction:column;
-  gap:8px;
-  margin: 8px auto 0;
+  gap:6px;
+  margin: 6px auto 0;
   max-width:240px;
   padding:0;
   overflow:hidden;
@@ -691,18 +692,18 @@ body.scroll-anim .product.active{
 .cat-item{
   border:0;
   border-radius:0;
-  padding:6px 8px;
+  padding:5px 8px;
   background: transparent;
   outline:0;
   color:var(--text);
   font-weight:500;
-  font-size:0.85rem;
+  font-size:0.8rem;
   cursor:pointer;
   transition: transform .12s ease, filter .2s ease, color .2s ease;
   text-align:center;
 }
 .cat-item:active{ transform: translateY(1px); }
-.shop-spacer{ height:120px; }
+.shop-spacer{ height:108px; }
 
 /* ===== FULL-BLEED BACKGROUND LAYER (wie Home "durchgezogen") ===== */
 body::before{

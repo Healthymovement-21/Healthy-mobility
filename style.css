@@ -93,8 +93,8 @@ body::before{
   margin:0 auto;
   display:flex;
   align-items:center;
-  gap:5cm;
-  padding-left:0;
+  gap:10px;
+  padding-left: clamp(120px, 26vw, 180px);
 }
 .top-nav .bar{
   pointer-events:auto;
@@ -130,26 +130,25 @@ body::before{
   outline-color: color-mix(in srgb, var(--line) 80%, transparent);
 }
 .brand-mark{
-  position:relative;
-  top:auto;
-  left:auto;
-  z-index:1;
+  position:fixed;
+  top: calc(10px + var(--sat));
+  left: calc(14px + var(--sal));
+  z-index:100003;
   text-decoration:none;
   font-weight:1000;
   letter-spacing:-0.02em;
-  font-size: clamp(28px, 7.4vw, 34px);
+  font-size: clamp(14px, 3.7vw, 17px);
   color:var(--text);
   line-height:0.98;
   display:inline-flex;
   flex-direction:column;
   align-items:flex-start;
   text-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  transform: translateZ(0);
   transition: opacity .2s ease, transform .2s ease;
 }
 .brand-mark span:last-child{
-  margin-top:-8px;
-  margin-left:24px;
+  margin-top:-4px;
+  margin-left:12px;
 }
 .brand-mark .glow{
   background:var(--ig);

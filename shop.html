@@ -15,10 +15,10 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209ah">
+  <link rel="stylesheet" href="style.css?v=20260209al">
 </head>
 
-<body>
+<body class="shop-page">
   <!-- THEME: ALWAYS top-right -->
   <button class="theme-top" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
 
@@ -40,6 +40,7 @@
     </div>
 
     <div class="shop-cats" id="shopCats" aria-hidden="true">
+      <button class="cat-item active" type="button" data-cat="Alle">Alle</button>
       <button class="cat-item" type="button" data-cat="Regeneration">Regeneration</button>
       <button class="cat-item" type="button" data-cat="Sport & Freizeit">Sport & Freizeit</button>
       <button class="cat-item" type="button" data-cat="Rehabilitation">Rehabilitation</button>
@@ -342,6 +343,13 @@
     function go(url){
   window.location.assign(url);
 }
+    let swipeNavigating = false;
+    function swipeGo(url, dir){
+      if (swipeNavigating) return;
+      swipeNavigating = true;
+      document.body.classList.add(dir === "left" ? "swipe-out-left" : "swipe-out-right");
+      setTimeout(()=>{ window.location.assign(url); }, 180);
+    }
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
     function setThemeMeta(){
       if (!themeMeta) return;
@@ -378,6 +386,7 @@
     const shopTitle = document.getElementById("shopTitle");
     const shopCats = document.getElementById("shopCats");
     const catItems = Array.from(document.querySelectorAll(".cat-item"));
+    let selectedCategory = "Alle";
 
     const products = items.map(el => ({
       id: el.id,
@@ -404,12 +413,22 @@
     function openCategories(){
       shopCats.classList.add("open");
       shopCats.setAttribute("aria-hidden","false");
+      document.body.classList.add("cats-open");
       track("cat_open","shop");
     }
     function closeCategories(){
       shopCats.classList.remove("open");
       shopCats.setAttribute("aria-hidden","true");
+      document.body.classList.remove("cats-open");
       track("cat_close","shop");
+    }
+
+    function categoryMatch(productCat){
+      if (selectedCategory === "Alle") return true;
+      if (selectedCategory === "Regeneration") return ["Regeneration","Wärme","Kälte"].includes(productCat);
+      if (selectedCategory === "Sport & Freizeit") return ["Training","Stabilität"].includes(productCat);
+      if (selectedCategory === "Rehabilitation") return ["Diagnostik","Pflege"].includes(productCat);
+      return productCat === selectedCategory;
     }
 
     function applySearch(){
@@ -417,7 +436,8 @@
       let visible = 0;
       items.forEach(el=>{
         const t = (el.textContent || "").toLowerCase();
-        const show = !q || t.includes(q);
+        const cat = el.getAttribute("data-category") || "";
+        const show = categoryMatch(cat) && (!q || t.includes(q));
         el.style.display = show ? "" : "none";
         if (show) visible++;
       });
@@ -427,14 +447,21 @@
 
     function renderSuggest(q){
       const query = (q||"").trim().toLowerCase();
+      if (!query){
+        suggestList.innerHTML = "";
+        suggestList.style.display = "none";
+        return;
+      }
       const results = products
-        .filter(p => !query || p.name.toLowerCase().includes(query))
+        .filter(p => categoryMatch(p.category) && (!query || p.name.toLowerCase().includes(query)))
         .slice(0, 10);
 
       if (results.length === 0){
-        suggestList.innerHTML = `<div style="color:var(--muted);padding:10px 2px;">Keine Treffer.</div>`;
+        suggestList.innerHTML = "";
+        suggestList.style.display = "none";
         return;
       }
+      suggestList.style.display = "grid";
       suggestList.innerHTML = results.map(p => `
         <button type="button" class="suggest-item" data-id="${p.id}">
           <span class="name">${p.name}</span>
@@ -465,15 +492,12 @@
       if (shopCats.classList.contains("open")) closeCategories(); else openCategories();
     });
     catItems.forEach(btn => btn.addEventListener("click", ()=>{
-      const cat = btn.getAttribute("data-cat");
-      let target = null;
-      if (cat === "Regeneration") target = items.find(el => (el.getAttribute("data-category") || "") === "Regeneration");
-      if (cat === "Sport & Freizeit") target = items.find(el => (el.getAttribute("data-category") || "") === "Training") || items.find(el => (el.getAttribute("data-category") || "") === "Stabilität");
-      if (cat === "Rehabilitation") target = items.find(el => (el.getAttribute("data-category") || "") === "Diagnostik") || items.find(el => (el.getAttribute("data-category") || "") === "Pflege");
+      selectedCategory = btn.getAttribute("data-cat") || "Alle";
+      catItems.forEach(node => node.classList.remove("active"));
+      btn.classList.add("active");
       closeCategories();
-      if (target){
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      applySearch();
+      renderSuggest(overlayInput.value);
     }));
 
     // local click counts for popular
@@ -551,9 +575,10 @@
         const dy = t.clientY - startY;
         if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
           tracking = false;
-          if (dx > 0) go("index.html");
+          if (dx > 0) swipeGo("index.html", "right");
         }
       }, { passive:true });
+      document.addEventListener("touchend", ()=>{ tracking = false; }, { passive:true });
     }
     initMobileSwipe();
   </script>

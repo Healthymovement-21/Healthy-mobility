@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
   <meta name="theme-color" content="#ffffff" id="themeColorMeta">
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209ah">
+  <link rel="stylesheet" href="style.css?v=20260209al">
 </head>
 
 <body>
@@ -145,6 +149,13 @@
       try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
     }
     function go(url){ window.location.href = url; }
+    let swipeNavigating = false;
+    function swipeGo(url, dir){
+      if (swipeNavigating) return;
+      swipeNavigating = true;
+      document.body.classList.add(dir === "left" ? "swipe-out-left" : "swipe-out-right");
+      setTimeout(()=>{ window.location.href = url; }, 180);
+    }
 
 
     const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
@@ -299,9 +310,10 @@
         const dy = t.clientY - startY;
         if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
           tracking = false;
-          if (dx < 0) go("shop.html");
+          if (dx < 0) swipeGo("shop.html", "left");
         }
       }, { passive:true });
+      document.addEventListener("touchend", ()=>{ tracking = false; }, { passive:true });
     }
     initMobileSwipe();
 

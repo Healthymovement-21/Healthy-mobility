@@ -61,7 +61,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      padding-left: clamp(120px, 26vw, 180px);
+      padding-left: 0;
     }
     .top-nav .bar{
       pointer-events:auto;
@@ -101,11 +101,11 @@
       font-size:18px;
       padding:8px 0;
     }
-    .brand-mark{
+    .brand-floating{
       position:fixed;
       top: calc(10px + var(--sat));
       left: calc(14px + var(--sal));
-      z-index:100003;
+      z-index:100005;
       text-decoration:none;
       font-weight:1000;
       letter-spacing:-0.02em;
@@ -116,21 +116,22 @@
       flex-direction:column;
       align-items:flex-start;
       text-shadow: 0 6px 18px rgba(0,0,0,0.25);
-      transition: opacity .2s ease, transform .2s ease;
+      will-change: opacity, transform;
+      transition: opacity .24s ease, transform .24s ease;
     }
-    .brand-mark span:last-child{
+    .brand-floating span:last-child{
       margin-top:-4px;
       margin-left:12px;
     }
-    .brand-mark .glow{
+    .brand-floating .glow{
       background:var(--ig);
       -webkit-background-clip:text;
       background-clip:text;
       color:transparent;
     }
-    .logo-hidden .brand-mark{
+    body.logo-scroll-hidden .brand-floating{
       opacity:0;
-      transform: translateY(-10px);
+      transform: translateY(-8px);
       pointer-events:none;
     }
 
@@ -168,6 +169,16 @@
     p,li{ color:var(--muted); line-height:1.7; }
     ul{ margin:0 0 12px 18px; padding:0; }
 
+    .scroll-reveal{
+      opacity:0;
+      transform: translateY(22px) scale(.985);
+      transition: opacity .48s ease, transform .48s cubic-bezier(.2,.8,.2,1);
+    }
+    .scroll-reveal.is-visible{
+      opacity:1;
+      transform:none;
+    }
+
     .footer{
       max-width:900px;
       margin:18px auto 0;
@@ -185,9 +196,10 @@
 </head>
 
 <body>
+  <a class="brand-floating" href="index.html"><span class="glow">Healthy</span><span>Mobility</span></a>
+
   <div class="top-nav" role="navigation" aria-label="Top Navigation">
     <div class="row">
-      <a class="brand-mark" href="index.html"><span class="glow">Healthy</span><span>Mobility</span></a>
       <div class="bar">
         <button class="top-btn" type="button" onclick="go('index.html')">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -300,21 +312,33 @@
       track("theme_toggle", next);
     });
 
-    function initLogoHideOnScroll(){
-      const mqDesktop = window.matchMedia("(min-width: 901px)");
+    function initScrollReveal(){
+      const targets = Array.from(document.querySelectorAll("h1, .card, .footer"));
+      if (!("IntersectionObserver" in window)){
+        targets.forEach(el => el.classList.add("is-visible"));
+        return;
+      }
+      targets.forEach(el => el.classList.add("scroll-reveal"));
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry => {
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
+      targets.forEach(el => io.observe(el));
+    }
+    initScrollReveal();
+
+    function initLogoOnScroll(){
       const update = () => {
-        if (!mqDesktop.matches){
-          document.body.classList.remove("logo-hidden");
-          return;
-        }
-        if ((window.scrollY || 0) > 8) document.body.classList.add("logo-hidden");
-        else document.body.classList.remove("logo-hidden");
+        const y = window.scrollY || window.pageYOffset || 0;
+        document.body.classList.toggle("logo-scroll-hidden", y > 0);
       };
       window.addEventListener("scroll", update, { passive:true });
-      mqDesktop.addEventListener("change", update);
+      document.addEventListener("scroll", update, { passive:true, capture:true });
+      window.addEventListener("touchmove", update, { passive:true });
       update();
     }
-    initLogoHideOnScroll();
+    initLogoOnScroll();
   </script>
 </body>
 </html>

@@ -103,7 +103,7 @@ body::before{
   display:flex;
   align-items:center;
   gap:10px;
-  padding-left: clamp(120px, 26vw, 180px);
+  padding-left: 0;
 }
 .top-nav .bar{
   pointer-events:auto;
@@ -160,11 +160,11 @@ body::before{
     backdrop-filter: blur(14px);
   }
 }
-.brand-mark{
+.brand-floating{
   position:fixed;
   top: calc(10px + var(--sat));
   left: calc(14px + var(--sal));
-  z-index:100003;
+  z-index:100005;
   text-decoration:none;
   font-weight:1000;
   letter-spacing:-0.02em;
@@ -175,21 +175,22 @@ body::before{
   flex-direction:column;
   align-items:flex-start;
   text-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  transition: opacity .2s ease, transform .2s ease;
+  will-change: opacity, transform;
+  transition: opacity .24s ease, transform .24s ease;
 }
-.brand-mark span:last-child{
+.brand-floating span:last-child{
   margin-top:-4px;
   margin-left:12px;
 }
-.brand-mark .glow{
+.brand-floating .glow{
   background:var(--ig);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
 }
-.logo-hidden .brand-mark{
+body.logo-scroll-hidden .brand-floating{
   opacity:0;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   pointer-events:none;
 }
 .has-top-nav .overlay{
@@ -297,6 +298,16 @@ p{
   line-height:1.7;
   margin:0 0 12px;
   font-size:0.95rem;
+}
+
+.scroll-reveal{
+  opacity:0;
+  transform: translateY(22px) scale(.985);
+  transition: opacity .48s ease, transform .48s cubic-bezier(.2,.8,.2,1);
+}
+.scroll-reveal.is-visible{
+  opacity:1;
+  transform:none;
 }
 
 @media (min-width: 900px){

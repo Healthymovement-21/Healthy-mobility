@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260209ar">
+  <link rel="stylesheet" href="style.css?v=20260214c">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -32,9 +32,10 @@
   </div>
   <!-- (FIX) das extra </div> war hier zu viel und ist entfernt -->
 
+  <a class="brand-floating" href="index.html" onclick="track('brand_click','shop')"><span class="glow">Healthy</span><span>Mobility</span></a>
+
   <div class="top-nav" role="navigation" aria-label="Top Navigation">
     <div class="row">
-      <a class="brand-mark" href="index.html" onclick="track('brand_click','shop')"><span class="glow">Healthy</span><span>Mobility</span></a>
       <div class="bar">
       <button class="top-btn" type="button" onclick="go('index.html')">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -576,24 +577,33 @@
 
     applySearch();
 
-    function initLogoHideOnScroll(){
-      const mqDesktop = window.matchMedia("(min-width: 901px)");
-      const pageHost = document.querySelector(".page");
+    function initScrollReveal(){
+      const targets = Array.from(document.querySelectorAll(".shop-head, .shop-cats, .footer"));
+      if (!("IntersectionObserver" in window)){
+        targets.forEach(el => el.classList.add("is-visible"));
+        return;
+      }
+      targets.forEach(el => el.classList.add("scroll-reveal"));
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry => {
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      }, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
+      targets.forEach(el => io.observe(el));
+    }
+    initScrollReveal();
+
+    function initLogoOnScroll(){
       const update = () => {
-        if (!mqDesktop.matches){
-          document.body.classList.remove("logo-hidden");
-          return;
-        }
-        const y = Math.max(window.scrollY || 0, pageHost ? pageHost.scrollTop : 0);
-        if (y > 8) document.body.classList.add("logo-hidden");
-        else document.body.classList.remove("logo-hidden");
+        const y = window.scrollY || window.pageYOffset || 0;
+        document.body.classList.toggle("logo-scroll-hidden", y > 0);
       };
       window.addEventListener("scroll", update, { passive:true });
-      if (pageHost) pageHost.addEventListener("scroll", update, { passive:true });
-      mqDesktop.addEventListener("change", update);
+      document.addEventListener("scroll", update, { passive:true, capture:true });
+      window.addEventListener("touchmove", update, { passive:true });
       update();
     }
-    initLogoHideOnScroll();
+    initLogoOnScroll();
 
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");

@@ -318,14 +318,20 @@
     renderPopular();
 
     function initLogoHideOnScroll(){
+      const mqDesktop = window.matchMedia("(min-width: 901px)");
       const pageHost = document.querySelector(".page");
       const update = () => {
+        if (!mqDesktop.matches){
+          document.body.classList.remove("logo-hidden");
+          return;
+        }
         const y = Math.max(window.scrollY || 0, pageHost ? pageHost.scrollTop : 0);
         if (y > 8) document.body.classList.add("logo-hidden");
         else document.body.classList.remove("logo-hidden");
       };
       window.addEventListener("scroll", update, { passive:true });
       if (pageHost) pageHost.addEventListener("scroll", update, { passive:true });
+      mqDesktop.addEventListener("change", update);
       update();
     }
     initLogoHideOnScroll();

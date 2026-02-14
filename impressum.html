@@ -284,11 +284,17 @@
     });
 
     function initLogoHideOnScroll(){
+      const mqDesktop = window.matchMedia("(min-width: 901px)");
       const update = () => {
+        if (!mqDesktop.matches){
+          document.body.classList.remove("logo-hidden");
+          return;
+        }
         if ((window.scrollY || 0) > 8) document.body.classList.add("logo-hidden");
         else document.body.classList.remove("logo-hidden");
       };
       window.addEventListener("scroll", update, { passive:true });
+      mqDesktop.addEventListener("change", update);
       update();
     }
     initLogoHideOnScroll();

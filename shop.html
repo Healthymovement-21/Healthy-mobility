@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216d">
+  <link rel="stylesheet" href="style.css?v=20260216e">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -661,9 +661,24 @@
     initScrollReveal();
 
     function initLogoOnScroll(){
+      let lastY = window.scrollY || window.pageYOffset || 0;
+      const threshold = 6;
       const update = () => {
         const y = window.scrollY || window.pageYOffset || 0;
-        document.body.classList.toggle("logo-scroll-hidden", y > 0);
+        if (y <= 4){
+          document.body.classList.remove("logo-scrolling-down");
+          document.body.classList.remove("logo-scrolling-up");
+          lastY = y;
+          return;
+        }
+        if (y > lastY + threshold){
+          document.body.classList.add("logo-scrolling-down");
+          document.body.classList.remove("logo-scrolling-up");
+        } else if (y < lastY - threshold){
+          document.body.classList.add("logo-scrolling-up");
+          document.body.classList.remove("logo-scrolling-down");
+        }
+        lastY = y;
       };
       window.addEventListener("scroll", update, { passive:true });
       document.addEventListener("scroll", update, { passive:true, capture:true });
@@ -671,55 +686,6 @@
       update();
     }
     initLogoOnScroll();
-
-    function initLogoHideSeek(){
-      const logo = document.querySelector(".top-nav .row > .brand-floating");
-      if (!logo) return;
-      let seekTimer = null;
-      let revealTimer = null;
-
-      const clearTimers = () => {
-        if (seekTimer) clearTimeout(seekTimer);
-        if (revealTimer) clearTimeout(revealTimer);
-      };
-
-      const markFound = () => {
-        logo.classList.remove("is-seeking");
-        logo.classList.add("is-found");
-        setTimeout(() => logo.classList.remove("is-found"), 480);
-      };
-
-      const scheduleSeek = () => {
-        const delay = 7000 + Math.random() * 6000;
-        seekTimer = setTimeout(() => {
-          if (document.hidden) { scheduleSeek(); return; }
-          logo.classList.add("is-seeking");
-          revealTimer = setTimeout(() => {
-            markFound();
-            scheduleSeek();
-          }, 1100);
-        }, delay);
-      };
-
-      logo.addEventListener("click", () => {
-        clearTimers();
-        markFound();
-        scheduleSeek();
-      });
-
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden){
-          clearTimers();
-          logo.classList.remove("is-seeking");
-          return;
-        }
-        clearTimers();
-        scheduleSeek();
-      });
-
-      scheduleSeek();
-    }
-    initLogoHideSeek();
 
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");

@@ -96,14 +96,14 @@ body::before{
   background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 55%, transparent), transparent);
   pointer-events:none;
 }
-.top-nav .row{
+body.has-top-nav .top-nav .row{
   pointer-events:auto;
   max-width:980px;
   margin:0 auto;
   display:flex;
   align-items:center;
   gap:10px;
-  padding-left: 0;
+  padding-left: calc(clamp(132px, 24vw, 190px) + 5cm) !important;
 }
 .top-nav .bar{
   pointer-events:auto;
@@ -144,8 +144,11 @@ body::before{
   padding:8px 0;
 }
 @media (max-width: 900px){
-  .top-nav .row{
+  body.has-top-nav .top-nav .row{
     padding-right:56px;
+  }
+  body.has-top-nav .top-nav .row{
+    padding-left: calc(clamp(116px, 30vw, 156px) + 5cm) !important;
   }
   .top-btn.theme-btn{
     position:fixed;

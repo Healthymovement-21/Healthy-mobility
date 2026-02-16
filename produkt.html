@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
+  <meta name="theme-color" content="#ffffff" id="themeColorMeta">
+  <title>Healthy Mobility – Produktdetails</title>
+
+  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260216r">
+</head>
+
+<body class="has-top-nav big-layout">
+  <div class="top-nav" role="navigation" aria-label="Top Navigation">
+    <div class="row">
+      <a class="brand-floating" href="index.html" onclick="track('brand_click','product_page')"><span class="glow">Healthy</span><span>Mobility</span></a>
+      <div class="bar">
+        <button class="top-btn" type="button" onclick="go('index.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="top-btn active" type="button" onclick="go('shop.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Shop</span>
+        </button>
+        <button class="top-btn" type="button" onclick="go('blog.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Blog</span>
+        </button>
+      </div>
+      <button class="top-btn theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+    </div>
+  </div>
+
+  <main class="page">
+    <section class="product-detail-head scroll-reveal">
+      <div class="meta-chip" id="productCategory">Produkt</div>
+      <h1 id="productTitle">Produktdetails</h1>
+      <p class="hero-sub" id="productPrice">Preis bei Amazon prüfen</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="cta" id="productAmazonBtn" target="_blank" rel="noopener">Bei Amazon ansehen</a>
+        <a class="cta ghost" href="shop.html">Zurück zum Shop</a>
+      </div>
+    </section>
+
+    <article class="article-full scroll-reveal">
+      <div class="detail-media">
+        <img id="productImage" alt="Produktbild">
+      </div>
+
+      <h3>Was kann das bringen?</h3>
+      <p id="productBenefit"></p>
+
+      <h3>Anwendung (Beispiele)</h3>
+      <ul id="productUsage" class="checklist"></ul>
+
+      <h3>Praxisbeispiel</h3>
+      <p id="productExample"></p>
+    </article>
+
+    <section class="coach-form scroll-reveal">
+      <h2>Verifizierte Kundenrezensionen</h2>
+      <div id="productReviewList" class="review-list"></div>
+
+      <form id="productReviewForm" class="review-form">
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="reviewName">Name (Gast)</label>
+            <input id="reviewName" type="text" maxlength="40" placeholder="z. B. Anna">
+          </div>
+          <div class="form-row">
+            <label for="reviewCode">Verifizierungscode</label>
+            <input id="reviewCode" type="text" maxlength="24" placeholder="Code nach Kauf">
+          </div>
+          <div class="form-row full">
+            <label for="reviewText">Deine Erfahrung</label>
+            <textarea id="reviewText" maxlength="400" required placeholder="z. B. Hat mir in der Reha geholfen, weil ..."></textarea>
+          </div>
+        </div>
+        <div class="cta-row" style="margin-top:8px;">
+          <button class="cta" type="submit">Bewertung senden</button>
+        </div>
+        <div id="reviewFeedback" class="form-note">Nur verifizierte Bewertungen werden direkt veröffentlicht.</div>
+      </form>
+    </section>
+
+    <div class="footer">
+      <a href="shop.html">Shop</a> ·
+      <a href="blog.html">Blog</a> ·
+      <a href="coaching.html">Coaching</a> ·
+      <a href="impressum.html">Impressum</a> ·
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </main>
+
+  <script>
+    function track(eventName, label){
+      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
+    }
+    function go(url){ window.location.assign(url); }
+
+    const PRODUCT_BASE = {
+      massagepistole: { name:"Massagepistole", category:"Regeneration", url:"https://amzn.to/45QvJM2", image:"https://m.media-amazon.com/images/I/71mF9hGacPL._AC_SL1500_.jpg" },
+      moorkissen: { name:"Moorkissen", category:"Wärme", url:"https://amzn.to/4cgzQ7V", image:"https://m.media-amazon.com/images/I/61vUUfvCJGL._AC_SL1500_.jpg" },
+      "knie-kuehlpack": { name:"Knie-Kühlpack", category:"Kälte", url:"https://amzn.to/4qjoAuL", image:"https://m.media-amazon.com/images/I/61NgziXR6CL._AC_SL1500_.jpg" },
+      retterspitz: { name:"Retterspitz", category:"Regeneration", url:"https://amzn.to/3ZnEwRS", image:"https://m.media-amazon.com/images/I/61lTf9uosoL._SL1500_.jpg" },
+      "macdavid-bandage": { name:"MacDavid Bandage", category:"Stabilität", url:"https://amzn.to/4tvfiin", image:"https://m.media-amazon.com/images/I/71NzwsOViZL._AC_SL1500_.jpg" },
+      leukotape: { name:"Leukotape", category:"Stabilität", url:"https://amzn.to/4kplTGW", image:"https://m.media-amazon.com/images/I/61uZ9Pzca6L._AC_SL1250_.jpg" },
+      laufband: { name:"Laufband", category:"Training", url:"https://amzn.to/3O9os3F", image:"https://m.media-amazon.com/images/I/61NgziXR6CL._AC_SX425_.jpg" },
+      thrombosestrumpf: { name:"Thrombosestrumpf", category:"Regeneration", url:"https://amzn.to/4r3NY91", image:"https://m.media-amazon.com/images/I/81xd-4G5VJL._AC_SX385_.jpg" },
+      waermemessgeraet: { name:"Wärmemessgerät", category:"Diagnostik", url:"https://amzn.to/4a6vNtq", image:"https://m.media-amazon.com/images/I/717pPiVFZlL._AC_SX425_.jpg" },
+      "aloe-vera-gel": { name:"Aloe-Vera-Gel", category:"Pflege", url:"https://amzn.to/4rftMB6", image:"https://m.media-amazon.com/images/I/71qXwLd5KUL._SY355_.jpg" },
+      lymphmassband: { name:"Lymphmaßband", category:"Diagnostik", url:"https://amzn.to/3MvIhSn", image:"https://m.media-amazon.com/images/I/61ztkadSNlL._AC_SL1500_.jpg" },
+      "elektrischer-shaker": { name:"Elektrischer Shaker", category:"Training", url:"https://amzn.to/3MhQ1HB", image:"https://m.media-amazon.com/images/I/511mCS65vpL._AC_SL1500_.jpg" },
+      "bauerfeind-fussbandage": { name:"BAUERFEIND Fußbandage", category:"Stabilität", url:"https://amzn.to/3MchKJM", image:"https://m.media-amazon.com/images/I/61SmPtvyMcL._AC_SY355_.jpg" },
+      "bauerfeind-armbandage": { name:"BAUERFEIND Armbandage", category:"Stabilität", url:"https://amzn.to/4alA3nI", image:"https://m.media-amazon.com/images/I/71WZY82KqNL._AC_SY355_PIbundle-2,TopRight,0,0_SH20_.jpg" },
+      "neue-empfehlung-1": { name:"Neue Empfehlung 1", category:"Training", url:"https://amzn.to/4tIZtVq", image:"https://m.media-amazon.com/images/I/61neBIdnKwL._AC_SL1500_.jpg" },
+      "neue-empfehlung-2": { name:"Neue Empfehlung 2", category:"Regeneration", url:"https://amzn.to/3ZDThQM", image:"https://m.media-amazon.com/images/I/71ZXju02EjL._AC_SL1500_.jpg" },
+      "neue-empfehlung-3": { name:"Neue Empfehlung 3", category:"Stabilität", url:"https://amzn.to/4qCMuBO", image:"https://m.media-amazon.com/images/I/71tCehJ9p9L._AC_SL1500_.jpg" },
+      "neue-empfehlung-4": { name:"Neue Empfehlung 4", category:"Diagnostik", url:"https://amzn.to/3MAkkJz", image:"https://m.media-amazon.com/images/I/61UqWKzH5yL._AC_SL1500_.jpg" }
+    };
+
+    const PRODUCT_DETAILS = {
+      massagepistole: {
+        benefit: "Kann helfen, verspannte Muskulatur nach Belastung schneller zu lockern und das Bewegungsgefühl zu verbessern.",
+        example: "Empfehlung: nach Training oder langem Sitzen 60-120 Sekunden pro Muskelgruppe, nicht direkt auf Gelenke oder Knochen.",
+        usage: ["Niedrige Intensität zum Einstieg wählen", "Pro Bereich kurz und kontrolliert arbeiten", "Bei akuten Entzündungen oder starken Schmerzen pausieren"]
+      },
+      moorkissen: {
+        benefit: "Wärme kann bei muskulärer Spannung und Steifigkeit als unterstützende Maßnahme entspannend wirken.",
+        example: "Empfehlung: 15-20 Minuten lokal anwenden, danach kurz nachspüren, ob die Belastung danach besser toleriert wird.",
+        usage: ["Temperatur vor der Anwendung prüfen", "Nie auf verletzte oder taube Haut legen", "1-2 Anwendungen täglich reichen in der Regel aus"]
+      },
+      "knie-kuehlpack": {
+        benefit: "Kann in akuten Reizphasen unterstützend wirken, wenn Belastung und Reaktion sauber gesteuert werden.",
+        example: "Empfehlung: 10-15 Minuten kühlen, danach Pause und Reaktion des Knies am Folgetag beobachten.",
+        usage: ["Kälte nie direkt auf nackte Haut legen", "Zwischen Anwendungen ausreichend Pause lassen", "Bei Taubheitsgefühl oder starker Reizung abbrechen"]
+      },
+      retterspitz: {
+        benefit: "Kann als lokale Zusatzmaßnahme bei gereizten Bereichen genutzt werden und das subjektive Beschwerdegefühl verbessern.",
+        example: "Empfehlung: als Wickel im Rahmen einer ruhigen Regenerationsroutine einsetzen.",
+        usage: ["Nur äußerlich und gemäß Herstellerangaben anwenden", "Hautreaktion zunächst auf kleiner Fläche testen", "Nicht auf offene Hautstellen auftragen"]
+      },
+      "macdavid-bandage": {
+        benefit: "Kann das Stabilitätsgefühl bei Belastung verbessern und Unsicherheit in frühen Belastungsphasen reduzieren.",
+        example: "Empfehlung: bei längeren Alltagswegen oder sportnahen Einheiten als Unterstützung nutzen.",
+        usage: ["Bandagegröße passend wählen", "Sitz vor Bewegung prüfen", "Nicht dauerhaft rund um die Uhr tragen"]
+      },
+      leukotape: {
+        benefit: "Kann die Gelenkführung unterstützen und in bestimmten Phasen mehr Stabilitätsgefühl geben.",
+        example: "Empfehlung: als Ergänzung bei Belastung einsetzen, nicht als Ersatz für gezielten Kraftaufbau.",
+        usage: ["Auf saubere und trockene Haut kleben", "Spannung kontrolliert dosieren", "Bei Hautreizungen sofort entfernen"]
+      },
+      laufband: {
+        benefit: "Ermöglicht planbares Ausdauertraining zu Hause mit kontrollierbarer Geschwindigkeit.",
+        example: "Empfehlung: mit Intervallen starten, z. B. 2 Minuten Gehen / 1 Minute zügig, dann langsam steigern.",
+        usage: ["Vorher 5 Minuten locker aufwärmen", "Belastung über Tempo oder Dauer erhöhen, nicht beides gleichzeitig", "Nach dem Training kurz auslaufen lassen"]
+      },
+      thrombosestrumpf: {
+        benefit: "Kann den venösen Rückfluss unterstützen, vor allem bei langen Sitzphasen oder reduzierter Bewegung.",
+        example: "Empfehlung: bei längeren Ruhezeiten oder Reisen gezielt einsetzen.",
+        usage: ["Passende Kompressionsklasse beachten", "Faltenfrei anlegen", "Bei Druckstellen oder Beschwerden Nutzung prüfen lassen"]
+      },
+      waermemessgeraet: {
+        benefit: "Hilft, Temperaturunterschiede objektiver einzuschätzen, statt nur nach Gefühl zu entscheiden.",
+        example: "Empfehlung: immer an vergleichbaren Stellen und zu ähnlichen Zeitpunkten messen.",
+        usage: ["Messdistanz konstant halten", "Mehrere Messungen vergleichen", "Werte als Verlauf dokumentieren"]
+      },
+      "aloe-vera-gel": {
+        benefit: "Kann die Haut nach thermischen Anwendungen beruhigen und das Hautgefühl verbessern.",
+        example: "Empfehlung: dünn auftragen nach Kälte- oder Wärmeanwendung.",
+        usage: ["Vorher Hautverträglichkeit testen", "Nur auf intakte Haut auftragen", "Bei Reizung abwaschen und pausieren"]
+      },
+      lymphmassband: {
+        benefit: "Unterstützt eine objektive Verlaufskontrolle bei Schwellungen und macht Fortschritte messbar.",
+        example: "Empfehlung: Umfang immer an denselben Punkten dokumentieren.",
+        usage: ["Messpunkte markieren", "Uhrzeit der Messung möglichst konstant halten", "Daten über mehrere Wochen vergleichen"]
+      },
+      "elektrischer-shaker": {
+        benefit: "Erleichtert die alltagstaugliche Versorgung rund um Training und Regeneration.",
+        example: "Empfehlung: vorab Portionen planen, damit die Umsetzung im Alltag einfacher wird.",
+        usage: ["Vor jeder Nutzung sauber spülen", "Flüssigkeitsmenge passend dosieren", "Motorblock nicht in Wasser tauchen"]
+      },
+      "bauerfeind-fussbandage": {
+        benefit: "Kann den Fuß bei Belastung stabilisieren und ein sichereres Bewegungsgefühl vermitteln.",
+        example: "Empfehlung: bei längeren Gehstrecken oder sportnahen Belastungen gezielt nutzen.",
+        usage: ["Passform und Druckgefühl prüfen", "Mit Schuhwerk testen, das du oft nutzt", "Belastung weiterhin aktiv aufbauen"]
+      },
+      "bauerfeind-armbandage": {
+        benefit: "Kann den Ellenbogen bei Überlastung unterstützen und Beschwerden unter Belastung reduzieren.",
+        example: "Empfehlung: bei Zug- und Druckbelastung als ergänzende Unterstützung einsetzen.",
+        usage: ["Bandage mit korrekter Position tragen", "Lokal zu hohen Druck vermeiden", "Kraft- und Techniktraining parallel fortführen"]
+      },
+      "neue-empfehlung-1": {
+        benefit: "Kann als ergänzendes Tool im Reha- und Trainingsalltag sinnvoll eingesetzt werden.",
+        example: "Empfehlung: zunächst in kleinen Dosen testen und Wirkung dokumentieren.",
+        usage: ["Belastung stufenweise erhöhen", "Nur bei klarer Zielsetzung einsetzen", "Wirkung regelmäßig überprüfen"]
+      },
+      "neue-empfehlung-2": {
+        benefit: "Kann in deinem Setup eine sinnvolle Zusatzfunktion für Regeneration oder Stabilität übernehmen.",
+        example: "Empfehlung: gezielt in bestehende Routinen integrieren statt zusätzlich zu überladen.",
+        usage: ["Mit niedriger Intensität starten", "Alltagstauglich planen", "Reaktion am Folgetag beobachten"]
+      },
+      "neue-empfehlung-3": {
+        benefit: "Kann je nach Zielsetzung als praktische Ergänzung im Belastungsaufbau dienen.",
+        example: "Empfehlung: nur dann nutzen, wenn es eine konkrete Lücke im Plan schließt.",
+        usage: ["Anwendung vorher fest planen", "Fortschritt notieren", "Bei fehlendem Nutzen wieder entfernen"]
+      },
+      "neue-empfehlung-4": {
+        benefit: "Kann den Reha-Alltag unterstützen, wenn Einsatz und Dosierung strukturiert erfolgen.",
+        example: "Empfehlung: mit klaren Kriterien nutzen (wann, wie oft, mit welchem Ziel).",
+        usage: ["Regelmäßig und kontrolliert einsetzen", "Nicht mehrere neue Tools gleichzeitig starten", "Anwendung bei Unsicherheit fachlich abstimmen"]
+      }
+    };
+
+    const SEEDED_REVIEWS = {
+      massagepistole: [{ name:"T. M.", text:"Hat mir in der Reha geholfen, weil die Muskulatur nach dem Training schneller locker wurde.", date:"12.02.2026" }],
+      moorkissen: [{ name:"S. R.", text:"Nutze es abends bei Nackenverspannung. Danach fühlt sich Bewegung deutlich freier an.", date:"09.02.2026" }]
+    };
+
+    const REVIEW_CODE = {
+      massagepistole: "HM-MAS-2026", moorkissen: "HM-MOO-2026", "knie-kuehlpack": "HM-KKP-2026", retterspitz: "HM-RET-2026",
+      "macdavid-bandage": "HM-MAC-2026", leukotape: "HM-LEU-2026", laufband: "HM-LAU-2026", thrombosestrumpf: "HM-THR-2026",
+      waermemessgeraet: "HM-WAE-2026", "aloe-vera-gel": "HM-ALO-2026", lymphmassband: "HM-LYM-2026", "elektrischer-shaker": "HM-SHA-2026",
+      "bauerfeind-fussbandage": "HM-BFF-2026", "bauerfeind-armbandage": "HM-BFA-2026", "neue-empfehlung-1": "HM-EMP1-2026",
+      "neue-empfehlung-2": "HM-EMP2-2026", "neue-empfehlung-3": "HM-EMP3-2026", "neue-empfehlung-4": "HM-EMP4-2026"
+    };
+
+    const verifiedReviewStoreKey = "hm_verified_reviews_v2";
+    const pendingReviewStoreKey = "hm_pending_reviews_v2";
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id") || "";
+    const base = PRODUCT_BASE[productId] || {};
+
+    const product = {
+      id: productId,
+      name: params.get("name") || base.name || "Produktdetails",
+      category: params.get("category") || base.category || "Empfehlung",
+      price: params.get("price") || "Preis bei Amazon prüfen",
+      url: params.get("url") || base.url || "shop.html",
+      image: params.get("img") || base.image || ""
+    };
+
+    function buildDefaultDetails(p){
+      const cat = p.category || "Empfehlung";
+      return {
+        benefit: `${p.name} kann als ${cat.toLowerCase()}-Tool sinnvoll sein, wenn du Belastung gezielt aufbauen willst.`,
+        example: "Empfehlung: klein anfangen, Wirkung beobachten und schrittweise steigern.",
+        usage: [
+          "Einsatz an dein aktuelles Belastungsniveau anpassen",
+          "Regelmaessig statt extrem nutzen",
+          "Bei Unsicherheit fachlich rueckkoppeln"
+        ]
+      };
+    }
+
+    function escapeHtml(value){
+      return String(value || "").replace(/[&<>"']/g, (s) => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        "\"":"&quot;",
+        "'":"&#39;"
+      }[s]));
+    }
+
+    function safeJsonParse(raw, fallback){
+      try{ return raw ? JSON.parse(raw) : fallback; }catch(_){ return fallback; }
+    }
+    function getVerifiedReviewStore(){
+      return safeJsonParse(localStorage.getItem(verifiedReviewStoreKey), {});
+    }
+    function getPendingReviewStore(){
+      return safeJsonParse(localStorage.getItem(pendingReviewStoreKey), {});
+    }
+    function saveVerifiedReviewStore(store){
+      localStorage.setItem(verifiedReviewStoreKey, JSON.stringify(store));
+    }
+    function savePendingReviewStore(store){
+      localStorage.setItem(pendingReviewStoreKey, JSON.stringify(store));
+    }
+
+    function renderProductData(){
+      const details = PRODUCT_DETAILS[product.id] || buildDefaultDetails(product);
+      document.getElementById("productCategory").textContent = product.category;
+      document.getElementById("productTitle").textContent = product.name;
+      document.getElementById("productPrice").textContent = product.price || "Preis bei Amazon prüfen";
+      document.getElementById("productBenefit").textContent = details.benefit;
+      document.getElementById("productExample").textContent = details.example;
+      document.getElementById("productUsage").innerHTML = details.usage.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+
+      const image = document.getElementById("productImage");
+      if (product.image){
+        image.src = product.image;
+        image.alt = `${product.name} Produktbild`;
+      } else {
+        image.style.display = "none";
+      }
+
+      const amazonBtn = document.getElementById("productAmazonBtn");
+      if (product.url && /^https?:\/\//.test(product.url)){
+        amazonBtn.href = product.url;
+      } else {
+        amazonBtn.href = "shop.html";
+        amazonBtn.textContent = "Zurück zum Shop";
+      }
+      amazonBtn.addEventListener("click", () => track("product_affiliate_click", product.name));
+      track("product_page_view", product.id || product.name);
+    }
+
+    function renderProductReviews(){
+      const host = document.getElementById("productReviewList");
+      const seeded = SEEDED_REVIEWS[product.id] || [];
+      const store = getVerifiedReviewStore();
+      const saved = store[product.id] || [];
+      const list = seeded.concat(saved);
+
+      if (list.length === 0){
+        host.innerHTML = `<div class="review-item"><p class="review-text">Noch keine verifizierte Rezension vorhanden.</p></div>`;
+        return;
+      }
+
+      host.innerHTML = list.map((r) => `
+        <article class="review-item">
+          <div class="review-head">
+            <div class="review-name">${escapeHtml(r.name)}</div>
+            <span class="review-badge">Verifiziert</span>
+          </div>
+          <p class="review-text">${escapeHtml(r.text)}</p>
+          <div class="form-note">${escapeHtml(r.date)}</div>
+        </article>
+      `).join("");
+    }
+
+    document.getElementById("productReviewForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!product.id){
+        document.getElementById("reviewFeedback").textContent = "Produkt konnte nicht zugeordnet werden.";
+        return;
+      }
+      const name = (document.getElementById("reviewName").value || "").trim() || "Gast";
+      const code = (document.getElementById("reviewCode").value || "").trim().toUpperCase();
+      const text = (document.getElementById("reviewText").value || "").trim();
+      const feedback = document.getElementById("reviewFeedback");
+
+      if (!text){
+        feedback.textContent = "Bitte zuerst deine Erfahrung eintragen.";
+        return;
+      }
+
+      const entry = { name, text, date: new Date().toLocaleDateString("de-DE") };
+      const expectedCode = REVIEW_CODE[product.id] || "";
+
+      if (code && expectedCode && code === expectedCode){
+        const store = getVerifiedReviewStore();
+        store[product.id] = store[product.id] || [];
+        store[product.id].unshift(entry);
+        saveVerifiedReviewStore(store);
+        feedback.textContent = "Danke! Deine verifizierte Bewertung ist jetzt sichtbar.";
+        renderProductReviews();
+      } else {
+        const pending = getPendingReviewStore();
+        pending[product.id] = pending[product.id] || [];
+        pending[product.id].unshift(entry);
+        savePendingReviewStore(pending);
+        feedback.textContent = "Danke! Deine Bewertung ist eingegangen und wartet auf Verifizierung.";
+      }
+
+      document.getElementById("productReviewForm").reset();
+    });
+
+    const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
+    function setThemeMeta(){
+      if (!themeMeta) return;
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      themeMeta.setAttribute("content", cur === "light" ? "#ffffff" : "#12151b");
+    }
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      track("theme_toggle", next);
+      setThemeMeta();
+    });
+    setThemeMeta();
+
+    function initScrollReveal(){
+      const targets = Array.from(document.querySelectorAll(".scroll-reveal, .footer"));
+      if (!("IntersectionObserver" in window)){
+        targets.forEach(el => el.classList.add("is-visible"));
+        return;
+      }
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry => entry.target.classList.toggle("is-visible", entry.isIntersecting));
+      }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+      targets.forEach(el => io.observe(el));
+    }
+
+    renderProductData();
+    renderProductReviews();
+    initScrollReveal();
+  </script>
+</body>
+</html>

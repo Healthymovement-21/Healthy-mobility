@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216q">
+  <link rel="stylesheet" href="style.css?v=20260216r">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -943,22 +943,20 @@
 
     function openProductModal(productId){
       const product = getProductById(productId);
-      if (!product) return;
-      const details = getProductDetails(productId);
-      if (!details) return;
-
-      activeProductId = productId;
-      productModalTitle.textContent = product.name;
-      productModalMeta.textContent = `${product.category} · ${product.price}`;
-      productModalBenefit.textContent = details.benefit;
-      productModalExample.textContent = details.example;
-      productModalUsage.innerHTML = details.usage.map(item => `<li>${item}</li>`).join("");
-      reviewFeedback.textContent = "Nur verifizierte Bewertungen werden direkt veröffentlicht.";
-      renderProductReviews(productId);
-
-      productModal.classList.add("open");
-      productModal.setAttribute("aria-hidden","false");
-      track("product_details_open", product.name);
+      const card = document.getElementById(productId);
+      if (!product || !card) return;
+      const amazonUrl = card.querySelector(".product-actions .btn")?.getAttribute("href") || "";
+      const imgUrl = card.querySelector(".product-media img")?.getAttribute("src") || (imageUrlOverrideByProductId[productId] || "");
+      const params = new URLSearchParams({
+        id: productId,
+        name: product.name || "",
+        category: product.category || "",
+        price: product.price || "Preis bei Amazon prüfen",
+        url: amazonUrl,
+        img: imgUrl
+      });
+      track("product_page_open", product.name);
+      window.location.assign(`produkt.html?${params.toString()}`);
     }
 
     function closeProductModal(){
@@ -976,7 +974,7 @@
           const detailBtn = document.createElement("button");
           detailBtn.type = "button";
           detailBtn.className = "detail-btn";
-          detailBtn.textContent = "Details";
+          detailBtn.textContent = "Seite öffnen";
           detailBtn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();

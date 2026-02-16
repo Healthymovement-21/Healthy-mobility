@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
   <meta name="theme-color" content="#ffffff" id="themeColorMeta">
-  <title>Healthy Mobility – Blog</title>
+  <title>Healthy Mobility – Kreuzbandartikel</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
   <link rel="stylesheet" href="style.css?v=20260216r">
@@ -17,7 +17,7 @@
 <body class="has-top-nav big-layout">
   <div class="top-nav" role="navigation" aria-label="Top Navigation">
     <div class="row">
-      <a class="brand-floating" href="index.html" onclick="track('brand_click','blog')"><span class="glow">Healthy</span><span>Mobility</span></a>
+      <a class="brand-floating" href="index.html" onclick="track('brand_click','blog_article_1')"><span class="glow">Healthy</span><span>Mobility</span></a>
       <div class="bar">
         <button class="top-btn" type="button" onclick="go('index.html')">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -45,33 +45,50 @@
   </div>
 
   <main class="page">
-    <h1>Blog & Artikel aus der Rehabilitation</h1>
-    <p class="hero-sub">Praxisnahe Inhalte, damit du Therapie, Training und Alltag besser verstehst und sicher umsetzen kannst.</p>
+    <div class="product-detail-head scroll-reveal">
+      <div class="meta-chip">Artikel 01 · Reha-Fokus</div>
+      <h1>Kreuzbandverletzung: Struktur im Wiedereinstieg</h1>
+      <p class="hero-sub">Ein klarer, realistischer Plan bringt dich schneller nach vorne als hektische Belastungsspruenge.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="cta ghost" href="blog.html">Zur Blog-Uebersicht</a>
+        <a class="cta" href="shop.html">Passende Produktempfehlungen</a>
+      </div>
+    </div>
 
-    <section class="article-list" style="margin-top:18px;">
-      <a class="article-card article-link scroll-reveal" href="blog-kreuzband.html" onclick="track('blog_open','kreuzband')">
-        <div class="meta-chip">Reha-Fokus</div>
-        <h3>Kreuzbandverletzung: Struktur im Wiedereinstieg</h3>
-        <p>
-          Was in den Phasen nach einer Kreuzbandverletzung sinnvoll ist, welche Fehler oft passieren
-          und wie du Belastung schrittweise wieder aufbaust.
-        </p>
-        <span class="cta">Artikel lesen →</span>
-      </a>
+    <article class="article-full scroll-reveal">
+      <h3>1) Die ersten Wochen: Reizkontrolle und Sicherheit</h3>
+      <p>
+        In der fruehen Phase geht es darum, Schwellung und Reizung zu kontrollieren, Beweglichkeit zurueckzugewinnen
+        und alltagstaugliche Belastung wieder aufzubauen. Die Qualitaet deiner Bewegung ist wichtiger als hohe Umfaenge.
+      </p>
 
-      <a class="article-card article-link scroll-reveal" href="blog-rueckkehr.html" onclick="track('blog_open','rueckkehr')">
-        <div class="meta-chip">Artikel 02</div>
-        <h3>Rueckkehr in Sport und Alltag</h3>
-        <p>
-          Kriterien, mit denen du Fortschritt besser einschaetzen kannst, statt nur nach Gefuehl zu trainieren.
-        </p>
-        <span class="cta">Artikel lesen →</span>
-      </a>
-    </section>
+      <h3>2) Belastungsaufbau: Kraft und Kontrolle</h3>
+      <p>
+        Danach steht ein strukturierter Kraftaufbau im Fokus, vor allem fuer Oberschenkel, Huftstabilitaet und Rumpf.
+        Ziel ist eine saubere Kontrolle in einbeinigen Situationen, nicht nur "mehr Gewicht".
+      </p>
+      <ul class="checklist">
+        <li>Regelmaessige Progression statt Sprungbelastung</li>
+        <li>Seitenvergleich als objektiver Marker</li>
+        <li>Reaktion am Folgetag dokumentieren</li>
+      </ul>
+
+      <h3>3) Rueckkehr in den Sport: Kriterien vor Gefuehl</h3>
+      <p>
+        Return-to-Sport sollte nicht nur am Schmerz festgemacht werden. Entscheidend sind Leistungsdaten,
+        dynamische Stabilitaet und belastbare Bewegungsmuster bei Richtungswechsel und Landungen.
+      </p>
+
+      <h3>Fazit</h3>
+      <p>
+        Ein belastbares Knie entsteht aus konsequenter Struktur: dosierte Belastung, messbarer Fortschritt und
+        regelmaessige Anpassung. Genau dabei helfen dir klare Routinen und die passenden Tools im Alltag.
+      </p>
+    </article>
 
     <div class="footer">
-      <a href="coaching.html" onclick="track('nav_coaching','blog_footer')">Personal Coaching</a> ·
-      <a href="shop.html" onclick="track('nav_shop','blog_footer')">Shop</a> ·
+      <a href="blog-rueckkehr.html">Naechster Artikel</a> ·
+      <a href="coaching.html">Personal Coaching</a> ·
       <a href="impressum.html">Impressum</a> ·
       <a href="datenschutz.html">Datenschutz</a>
     </div>
@@ -107,7 +124,7 @@
     setThemeMeta();
 
     function initScrollReveal(){
-      const targets = Array.from(document.querySelectorAll("h1, .hero-sub, .article-card, .footer"));
+      const targets = Array.from(document.querySelectorAll(".scroll-reveal, .footer"));
       if (!("IntersectionObserver" in window)){
         targets.forEach(el => el.classList.add("is-visible"));
         return;
@@ -115,7 +132,7 @@
       targets.forEach(el => el.classList.add("scroll-reveal"));
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(entry => entry.target.classList.toggle("is-visible", entry.isIntersecting));
-      }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+      }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
       targets.forEach(el => io.observe(el));
     }
     initScrollReveal();

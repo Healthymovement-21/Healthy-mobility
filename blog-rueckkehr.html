@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
   <meta name="theme-color" content="#ffffff" id="themeColorMeta">
-  <title>Healthy Mobility – Blog</title>
+  <title>Healthy Mobility – Rueckkehr in Sport</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
   <link rel="stylesheet" href="style.css?v=20260216r">
@@ -17,7 +17,7 @@
 <body class="has-top-nav big-layout">
   <div class="top-nav" role="navigation" aria-label="Top Navigation">
     <div class="row">
-      <a class="brand-floating" href="index.html" onclick="track('brand_click','blog')"><span class="glow">Healthy</span><span>Mobility</span></a>
+      <a class="brand-floating" href="index.html" onclick="track('brand_click','blog_article_2')"><span class="glow">Healthy</span><span>Mobility</span></a>
       <div class="bar">
         <button class="top-btn" type="button" onclick="go('index.html')">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -45,33 +45,50 @@
   </div>
 
   <main class="page">
-    <h1>Blog & Artikel aus der Rehabilitation</h1>
-    <p class="hero-sub">Praxisnahe Inhalte, damit du Therapie, Training und Alltag besser verstehst und sicher umsetzen kannst.</p>
+    <div class="product-detail-head scroll-reveal">
+      <div class="meta-chip">Artikel 02 · Return to Sport</div>
+      <h1>Rueckkehr in Sport und Alltag: Was wirklich zaehlt</h1>
+      <p class="hero-sub">Nicht der schnellste Wiedereinstieg gewinnt, sondern der belastbarste.</p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="cta ghost" href="blog.html">Zur Blog-Uebersicht</a>
+        <a class="cta" href="coaching.html">Coaching anfragen</a>
+      </div>
+    </div>
 
-    <section class="article-list" style="margin-top:18px;">
-      <a class="article-card article-link scroll-reveal" href="blog-kreuzband.html" onclick="track('blog_open','kreuzband')">
-        <div class="meta-chip">Reha-Fokus</div>
-        <h3>Kreuzbandverletzung: Struktur im Wiedereinstieg</h3>
-        <p>
-          Was in den Phasen nach einer Kreuzbandverletzung sinnvoll ist, welche Fehler oft passieren
-          und wie du Belastung schrittweise wieder aufbaust.
-        </p>
-        <span class="cta">Artikel lesen →</span>
-      </a>
+    <article class="article-full scroll-reveal">
+      <h3>Kriterium 1: Belastungstoleranz</h3>
+      <p>
+        Dein Training ist erst dann passend, wenn dein Koerper es am Folgetag stabil verarbeitet.
+        Entscheidend sind Schwellung, Schmerzverhalten und Bewegungsqualitaet nach Belastung.
+      </p>
 
-      <a class="article-card article-link scroll-reveal" href="blog-rueckkehr.html" onclick="track('blog_open','rueckkehr')">
-        <div class="meta-chip">Artikel 02</div>
-        <h3>Rueckkehr in Sport und Alltag</h3>
-        <p>
-          Kriterien, mit denen du Fortschritt besser einschaetzen kannst, statt nur nach Gefuehl zu trainieren.
-        </p>
-        <span class="cta">Artikel lesen →</span>
-      </a>
-    </section>
+      <h3>Kriterium 2: Bewegungsqualitaet unter Tempo</h3>
+      <p>
+        Saubere Technik bei langsamen Uebungen reicht nicht aus. Beim Wiedereinstieg musst du Bewegungen auch
+        unter Geschwindigkeit, Richtungswechsel und Reaktionsdruck kontrollieren koennen.
+      </p>
+      <ul class="checklist">
+        <li>Landung stabil und achsengerecht</li>
+        <li>Richtungswechsel ohne Ausweichmuster</li>
+        <li>Belastung ueber mehrere Einheiten reproduzierbar</li>
+      </ul>
+
+      <h3>Kriterium 3: Plan statt Zufall</h3>
+      <p>
+        Rueckkehr in Sport funktioniert besser mit klaren Stufen: Volumen, Intensitaet und Komplexitaet
+        werden nacheinander gesteigert. So reduzierst du Rueckschritte und bleibst handlungsfaehig.
+      </p>
+
+      <h3>Fazit</h3>
+      <p>
+        "Wieder anfangen" ist leicht. "Belastbar zurueckkommen" braucht Struktur. Mit guten Kriterien
+        kannst du Fortschritt messen und Entscheidungen sauber treffen.
+      </p>
+    </article>
 
     <div class="footer">
-      <a href="coaching.html" onclick="track('nav_coaching','blog_footer')">Personal Coaching</a> ·
-      <a href="shop.html" onclick="track('nav_shop','blog_footer')">Shop</a> ·
+      <a href="blog-kreuzband.html">Vorheriger Artikel</a> ·
+      <a href="shop.html">Shop</a> ·
       <a href="impressum.html">Impressum</a> ·
       <a href="datenschutz.html">Datenschutz</a>
     </div>
@@ -107,7 +124,7 @@
     setThemeMeta();
 
     function initScrollReveal(){
-      const targets = Array.from(document.querySelectorAll("h1, .hero-sub, .article-card, .footer"));
+      const targets = Array.from(document.querySelectorAll(".scroll-reveal, .footer"));
       if (!("IntersectionObserver" in window)){
         targets.forEach(el => el.classList.add("is-visible"));
         return;
@@ -115,7 +132,7 @@
       targets.forEach(el => el.classList.add("scroll-reveal"));
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(entry => entry.target.classList.toggle("is-visible", entry.isIntersecting));
-      }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+      }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
       targets.forEach(el => io.observe(el));
     }
     initScrollReveal();

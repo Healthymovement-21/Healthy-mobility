@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
+  <meta name="theme-color" content="#ffffff" id="themeColorMeta">
+  <title>Healthy Mobility – Personal Coaching</title>
+
+  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260216p">
+</head>
+
+<body class="has-top-nav big-layout">
+  <div class="top-nav" role="navigation" aria-label="Top Navigation">
+    <div class="row">
+      <a class="brand-floating" href="index.html" onclick="track('brand_click','coaching')"><span class="glow">Healthy</span><span>Mobility</span></a>
+      <div class="bar">
+        <button class="top-btn" type="button" onclick="go('index.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="top-btn" type="button" onclick="go('shop.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Shop</span>
+        </button>
+        <button class="top-btn active" type="button" onclick="go('coaching.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Coaching</span>
+        </button>
+      </div>
+      <button class="top-btn theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+    </div>
+  </div>
+
+  <main class="page">
+    <h1>Personal Coaching</h1>
+    <p class="hero-sub">Individuelle Begleitung fuer Rehabilitation, Training und belastbaren Alltag.</p>
+
+    <section class="coach-grid" style="margin-top:18px;">
+      <article class="coach-card scroll-reveal">
+        <div class="meta-chip">Baustein 1</div>
+        <h3>Analyse & Zielsetzung</h3>
+        <p>
+          Wir starten mit deiner Ausgangslage, Belastungshistorie und einem klaren Ziel,
+          damit dein Plan zu deiner Realitaet passt.
+        </p>
+      </article>
+
+      <article class="coach-card scroll-reveal">
+        <div class="meta-chip">Baustein 2</div>
+        <h3>Plan & Struktur</h3>
+        <p>
+          Du bekommst einen realistischen Ablauf mit Prioritaeten fuer Kraft, Beweglichkeit,
+          Belastungssteuerung und sichere Progression.
+        </p>
+      </article>
+
+      <article class="coach-card scroll-reveal">
+        <div class="meta-chip">Baustein 3</div>
+        <h3>Begleitung & Anpassung</h3>
+        <p>
+          Regelmaessige Rueckmeldung, Anpassung bei Rueckschritten und klare Entscheidungshilfen,
+          damit du kontinuierlich weiterkommst.
+        </p>
+      </article>
+
+      <article class="coach-card scroll-reveal">
+        <div class="meta-chip">Hinweis</div>
+        <h3>Inhalte individualisierbar</h3>
+        <p>
+          Die finalen Inhalte stimmen wir auf dein Ziel ab. Sobald du mir sagst,
+          was genau enthalten sein soll, baue ich die Seite inhaltlich fix fertig.
+        </p>
+      </article>
+    </section>
+
+    <section class="coach-form scroll-reveal">
+      <h2>Unverbindliche Anfrage</h2>
+      <form id="coachingForm">
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="coachName">Name</label>
+            <input id="coachName" name="name" type="text" required>
+          </div>
+          <div class="form-row">
+            <label for="coachEmail">E-Mail</label>
+            <input id="coachEmail" name="email" type="email" required>
+          </div>
+          <div class="form-row full">
+            <label for="coachGoal">Ziel / Situation</label>
+            <textarea id="coachGoal" name="goal" placeholder="Zum Beispiel: Reha nach Kreuzbandverletzung, sicherer Wiedereinstieg in den Sport." required></textarea>
+          </div>
+        </div>
+        <div class="cta-row">
+          <button class="cta" type="submit">Anfrage vorbereiten</button>
+        </div>
+      </form>
+      <div class="form-note">Die Anfrage oeffnet dein Mailprogramm mit den eingetragenen Daten.</div>
+    </section>
+
+    <div class="footer">
+      <a href="blog.html" onclick="track('nav_blog','coaching_footer')">Blog</a> ·
+      <a href="shop.html" onclick="track('nav_shop','coaching_footer')">Shop</a> ·
+      <a href="impressum.html">Impressum</a> ·
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </main>
+
+  <script>
+    function track(eventName, label){
+      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
+    }
+    function go(url){ window.location.assign(url); }
+
+    const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
+    function setThemeMeta(){
+      if (!themeMeta) return;
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      themeMeta.setAttribute("content", cur === "light" ? "#ffffff" : "#12151b");
+    }
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      track("theme_toggle", next);
+      setThemeMeta();
+    });
+    setThemeMeta();
+
+    document.getElementById("coachingForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("coachName").value.trim();
+      const email = document.getElementById("coachEmail").value.trim();
+      const goal = document.getElementById("coachGoal").value.trim();
+      const subject = encodeURIComponent("Anfrage Personal Coaching");
+      const body = encodeURIComponent(
+        `Name: ${name}\nE-Mail: ${email}\n\nZiel / Situation:\n${goal}\n\n---\nGesendet ueber Healthy Mobility Coaching-Seite`
+      );
+      window.location.href = `mailto:deine-email@domain.de?subject=${subject}&body=${body}`;
+    });
+
+    function initScrollReveal(){
+      const targets = Array.from(document.querySelectorAll("h1, .hero-sub, .coach-card, .coach-form, .footer"));
+      if (!("IntersectionObserver" in window)){
+        targets.forEach(el => el.classList.add("is-visible"));
+        return;
+      }
+      targets.forEach(el => el.classList.add("scroll-reveal"));
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry => entry.target.classList.toggle("is-visible", entry.isIntersecting));
+      }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+      targets.forEach(el => io.observe(el));
+    }
+    initScrollReveal();
+  </script>
+</body>
+</html>

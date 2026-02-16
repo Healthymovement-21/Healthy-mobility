@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
+  <meta name="theme-color" content="#ffffff" id="themeColorMeta">
+  <title>Healthy Mobility – Blog</title>
+
+  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260216p">
+</head>
+
+<body class="has-top-nav big-layout">
+  <div class="top-nav" role="navigation" aria-label="Top Navigation">
+    <div class="row">
+      <a class="brand-floating" href="index.html" onclick="track('brand_click','blog')"><span class="glow">Healthy</span><span>Mobility</span></a>
+      <div class="bar">
+        <button class="top-btn" type="button" onclick="go('index.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="top-btn" type="button" onclick="go('shop.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Shop</span>
+        </button>
+        <button class="top-btn active" type="button" onclick="go('blog.html')">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Blog</span>
+        </button>
+      </div>
+      <button class="top-btn theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+    </div>
+  </div>
+
+  <main class="page">
+    <h1>Blog & Artikel aus der Rehabilitation</h1>
+    <p class="hero-sub">Praxisnahe Inhalte, damit du Therapie, Training und Alltag besser verstehst und sicher umsetzen kannst.</p>
+
+    <section class="article-list" style="margin-top:18px;">
+      <article class="article-card scroll-reveal">
+        <div class="meta-chip">Reha-Fokus</div>
+        <h3>Kreuzbandverletzung: Struktur im Wiedereinstieg</h3>
+        <p>
+          Was in den Phasen nach einer Kreuzbandverletzung sinnvoll ist, welche Fehler oft passieren
+          und wie du Belastung schrittweise wieder aufbaust.
+        </p>
+        <a class="cta" href="#artikel-kreuzband">Artikel lesen →</a>
+      </article>
+
+      <article class="article-card scroll-reveal">
+        <div class="meta-chip">Demnaechst</div>
+        <h3>Rueckkehr in Sport und Alltag</h3>
+        <p>
+          Kriterien, mit denen du Fortschritt besser einschaetzen kannst, statt nur nach Gefuehl zu trainieren.
+        </p>
+        <a class="cta" href="#">Kommt bald</a>
+      </article>
+    </section>
+
+    <article class="article-full scroll-reveal" id="artikel-kreuzband" style="margin-top:18px;">
+      <div class="meta-chip">Artikel 01</div>
+      <h3>Kreuzbandverletzung: Was bringt dich wirklich weiter?</h3>
+      <p>
+        Nach einer Kreuzbandverletzung hilft kein hektisches "schneller wieder fit", sondern ein klarer Plan.
+        Ziel ist ein belastbares Knie fuer Alltag und Sport. Entscheidend sind dosierter Kraftaufbau,
+        neuromuskulaere Kontrolle und konsequente Verlaufsbeobachtung.
+      </p>
+      <ul class="checklist">
+        <li>Phase 1: Reizkontrolle, Beweglichkeit, sichere Alltagsbelastung</li>
+        <li>Phase 2: Kraftbasis aufbauen und Seitenunterschiede reduzieren</li>
+        <li>Phase 3: Dynamik, Richtungswechsel, sportartspezifische Vorbereitung</li>
+      </ul>
+      <p>
+        Wichtig: Fortschritt wird nicht nur ueber Schmerz bewertet. Relevant sind auch Stabilitaet,
+        Belastungsvertraeglichkeit am Folgetag und die Qualitaet der Bewegung.
+      </p>
+    </article>
+
+    <div class="footer">
+      <a href="coaching.html" onclick="track('nav_coaching','blog_footer')">Personal Coaching</a> ·
+      <a href="shop.html" onclick="track('nav_shop','blog_footer')">Shop</a> ·
+      <a href="impressum.html">Impressum</a> ·
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </main>
+
+  <script>
+    function track(eventName, label){
+      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
+    }
+    function go(url){ window.location.assign(url); }
+
+    const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
+    function setThemeMeta(){
+      if (!themeMeta) return;
+      const cur = document.documentElement.getAttribute("data-theme") || "dark";
+      themeMeta.setAttribute("content", cur === "light" ? "#ffffff" : "#12151b");
+    }
+    const root = document.documentElement;
+    const saved = localStorage.getItem("theme");
+    if (saved) root.setAttribute("data-theme", saved);
+    else {
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
+    }
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+      track("theme_toggle", next);
+      setThemeMeta();
+    });
+    setThemeMeta();
+
+    function initScrollReveal(){
+      const targets = Array.from(document.querySelectorAll("h1, .hero-sub, .article-card, .article-full, .footer"));
+      if (!("IntersectionObserver" in window)){
+        targets.forEach(el => el.classList.add("is-visible"));
+        return;
+      }
+      targets.forEach(el => el.classList.add("scroll-reveal"));
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry => entry.target.classList.toggle("is-visible", entry.isIntersecting));
+      }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+      targets.forEach(el => io.observe(el));
+    }
+    initScrollReveal();
+  </script>
+</body>
+</html>

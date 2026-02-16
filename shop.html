@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216o">
+  <link rel="stylesheet" href="style.css?v=20260216p">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -383,6 +383,50 @@
       </div>
     </section>
 
+    <div class="product-modal" id="productModal" aria-hidden="true">
+      <div class="product-modal-panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+        <div class="product-modal-top">
+          <div>
+            <h2 id="productModalTitle">Produktdetails</h2>
+            <div id="productModalMeta" class="product-meta"></div>
+          </div>
+          <button id="productModalClose" class="product-modal-close" type="button">Schließen</button>
+        </div>
+
+        <p id="productModalBenefit"></p>
+        <p id="productModalExample"></p>
+
+        <h3 style="margin:12px 0 8px;">Anwendung (Beispiele)</h3>
+        <ul id="productModalUsage" class="checklist"></ul>
+
+        <section class="review-block">
+          <h3 style="margin:14px 0 8px;">Verifizierte Kundenrezensionen</h3>
+          <div id="productReviewList" class="review-list"></div>
+
+          <form id="productReviewForm" class="review-form">
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="reviewName">Name (Gast)</label>
+                <input id="reviewName" type="text" maxlength="40" placeholder="z. B. Anna">
+              </div>
+              <div class="form-row">
+                <label for="reviewCode">Verifizierungscode</label>
+                <input id="reviewCode" type="text" maxlength="24" placeholder="Code nach Kauf">
+              </div>
+              <div class="form-row full">
+                <label for="reviewText">Deine Erfahrung</label>
+                <textarea id="reviewText" maxlength="400" required placeholder="z. B. Hat mir in der Reha geholfen, weil ..."></textarea>
+              </div>
+            </div>
+            <div class="cta-row" style="margin-top:8px;">
+              <button class="cta" type="submit">Bewertung senden</button>
+            </div>
+            <div id="reviewFeedback" class="form-note"></div>
+          </form>
+        </section>
+      </div>
+    </div>
+
     <div class="empty" id="emptyState">
       <strong>Keine Treffer.</strong><br>
       Tipp: Suchbegriff ändern.
@@ -575,6 +619,382 @@
     }
     injectProductImages();
 
+    const productModal = document.getElementById("productModal");
+    const productModalTitle = document.getElementById("productModalTitle");
+    const productModalMeta = document.getElementById("productModalMeta");
+    const productModalBenefit = document.getElementById("productModalBenefit");
+    const productModalExample = document.getElementById("productModalExample");
+    const productModalUsage = document.getElementById("productModalUsage");
+    const productModalClose = document.getElementById("productModalClose");
+    const productReviewList = document.getElementById("productReviewList");
+    const productReviewForm = document.getElementById("productReviewForm");
+    const reviewName = document.getElementById("reviewName");
+    const reviewCode = document.getElementById("reviewCode");
+    const reviewText = document.getElementById("reviewText");
+    const reviewFeedback = document.getElementById("reviewFeedback");
+    const verifiedReviewStoreKey = "hm_verified_reviews_v2";
+    const pendingReviewStoreKey = "hm_pending_reviews_v2";
+    let activeProductId = "";
+
+    const productDetailsById = {
+      massagepistole: {
+        benefit: "Kann helfen, verspannte Muskulatur nach Belastung schneller zu lockern und das Bewegungsgefühl zu verbessern.",
+        example: "Empfehlung: nach Training oder langem Sitzen 60-120 Sekunden pro Muskelgruppe, nicht direkt auf Gelenke oder Knochen.",
+        usage: [
+          "Niedrige Intensität zum Einstieg wählen",
+          "Pro Bereich kurz und kontrolliert arbeiten",
+          "Bei akuten Entzündungen oder starken Schmerzen pausieren"
+        ]
+      },
+      moorkissen: {
+        benefit: "Wärme kann bei muskulärer Spannung und Steifigkeit als unterstützende Maßnahme entspannend wirken.",
+        example: "Empfehlung: 15-20 Minuten lokal anwenden, danach kurz nachspüren, ob die Belastung danach besser toleriert wird.",
+        usage: [
+          "Temperatur vor der Anwendung prüfen",
+          "Nie auf verletzte oder taube Haut legen",
+          "1-2 Anwendungen täglich reichen in der Regel aus"
+        ]
+      },
+      "knie-kuehlpack": {
+        benefit: "Kann in akuten Reizphasen unterstützend wirken, wenn Belastung und Reaktion sauber gesteuert werden.",
+        example: "Empfehlung: 10-15 Minuten kühlen, danach Pause und Reaktion des Knies am Folgetag beobachten.",
+        usage: [
+          "Kälte nie direkt auf nackte Haut legen",
+          "Zwischen Anwendungen ausreichend Pause lassen",
+          "Bei Taubheitsgefühl oder starker Reizung abbrechen"
+        ]
+      },
+      retterspitz: {
+        benefit: "Kann als lokale Zusatzmaßnahme bei gereizten Bereichen genutzt werden und das subjektive Beschwerdegefühl verbessern.",
+        example: "Empfehlung: als Wickel im Rahmen einer ruhigen Regenerationsroutine einsetzen.",
+        usage: [
+          "Nur äußerlich und gemäß Herstellerangaben anwenden",
+          "Hautreaktion zunächst auf kleiner Fläche testen",
+          "Nicht auf offene Hautstellen auftragen"
+        ]
+      },
+      "macdavid-bandage": {
+        benefit: "Kann das Stabilitätsgefühl bei Belastung verbessern und Unsicherheit in frühen Belastungsphasen reduzieren.",
+        example: "Empfehlung: bei längeren Alltagswegen oder sportnahen Einheiten als Unterstützung nutzen.",
+        usage: [
+          "Bandagegröße passend wählen",
+          "Sitz vor Bewegung prüfen",
+          "Nicht dauerhaft rund um die Uhr tragen"
+        ]
+      },
+      leukotape: {
+        benefit: "Kann die Gelenkführung unterstützen und in bestimmten Phasen mehr Stabilitätsgefühl geben.",
+        example: "Empfehlung: als Ergänzung bei Belastung einsetzen, nicht als Ersatz für gezielten Kraftaufbau.",
+        usage: [
+          "Auf saubere und trockene Haut kleben",
+          "Spannung kontrolliert dosieren",
+          "Bei Hautreizungen sofort entfernen"
+        ]
+      },
+      laufband: {
+        benefit: "Ermöglicht planbares Ausdauertraining zu Hause mit kontrollierbarer Geschwindigkeit.",
+        example: "Empfehlung: mit Intervallen starten, z. B. 2 Minuten Gehen / 1 Minute zügig, dann langsam steigern.",
+        usage: [
+          "Vorher 5 Minuten locker aufwärmen",
+          "Belastung über Tempo oder Dauer erhöhen, nicht beides gleichzeitig",
+          "Nach dem Training kurz auslaufen lassen"
+        ]
+      },
+      thrombosestrumpf: {
+        benefit: "Kann den venösen Rückfluss unterstützen, vor allem bei langen Sitzphasen oder reduzierter Bewegung.",
+        example: "Empfehlung: bei längeren Ruhezeiten oder Reisen gezielt einsetzen.",
+        usage: [
+          "Passende Kompressionsklasse beachten",
+          "Faltenfrei anlegen",
+          "Bei Druckstellen oder Beschwerden Nutzung prüfen lassen"
+        ]
+      },
+      waermemessgeraet: {
+        benefit: "Hilft, Temperaturunterschiede objektiver einzuschätzen, statt nur nach Gefühl zu entscheiden.",
+        example: "Empfehlung: immer an vergleichbaren Stellen und zu ähnlichen Zeitpunkten messen.",
+        usage: [
+          "Messdistanz konstant halten",
+          "Mehrere Messungen vergleichen",
+          "Werte als Verlauf dokumentieren"
+        ]
+      },
+      "aloe-vera-gel": {
+        benefit: "Kann die Haut nach thermischen Anwendungen beruhigen und das Hautgefühl verbessern.",
+        example: "Empfehlung: dünn auftragen nach Kälte- oder Wärmeanwendung.",
+        usage: [
+          "Vorher Hautverträglichkeit testen",
+          "Nur auf intakte Haut auftragen",
+          "Bei Reizung abwaschen und pausieren"
+        ]
+      },
+      lymphmassband: {
+        benefit: "Unterstützt eine objektive Verlaufskontrolle bei Schwellungen und macht Fortschritte messbar.",
+        example: "Empfehlung: Umfang immer an denselben Punkten dokumentieren.",
+        usage: [
+          "Messpunkte markieren",
+          "Uhrzeit der Messung möglichst konstant halten",
+          "Daten über mehrere Wochen vergleichen"
+        ]
+      },
+      "elektrischer-shaker": {
+        benefit: "Erleichtert die alltagstaugliche Versorgung rund um Training und Regeneration.",
+        example: "Empfehlung: vorab Portionen planen, damit die Umsetzung im Alltag einfacher wird.",
+        usage: [
+          "Vor jeder Nutzung sauber spülen",
+          "Flüssigkeitsmenge passend dosieren",
+          "Motorblock nicht in Wasser tauchen"
+        ]
+      },
+      "bauerfeind-fussbandage": {
+        benefit: "Kann den Fuß bei Belastung stabilisieren und ein sichereres Bewegungsgefühl vermitteln.",
+        example: "Empfehlung: bei längeren Gehstrecken oder sportnahen Belastungen gezielt nutzen.",
+        usage: [
+          "Passform und Druckgefühl prüfen",
+          "Mit Schuhwerk testen, das du oft nutzt",
+          "Belastung weiterhin aktiv aufbauen"
+        ]
+      },
+      "bauerfeind-armbandage": {
+        benefit: "Kann den Ellenbogen bei Überlastung unterstützen und Beschwerden unter Belastung reduzieren.",
+        example: "Empfehlung: bei Zug- und Druckbelastung als ergänzende Unterstützung einsetzen.",
+        usage: [
+          "Bandage mit korrekter Position tragen",
+          "Lokal zu hohen Druck vermeiden",
+          "Kraft- und Techniktraining parallel fortführen"
+        ]
+      },
+      "neue-empfehlung-1": {
+        benefit: "Kann als ergänzendes Tool im Reha- und Trainingsalltag sinnvoll eingesetzt werden.",
+        example: "Empfehlung: zunächst in kleinen Dosen testen und Wirkung dokumentieren.",
+        usage: [
+          "Belastung stufenweise erhöhen",
+          "Nur bei klarer Zielsetzung einsetzen",
+          "Wirkung regelmäßig überprüfen"
+        ]
+      },
+      "neue-empfehlung-2": {
+        benefit: "Kann in deinem Setup eine sinnvolle Zusatzfunktion für Regeneration oder Stabilität übernehmen.",
+        example: "Empfehlung: gezielt in bestehende Routinen integrieren statt zusätzlich zu überladen.",
+        usage: [
+          "Mit niedriger Intensität starten",
+          "Alltagstauglich planen",
+          "Reaktion am Folgetag beobachten"
+        ]
+      },
+      "neue-empfehlung-3": {
+        benefit: "Kann je nach Zielsetzung als praktische Ergänzung im Belastungsaufbau dienen.",
+        example: "Empfehlung: nur dann nutzen, wenn es eine konkrete Lücke im Plan schließt.",
+        usage: [
+          "Anwendung vorher fest planen",
+          "Fortschritt notieren",
+          "Bei fehlendem Nutzen wieder entfernen"
+        ]
+      },
+      "neue-empfehlung-4": {
+        benefit: "Kann den Reha-Alltag unterstützen, wenn Einsatz und Dosierung strukturiert erfolgen.",
+        example: "Empfehlung: mit klaren Kriterien nutzen (wann, wie oft, mit welchem Ziel).",
+        usage: [
+          "Regelmäßig und kontrolliert einsetzen",
+          "Nicht mehrere neue Tools gleichzeitig starten",
+          "Anwendung bei Unsicherheit fachlich abstimmen"
+        ]
+      }
+    };
+
+    const seededVerifiedReviewsByProduct = {
+      massagepistole: [
+        { name: "T. M.", text: "Hat mir in der Reha geholfen, weil die Muskulatur nach dem Training schneller locker wurde.", date: "12.02.2026" }
+      ],
+      moorkissen: [
+        { name: "S. R.", text: "Nutze es abends bei Nackenverspannung. Danach fühlt sich Bewegung deutlich freier an.", date: "09.02.2026" }
+      ]
+    };
+
+    const reviewVerificationCodeByProduct = {
+      massagepistole: "HM-MAS-2026",
+      moorkissen: "HM-MOO-2026",
+      "knie-kuehlpack": "HM-KKP-2026",
+      retterspitz: "HM-RET-2026",
+      "macdavid-bandage": "HM-MAC-2026",
+      leukotape: "HM-LEU-2026",
+      laufband: "HM-LAU-2026",
+      thrombosestrumpf: "HM-THR-2026",
+      waermemessgeraet: "HM-WAE-2026",
+      "aloe-vera-gel": "HM-ALO-2026",
+      lymphmassband: "HM-LYM-2026",
+      "elektrischer-shaker": "HM-SHA-2026",
+      "bauerfeind-fussbandage": "HM-BFF-2026",
+      "bauerfeind-armbandage": "HM-BFA-2026",
+      "neue-empfehlung-1": "HM-EMP1-2026",
+      "neue-empfehlung-2": "HM-EMP2-2026",
+      "neue-empfehlung-3": "HM-EMP3-2026",
+      "neue-empfehlung-4": "HM-EMP4-2026"
+    };
+
+    function safeJsonParse(raw, fallback){
+      try{ return raw ? JSON.parse(raw) : fallback; }catch(_){ return fallback; }
+    }
+    function getVerifiedReviewStore(){
+      return safeJsonParse(localStorage.getItem(verifiedReviewStoreKey), {});
+    }
+    function getPendingReviewStore(){
+      return safeJsonParse(localStorage.getItem(pendingReviewStoreKey), {});
+    }
+    function saveVerifiedReviewStore(store){
+      localStorage.setItem(verifiedReviewStoreKey, JSON.stringify(store));
+    }
+    function savePendingReviewStore(store){
+      localStorage.setItem(pendingReviewStoreKey, JSON.stringify(store));
+    }
+
+    function buildDefaultDetails(product){
+      const cat = product.category || "Empfehlung";
+      return {
+        benefit: `${product.name} kann als ${cat.toLowerCase()}-Tool sinnvoll sein, wenn du Belastung gezielt aufbauen willst.`,
+        example: "Empfehlung: klein anfangen, Wirkung beobachten und nur schrittweise steigern.",
+        usage: [
+          "Einsatz an dein aktuelles Belastungsniveau anpassen",
+          "Regelmaessig statt extrem nutzen",
+          "Bei Unsicherheit vorher fachlich rueckkoppeln"
+        ]
+      };
+    }
+
+    function getProductById(productId){
+      return products.find(p => p.id === productId) || null;
+    }
+
+    function getProductDetails(productId){
+      const product = getProductById(productId);
+      if (!product) return null;
+      return productDetailsById[productId] || buildDefaultDetails(product);
+    }
+
+    function renderProductReviews(productId){
+      const store = getVerifiedReviewStore();
+      const seeded = seededVerifiedReviewsByProduct[productId] || [];
+      const saved = store[productId] || [];
+      const list = seeded.concat(saved);
+
+      if (list.length === 0){
+        productReviewList.innerHTML = `<div class="review-item"><p class="review-text">Noch keine verifizierte Rezension vorhanden.</p></div>`;
+        return;
+      }
+
+      productReviewList.innerHTML = list.map(r => `
+        <article class="review-item">
+          <div class="review-head">
+            <div class="review-name">${r.name}</div>
+            <span class="review-badge">Verifiziert</span>
+          </div>
+          <p class="review-text">${r.text}</p>
+          <div class="form-note">${r.date}</div>
+        </article>
+      `).join("");
+    }
+
+    function openProductModal(productId){
+      const product = getProductById(productId);
+      if (!product) return;
+      const details = getProductDetails(productId);
+      if (!details) return;
+
+      activeProductId = productId;
+      productModalTitle.textContent = product.name;
+      productModalMeta.textContent = `${product.category} · ${product.price}`;
+      productModalBenefit.textContent = details.benefit;
+      productModalExample.textContent = details.example;
+      productModalUsage.innerHTML = details.usage.map(item => `<li>${item}</li>`).join("");
+      reviewFeedback.textContent = "Nur verifizierte Bewertungen werden direkt veröffentlicht.";
+      renderProductReviews(productId);
+
+      productModal.classList.add("open");
+      productModal.setAttribute("aria-hidden","false");
+      track("product_details_open", product.name);
+    }
+
+    function closeProductModal(){
+      productModal.classList.remove("open");
+      productModal.setAttribute("aria-hidden","true");
+      activeProductId = "";
+    }
+
+    function injectDetailButtonsAndOpen(){
+      items.forEach(el => {
+        el.classList.add("clickable");
+        const title = (el.querySelector("h3")?.textContent || "Produkt").trim();
+        const actions = el.querySelector(".product-actions");
+        if (actions && !actions.querySelector(".detail-btn")){
+          const detailBtn = document.createElement("button");
+          detailBtn.type = "button";
+          detailBtn.className = "detail-btn";
+          detailBtn.textContent = "Details";
+          detailBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openProductModal(el.id);
+          });
+          actions.appendChild(detailBtn);
+        }
+
+        el.setAttribute("tabindex", "0");
+        el.setAttribute("role", "button");
+        el.setAttribute("aria-label", `${title} Details öffnen`);
+        el.addEventListener("click", (e) => {
+          if (e.target.closest(".product-actions")) return;
+          openProductModal(el.id);
+        });
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            openProductModal(el.id);
+          }
+        });
+      });
+    }
+    injectDetailButtonsAndOpen();
+
+    productModalClose.addEventListener("click", closeProductModal);
+    productModal.addEventListener("click", (e) => {
+      if (e.target === productModal) closeProductModal();
+    });
+
+    productReviewForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!activeProductId) return;
+      const name = (reviewName.value || "").trim() || "Gast";
+      const text = (reviewText.value || "").trim();
+      const code = (reviewCode.value || "").trim().toUpperCase();
+      if (!text){
+        reviewFeedback.textContent = "Bitte zuerst deine Erfahrung eintragen.";
+        return;
+      }
+
+      const expectedCode = reviewVerificationCodeByProduct[activeProductId] || "";
+      const entry = {
+        name,
+        text,
+        date: new Date().toLocaleDateString("de-DE")
+      };
+
+      if (code && expectedCode && code === expectedCode){
+        const store = getVerifiedReviewStore();
+        store[activeProductId] = store[activeProductId] || [];
+        store[activeProductId].unshift(entry);
+        saveVerifiedReviewStore(store);
+        reviewFeedback.textContent = "Danke! Deine verifizierte Bewertung ist jetzt sichtbar.";
+        renderProductReviews(activeProductId);
+      } else {
+        const pending = getPendingReviewStore();
+        pending[activeProductId] = pending[activeProductId] || [];
+        pending[activeProductId].unshift(entry);
+        savePendingReviewStore(pending);
+        reviewFeedback.textContent = "Danke! Deine Bewertung ist eingegangen und wartet auf Verifizierung.";
+      }
+
+      productReviewForm.reset();
+    });
+
     function openOverlay(){
       overlay.classList.add("open");
       overlay.setAttribute("aria-hidden","false");
@@ -666,7 +1086,15 @@
     if (openSearchBtn) openSearchBtn.addEventListener("click", openOverlay);
     if (overlayClose) overlayClose.addEventListener("click", closeOverlay);
     if (overlay) overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
-    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
+    document.addEventListener("keydown",(e)=>{
+      if (e.key !== "Escape") return;
+      if (productModal.classList.contains("open")){
+        closeProductModal();
+        return;
+      }
+      closeOverlay();
+      closeCategories();
+    });
 
     if (shopTitle) shopTitle.addEventListener("click", ()=>{
       if (shopCats.classList.contains("open")) closeCategories(); else openCategories();
@@ -751,16 +1179,6 @@
       targets.forEach(el => io.observe(el));
     }
     initScrollReveal();
-
-    function initLogoOnScroll(){
-      const update = () => {
-        const y = window.scrollY || window.pageYOffset || 0;
-        document.body.classList.toggle("logo-scroll-hidden", y > 4);
-      };
-      window.addEventListener("scroll", update, { passive:true });
-      update();
-    }
-    initLogoOnScroll();
 
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");

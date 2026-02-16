@@ -11,18 +11,10 @@
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216o">
+  <link rel="stylesheet" href="style.css?v=20260216p">
 </head>
 
 <body class="has-top-nav">
-  <!-- Intro Animation -->
-  <div class="intro" id="intro">
-    <div class="logo">
-      <div class="shine"></div>
-      <div><span>Healthy</span><br><span>Mobility</span></div>
-    </div>
-  </div>
-
   <!-- Search overlay (opens from bottom search icon) -->
   <div class="overlay" id="searchOverlay" aria-hidden="true">
     <div class="overlay-panel">
@@ -132,8 +124,34 @@
       <div id="popularList"></div>
     </div>
 
+    <section class="hub-section">
+      <h2>Mehr Inhalte & Angebote</h2>
+      <div class="hub-grid">
+        <a class="hub-card" href="blog.html" onclick="track('nav_blog','home_hub')">
+          <div class="kicker">Wissen</div>
+          <h3>Blog & Reha-Artikel</h3>
+          <p>
+            Fachliche Beiträge aus der Physiotherapie, z. B. zur Rehabilitation nach Kreuzbandverletzung,
+            Training im Aufbau und konkrete Alltagstipps.
+          </p>
+          <span>Zum Blog ansehen →</span>
+        </a>
+        <a class="hub-card" href="coaching.html" onclick="track('nav_coaching','home_hub')">
+          <div class="kicker">Betreuung</div>
+          <h3>Personal Coaching</h3>
+          <p>
+            Individuelle Begleitung für Training, Reha und nachhaltige Belastungssteuerung.
+            Inhalte, Ablauf und Anfrage findest du auf der Coaching-Seite.
+          </p>
+          <span>Coaching ansehen →</span>
+        </a>
+      </div>
+    </section>
+
     <!-- Impressum/Datenschutz nur hier -->
     <div class="footer">
+      <a href="blog.html" onclick="track('nav_blog','home_footer')">Blog</a> ·
+      <a href="coaching.html" onclick="track('nav_coaching','home_footer')">Coaching</a> ·
       <a href="impressum.html" onclick="track('nav_impressum','home_footer')">Impressum</a> ·
       <a href="datenschutz.html" onclick="track('nav_datenschutz','home_footer')">Datenschutz</a>
       <div style="margin-top:10px;">Hinweis: Die Inhalte stellen keine medizinische Beratung dar.</div>
@@ -200,18 +218,6 @@
       setThemeMeta();
     });
     setThemeMeta();
-
-    // Intro FIX: always disappears + failsafe remove
-    const intro = document.getElementById("intro");
-    const seen = sessionStorage.getItem("hm_intro_seen");
-    if (seen){
-      intro.remove();
-    } else {
-      sessionStorage.setItem("hm_intro_seen","1");
-      setTimeout(()=> intro.classList.add("hide"), 1200);
-      setTimeout(()=> { if (intro) intro.remove(); }, 1500);
-      setTimeout(()=> { const x=document.getElementById("intro"); if (x) x.remove(); }, 2000); // failsafe
-    }
 
     // Products catalog for overlay search
     const products = [
@@ -332,16 +338,6 @@
       targets.forEach(el => io.observe(el));
     }
     initScrollReveal();
-
-    function initLogoOnScroll(){
-      const update = () => {
-        const y = window.scrollY || window.pageYOffset || 0;
-        document.body.classList.toggle("logo-scroll-hidden", y > 4);
-      };
-      window.addEventListener("scroll", update, { passive:true });
-      update();
-    }
-    initLogoOnScroll();
 
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");

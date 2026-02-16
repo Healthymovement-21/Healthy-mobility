@@ -177,6 +177,7 @@ body::before{
   text-shadow: 0 6px 18px rgba(0,0,0,0.25);
   will-change: opacity, transform;
   transition: opacity .24s ease, transform .24s ease;
+  animation: logo-fade-inout 2.8s ease-in-out infinite;
 }
 body.has-top-nav .top-nav .row > .brand-floating{
   position:relative;
@@ -192,16 +193,6 @@ body.has-top-nav .top-nav .bar{
   min-width:0;
   margin-left: clamp(8px, 2vw, 14px);
 }
-body.has-top-nav.logo-scrolling-down .top-nav .row > .brand-floating{
-  opacity:0;
-  transform: translateY(-8px);
-  pointer-events:none;
-}
-body.has-top-nav.logo-scrolling-up .top-nav .row > .brand-floating{
-  opacity:1;
-  transform:none;
-  pointer-events:auto;
-}
 .brand-floating span:last-child{
   margin-top:-4px;
   margin-left:12px;
@@ -212,10 +203,9 @@ body.has-top-nav.logo-scrolling-up .top-nav .row > .brand-floating{
   background-clip:text;
   color:transparent;
 }
-body.logo-scroll-hidden .brand-floating{
-  opacity:0;
-  transform: translateY(-8px);
-  pointer-events:none;
+@keyframes logo-fade-inout{
+  0%,100%{ opacity:1; }
+  50%{ opacity:.55; }
 }
 .has-top-nav .overlay{
   align-items:center;

@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216i">
+  <link rel="stylesheet" href="style.css?v=20260216j">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -716,29 +716,6 @@
       targets.forEach(el => io.observe(el));
     }
     initScrollReveal();
-
-    function initLogoOnScroll(){
-      let lastY = window.scrollY || window.pageYOffset || 0;
-      let rafId = 0;
-      const tick = () => {
-        const y = window.scrollY || window.pageYOffset || 0;
-        if (y <= 2){
-          document.body.classList.remove("logo-scrolling-down");
-          document.body.classList.remove("logo-scrolling-up");
-        } else if (y > lastY){
-          document.body.classList.add("logo-scrolling-down");
-          document.body.classList.remove("logo-scrolling-up");
-        } else if (y < lastY){
-          document.body.classList.add("logo-scrolling-up");
-          document.body.classList.remove("logo-scrolling-down");
-        }
-        lastY = y;
-        rafId = window.requestAnimationFrame(tick);
-      };
-      rafId = window.requestAnimationFrame(tick);
-      window.addEventListener("beforeunload", () => window.cancelAnimationFrame(rafId), { once:true });
-    }
-    initLogoOnScroll();
 
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");

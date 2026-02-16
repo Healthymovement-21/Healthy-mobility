@@ -118,6 +118,7 @@
       text-shadow: 0 6px 18px rgba(0,0,0,0.25);
       will-change: opacity, transform;
       transition: opacity .24s ease, transform .24s ease;
+      animation: logo-fade-inout 2.8s ease-in-out infinite;
     }
     .brand-floating span:last-child{
       margin-top:-4px;
@@ -129,10 +130,9 @@
       background-clip:text;
       color:transparent;
     }
-    body.logo-scroll-hidden .brand-floating{
-      opacity:0;
-      transform: translateY(-8px);
-      pointer-events:none;
+    @keyframes logo-fade-inout{
+      0%,100%{ opacity:1; }
+      50%{ opacity:.55; }
     }
 
     .wrap{
@@ -311,17 +311,6 @@
     }
     initScrollReveal();
 
-    function initLogoOnScroll(){
-      const update = () => {
-        const y = window.scrollY || window.pageYOffset || 0;
-        document.body.classList.toggle("logo-scroll-hidden", y > 0);
-      };
-      window.addEventListener("scroll", update, { passive:true });
-      document.addEventListener("scroll", update, { passive:true, capture:true });
-      window.addEventListener("touchmove", update, { passive:true });
-      update();
-    }
-    initLogoOnScroll();
   </script>
 </body>
 </html>

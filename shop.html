@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216f">
+  <link rel="stylesheet" href="style.css?v=20260216g">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -662,27 +662,24 @@
 
     function initLogoOnScroll(){
       let lastY = window.scrollY || window.pageYOffset || 0;
-      const threshold = 6;
       const update = () => {
         const y = window.scrollY || window.pageYOffset || 0;
-        if (y <= 4){
+        if (y <= 2){
           document.body.classList.remove("logo-scrolling-down");
           document.body.classList.remove("logo-scrolling-up");
           lastY = y;
           return;
         }
-        if (y > lastY + threshold){
+        if (y > lastY){
           document.body.classList.add("logo-scrolling-down");
           document.body.classList.remove("logo-scrolling-up");
-        } else if (y < lastY - threshold){
+        } else if (y < lastY){
           document.body.classList.add("logo-scrolling-up");
           document.body.classList.remove("logo-scrolling-down");
         }
         lastY = y;
       };
       window.addEventListener("scroll", update, { passive:true });
-      document.addEventListener("scroll", update, { passive:true, capture:true });
-      window.addEventListener("touchmove", update, { passive:true });
       update();
     }
     initLogoOnScroll();

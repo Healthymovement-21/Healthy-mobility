@@ -530,6 +530,20 @@ fieldset.searchbox legend{
   opacity:0.75;
 }
 .product > *{ position:relative; z-index:1; }
+.product-media{
+  margin: -2px -2px 10px;
+  border-radius:12px;
+  overflow:hidden;
+  aspect-ratio: 16 / 10;
+  outline:1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+}
+.product-media img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
 
 body.scroll-anim .product{
   opacity:1;

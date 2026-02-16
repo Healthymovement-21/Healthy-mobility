@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216h">
+  <link rel="stylesheet" href="style.css?v=20260216i">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -482,6 +482,63 @@
       price: (el.querySelector(".price")?.textContent || "").trim(),
       category: el.getAttribute("data-category") || "All"
     }));
+
+    function imagePalette(category){
+      if (category === "Regeneration") return { a:"#fda758", b:"#f56f7f", c:"#6f46d9" };
+      if (category === "Wärme") return { a:"#ffb24a", b:"#ff6f3c", c:"#cc2f2f" };
+      if (category === "Kälte") return { a:"#71c7ff", b:"#3f8cff", c:"#3357cc" };
+      if (category === "Stabilität") return { a:"#9ca4b3", b:"#5f6c82", c:"#2f3441" };
+      if (category === "Training") return { a:"#7be495", b:"#3bb273", c:"#1f7a59" };
+      if (category === "Diagnostik") return { a:"#ffd166", b:"#f6a24a", c:"#8a6a3f" };
+      if (category === "Pflege") return { a:"#b8f2e6", b:"#6cd4c5", c:"#2f8f9d" };
+      return { a:"#cdb4db", b:"#95b8d1", c:"#4f5d75" };
+    }
+
+    function productImageData(name, category){
+      const p = imagePalette(category);
+      const esc = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+      const title = esc(name || "Produkt");
+      const cat = esc(category || "Empfehlung");
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${p.a}"/>
+      <stop offset="52%" stop-color="${p.b}"/>
+      <stop offset="100%" stop-color="${p.c}"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#g)"/>
+  <circle cx="950" cy="180" r="210" fill="rgba(255,255,255,0.14)"/>
+  <circle cx="260" cy="640" r="240" fill="rgba(255,255,255,0.12)"/>
+  <rect x="56" y="70" rx="24" ry="24" width="270" height="58" fill="rgba(255,255,255,0.2)"/>
+  <text x="82" y="108" fill="#ffffff" font-size="28" font-family="Arial, Helvetica, sans-serif" font-weight="700">${cat}</text>
+  <text x="70" y="520" fill="#ffffff" font-size="64" font-family="Arial, Helvetica, sans-serif" font-weight="900">${title}</text>
+</svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function injectProductImages(){
+      items.forEach(el => {
+        if (el.querySelector(".product-media")) return;
+        const title = (el.querySelector("h3")?.textContent || "Produkt").trim();
+        const category = (el.getAttribute("data-category") || "Empfehlung").trim();
+        const figure = document.createElement("div");
+        figure.className = "product-media";
+        const img = document.createElement("img");
+        img.src = productImageData(title, category);
+        img.alt = `${title} Produktbild`;
+        img.loading = "lazy";
+        img.decoding = "async";
+        figure.appendChild(img);
+        el.insertBefore(figure, el.firstChild);
+      });
+    }
+    injectProductImages();
 
     function openOverlay(){
       overlay.classList.add("open");

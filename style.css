@@ -184,12 +184,13 @@ body.has-top-nav .top-nav .row > .brand-floating{
   left:auto;
   z-index:1;
   flex:0 0 auto;
-  margin-right:5cm;
+  margin-right:0;
   font-size: clamp(13px, 2.7vw, 16px);
   text-shadow:none;
 }
 body.has-top-nav .top-nav .bar{
   min-width:0;
+  margin-left:5cm;
 }
 body.has-top-nav.logo-scroll-hidden .top-nav .row > .brand-floating{
   opacity:1;

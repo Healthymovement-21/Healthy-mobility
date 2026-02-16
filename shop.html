@@ -523,6 +523,11 @@
       "B0DVC94TN2": "71tCehJ9p9L",
       "B0GFSJYVX6": "61UqWKzH5yL"
     };
+    const imageUrlOverrideByProductId = {
+      "massagepistole": "https://m.media-amazon.com/images/I/71scpP5T26L._AC_SY355_.jpg",
+      "moorkissen": "https://m.media-amazon.com/images/I/61vUUfvCJGL._AC_SL1500_.jpg",
+      "retterspitz": "https://m.media-amazon.com/images/I/61lTf9uosoL._SL1500_.jpg"
+    };
 
     function amazonAsinFromUrl(url){
       if (!url) return "";
@@ -544,7 +549,7 @@
         const title = (el.querySelector("h3")?.textContent || "Produkt").trim();
         const productLink = el.querySelector(".product-actions .btn")?.getAttribute("href") || "";
         const asin = amazonAsinFromUrl(productLink);
-        const src = amazonImageUrl(asin);
+        const src = imageUrlOverrideByProductId[el.id] || amazonImageUrl(asin);
         const figure = document.createElement("div");
         figure.className = "product-media";
         const img = document.createElement("img");

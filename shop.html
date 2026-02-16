@@ -503,6 +503,26 @@
       "https://amzn.to/4qCMuBO": "B0DVC94TN2",
       "https://amzn.to/3MAkkJz": "B0GFSJYVX6"
     };
+    const amazonImageIdByAsin = {
+      "B09NZT1VV4": "41ePXOYTQLL",
+      "B08SQM4GK6": "51jrofUQqTL",
+      "B0B6TXXL51": "712EtPOhEyL",
+      "B00E4UGQYG": "51DsdagjsHL",
+      "B000V41428": "417j4gAHgJL",
+      "B001BB6UEM": "81gYYKBJLzL",
+      "B0FLJHY419": "71-2ijFGxDL",
+      "B0D15GQVRM": "81EseGQGbQL",
+      "B0BGGJH3G2": "61jmsaMMHXL",
+      "B0C7BFWTQ7": "715ydHEKcvL",
+      "B082W886W9": "51Ynl3tyVOL",
+      "B0C7GWGLWV": "81HjUEX21+L",
+      "B01BJT4BY6": "61Y+I5ZhJQL",
+      "B076KP7BKW": "81Gy4Upf0cL",
+      "B0FKBLTN38": "61jiQHEqBfL",
+      "B004FNTGUI": "71ZXju02EjL",
+      "B0DVC94TN2": "71tCehJ9p9L",
+      "B0GFSJYVX6": "61UqWKzH5yL"
+    };
 
     function amazonAsinFromUrl(url){
       if (!url) return "";
@@ -513,7 +533,9 @@
 
     function amazonImageUrl(asin){
       if (!asin) return "";
-      return `https://ws-eu.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=${asin}&Format=_SL500_&ID=AsinImage&MarketPlace=DE&ServiceVersion=20070822&WS=1&tag=mobilitycheck-21`;
+      const imageId = amazonImageIdByAsin[asin] || "";
+      if (!imageId) return "";
+      return `https://m.media-amazon.com/images/I/${imageId}._AC_SL1500_.jpg`;
     }
 
     function injectProductImages(){
@@ -530,7 +552,7 @@
         img.alt = `${title} Produktbild`;
         img.loading = "lazy";
         img.decoding = "async";
-        img.referrerPolicy = "no-referrer-when-downgrade";
+        img.referrerPolicy = "origin";
         figure.appendChild(img);
         el.insertBefore(figure, el.firstChild);
       });

@@ -190,7 +190,7 @@ body.has-top-nav .top-nav .row > .brand-floating{
 }
 body.has-top-nav .top-nav .bar{
   min-width:0;
-  margin-left:5cm;
+  margin-left: clamp(8px, 2vw, 14px);
 }
 body.has-top-nav.logo-scrolling-down .top-nav .row > .brand-floating{
   opacity:0;

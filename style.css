@@ -26,6 +26,29 @@
   --btnText:#ffffff;
 }
 
+:root:not([data-theme="light"]){
+  --card:#141417;
+  --line: rgba(255,255,255,0.36);
+}
+:root:not([data-theme="light"]) .top-nav .bar,
+:root:not([data-theme="light"]) .bottom-nav .bar,
+:root:not([data-theme="light"]) .card,
+:root:not([data-theme="light"]) .product,
+:root:not([data-theme="light"]) .product-media,
+:root:not([data-theme="light"]) .overlay-panel,
+:root:not([data-theme="light"]) .menu .sheet,
+:root:not([data-theme="light"]) .empty{
+  box-shadow:
+    0 14px 32px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(255,255,255,0.2);
+}
+:root:not([data-theme="light"]) .btn{
+  border-color: rgba(255,255,255,0.72);
+}
+:root:not([data-theme="light"]) .top-btn.active{
+  outline-color: rgba(255,255,255,0.56);
+}
+
 html,body{
   margin:0; padding:0;
   background:var(--bg) !important;

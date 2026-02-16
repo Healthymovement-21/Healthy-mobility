@@ -11,7 +11,7 @@
   <title>Healthy Mobility – Home</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216g">
+  <link rel="stylesheet" href="style.css?v=20260216h">
 </head>
 
 <body class="has-top-nav">
@@ -335,15 +335,13 @@
 
     function initLogoOnScroll(){
       let lastY = window.scrollY || window.pageYOffset || 0;
-      const update = () => {
+      let rafId = 0;
+      const tick = () => {
         const y = window.scrollY || window.pageYOffset || 0;
         if (y <= 2){
           document.body.classList.remove("logo-scrolling-down");
           document.body.classList.remove("logo-scrolling-up");
-          lastY = y;
-          return;
-        }
-        if (y > lastY){
+        } else if (y > lastY){
           document.body.classList.add("logo-scrolling-down");
           document.body.classList.remove("logo-scrolling-up");
         } else if (y < lastY){
@@ -351,9 +349,10 @@
           document.body.classList.remove("logo-scrolling-down");
         }
         lastY = y;
+        rafId = window.requestAnimationFrame(tick);
       };
-      window.addEventListener("scroll", update, { passive:true });
-      update();
+      rafId = window.requestAnimationFrame(tick);
+      window.addEventListener("beforeunload", () => window.cancelAnimationFrame(rafId), { once:true });
     }
     initLogoOnScroll();
 

@@ -96,14 +96,14 @@ body::before{
   background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 55%, transparent), transparent);
   pointer-events:none;
 }
-body.has-top-nav .top-nav .row{
+.top-nav .row{
   pointer-events:auto;
   max-width:980px;
   margin:0 auto;
   display:flex;
   align-items:center;
   gap:10px;
-  padding-left: calc(clamp(132px, 24vw, 190px) + 5cm) !important;
+  padding-left: 0;
 }
 .top-nav .bar{
   pointer-events:auto;
@@ -144,11 +144,8 @@ body.has-top-nav .top-nav .row{
   padding:8px 0;
 }
 @media (max-width: 900px){
-  body.has-top-nav .top-nav .row{
+  .top-nav .row{
     padding-right:56px;
-  }
-  body.has-top-nav .top-nav .row{
-    padding-left: calc(clamp(116px, 30vw, 156px) + 5cm) !important;
   }
   .top-btn.theme-btn{
     position:fixed;
@@ -180,6 +177,24 @@ body.has-top-nav .top-nav .row{
   text-shadow: 0 6px 18px rgba(0,0,0,0.25);
   will-change: opacity, transform;
   transition: opacity .24s ease, transform .24s ease;
+}
+body.has-top-nav .top-nav .row > .brand-floating{
+  position:relative;
+  top:auto;
+  left:auto;
+  z-index:1;
+  flex:0 0 auto;
+  margin-right:8px;
+  font-size: clamp(13px, 2.7vw, 16px);
+  text-shadow:none;
+}
+body.has-top-nav .top-nav .bar{
+  min-width:0;
+}
+body.has-top-nav.logo-scroll-hidden .top-nav .row > .brand-floating{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
 }
 .brand-floating span:last-child{
   margin-top:-4px;

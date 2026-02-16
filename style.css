@@ -197,6 +197,19 @@ body.has-top-nav.logo-scroll-hidden .top-nav .row > .brand-floating{
   transform:none;
   pointer-events:auto;
 }
+body.has-top-nav .top-nav .row > .brand-floating.is-seeking{
+  opacity:0.08 !important;
+  transform: translateX(14px) translateY(-6px) scale(0.94);
+  filter: blur(0.6px);
+}
+body.has-top-nav .top-nav .row > .brand-floating.is-found{
+  animation: logo-found-pop .45s ease;
+}
+@keyframes logo-found-pop{
+  0%{ transform: translateY(0) scale(1); }
+  35%{ transform: translateY(-2px) scale(1.08); }
+  100%{ transform: translateY(0) scale(1); }
+}
 .brand-floating span:last-child{
   margin-top:-4px;
   margin-left:12px;

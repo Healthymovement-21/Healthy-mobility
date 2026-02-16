@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216c">
+  <link rel="stylesheet" href="style.css?v=20260216d">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -671,6 +671,55 @@
       update();
     }
     initLogoOnScroll();
+
+    function initLogoHideSeek(){
+      const logo = document.querySelector(".top-nav .row > .brand-floating");
+      if (!logo) return;
+      let seekTimer = null;
+      let revealTimer = null;
+
+      const clearTimers = () => {
+        if (seekTimer) clearTimeout(seekTimer);
+        if (revealTimer) clearTimeout(revealTimer);
+      };
+
+      const markFound = () => {
+        logo.classList.remove("is-seeking");
+        logo.classList.add("is-found");
+        setTimeout(() => logo.classList.remove("is-found"), 480);
+      };
+
+      const scheduleSeek = () => {
+        const delay = 7000 + Math.random() * 6000;
+        seekTimer = setTimeout(() => {
+          if (document.hidden) { scheduleSeek(); return; }
+          logo.classList.add("is-seeking");
+          revealTimer = setTimeout(() => {
+            markFound();
+            scheduleSeek();
+          }, 1100);
+        }, delay);
+      };
+
+      logo.addEventListener("click", () => {
+        clearTimers();
+        markFound();
+        scheduleSeek();
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden){
+          clearTimers();
+          logo.classList.remove("is-seeking");
+          return;
+        }
+        clearTimers();
+        scheduleSeek();
+      });
+
+      scheduleSeek();
+    }
+    initLogoHideSeek();
 
     function initMobileSwipe(){
       const mq = window.matchMedia("(max-width: 900px)");

@@ -15,7 +15,7 @@
   <title>Healthy Mobility – Shop</title>
 
   <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216p">
+  <link rel="stylesheet" href="style.css?v=20260216q">
 </head>
 
 <body class="shop-page has-top-nav">
@@ -74,6 +74,7 @@
     </div>
 
     <div class="shop-spacer"></div>
+    <div class="price-update-note" id="priceUpdateNote">Preise werden geladen …</div>
 
     <section class="product-grid" id="grid">
       <div class="product" id="massagepistole" data-category="Regeneration">
@@ -518,6 +519,7 @@
     const shopTitle = document.getElementById("shopTitle");
     const shopCats = document.getElementById("shopCats");
     const catItems = Array.from(document.querySelectorAll(".cat-item"));
+    const priceUpdateNote = document.getElementById("priceUpdateNote");
     let selectedCategory = "Alle";
 
     const products = items.map(el => ({
@@ -584,6 +586,139 @@
       "neue-empfehlung-1": "https://m.media-amazon.com/images/I/61neBIdnKwL._AC_SL1500_.jpg"
     };
 
+    function formatMoney(amount, currency = "EUR"){
+      const value = Number(amount);
+      if (!Number.isFinite(value)) return "";
+      try{
+        return new Intl.NumberFormat("de-DE", {
+          style: "currency",
+          currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(value);
+      }catch(_){
+        return `${value.toFixed(2)} ${currency}`;
+      }
+    }
+
+    function formatUpdateTime(ts){
+      if (!ts) return "";
+      const d = new Date(ts);
+      if (!Number.isFinite(d.getTime())) return "";
+      return d.toLocaleString("de-DE", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function getProductModel(productId){
+      return products.find(p => p.id === productId) || null;
+    }
+
+    function setPriceInModel(productId, value){
+      const model = getProductModel(productId);
+      if (model && value) model.price = value;
+    }
+
+    function setFallbackAmazonPrice(productId){
+      const card = document.getElementById(productId);
+      if (!card) return;
+      const priceEl = card.querySelector(".price");
+      if (priceEl) priceEl.textContent = "Preis bei Amazon prüfen";
+      setPriceInModel(productId, "Preis bei Amazon prüfen");
+      setProductDiscountLine(card, "");
+    }
+
+    function setAllFallbackAmazonPrices(){
+      items.forEach(el => setFallbackAmazonPrice(el.id));
+    }
+
+    function setProductDiscountLine(card, text){
+      if (!card) return;
+      let line = card.querySelector(".price-discount");
+      if (!text){
+        if (line) line.remove();
+        return;
+      }
+      if (!line){
+        line = document.createElement("div");
+        line.className = "price-discount";
+        const priceEl = card.querySelector(".price");
+        if (priceEl) priceEl.insertAdjacentElement("afterend", line);
+      }
+      line.textContent = text;
+    }
+
+    function applyLivePrice(productId, entry){
+      const card = document.getElementById(productId);
+      if (!card) return false;
+      const priceEl = card.querySelector(".price");
+      if (!priceEl) return false;
+
+      const currency = (entry && typeof entry.currency === "string" && entry.currency) ? entry.currency : "EUR";
+      const liveAmount = Number(entry?.price);
+      const liveListAmount = Number(entry?.listPrice);
+      const liveDiscountPercentRaw = Number(entry?.discountPercent);
+      const liveDiscountAmountRaw = Number(entry?.discountAmount);
+
+      const displayPrice = (entry?.displayPrice && String(entry.displayPrice).trim()) || formatMoney(liveAmount, currency);
+      if (!displayPrice) return false;
+
+      priceEl.textContent = displayPrice;
+      setPriceInModel(productId, displayPrice);
+
+      const hasListPrice = Number.isFinite(liveListAmount) && Number.isFinite(liveAmount) && liveListAmount > liveAmount;
+      const displayListPrice = (entry?.displayListPrice && String(entry.displayListPrice).trim()) || (hasListPrice ? formatMoney(liveListAmount, currency) : "");
+      const computedPercent = hasListPrice ? Math.round(((liveListAmount - liveAmount) / liveListAmount) * 100) : 0;
+      const discountPercent = Number.isFinite(liveDiscountPercentRaw) ? Math.max(0, Math.round(liveDiscountPercentRaw)) : computedPercent;
+      const discountAmount = Number.isFinite(liveDiscountAmountRaw) ? liveDiscountAmountRaw : (hasListPrice ? (liveListAmount - liveAmount) : NaN);
+
+      if (hasListPrice || discountPercent > 0){
+        const parts = [];
+        if (displayListPrice) parts.push(`Statt ${displayListPrice}`);
+        if (discountPercent > 0) parts.push(`-${discountPercent}%`);
+        if (Number.isFinite(discountAmount) && discountAmount > 0) parts.push(`${formatMoney(discountAmount, currency)} gespart`);
+        setProductDiscountLine(card, parts.join(" · "));
+      } else {
+        setProductDiscountLine(card, "");
+      }
+      return true;
+    }
+
+    async function loadLivePrices(){
+      try{
+        const res = await fetch(`prices.json?v=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const payload = await res.json();
+        const liveItems = (payload && typeof payload.items === "object" && payload.items) ? payload.items : {};
+        let updatedCount = 0;
+        Object.entries(liveItems).forEach(([productId, live]) => {
+          if (applyLivePrice(productId, live)) updatedCount += 1;
+        });
+
+        if (!priceUpdateNote) return;
+        if (updatedCount > 0){
+          const stamp = formatUpdateTime(payload.updatedAt || payload.generatedAt || payload.lastUpdated || "");
+          priceUpdateNote.textContent = stamp
+            ? `Live-Preise aktiv · Stand ${stamp}`
+            : "Live-Preise aktiv";
+          priceUpdateNote.classList.add("is-live");
+        } else {
+          setAllFallbackAmazonPrices();
+          priceUpdateNote.textContent = "Live-Preise momentan nicht verfügbar. Preis bitte direkt bei Amazon prüfen.";
+          priceUpdateNote.classList.remove("is-live");
+        }
+      }catch(_){
+        setAllFallbackAmazonPrices();
+        if (!priceUpdateNote) return;
+        priceUpdateNote.textContent = "Live-Preise momentan nicht verfügbar. Preis bitte direkt bei Amazon prüfen.";
+        priceUpdateNote.classList.remove("is-live");
+      }
+    }
+
     function amazonAsinFromUrl(url){
       if (!url) return "";
       if (amazonAsinByShortLink[url]) return amazonAsinByShortLink[url];
@@ -618,6 +753,7 @@
       });
     }
     injectProductImages();
+    loadLivePrices();
 
     const productModal = document.getElementById("productModal");
     const productModalTitle = document.getElementById("productModalTitle");

@@ -751,7 +751,14 @@ body.scroll-anim .product.active{
 .product .why{
   display:none;
 }
-.price{ display:block; margin:6px 0 10px; font-weight:950; font-size:0.86rem; }
+.price{ display:block; margin:6px 0 4px; font-weight:950; font-size:0.9rem; }
+.price-discount{
+  margin:0 0 10px;
+  color:#73e7a8;
+  font-size:0.78rem;
+  font-weight:850;
+  letter-spacing:0.01em;
+}
 .btn{
   display:inline-flex;
   align-items:center;
@@ -1148,6 +1155,17 @@ body.scroll-anim .product.active{
   transition: height .24s ease;
 }
 body.cats-open .shop-spacer{ height:74px; }
+.price-update-note{
+  margin: 2px auto 12px;
+  max-width:680px;
+  text-align:center;
+  color:var(--muted);
+  font-size:0.8rem;
+  line-height:1.45;
+}
+.price-update-note.is-live{
+  color:#73e7a8;
+}
 body.cats-open .product-grid,
 body.cats-open .empty,
 body.cats-open .footer{

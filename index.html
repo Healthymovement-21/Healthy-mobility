@@ -1,369 +1,403 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <link rel="manifest" href="manifest.json">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Healthy Mobility">
-  <meta name="theme-color" content="#ffffff" id="themeColorMeta">
-  <title>Healthy Mobility – Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>APEX · Physio & Performance bei dir zuhause | Raum Heidelberg–Karlsruhe</title>
+<meta name="description" content="APEX: Physiotherapie und Training bei dir zuhause. Behandlung auf Privatrezept, Reha-Nachsorge und APEX Club. Raum Heidelberg–Karlsruhe.">
+<meta name="author" content="Nick Grausam">
+<style>
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
 
-  <script defer data-domain="healthymovement-21.github.io" src="https://plausible.io/js/script.js"></script>
-  <link rel="stylesheet" href="style.css?v=20260216r">
+:root{
+  --paper:#F2F1EB;
+  --card:#FBFAF7;
+  --ink:#15171C;
+  --dim:#5E6068;
+  --line:#E0DED4;
+  --volt:#B8E22E;
+  --volt-ink:#3E5900;
+  --apex:#5B4BD4;
+  --grad:linear-gradient(115deg,#8CC63F 0%,#3EBFA0 50%,#5B4BD4 100%);
+  --display:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --body:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+::selection{background:var(--volt);color:var(--ink)}
+
+/* ambient */
+.orb{position:fixed;border-radius:50%;filter:blur(120px);opacity:.35;pointer-events:none;z-index:0}
+.orb-a{width:46vw;height:46vw;background:#D6F58E;top:-16vw;right:-12vw}
+.orb-b{width:40vw;height:40vw;background:#CFC8FF;bottom:-18vw;left:-14vw}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;
+  background-image:linear-gradient(rgba(21,23,28,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(21,23,28,.045) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 90% 65% at 50% 15%,black 25%,transparent 75%)}
+main,nav,footer{position:relative;z-index:1}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(18px,4vw,44px);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:rgba(242,241,235,.75);border-bottom:1px solid var(--line)}
+.logo{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.14em;text-decoration:none;color:var(--ink)}
+.logo em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{color:var(--dim);text-decoration:none;font-size:13.5px;transition:color .2s}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--ink)}
+.btn{display:inline-block;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.03em;
+  padding:12px 24px;border-radius:100px;text-decoration:none;transition:transform .18s,box-shadow .18s;border:none;cursor:pointer}
+.btn-volt{background:var(--ink);color:var(--volt)}
+.btn-volt:hover,.btn-volt:focus-visible{transform:translateY(-2px);box-shadow:0 12px 30px rgba(21,23,28,.28)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn-ghost:hover,.btn-ghost:focus-visible{background:var(--ink);color:var(--paper)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--apex);outline-offset:3px}
+@media(max-width:760px){.nav-links a:not(.btn){display:none}}
+
+/* hero */
+.hero{min-height:96svh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:48px;
+  padding:130px clamp(18px,5vw,64px) 60px;max-width:1240px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:32px;height:2px;background:var(--volt)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(46px,7.4vw,98px);line-height:.96;letter-spacing:-.02em;text-transform:uppercase}
+h1 .fill{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{margin:24px 0 32px;max-width:44ch;color:var(--dim);font-size:clamp(15px,1.5vw,17.5px)}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-meta{margin-top:30px;font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:.05em}
+.hero-meta b{color:var(--ink)}
+
+/* 3D card */
+.scene{perspective:1200px}
+.panel{transform-style:preserve-3d;transform:rotateY(-8deg) rotateX(4deg);transition:transform .3s ease-out;
+  background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px;
+  box-shadow:0 30px 70px rgba(21,23,28,.14),0 2px 0 #fff inset}
+.panel-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;margin-bottom:14px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 10px var(--volt)}
+.phase{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.phase:last-of-type{border-bottom:none}
+.ph-body b{display:block;font-family:var(--display);font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.ph-body span{font-size:12.5px;color:var(--dim)}
+.ph-num{font-family:var(--mono);font-size:12px;color:var(--volt-ink);background:#EDF7CE;border:1px solid #D8ECA0;padding:4px 10px;border-radius:100px}
+.panel-foot{border-top:1px solid var(--line);padding-top:14px;margin-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.panel-foot b{color:var(--ink)}
+@media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:110px}.panel{transform:none}}
+
+/* sections */
+section{max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(18px,5vw,64px)}
+.sec-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--apex);text-transform:uppercase;margin-bottom:12px}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(28px,4.2vw,50px);line-height:1.04;letter-spacing:-.015em;text-transform:uppercase;margin-bottom:14px}
+.sec-intro{color:var(--dim);max-width:56ch;font-size:16px}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* code cards */
+.code-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px;perspective:1400px}
+.code-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 22px;
+  transition:transform .25s ease,box-shadow .25s ease;box-shadow:0 4px 18px rgba(21,23,28,.05)}
+.code-card:hover{box-shadow:0 20px 44px rgba(21,23,28,.13)}
+.code-num{font-family:var(--mono);font-size:12px;color:var(--volt-ink);background:#EDF7CE;border:1px solid #D8ECA0;padding:4px 10px;border-radius:100px}
+.code-card h3{font-family:var(--display);font-size:17px;letter-spacing:.08em;text-transform:uppercase;margin:16px 0 8px}
+.code-card p{color:var(--dim);font-size:13.5px}
+@media(max-width:900px){.code-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.code-grid{grid-template-columns:1fr}}
+
+/* offer cards */
+.price-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:44px}
+.price-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;box-shadow:0 4px 18px rgba(21,23,28,.05)}
+.price-card.feature{border:1.5px solid var(--ink);position:relative}
+.price-card.apex{border:1.5px solid var(--apex);position:relative;background:linear-gradient(185deg,#F4F2FF, var(--card) 45%)}
+.tag{position:absolute;top:-13px;left:24px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:100px;text-transform:uppercase}
+.tag-ink{background:var(--ink);color:var(--volt)}
+.tag-apex{background:var(--apex);color:#fff}
+.price-card h3{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+.apex-word{background:linear-gradient(115deg,#5B4BD4,#8B7CFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.price-sub{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.07em;margin:6px 0 18px;text-transform:uppercase}
+.big-price{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.2vw,40px);line-height:1;margin-bottom:14px}
+.big-price small{font-size:14px;color:var(--dim);font-weight:500}
+.apex .big-price{color:var(--apex)}
+.price-list{list-style:none;margin:0 0 24px;flex:1}
+.price-list li{font-size:14px;padding:8px 0 8px 22px;position:relative;border-bottom:1px solid var(--line)}
+.price-list li::before{content:"";position:absolute;left:2px;top:15px;width:7px;height:7px;background:var(--volt);border:1px solid #9CC414}
+.apex .price-list li::before{background:#CFC8FF;border-color:var(--apex)}
+.sz-table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:14.5px}
+.sz-table td{padding:9px 0;border-bottom:1px solid var(--line)}
+.sz-table td:last-child{text-align:right;font-family:var(--mono);font-weight:600}
+.fine{font-size:11.5px;color:var(--dim);margin-top:24px;max-width:92ch;line-height:1.7}
+@media(max-width:960px){.price-grid{grid-template-columns:1fr}}
+
+/* legende */
+.legende{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;margin-top:44px;box-shadow:0 4px 18px rgba(21,23,28,.05)}
+.legende-head{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--volt-ink);margin-bottom:18px}
+.legende-head::after{content:"";flex:1;height:1px;background:var(--line)}
+.legende-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:4px 32px}
+.leg-row{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.leg-key{font-family:var(--mono);font-weight:700;color:var(--volt-ink);font-size:13px}
+.leg-row span{color:var(--dim)}
+.leg-row b{color:var(--ink);display:block;font-size:14px}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.about-facts{list-style:none;margin-top:22px}
+.about-facts li{padding:12px 0 12px 28px;border-bottom:1px solid var(--line);position:relative;font-size:15px}
+.about-facts li::before{content:"//";position:absolute;left:0;font-family:var(--mono);color:var(--volt-ink);font-size:13px;top:14px}
+.stat-stack{display:grid;gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 24px;box-shadow:0 4px 18px rgba(21,23,28,.05)}
+.stat b{font-family:var(--display);font-size:24px;display:block}
+.stat span{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+@media(max-width:860px){.about{grid-template-columns:1fr}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px;counter-reset:step}
+.step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px;counter-increment:step;box-shadow:0 4px 18px rgba(21,23,28,.05)}
+.step::before{content:"0" counter(step);font-family:var(--mono);font-size:12px;color:var(--volt-ink)}
+.step h3{font-family:var(--display);font-size:15.5px;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 6px}
+.step p{font-size:13.5px;color:var(--dim)}
+@media(max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* faq */
+.faq{max-width:800px}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;
+  font-family:var(--display);font-size:16px;padding:20px 4px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);color:var(--apex);font-size:20px;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--dim);font-size:14.5px;padding:0 4px 20px;max-width:70ch}
+
+/* final */
+.final{text-align:center;padding-bottom:120px}
+.final h2{font-size:clamp(34px,5.6vw,68px)}
+.final .hero-sub{margin-inline:auto}
+footer{border-top:1px solid var(--line);padding:40px clamp(18px,5vw,64px);display:flex;flex-wrap:wrap;gap:22px;justify-content:space-between;align-items:center;font-size:13px;color:var(--dim);background:var(--card)}
+footer a{color:var(--dim);text-decoration:none;margin-right:18px}
+footer a:hover{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto}.reveal{opacity:1;transform:none}}
+</style>
 </head>
+<body>
+<div class="orb orb-a"></div><div class="orb orb-b"></div><div class="grid-bg"></div>
 
-<body class="has-top-nav">
-  <!-- Search overlay (opens from bottom search icon) -->
-  <div class="overlay" id="searchOverlay" aria-hidden="true">
-    <div class="overlay-panel">
-      <div class="overlay-top">
-        <input id="overlayInput" type="search" placeholder="Produkt suchen…" autocomplete="off">
-        <button id="overlayClose" type="button">Schließen</button>
-      </div>
-      <div class="suggest" id="suggestList"></div>
+<nav>
+  <a class="logo" href="#top">APE<em>X</em></a>
+  <div class="nav-links">
+    <a href="#code">Methode</a>
+    <a href="#angebot">Angebot</a>
+    <a href="#nick">Über Nick</a>
+    <a href="#faq">FAQ</a>
+    <a class="btn btn-volt" href="#start">Termin anfragen</a>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <p class="eyebrow">Physio × Performance · Hausbesuch · Heidelberg–Karlsruhe</p>
+    <h1>Physio.<br>Training.<br><span class="fill">Ein System.</span></h1>
+    <p class="hero-sub"><strong>APEX verbindet Behandlung und Training bei dir zuhause.</strong> Klar strukturiert, messbar, ohne Wartezimmer.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-volt" href="#start">Termin anfragen</a>
+      <a class="btn btn-ghost" href="#code">Die Methode ↓</a>
+    </div>
+    <p class="hero-meta">FREQUENZ <b>1–2× / WOCHE</b> · NACH VERORDNUNG <b>30 ODER 60 MIN</b></p>
+  </div>
+  <div class="scene">
+    <div class="panel" id="tilt-panel">
+      <div class="panel-head"><span>JEDE SESSION · VIER PHASEN</span><span class="dot"></span></div>
+      <div class="phase"><div class="ph-body"><b>Messen</b><span>Feste Tests — Fortschritt in Werten</span></div><span class="ph-num">01</span></div>
+      <div class="phase"><div class="ph-body"><b>Vorbereiten</b><span>Hands-on-Behandlung nach Befund</span></div><span class="ph-num">02</span></div>
+      <div class="phase"><div class="ph-body"><b>Verstehen</b><span>Klartext: warum, nicht nur was</span></div><span class="ph-num">03</span></div>
+      <div class="phase"><div class="ph-body"><b>Trainieren</b><span>Aktiv, progressiv + Wochenauftrag</span></div><span class="ph-num">04</span></div>
+      <div class="panel-foot">BEHANDLUNG + TRAINING — <b>in jeder Session beides.</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- METHODE -->
+<section id="code" class="reveal">
+  <p class="sec-eyebrow">Die Methode</p>
+  <h2>Vier Phasen. Jede Session.</h2>
+  <div class="code-grid">
+    <div class="code-card"><span class="code-num">01</span><h3>Messen</h3><p>Dieselben Tests am Anfang und Ende — du siehst, was sich verändert.</p></div>
+    <div class="code-card"><span class="code-num">02</span><h3>Vorbereiten</h3><p>Manuelle Behandlung, die den Körper auf Belastung vorbereitet.</p></div>
+    <div class="code-card"><span class="code-num">03</span><h3>Verstehen</h3><p>Fünf Minuten Klartext zu deinem Körper. Ohne Fachchinesisch.</p></div>
+    <div class="code-card"><span class="code-num">04</span><h3>Trainieren</h3><p>Aktives Training mit Steigerung — plus 2–3 Übungen für die Woche.</p></div>
+  </div>
+</section>
+
+<!-- ANGEBOT -->
+<section id="angebot" class="reveal">
+  <p class="sec-eyebrow">Angebot · keine GKV-Abrechnung</p>
+  <h2>Drei Wege zu APEX</h2>
+  <div class="price-grid">
+    <div class="price-card feature">
+      <span class="tag tag-ink">Privatrezept</span>
+      <h3>Behandlung</h3>
+      <p class="price-sub">PKV · Beihilfe · nach ärztlicher Verordnung</p>
+      <ul class="price-list">
+        <li>Einzelverordnung (z. B. KG): ca. 30 Min</li>
+        <li>Doppelverordnung (z. B. KG + MT): bis 60 Min</li>
+        <li>Auch Reha-Nachsorge — inkl. Überbrückung bis zum ersten Praxistermin</li>
+        <li>Vergütung nach Anlage 9 BBhV, vorab schriftlich vereinbart</li>
+      </ul>
+      <a class="btn btn-volt" href="#start">Mit Rezept anfragen</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Selbstzahler</h3>
+      <p class="price-sub">Gesetzlich versichert · mit Privatrezept</p>
+      <table class="sz-table">
+        <tr><td>30 Minuten</td><td>45 €</td></tr>
+        <tr><td>45 Minuten</td><td>60 €</td></tr>
+        <tr><td>60 Minuten</td><td>75 €</td></tr>
+      </table>
+      <p class="sec-intro" style="font-size:13.5px;margin-bottom:22px">Gesetzlich versichert? Mit einem Privatrezept vom Arzt kannst du als Selbstzahler zu mir — Anfahrt inklusive.</p>
+      <a class="btn btn-ghost" href="#start">Termin anfragen</a>
+    </div>
+
+    <div class="price-card apex">
+      <span class="tag tag-apex">Membership</span>
+      <h3><span class="apex-word">APEX</span> CLUB</h3>
+      <p class="price-sub">Training · monatlich kündbar</p>
+      <div class="big-price">150 €<small> / Monat</small></div>
+      <ul class="price-list">
+        <li>4× 60 Min Training bei dir zuhause</li>
+        <li>Individueller Plan + Kontakt zwischen den Sessions</li>
+        <li>Kostenloses Erstgespräch</li>
+      </ul>
+      <a class="btn btn-ghost" href="#start">Aufnahme anfragen</a>
     </div>
   </div>
 
-  <div class="top-nav" role="navigation" aria-label="Top Navigation">
-    <div class="row">
-      <a class="brand-floating" href="index.html" onclick="track('brand_click','home')"><span class="glow">Healthy</span><span>Mobility</span></a>
-      <div class="bar">
-      <button class="top-btn active" type="button" onclick="go('index.html')">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-        </svg>
-        <span>Home</span>
-      </button>
-      <button class="top-btn" type="button" onclick="go('shop.html')">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span>Shop</span>
-      </button>
-      <button class="top-btn" type="button" onclick="openOverlay()">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
-          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span>Suche</span>
-      </button>
-      </div>
-      <button class="top-btn theme-btn" id="themeBtn" type="button" aria-label="Theme wechseln">🌗</button>
+  <!-- LEGENDE -->
+  <div class="legende reveal">
+    <div class="legende-head">Legende · Abkürzungen auf Rezept & Rechnung</div>
+    <div class="legende-grid">
+      <div class="leg-row"><span class="leg-key">KG</span><span><b>Krankengymnastik</b>Aktive Übungstherapie</span></div>
+      <div class="leg-row"><span class="leg-key">MT</span><span><b>Manuelle Therapie</b>Techniken an Gelenken, Muskeln & Nerven</span></div>
+      <div class="leg-row"><span class="leg-key">MLD</span><span><b>Manuelle Lymphdrainage</b>Entstauung, z. B. nach OP</span></div>
+      <div class="leg-row"><span class="leg-key">KMT</span><span><b>Klassische Massagetherapie</b>Durchblutung & Entspannung</span></div>
+      <div class="leg-row"><span class="leg-key">KGG</span><span><b>Krankengymnastik am Gerät</b>Medizinisches Training</span></div>
+      <div class="leg-row"><span class="leg-key">AT</span><span><b>Atemtherapie</b>Bei Atemfunktionsstörungen</span></div>
     </div>
   </div>
 
+  <p class="fine">Vergütung und Ablauf werden vor Behandlungsbeginn schriftlich vereinbart. Ob und in welcher Höhe PKV, Beihilfe oder Restkostenversicherung erstatten, richtet sich nach dem jeweiligen Tarif — bitte vorab dort erfragen. Heilbehandlungen auf Verordnung sind umsatzsteuerfrei (§ 4 Nr. 14 UStG); Selbstzahler-Preise inkl. 19 % USt. Der APEX Club ist eine Trainingsleistung, keine Heilbehandlung. Keine Abrechnung mit gesetzlichen Krankenkassen.</p>
+</section>
 
-  <main class="page">
-    <h1>Ausgewählte Produktempfehlungen aus der Physiotherapie</h1>
-    <p class="hero-sub">Praktische Tools, die Therapie, Training und Alltag sinnvoll unterstützen.</p>
-
-    <div class="card" style="margin-top:18px;">
-      <p>
-        Auf dieser Seite findest du eine Auswahl an Produkten aus den Bereichen Bewegung,
-        Regeneration, Wärme, Kälte, Stabilität und unterstützendes Training.
-        Die Produktauswahl basiert auf physiotherapeutischem Fachwissen,
-        Erfahrungen aus dem Praxisalltag sowie Rückmeldungen von Patientinnen und Patienten.
-      </p>
-
-      <p>
-        Die hier aufgeführten Produkte können eine physiotherapeutische Behandlung sinnvoll
-        ergänzen und unterstützen. Sie ersetzen jedoch weder eine individuelle Therapie
-        noch eine medizinische Diagnose oder Behandlung.
-      </p>
-
-      <p>
-        Wichtig zu wissen: Nicht alle hier aufgeführten Produkte habe ich persönlich selbst getestet.
-        Die Empfehlungen ergeben sich aus fachlicher Einschätzung,
-        bewährten Anwendungen im therapeutischen Umfeld
-        sowie aus Erfahrungen und Rückmeldungen anderer Anwender.
-      </p>
-
-      <p>
-        Ich achte dabei besonders auf einfache Anwendung, sinnvollen Nutzen und gute Alltagstauglichkeit.
-        So hast du praktische Tools, die dich wirklich unterstützen – ohne unnötigen Aufwand.
-      </p>
-
-      <p>
-        Ob und welches Produkt sinnvoll ist, hängt immer von der individuellen Situation,
-        dem jeweiligen Beschwerdebild sowie den persönlichen Voraussetzungen ab.
-        In bestimmten Fällen kann es sinnvoll sein,
-        vor der Anwendung noch einmal Rücksprache zu halten.
-      </p>
-
-      <p>
-        Werbung / Affiliate-Links: Wenn du über Links einkaufst, erhalte ich eine Provision.
-        Für dich entstehen keine zusätzlichen Kosten.
-      </p>
-
-      <div class="cta-row">
-        <a class="cta" href="shop.html" onclick="track('nav_shop','home_cta')">Zum Shop →</a>
-      </div>
+<!-- ÜBER NICK -->
+<section id="nick" class="reveal">
+  <div class="about">
+    <div>
+      <p class="sec-eyebrow">Über Nick</p>
+      <h2>Vom Leistungssport zu dir nach Hause</h2>
+      <ul class="about-facts">
+        <li>Staatlich anerkannter Physiotherapeut · BG Klinik Ludwigshafen</li>
+        <li>Leistungshandball NLZ · Rhein-Neckar Löwen</li>
+        <li>Fortbildungen bei Thomas Armbrecht (ehem. Physio der dt. Fußballnationalmannschaft)</li>
+        <li>KGG · MLD · Manuelle Therapie (Weiterbildung laufend)</li>
+      </ul>
     </div>
-
-    <div class="card" style="margin-top:18px;">
-      <p>
-        Tipp: Nutze Produkte nie nach dem Motto „viel hilft viel“. Gerade bei Wärme/Kälte,
-        Bandagen oder intensiver Selbstbehandlung gilt: dosiert, individuell und sinnvoll einsetzen.
-        Wenn du dir unsicher bist, klären wir lieber kurz ab, was bei deiner Situation wirklich passt.
-      </p>
-      <p>
-        Ziel ist nicht „mehr kaufen“, sondern die passenden Tools zu haben, um Therapie, Training und Alltag
-        besser zu unterstützen – ohne unnötigen Quatsch.
-      </p>
-    </div>
-
-    <div class="card" style="margin-top:18px;">
-      <p><strong>Beliebte Empfehlungen</strong></p>
-      <p>
-        Hier siehst du automatisch die Produkte, die am häufigsten angeklickt wurden.
-        (Die Klicks werden lokal im Browser gespeichert.)
-      </p>
-      <div id="popularList"></div>
-    </div>
-
-    <section class="hub-section">
-      <h2>Mehr Inhalte & Angebote</h2>
-      <div class="hub-grid">
-        <a class="hub-card" href="blog.html" onclick="track('nav_blog','home_hub')">
-          <div class="kicker">Wissen</div>
-          <h3>Blog & Reha-Artikel</h3>
-          <p>
-            Fachliche Beiträge aus der Physiotherapie, z. B. zur Rehabilitation nach Kreuzbandverletzung,
-            Training im Aufbau und konkrete Alltagstipps.
-          </p>
-          <span>Zum Blog ansehen →</span>
-        </a>
-        <a class="hub-card" href="coaching.html" onclick="track('nav_coaching','home_hub')">
-          <div class="kicker">Betreuung</div>
-          <h3>Personal Coaching</h3>
-          <p>
-            Individuelle Begleitung für Training, Reha und nachhaltige Belastungssteuerung.
-            Inhalte, Ablauf und Anfrage findest du auf der Coaching-Seite.
-          </p>
-          <span>Coaching ansehen →</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Impressum/Datenschutz nur hier -->
-    <div class="footer">
-      <a href="blog.html" onclick="track('nav_blog','home_footer')">Blog</a> ·
-      <a href="coaching.html" onclick="track('nav_coaching','home_footer')">Coaching</a> ·
-      <a href="impressum.html" onclick="track('nav_impressum','home_footer')">Impressum</a> ·
-      <a href="datenschutz.html" onclick="track('nav_datenschutz','home_footer')">Datenschutz</a>
-      <div style="margin-top:10px;">Hinweis: Die Inhalte stellen keine medizinische Beratung dar.</div>
-    </div>
-  </main>
-
-  <!-- Bottom Nav -->
-  <div class="bottom-nav" role="navigation" aria-label="Bottom Navigation">
-    <div class="bar">
-      <button class="nav-btn active" type="button" onclick="go('index.html')">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5Z"
-                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-        </svg>
-        <div style="font-size:11px;">Home</div>
-      </button>
-
-      <button class="nav-btn" type="button" onclick="go('shop.html')">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 8h12l-1 13H7L6 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <div style="font-size:11px;">Shop</div>
-      </button>
-
-      <!-- SEARCH opens overlay, not scroll -->
-      <button class="nav-btn" type="button" id="openSearchBtn">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
-          <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <div style="font-size:11px;">Suche</div>
-      </button>
+    <div class="stat-stack">
+      <div class="stat"><b>1:1</b><span>Volle Zeit für dich — keine Parallelbehandlung</span></div>
+      <div class="stat"><b>0 Min</b><span>Anfahrt & Wartezimmer für dich</span></div>
+      <div class="stat"><b>HD – KA</b><span>Leimen, Nußloch, Sandhausen, Wiesloch, Walldorf u. a.</span></div>
     </div>
   </div>
+</section>
 
-  <script>
-    function track(eventName, label){
-      try{ if (window.plausible) window.plausible(eventName, { props:{ label } }); }catch(e){}
-    }
-    function go(url){ window.location.href = url; }
+<!-- ABLAUF -->
+<section class="reveal">
+  <p class="sec-eyebrow">Der Weg rein</p>
+  <h2>In vier Schritten</h2>
+  <div class="steps">
+    <div class="step"><h3>Anfragen</h3><p>Kurze Nachricht genügt. Antwort meist innerhalb von 24 h.</p></div>
+    <div class="step"><h3>Rezept klären</h3><p>Ich sage dir, was du brauchst und wie du es bekommst.</p></div>
+    <div class="step"><h3>Ersttermin</h3><p>Befund, Tests und Plan — bei dir zuhause.</p></div>
+    <div class="step"><h3>Loslegen</h3><p>1–2 Sessions pro Woche nach den vier Phasen.</p></div>
+  </div>
+</section>
 
-    const themeMeta = document.querySelector('meta[name="theme-color"][id="themeColorMeta"]');
-    function setThemeMeta(){
-      if (!themeMeta) return;
-      const cur = document.documentElement.getAttribute("data-theme") || "dark";
-      themeMeta.setAttribute("content", cur === "light" ? "#ffffff" : "#12151b");
-    }
+<!-- FAQ -->
+<section id="faq" class="reveal">
+  <p class="sec-eyebrow">FAQ</p>
+  <h2>Kurz beantwortet</h2>
+  <div class="faq">
+    <details>
+      <summary>Brauche ich ein Rezept?</summary>
+      <p>Für Behandlungen: ja — ein Privatrezept vom Arzt genügt, egal ob du privat oder gesetzlich versichert bist. Für den APEX Club (Training): nein.</p>
+    </details>
+    <details>
+      <summary>Was kostet mich die Behandlung?</summary>
+      <p>Das hängt von deiner Verordnung und deinem Versicherungstarif ab. Alles wird vor dem Start schriftlich vereinbart — du weißt vorher genau, was auf dich zukommt.</p>
+    </details>
+    <details>
+      <summary>Ich bin gesetzlich versichert — geht das?</summary>
+      <p>Ja, als Selbstzahler mit Privatrezept vom Arzt. Die Preise stehen oben, Anfahrt inklusive.</p>
+    </details>
+    <details>
+      <summary>Ich warte auf einen Praxistermin — was jetzt?</summary>
+      <p>Genau dafür bin ich da: Nach OP oder Verletzung überbrücke ich die Wartezeit bis zum ersten Termin in der Praxis — bei dir zuhause, ohne Verzögerung im Heilungsverlauf zu riskieren.</p>
+    </details>
+    <details>
+      <summary>Wo bist du unterwegs?</summary>
+      <p>In ausgewählten Orten zwischen Heidelberg und Karlsruhe — u. a. Leimen, Nußloch, Sandhausen, Wiesloch, Walldorf. Im Zweifel: kurz anfragen.</p>
+    </details>
+  </div>
+</section>
 
-    // Theme ALWAYS top-right
-    const root = document.documentElement;
-    const saved = localStorage.getItem("theme");
-    if (saved) root.setAttribute("data-theme", saved);
-    else {
-      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-      root.setAttribute("data-theme", prefersLight ? "light" : "dark");
-    }
-    document.getElementById("themeBtn").addEventListener("click", () => {
-      const cur = root.getAttribute("data-theme") || "dark";
-      const next = cur === "dark" ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      localStorage.setItem("theme", next);
-      track("theme_toggle", next);
-      setThemeMeta();
+<!-- CTA -->
+<section id="start" class="final reveal">
+  <h2>Bereit? <span class="fill" style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">Leg los.</span></h2>
+  <p class="hero-sub">Schreib mir kurz, worum es geht — den Rest klären wir persönlich.</p>
+  <div class="hero-ctas" style="justify-content:center">
+    <a class="btn btn-volt" href="mailto:info@physiotherapie-grausam.com?subject=APEX%20Termin%20anfragen">info@physiotherapie-grausam.com</a>
+    <a class="btn btn-ghost" href="tel:017642685146">0176 4268 5146</a>
+  </div>
+  <p class="hero-meta" style="margin-top:26px">ERREICHBAR · MO–MI & FR AB 17 UHR · SA & SO GANZTAGS</p>
+</section>
+
+</main>
+
+<footer>
+  <div>© 2026 Nick Grausam · Mobile Physiotherapie Grausam · Dornierstraße 5, 69181 Leimen</div>
+  <div>
+    <a href="https://www.physiotherapie-grausam.com/">Klassische Seite</a>
+    <a href="https://www.physiotherapie-grausam.com/#impressum">Impressum</a>
+    <a href="https://www.physiotherapie-grausam.com/#datenschutz">Datenschutz</a>
+    <a href="https://www.physiotherapie-grausam.com/#behandlungsbedingungen">Behandlungsbedingungen</a>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const panel = document.getElementById('tilt-panel');
+if (!reduced && matchMedia('(pointer: fine)').matches) {
+  const scene = document.querySelector('.scene');
+  scene.addEventListener('mousemove', e => {
+    const r = scene.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    panel.style.transform = `rotateY(${-8 + x * 10}deg) rotateX(${4 - y * 8}deg)`;
+  });
+  scene.addEventListener('mouseleave', () => panel.style.transform = 'rotateY(-8deg) rotateX(4deg)');
+  document.querySelectorAll('.code-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      card.style.transform = `rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-3px)`;
     });
-    setThemeMeta();
-
-    // Products catalog for overlay search
-    const products = [
-      { name:"Massagepistole", id:"massagepistole", price:"25,99 €" },
-      { name:"Moorkissen", id:"moorkissen", price:"29,89 €" },
-      { name:"Knie-Kühlpack", id:"knie-kuehlpack", price:"17,89 €" },
-      { name:"Retterspitz", id:"retterspitz", price:"26,14 €" },
-      { name:"MacDavid Bandage", id:"macdavid-bandage", price:"44,95 €" },
-      { name:"Leukotape", id:"leukotape", price:"9,99 €" },
-      { name:"Laufband", id:"laufband", price:"94,99 €" },
-      { name:"Thrombosestrumpf", id:"thrombosestrumpf", price:"26,90 €" },
-      { name:"Wärmemessgerät", id:"waermemessgeraet", price:"16,14 €" },
-      { name:"Aloe-Vera-Gel", id:"aloe-vera-gel", price:"6,30 €" },
-      { name:"Lymphmaßband", id:"lymphmassband", price:"20,09 €" },
-      { name:"Elektrischer Shaker", id:"elektrischer-shaker", price:"19,54 €" },
-      { name:"BAUERFEIND Fußbandage", id:"bauerfeind-fussbandage", price:"47,43 €" },
-      { name:"BAUERFEIND Armbandage", id:"bauerfeind-armbandage", price:"35,20 €" }
-    ];
-
-    // Overlay Search
-    const overlay = document.getElementById("searchOverlay");
-    const openSearchBtn = document.getElementById("openSearchBtn");
-    const overlayInput = document.getElementById("overlayInput");
-    const overlayClose = document.getElementById("overlayClose");
-    const suggestList = document.getElementById("suggestList");
-
-    function openOverlay(){
-      overlay.classList.add("open");
-      overlay.setAttribute("aria-hidden","false");
-      overlayInput.value = "";
-      renderSuggest("");
-      setTimeout(()=> overlayInput.focus(), 50);
-      track("search_overlay_open","home");
-    }
-    function closeOverlay(){
-      overlay.classList.remove("open");
-      overlay.setAttribute("aria-hidden","true");
-      track("search_overlay_close","home");
-    }
-    function renderSuggest(q){
-      const query = (q||"").trim().toLowerCase();
-      if (!query){
-        suggestList.innerHTML = "";
-        suggestList.style.display = "none";
-        return;
-      }
-      const results = products
-        .filter(p => p.name.toLowerCase().includes(query))
-        .slice(0, 10);
-
-      if (results.length === 0){
-        suggestList.innerHTML = "";
-        suggestList.style.display = "none";
-        return;
-      }
-      suggestList.style.display = "grid";
-      suggestList.innerHTML = results.map(p => `
-        <a href="shop.html#${p.id}" onclick="track('search_select','${p.name}')">
-          <span class="name">${p.name}</span>
-          <span class="meta">${p.price}</span>
-        </a>
-      `).join("");
-    }
-
-    openSearchBtn.addEventListener("click", openOverlay);
-    overlayClose.addEventListener("click", closeOverlay);
-    overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeOverlay(); });
-    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeOverlay(); });
-
-    overlayInput.addEventListener("input", ()=> renderSuggest(overlayInput.value));
-
-    // Popular list
-    const productLinks = products.reduce((acc,p)=>{ acc[p.name]={url:`shop.html#${p.id}`}; return acc; },{});
-
-    function getClickCounts(){
-      try{
-        const raw = localStorage.getItem("hm_clicks_v1");
-        return raw ? JSON.parse(raw) : {};
-      }catch(e){ return {}; }
-    }
-    function renderPopular(){
-      const host = document.getElementById("popularList");
-      const counts = getClickCounts();
-
-      const items = Object.keys(productLinks).map(name => ({
-        name,
-        count: counts[name] || 0,
-        url: productLinks[name].url
-      })).sort((a,b) => b.count - a.count);
-
-      const top = items.filter(i => i.count > 0).slice(0, 6);
-
-      if (top.length === 0){
-        host.innerHTML = `<div class="cta-row"><a class="cta" href="shop.html">Noch keine Klicks → Shop öffnen</a></div>`;
-        return;
-      }
-
-      host.innerHTML = top.map(i => `
-        <div style="margin-top:10px;">
-          <a class="cta" href="${i.url}">${i.name} (${i.count} Klicks)</a>
-        </div>
-      `).join("");
-    }
-    renderPopular();
-
-    function initScrollReveal(){
-      const targets = Array.from(document.querySelectorAll("h1, .hero-sub, .card, .footer"));
-      if (!("IntersectionObserver" in window)){
-        targets.forEach(el => el.classList.add("is-visible"));
-        return;
-      }
-      targets.forEach(el => el.classList.add("scroll-reveal"));
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(entry => {
-          entry.target.classList.toggle("is-visible", entry.isIntersecting);
-        });
-      }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
-      targets.forEach(el => io.observe(el));
-    }
-    initScrollReveal();
-
-    function initMobileSwipe(){
-      const mq = window.matchMedia("(max-width: 900px)");
-      if (!mq.matches) return;
-      let startX = 0, startY = 0, tracking = false;
-      document.addEventListener("touchstart", (e)=>{
-        if (e.touches.length !== 1) return;
-        const ov = document.getElementById("searchOverlay");
-        if (ov && ov.classList.contains("open")) return;
-        const t = e.touches[0];
-        startX = t.clientX; startY = t.clientY; tracking = true;
-      }, { passive:true });
-      document.addEventListener("touchmove", (e)=>{
-        if (!tracking) return;
-        const t = e.touches[0];
-        const dx = t.clientX - startX;
-        const dy = t.clientY - startY;
-        if (Math.abs(dx) > 70 && Math.abs(dy) < 35){
-          tracking = false;
-          if (dx < 0) go("shop.html");
-        }
-      }, { passive:true });
-      document.addEventListener("touchend", ()=>{ tracking = false; }, { passive:true });
-    }
-    initMobileSwipe();
-
-  </script>
+    card.addEventListener('mouseleave', () => card.style.transform = '');
+  });
+}
+</script>
 </body>
 </html>

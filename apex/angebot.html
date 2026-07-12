@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Angebot & Preise · APEX Physio & Performance</title>
+<meta name="description" content="Behandlung auf Privatrezept, Selbstzahler-Preise und APEX Club Membership — drei Wege zu APEX. Physiotherapie und Training bei dir zuhause.">
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="styles.css">
+<style>
+.price-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:44px}
+.price-card{display:flex;flex-direction:column}
+.price-card.feature{border:1.5px solid var(--ink)}
+.price-card.apex{border:1.5px solid var(--apex);background:linear-gradient(185deg,#F1EEFF, var(--card) 45%)}
+.tag{position:absolute;top:-13px;left:24px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:100px;text-transform:uppercase}
+.tag-ink{background:var(--ink);color:var(--volt)}
+.tag-apex{background:var(--apex);color:#fff}
+.price-card h3{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+.apex-word{background:var(--holo);-webkit-background-clip:text;background-clip:text;color:transparent}
+.price-sub{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.07em;margin:6px 0 18px;text-transform:uppercase}
+.big-price{font-family:var(--display);font-weight:700;font-size:clamp(30px,3.2vw,40px);line-height:1;margin-bottom:14px}
+.big-price small{font-size:14px;color:var(--dim);font-weight:500}
+.price-card.apex .big-price{color:var(--apex)}
+.price-card.apex .list li::before{background:#CFC8FF;border-color:var(--apex)}
+.price-card .list{flex:1;margin-bottom:24px}
+@media(max-width:960px){.price-grid{grid-template-columns:1fr}}
+
+.legende{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;margin-top:44px;box-shadow:0 4px 20px rgba(19,20,24,.06)}
+.legende-head{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--volt-ink);margin-bottom:18px}
+.legende-head::after{content:"";flex:1;height:1px;background:var(--line)}
+.legende-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:4px 32px}
+.leg-row{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.leg-key{font-family:var(--mono);font-weight:700;color:var(--volt-ink);font-size:13px}
+.leg-row span{color:var(--dim)}
+.leg-row b{color:var(--ink);display:block;font-size:14px}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px;counter-reset:step}
+.step{counter-increment:step}
+.step::before{content:"0" counter(step);font-family:var(--mono);font-size:12px;color:var(--volt-ink)}
+.step h3{font-family:var(--display);font-size:15.5px;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 6px}
+.step p{font-size:13.5px;color:var(--dim)}
+@media(max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+.faq{max-width:800px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;
+  font-family:var(--display);font-size:16px;padding:20px 4px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--apex);font-size:20px;transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--dim);font-size:14.5px;padding:0 4px 20px;max-width:70ch}
+</style>
+</head>
+<body>
+<div class="orb orb-a"></div><div class="orb orb-b"></div><div class="grid-bg"></div>
+
+<nav>
+  <a class="logo" href="index.html">APE<em>X</em></a>
+  <div class="nav-links">
+    <a href="methode.html">Methode</a>
+    <a href="angebot.html" aria-current="page">Angebot</a>
+    <a href="club.html">Club</a>
+    <a class="btn btn-ink" href="#start">Termin anfragen</a>
+  </div>
+</nav>
+
+<main>
+
+<section style="padding-top:130px;padding-bottom:20px">
+  <p class="eyebrow">Angebot · keine GKV-Abrechnung</p>
+  <h1>Drei Wege<br><span class="fill">zu APEX.</span></h1>
+  <p class="sub" style="margin-top:24px">Ob mit Rezept, als Selbstzahler oder als Club-Mitglied — dein Zugang, klar erklärt.</p>
+</section>
+
+<section class="reveal" style="padding-top:0">
+  <div class="price-grid">
+    <div class="hcard price-card feature">
+      <span class="tag tag-ink">Privatrezept</span>
+      <h3>Behandlung</h3>
+      <p class="price-sub">PKV · Beihilfe · nach ärztlicher Verordnung</p>
+      <ul class="list">
+        <li>Einzelverordnung (z. B. KG): ca. 30 Min</li>
+        <li>Doppelverordnung (z. B. KG + MT): bis 60 Min</li>
+        <li>Auch Reha-Nachsorge — inkl. Überbrückung bis zum ersten Praxistermin</li>
+        <li>Vergütung nach Anlage 9 BBhV, vorab schriftlich vereinbart</li>
+      </ul>
+      <a class="btn btn-ink" href="mailto:info@physiotherapie-grausam.com?subject=APEX%20Behandlung%20mit%20Rezept">Mit Rezept anfragen</a>
+    </div>
+
+    <div class="hcard price-card">
+      <h3>Selbstzahler</h3>
+      <p class="price-sub">Gesetzlich versichert · mit Privatrezept</p>
+      <table class="sz-table">
+        <tr><td>30 Minuten</td><td>45 €</td></tr>
+        <tr><td>45 Minuten</td><td>60 €</td></tr>
+        <tr><td>60 Minuten</td><td>75 €</td></tr>
+      </table>
+      <p class="sub" style="font-size:13.5px;margin-bottom:22px">Gesetzlich versichert? Mit einem Privatrezept vom Arzt kannst du als Selbstzahler zu mir — Anfahrt inklusive.</p>
+      <a class="btn btn-ghost" href="#start">Termin anfragen</a>
+    </div>
+
+    <div class="hcard price-card apex">
+      <span class="tag tag-apex">Membership</span>
+      <h3><span class="apex-word">APEX</span> CLUB</h3>
+      <p class="price-sub">Training · monatlich kündbar</p>
+      <div class="big-price">150 €<small> / Monat</small></div>
+      <ul class="list">
+        <li>4× 60 Min Training bei dir zuhause</li>
+        <li>Individueller Plan + Kontakt zwischen den Sessions</li>
+        <li>Kostenloses Erstgespräch</li>
+      </ul>
+      <a class="btn btn-ghost" href="club.html">Mehr zum Club</a>
+    </div>
+  </div>
+
+  <div class="legende reveal">
+    <div class="legende-head">Legende · Abkürzungen auf Rezept & Rechnung</div>
+    <div class="legende-grid">
+      <div class="leg-row"><span class="leg-key">KG</span><span><b>Krankengymnastik</b>Aktive Übungstherapie</span></div>
+      <div class="leg-row"><span class="leg-key">MT</span><span><b>Manuelle Therapie</b>Techniken an Gelenken, Muskeln & Nerven</span></div>
+      <div class="leg-row"><span class="leg-key">MLD</span><span><b>Manuelle Lymphdrainage</b>Entstauung, z. B. nach OP</span></div>
+      <div class="leg-row"><span class="leg-key">KMT</span><span><b>Klassische Massagetherapie</b>Durchblutung & Entspannung</span></div>
+      <div class="leg-row"><span class="leg-key">KGG</span><span><b>Krankengymnastik am Gerät</b>Medizinisches Training</span></div>
+      <div class="leg-row"><span class="leg-key">AT</span><span><b>Atemtherapie</b>Bei Atemfunktionsstörungen</span></div>
+    </div>
+  </div>
+
+  <details class="legal">
+    <summary>Rechtliches & Hinweise</summary>
+    <p>Vergütung und Ablauf werden vor Behandlungsbeginn schriftlich vereinbart. Ob und in welcher Höhe PKV, Beihilfe oder Restkostenversicherung erstatten, richtet sich nach dem jeweiligen Tarif — bitte vorab dort erfragen. Heilbehandlungen auf Verordnung sind umsatzsteuerfrei (§ 4 Nr. 14 UStG); Selbstzahler-Preise inkl. 19 % USt. Der APEX Club ist eine Trainingsleistung, keine Heilbehandlung. Keine Abrechnung mit gesetzlichen Krankenkassen.</p>
+  </details>
+</section>
+
+<section class="reveal">
+  <p class="eyebrow">Der Weg rein</p>
+  <h2>In vier Schritten</h2>
+  <div class="steps">
+    <div class="hcard step"><h3>Anfragen</h3><p>Kurze Nachricht genügt. Antwort meist innerhalb von 24 h.</p></div>
+    <div class="hcard step"><h3>Rezept klären</h3><p>Ich sage dir, was du brauchst und wie du es bekommst.</p></div>
+    <div class="hcard step"><h3>Ersttermin</h3><p>Befund, Tests und Plan — bei dir zuhause.</p></div>
+    <div class="hcard step"><h3>Loslegen</h3><p>1–2 Sessions pro Woche nach den vier Phasen.</p></div>
+  </div>
+</section>
+
+<section class="reveal">
+  <p class="eyebrow">FAQ</p>
+  <h2>Kurz beantwortet</h2>
+  <div class="faq">
+    <details>
+      <summary>Brauche ich ein Rezept?</summary>
+      <p>Für Behandlungen: ja — ein Privatrezept vom Arzt genügt, egal ob du privat oder gesetzlich versichert bist. Für den APEX Club (Training): nein.</p>
+    </details>
+    <details>
+      <summary>Was kostet mich die Behandlung?</summary>
+      <p>Das hängt von deiner Verordnung und deinem Versicherungstarif ab. Alles wird vor dem Start schriftlich vereinbart — du weißt vorher genau, was auf dich zukommt.</p>
+    </details>
+    <details>
+      <summary>Ich bin gesetzlich versichert — geht das?</summary>
+      <p>Ja, als Selbstzahler mit Privatrezept vom Arzt. Die Preise stehen oben, Anfahrt inklusive.</p>
+    </details>
+    <details>
+      <summary>Ich warte auf einen Praxistermin — was jetzt?</summary>
+      <p>Genau dafür bin ich da: Nach OP oder Verletzung überbrücke ich die Wartezeit bis zum ersten Termin in der Praxis — bei dir zuhause, ohne Verzögerung im Heilungsverlauf zu riskieren.</p>
+    </details>
+    <details>
+      <summary>Wo bist du unterwegs?</summary>
+      <p>In ausgewählten Orten zwischen Heidelberg und Karlsruhe — u. a. Leimen, Nußloch, Sandhausen, Wiesloch, Walldorf. Im Zweifel: kurz anfragen.</p>
+    </details>
+  </div>
+</section>
+
+<section id="start" class="cta-final reveal">
+  <h2>Bereit? <span class="fill">Leg los.</span></h2>
+  <p class="sub">Schreib mir kurz, worum es geht — den Rest klären wir persönlich.</p>
+  <div class="ctas center">
+    <a class="btn btn-ink" href="mailto:info@physiotherapie-grausam.com?subject=APEX%20Termin">info@physiotherapie-grausam.com</a>
+    <a class="btn btn-ghost" href="tel:017642685146">0176 4268 5146</a>
+  </div>
+  <p class="meta" style="margin-top:26px">ERREICHBAR · MO–MI & FR AB 17 UHR · SA & SO GANZTAGS</p>
+</section>
+
+</main>
+
+<footer>
+  <div>© 2026 Nick Grausam · Mobile Physiotherapie Grausam · Dornierstraße 5, 69181 Leimen</div>
+  <div>
+    <a href="https://www.physiotherapie-grausam.com/#impressum">Impressum</a>
+    <a href="https://www.physiotherapie-grausam.com/#datenschutz">Datenschutz</a>
+    <a href="https://www.physiotherapie-grausam.com/">Klassische Seite</a>
+  </div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

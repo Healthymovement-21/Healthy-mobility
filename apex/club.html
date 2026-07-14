@@ -10,17 +10,17 @@
 <style>
 .club-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:start;margin-top:44px}
 @media(max-width:900px){.club-hero{grid-template-columns:1fr}}
-.club-price{border:1.5px solid var(--apex);background:linear-gradient(185deg,#F1EEFF, var(--card) 45%)}
+.club-price{border:1.5px solid var(--apex);background:linear-gradient(185deg,rgba(var(--apex-rgb),.16), var(--card) 55%)}
 .club-price .big-price{font-family:var(--display);font-weight:700;font-size:clamp(38px,4.4vw,52px);line-height:1;color:var(--apex);margin:8px 0 18px}
 .club-price .big-price small{font-size:15px;color:var(--dim);font-weight:500}
-.club-price .list li::before{background:#CFC8FF;border-color:var(--apex)}
+.club-price .list li::before{background:var(--apex);box-shadow:0 0 6px rgba(var(--apex-rgb),.8)}
 .benefit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
 .benefit-grid h3{font-family:var(--display);font-size:16px;letter-spacing:.05em;text-transform:uppercase;margin:14px 0 8px}
 .benefit-grid p{color:var(--dim);font-size:13.5px}
 @media(max-width:900px){.benefit-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.benefit-grid{grid-template-columns:1fr}}
 .how{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px}
-.how .ph-num{font-family:var(--mono);font-size:12px;color:var(--apex);background:#EEEBFF;border:1px solid #D6D0FF;padding:4px 10px;border-radius:100px;display:inline-block;margin-bottom:12px}
+.how .ph-num{font-family:var(--mono);font-size:12px;color:var(--apex);background:rgba(var(--apex-rgb),.12);border:1px solid rgba(var(--apex-rgb),.45);padding:4px 10px;border-radius:100px;display:inline-block;margin-bottom:12px}
 .how h3{font-family:var(--display);font-size:18px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
 .how p{color:var(--dim);font-size:14px}
 @media(max-width:760px){.how{grid-template-columns:1fr}}

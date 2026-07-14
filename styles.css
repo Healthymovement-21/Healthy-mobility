@@ -25,9 +25,12 @@ body{background:var(--paper);color:var(--ink);font-family:var(--body);line-heigh
 ::selection{background:var(--volt);color:var(--volt-ink)}
 
 /* ---------- ambient layers ---------- */
-.orb{position:fixed;border-radius:50%;filter:blur(130px);opacity:.28;pointer-events:none;z-index:0}
-.orb-a{width:44vw;height:44vw;background:#7CFF3E;top:-14vw;right:-10vw;animation:drift 26s ease-in-out infinite alternate}
-.orb-b{width:40vw;height:40vw;background:#7C6FFF;bottom:-16vw;left:-12vw;animation:drift 32s ease-in-out infinite alternate-reverse}
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+.orb-a{width:clamp(320px,44vw,640px);height:clamp(320px,44vw,640px);background:#7CFF3E;top:-14vw;right:-10vw;
+  filter:blur(clamp(70px,11vw,130px));opacity:.38;animation:drift 26s ease-in-out infinite alternate}
+.orb-b{width:clamp(300px,40vw,580px);height:clamp(300px,40vw,580px);background:#7C6FFF;bottom:-16vw;left:-12vw;
+  filter:blur(clamp(70px,11vw,130px));opacity:.38;animation:drift 32s ease-in-out infinite alternate-reverse}
+@media(max-width:640px){.orb-a{top:-22vw;right:-24vw}.orb-b{bottom:-20vw;left:-24vw}}
 @keyframes drift{to{transform:translate(5vw,3vw) scale(1.12)}}
 .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
   background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
@@ -63,8 +66,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .nav-menu-btn[aria-expanded="true"] .mm-caret{transform:rotate(225deg) translateY(-2px)}
 .mega-backdrop{position:fixed;inset:0;background:rgba(4,5,7,.6);opacity:0;pointer-events:none;transition:opacity .35s;z-index:45}
 .mega-backdrop.open{opacity:1;pointer-events:auto}
-.megamenu{position:fixed;top:73px;left:0;right:0;z-index:46;background:rgba(9,11,15,.96);
-  backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);border-bottom:1px solid var(--line);
+.megamenu{position:fixed;top:73px;left:0;right:0;z-index:46;background:rgba(10,12,16,.72);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-bottom:1px solid var(--line);
   max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
 .megamenu.open{max-height:85vh;overflow-y:auto}
 .mega-inner{max-width:1220px;margin:0 auto;padding:8px clamp(18px,5vw,64px) 40px}

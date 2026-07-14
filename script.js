@@ -51,4 +51,26 @@ if (!reduced) {
     }, { passive: true });
   });
 }
+
+// top mega-menu (site index dropdown)
+var menuBtn = document.getElementById('menuBtn');
+var megaMenu = document.getElementById('megaMenu');
+var megaBackdrop = document.getElementById('megaBackdrop');
+if (menuBtn && megaMenu && megaBackdrop) {
+  var closeMenu = function(){
+    megaMenu.classList.remove('open');
+    megaBackdrop.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  };
+  var openMenu = function(){
+    megaMenu.classList.add('open');
+    megaBackdrop.classList.add('open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+  };
+  menuBtn.addEventListener('click', function(){
+    if (megaMenu.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  megaBackdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+}
 })();

@@ -54,6 +54,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:cent
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--apex);outline-offset:3px}
 @media(max-width:760px){.nav-links a:not(.btn){display:none}}
 
+/* ---------- nav menu trigger + mega dropdown ---------- */
+.nav-menu-btn{display:inline-flex;align-items:center;gap:7px;background:none;border:none;color:var(--dim);
+  font-family:var(--body);font-size:13.5px;cursor:pointer;padding:0;transition:color .2s}
+.nav-menu-btn:hover,.nav-menu-btn[aria-expanded="true"]{color:var(--ink)}
+.mm-caret{width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg) translateY(-2px);transition:transform .3s}
+.nav-menu-btn[aria-expanded="true"] .mm-caret{transform:rotate(225deg) translateY(-2px)}
+.mega-backdrop{position:fixed;inset:0;background:rgba(4,5,7,.6);opacity:0;pointer-events:none;transition:opacity .35s;z-index:45}
+.mega-backdrop.open{opacity:1;pointer-events:auto}
+.megamenu{position:fixed;top:73px;left:0;right:0;z-index:46;background:rgba(9,11,15,.96);
+  backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);border-bottom:1px solid var(--line);
+  max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.megamenu.open{max-height:85vh;overflow-y:auto}
+.mega-inner{max-width:1220px;margin:0 auto;padding:8px clamp(18px,5vw,64px) 40px}
+.mega-head{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--volt);
+  padding-top:24px;margin-bottom:20px}
+@media(prefers-reduced-motion:reduce){.megamenu{transition:none}.mega-backdrop{transition:none}}
+
 /* ---------- type & layout ---------- */
 section{max-width:1220px;margin:0 auto;padding:clamp(52px,7.5vw,96px) clamp(18px,5vw,64px)}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}

@@ -148,12 +148,19 @@ details.legal summary::after{content:"+";color:var(--apex)}
 details.legal[open] summary::after{content:"–"}
 details.legal p{font-size:11.5px;color:var(--dim);line-height:1.7;max-width:92ch;padding-top:10px}
 
-/* ---------- legend (abbreviations / sitemap) ---------- */
+/* ---------- legend (abbreviations / sitemap) — collapsible, opens downward ---------- */
 .legende{position:relative;background:rgba(var(--card-rgb),.5);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  border:1px solid var(--line);border-radius:20px;padding:28px;margin-top:44px;box-shadow:0 4px 24px rgba(0,0,0,.3)}
-.legende-head{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--volt);margin-bottom:18px}
-.legende-head::after{content:"";flex:1;height:1px;background:var(--line)}
-.legende-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:4px 32px}
+  border:1px solid var(--line);border-radius:20px;margin-top:44px;box-shadow:0 4px 24px rgba(0,0,0,.3);overflow:hidden}
+.legende-head{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;padding:22px 28px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--volt)}
+.legende-head::-webkit-details-marker{display:none}
+.legende-head .legende-line{flex:1;height:1px;background:var(--line)}
+.legende-head::after{content:"+";font-size:17px;color:var(--apex);transition:transform .25s}
+.legende[open] .legende-head::after{transform:rotate(45deg)}
+.legende-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1)}
+.legende[open] .legende-body{grid-template-rows:1fr}
+.legende-body>div{overflow:hidden}
+.legende-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:4px 32px;padding:0 28px 26px}
 .leg-row{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px;text-decoration:none;color:inherit;transition:padding-left .2s}
 .leg-row[href]:hover{padding-left:6px;color:inherit}
 .leg-row[href]:hover .leg-key{color:var(--ink);background:var(--volt);border-color:var(--volt)}

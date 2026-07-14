@@ -24,15 +24,6 @@
 .price-card .list{flex:1;margin-bottom:24px}
 @media(max-width:960px){.price-grid{grid-template-columns:1fr}}
 
-.legende{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;margin-top:44px;box-shadow:0 4px 20px rgba(19,20,24,.06)}
-.legende-head{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--volt);margin-bottom:18px}
-.legende-head::after{content:"";flex:1;height:1px;background:var(--line)}
-.legende-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:4px 32px}
-.leg-row{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
-.leg-key{font-family:var(--mono);font-weight:700;color:var(--volt);font-size:13px}
-.leg-row span{color:var(--dim)}
-.leg-row b{color:var(--ink);display:block;font-size:14px}
-
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px;counter-reset:step}
 .step{counter-increment:step}
 .step::before{content:"0" counter(step);font-family:var(--mono);font-size:12px;color:var(--volt)}
@@ -211,9 +202,6 @@
   <div class="footer-bottom">© 2026 Nick Grausam · Mobile Physiotherapie Grausam · Dornierstraße 5, 69181 Leimen</div>
 </footer>
 
-<script>
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+<script src="script.js" defer></script>
 </body>
 </html>

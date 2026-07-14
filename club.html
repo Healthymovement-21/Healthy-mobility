@@ -165,9 +165,6 @@
   <div class="footer-bottom">© 2026 Nick Grausam · Mobile Physiotherapie Grausam · Dornierstraße 5, 69181 Leimen</div>
 </footer>
 
-<script>
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+<script src="script.js" defer></script>
 </body>
 </html>

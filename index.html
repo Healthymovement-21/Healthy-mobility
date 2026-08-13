@@ -3,161 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>APEX · Physio & Performance bei dir zuhause | Heidelberg–Karlsruhe</title>
-<meta name="description" content="APEX verbindet Behandlung und Training bei dir zuhause — klar strukturiert, messbar, ohne Wartezimmer. Raum Heidelberg–Karlsruhe.">
+<title>CAPRATE · Immobilien-Investment-Analyse</title>
+<meta name="description" content="Rechner für Immobilien als Kapitalanlage: Kaufpreis, Rendite, Finanzierung und Cashflow in Echtzeit — nach Buy-and-Hold-Prinzipien.">
 <link rel="stylesheet" href="styles.css">
-<style>
-.hero{min-height:96svh;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:48px;
-  padding:130px clamp(18px,5vw,64px) 40px;max-width:1220px;margin:0 auto}
-@media(max-width:900px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:112px}}
-.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-.door{display:block;text-decoration:none;color:var(--ink)}
-.door h3{font-family:var(--display);font-size:20px;letter-spacing:.05em;text-transform:uppercase;margin:16px 0 6px}
-.door p{color:var(--dim);font-size:13.5px;min-height:42px}
-.door .go{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--volt);margin-top:14px;display:inline-block}
-@media(max-width:860px){.doors{grid-template-columns:1fr}}
-.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
-.strip .hcard{padding:20px 24px}
-.strip b{font-family:var(--display);font-size:24px;display:block}
-.strip span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
-@media(max-width:860px){.strip{grid-template-columns:1fr}}
-</style>
 </head>
 <body>
-<div class="orb orb-a"></div><div class="orb orb-b"></div><div class="grid-bg"></div>
+<div class="glow"></div><div class="grid-bg"></div>
 
 <nav>
-  <a class="logo" href="index.html">APE<em>X</em></a>
+  <a class="logo" href="index.html"><span class="dot"></span>CAPRATE</a>
   <div class="nav-links">
-    <a href="methode.html">Methode</a>
-    <a href="angebot.html">Angebot</a>
-    <a href="club.html">Club</a>
-    <a href="kontakt.html">Kontakt</a>
-    <button class="nav-menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="megaMenu">
-      <span>Alle Seiten</span><span class="mm-caret"></span>
-    </button>
-
-    <a class="btn btn-ink" href="#start">Termin anfragen</a>
+    <a href="#tool">Rechner</a>
+    <a href="#methodik">Methodik</a>
+    <a href="#tool" class="btn btn-gold">Objekt prüfen</a>
   </div>
 </nav>
-<div class="mega-backdrop" id="megaBackdrop"></div>
-<div class="megamenu" id="megaMenu">
-  <div class="mega-inner">
-    <div class="mega-head">Sitemap · Alle Seiten</div>
-    <div class="legende-grid">
-      <a class="leg-row" href="index.html"><span class="leg-key">01</span><span><b>Start</b>Übersicht &amp; Einstieg</span></a>
-      <a class="leg-row" href="methode.html"><span class="leg-key">02</span><span><b>Methode</b>Die vier Phasen</span></a>
-      <a class="leg-row" href="angebot.html"><span class="leg-key">03</span><span><b>Angebot</b>Preise &amp; Zugang</span></a>
-      <a class="leg-row" href="club.html"><span class="leg-key">04</span><span><b>Club</b>Membership-Training</span></a>
-      <a class="leg-row" href="nick.html"><span class="leg-key">05</span><span><b>Über Nick</b>Wer dahintersteckt</span></a>
-      <a class="leg-row" href="kontakt.html"><span class="leg-key">06</span><span><b>Kontakt</b>Direkt anfragen</span></a>
-      <a class="leg-row" href="faq.html"><span class="leg-key">07</span><span><b>FAQ</b>Alle Fragen, ein Ort</span></a>
-      <a class="leg-row" href="blog.html"><span class="leg-key">08</span><span><b>Blog</b>Wissen — bald verfügbar</span></a>
-    </div>
-  </div>
-</div>
 
 <main>
 
 <div class="hero">
   <div>
-    <p class="eyebrow">Physio × Performance · Hausbesuch · Heidelberg–Karlsruhe</p>
-    <h1>Physio.<br>Training.<br><span class="fill">Ein System.</span></h1>
-    <p class="sub" style="margin:24px 0 32px"><strong>Behandlung und Training in einer Session — bei dir zuhause.</strong> Klar strukturiert. Messbar. Ohne Wartezimmer.</p>
-    <div class="ctas">
-      <a class="btn btn-ink" href="#start">Termin anfragen</a>
-      <a class="btn btn-ghost" href="methode.html">Die Methode</a>
-    </div>
-    <p class="meta" style="margin-top:30px">1:1 · <b>60 MIN VOLLE ZEIT</b> · ANFAHRT FÜR DICH: <b>0 MIN</b></p>
-  </div>
-
-  <div class="scene">
-    <div class="radar radar-1"></div>
-    <div class="radar radar-2"></div>
-    <div class="stack" id="tilt">
-      <div class="layer layer-back"></div>
-      <div class="layer layer-mid"></div>
-      <div class="layer layer-front">
-        <div class="panel-head"><span>JEDE SESSION · VIER PHASEN</span><span class="dot"></span></div>
-        <div class="phase"><div class="ph-body"><b>Messen</b><span>Fortschritt in Werten, nicht im Gefühl</span></div><span class="ph-num">01</span></div>
-        <div class="phase"><div class="ph-body"><b>Vorbereiten</b><span>Hands-on-Behandlung nach Befund</span></div><span class="ph-num">02</span></div>
-        <div class="phase"><div class="ph-body"><b>Verstehen</b><span>Klartext zu deinem Körper</span></div><span class="ph-num">03</span></div>
-        <div class="phase"><div class="ph-body"><b>Trainieren</b><span>Aktiv, progressiv + Wochenauftrag</span></div><span class="ph-num">04</span></div>
-        <div class="panel-foot">BEHANDLUNG + TRAINING — <b>beides. jedes mal.</b></div>
-      </div>
+    <p class="eyebrow">Immobilien × Kapitalanlage · Buy &amp; Hold</p>
+    <h1>Ist diese Immobilie eine gute Kapitalanlage? <span style="color:var(--gold)">Rechne es aus.</span></h1>
+    <p class="sub" style="margin-top:20px"><strong>Kaufpreis, Rendite, Finanzierung und Cashflow in Echtzeit.</strong> Keine Schätzung nach Gefühl — nur Zahlen.</p>
+    <div class="hero-stats">
+      <div class="stat"><b>0</b><span>Kein Login nötig</span></div>
+      <div class="stat"><b>Live</b><span>Neuberechnung sofort</span></div>
+      <div class="stat"><b>1–100</b><span>Kennzahlen-Score</span></div>
     </div>
   </div>
 </div>
 
-<section class="reveal" style="padding-top:20px">
-  <div class="doors">
-    <a class="door hcard" href="methode.html">
-      <span class="chip">SYSTEM</span>
-      <h3>Die Methode</h3>
-      <p>Vier Phasen, ein Protokoll — warum jede Session bei mir anders läuft als jeder Termin, den du kennst.</p>
-      <span class="go">ANSEHEN →</span>
-    </a>
-    <a class="door hcard" href="angebot.html">
-      <span class="chip">ZUGANG</span>
-      <h3>Das Angebot</h3>
-      <p>Behandlung auf Verordnung, Selbstzahler oder Reha-Überbrückung — dein Weg rein, klar erklärt.</p>
-      <span class="go">ANSEHEN →</span>
-    </a>
-    <a class="door hcard" href="club.html">
-      <span class="chip chip-apex">MEMBERSHIP</span>
-      <h3>APEX Club</h3>
-      <p>Betreutes Training bei dir zuhause — für alle, die nach der Therapie weiter wollen. Oder nie aufhören.</p>
-      <span class="go" style="color:var(--apex)">ANSEHEN →</span>
-    </a>
+<section id="tool" class="reveal" style="padding-top:20px">
+  <p class="eyebrow">Der Rechner</p>
+  <h2>Objekt eingeben, Zahlen sehen</h2>
+  <p class="sub" style="margin-bottom:32px">Alle Werte sind Platzhalter zum Ausprobieren — trag dein Objekt ein, alles rechnet sich live neu.</p>
+
+  <div class="tool">
+    <form class="card" id="form" autocomplete="off">
+
+      <div class="field-group">
+        <div class="field-group-title">Objekt</div>
+        <div class="field-row">
+          <div class="field"><label for="kaufpreis">Kaufpreis (€)</label><input type="number" id="kaufpreis" value="220000" min="0" step="1000"></div>
+          <div class="field"><label for="wohnflaeche">Wohnfläche (m²)</label><input type="number" id="wohnflaeche" value="65" min="1" step="1"></div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-group-title">Miete &amp; Hausgeld</div>
+        <div class="field-row">
+          <div class="field"><label for="kaltmiete">Kaltmiete mtl. (€)</label><input type="number" id="kaltmiete" value="720" min="0" step="10"></div>
+          <div class="field"><label for="hausgeld">Hausgeld gesamt mtl. (€)</label><input type="number" id="hausgeld" value="260" min="0" step="5"></div>
+        </div>
+        <div class="field-row single">
+          <div class="field">
+            <label for="hgnu">davon nicht umlagefähig (%)</label>
+            <input type="range" id="hgnu" value="35" min="0" max="100" step="1">
+            <span class="field-hint" id="hgnu-out">35 % — Rücklage, Verwaltung u. a. trägt der Eigentümer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-group-title">Kaufnebenkosten</div>
+        <div class="field-row">
+          <div class="field">
+            <label for="bundesland">Bundesland (Grunderwerbsteuer)</label>
+            <select id="bundesland">
+              <option value="3.5">Bayern (3,5 %)</option>
+              <option value="5.0" selected>Baden-Württemberg (5,0 %)</option>
+              <option value="5.0">Bremen (5,0 %)</option>
+              <option value="5.0">Niedersachsen (5,0 %)</option>
+              <option value="5.0">Rheinland-Pfalz (5,0 %)</option>
+              <option value="5.0">Sachsen-Anhalt (5,0 %)</option>
+              <option value="5.5">Hamburg (5,5 %)</option>
+              <option value="5.5">Sachsen (5,5 %)</option>
+              <option value="6.0">Berlin (6,0 %)</option>
+              <option value="6.0">Hessen (6,0 %)</option>
+              <option value="6.0">Mecklenburg-Vorpommern (6,0 %)</option>
+              <option value="6.5">Brandenburg (6,5 %)</option>
+              <option value="6.5">Nordrhein-Westfalen (6,5 %)</option>
+              <option value="6.5">Saarland (6,5 %)</option>
+              <option value="6.5">Schleswig-Holstein (6,5 %)</option>
+              <option value="6.5">Thüringen (6,5 %)</option>
+            </select>
+          </div>
+          <div class="field"><label for="makler">Maklerprovision (%)</label><input type="number" id="makler" value="3.57" min="0" step="0.01"></div>
+        </div>
+        <p class="field-hint">Zzgl. Notar ~1,5 % und Grundbuch ~0,5 % (fest eingerechnet)</p>
+      </div>
+
+      <div class="field-group">
+        <div class="field-group-title">Finanzierung</div>
+        <div class="field-row">
+          <div class="field"><label for="eigenkapital">Eigenkapital (€)</label><input type="number" id="eigenkapital" value="40000" min="0" step="1000"></div>
+          <div class="field"><label for="zins">Zinssatz p.a. (%)</label><input type="number" id="zins" value="3.8" min="0" step="0.05"></div>
+        </div>
+        <div class="field-row single">
+          <div class="field"><label for="tilgung">Anfängliche Tilgung p.a. (%)</label><input type="number" id="tilgung" value="2.0" min="0" step="0.1"></div>
+        </div>
+      </div>
+    </form>
+
+    <div class="results">
+      <div class="card score-card">
+        <span class="field-hint">KENNZAHLEN-SCORE</span>
+        <div class="score-num" id="score">–</div>
+        <div class="score-label" id="score-label">–</div>
+        <div class="score-bar"><div class="score-bar-fill" id="score-bar"></div></div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="metric-grid">
+          <div class="metric"><span>Preis / m²</span><b id="m-ppqm">–</b></div>
+          <div class="metric"><span>Kaufpreisfaktor</span><b id="m-faktor">–</b></div>
+          <div class="metric gold"><span>Bruttorendite (Kaufpreis)</span><b id="m-rendite-kp">–</b></div>
+          <div class="metric gold"><span>Bruttorendite (Gesamtkapital)</span><b id="m-rendite-gk">–</b></div>
+        </div>
+
+        <div class="breakdown">
+          <div class="breakdown-row"><span>Grunderwerbsteuer</span><b id="b-gest">–</b></div>
+          <div class="breakdown-row"><span>Notar (1,5 %)</span><b id="b-notar">–</b></div>
+          <div class="breakdown-row"><span>Grundbuch (0,5 %)</span><b id="b-grundbuch">–</b></div>
+          <div class="breakdown-row"><span>Maklerprovision</span><b id="b-makler">–</b></div>
+          <div class="breakdown-row total"><span>Gesamtkapitalbedarf</span><b id="b-gesamt">–</b></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="metric-grid">
+          <div class="metric"><span>Darlehenssumme</span><b id="m-darlehen">–</b></div>
+          <div class="metric"><span>Monatliche Rate</span><b id="m-rate">–</b></div>
+          <div class="metric" id="m-cashflow-card"><span>Cashflow / Monat</span><b id="m-cashflow">–</b></div>
+          <div class="metric"><span>Cashflow / Jahr</span><b id="m-cashflow-jahr">–</b></div>
+        </div>
+        <div class="disclaimer">
+          Score bewertet nur die berechenbaren Kennzahlen (Kaufpreisfaktor, Rendite, Cashflow). Lage, Zustand, WEG-Risiken und Red Flags fließen hier <strong>nicht</strong> ein — dafür brauche ich das konkrete Exposé. 🔴 Zinssatz ist ein Platzhalter, kein aktuelles Bankangebot.
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="reveal" style="padding-top:0">
-  <div class="strip">
-    <div class="hcard"><b>1:1</b><span>Volle Zeit für dich — keine Parallelbehandlung</span></div>
-    <div class="hcard"><b>Messbar</b><span>Re-Test in jeder Session</span></div>
-    <div class="hcard"><b>HD – KA</b><span>Leimen · Nußloch · Sandhausen · Wiesloch · Walldorf u. a.</span></div>
+<section id="methodik" class="reveal">
+  <p class="eyebrow">Methodik</p>
+  <h2>Wonach der Rechner bewertet</h2>
+  <p class="sub">Buy-and-Hold-Kapitalanlage heißt: Rendite zählt weniger als Cashflow, und der Kaufpreisfaktor sagt oft mehr als die reine Rendite-Prozentzahl.</p>
+  <div class="method-grid">
+    <div class="card">
+      <b>Kaufpreisfaktor</b>
+      <p>Kaufpreis ÷ Jahreskaltmiete. Unter 20 gilt als günstig, 20–25 als fair, über 25 als teuer — unabhängig von der Lage ein erster Fingerzeig.</p>
+    </div>
+    <div class="card">
+      <b>Cashflow vor Rendite</b>
+      <p>Eine hohe Bruttorendite mit negativem monatlichem Cashflow ist kein gutes Investment. Der Rechner gewichtet Cashflow so hoch wie Rendite.</p>
+    </div>
+    <div class="card">
+      <b>Gesamtkapital, nicht nur Kaufpreis</b>
+      <p>Nebenkosten von 8–12 % gehören zur Investitionssumme dazu — Rendite auf Gesamtkapital ist ehrlicher als Rendite auf den nackten Kaufpreis.</p>
+    </div>
   </div>
-</section>
-
-<section id="start" class="cta-final reveal">
-  <h2>Bereit? <span class="fill">Leg los.</span></h2>
-  <p class="sub">Schreib mir kurz, worum es geht — den Rest klären wir persönlich.</p>
-  <div class="ctas center">
-    <a class="btn btn-ink" href="mailto:info@physiotherapie-grausam.com?subject=APEX%20Termin">info@physiotherapie-grausam.com</a>
-    <a class="btn btn-ghost" href="tel:017642685146">0176 4268 5146</a>
-  </div>
-  <p class="meta" style="margin-top:26px">ERREICHBAR · MO–MI & FR AB 17 UHR · SA & SO GANZTAGS</p>
 </section>
 
 </main>
 
 <footer>
-  <div class="footer-col footer-brand">
-    <strong>APEX</strong>
-    <p>Physiotherapie &amp; Training bei dir zuhause. Mobile Physiotherapie Grausam, Dornierstraße 5, 69181 Leimen.</p>
+  <div class="footer-brand">
+    <strong>CAPRATE</strong>
+    <p>Immobilien-Investment-Analyse nach Buy-and-Hold-Prinzipien. Kein Anlage- oder Steuerberatungsersatz.</p>
   </div>
-  <div class="footer-col">
-    <strong>Seiten</strong>
-    <a href="index.html">Start</a>
-    <a href="methode.html">Methode</a>
-    <a href="angebot.html">Angebot</a>
-    <a href="club.html">Club</a>
-    <a href="kontakt.html">Kontakt</a>
+  <div style="display:flex;flex-direction:column;gap:9px">
+    <a href="#tool">Rechner</a>
+    <a href="#methodik">Methodik</a>
   </div>
-  <div class="footer-col">
-    <strong>Mehr</strong>
-    <a href="nick.html">Über Nick</a>
-    <a href="faq.html">FAQ</a>
-    <a href="blog.html">Blog</a>
-  </div>
-  <div class="footer-col">
-    <strong>Rechtliches</strong>
-    <a href="https://www.physiotherapie-grausam.com/#impressum">Impressum</a>
-    <a href="https://www.physiotherapie-grausam.com/#datenschutz">Datenschutz</a>
-    <a href="https://www.physiotherapie-grausam.com/">Klassische Seite</a>
-  </div>
-  <div class="footer-bottom">© 2026 Nick Grausam · Mobile Physiotherapie Grausam · Dornierstraße 5, 69181 Leimen</div>
 </footer>
 
 <script src="script.js" defer></script>

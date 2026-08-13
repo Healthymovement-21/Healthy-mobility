@@ -119,8 +119,16 @@ document.querySelectorAll('.step-dot').forEach(function(dot){
 });
 
 /* ============ Exposé step ============ */
+var URL_PATTERN = /^\s*(https?:\/\/|www\.)\S+\s*$/i;
 $('parse-btn').addEventListener('click', function(){
-  var found = parseExpose($('expose').value);
+  var raw = $('expose').value;
+  var box = $('parse-result');
+  if (URL_PATTERN.test(raw)) {
+    box.style.display = 'block';
+    box.innerHTML = '<b style="color:var(--bad)">Diesen Link kann ich nicht selbst öffnen</b> — Browser blockieren das Nachladen fremder Seiten aus Sicherheitsgründen (Cross-Origin-Sperre), das lässt sich auf einer statischen Seite ohne eigenen Server nicht umgehen. Öffne den Link selbst, kopier den Beschreibungstext des Inserats und füg ihn hier ein — dann erkenne ich die Werte automatisch.';
+    return;
+  }
+  var found = parseExpose(raw);
   var applied = [];
   ['ort','plz','kaufpreis','wohnflaeche','zimmer','baujahr','hausgeld'].forEach(function(key){
     var val = found[key];
@@ -153,6 +161,33 @@ document.querySelectorAll('.radio-row').forEach(function(row){
   });
 });
 
+/* ============ "weiß ich nicht" Toggles ============ */
+document.querySelectorAll('.unknown-toggle').forEach(function(btn){
+  var input = $(btn.dataset.target);
+  btn.addEventListener('click', function(){
+    var nowUnknown = !input.disabled;
+    if (nowUnknown) {
+      input.dataset.prevValue = input.value;
+      input.dataset.prevPlaceholder = input.placeholder || '';
+      input.value = '';
+      input.placeholder = 'nicht bekannt';
+      input.disabled = true;
+      input.classList.add('is-unknown');
+      btn.classList.add('active');
+      btn.textContent = 'unbekannt ✕';
+    } else {
+      input.disabled = false;
+      input.classList.remove('is-unknown');
+      input.value = input.dataset.prevValue || '';
+      input.placeholder = input.dataset.prevPlaceholder || '';
+      btn.classList.remove('active');
+      btn.textContent = 'weiß ich nicht';
+    }
+    if (input.id === 'baujahr') updateRentEstimate();
+  });
+});
+function isUnknown(id){ return $(id).disabled; }
+
 /* ============ vermietet toggle ============ */
 document.getElementById('vermietet-row').addEventListener('change', function(e){
   var val = document.querySelector('input[name="vermietet"]:checked').value;
@@ -171,23 +206,51 @@ function updateRentEstimate(){
     return;
   }
   if (!renteOverridden) $('miete_markt').value = est.miete;
+  var baujahrPart = isUnknown('baujahr') ? ', Baujahr nicht bekannt (keine Anpassung)' : baujahr ? ', Baujahr-Anpassung ' + (est.bjMod >= 0 ? '+' : '') + fmtPct(est.bjMod * 100, 0) : '';
+  var zustandPart = zustand === 'unbekannt' ? ', Zustand nicht bekannt (keine Anpassung)' : ', Zustand-Anpassung ' + (est.zMod >= 0 ? '+' : '') + fmtPct(est.zMod * 100, 0);
   $('miete-basis').textContent = (est.known ? 'Basis: ' : 'Ort nicht hinterlegt, bundesweiter Richtwert: ') +
-    fmtNum(est.basePerSqm, 1) + ' €/m² × ' + fmtNum(wohnflaeche, 0) + ' m²' +
-    (baujahr ? ', Baujahr-Anpassung ' + (est.bjMod >= 0 ? '+' : '') + fmtPct(est.bjMod * 100, 0) : '') +
-    ', Zustand-Anpassung ' + (est.zMod >= 0 ? '+' : '') + fmtPct(est.zMod * 100, 0) + '. Frei überschreibbar.';
+    fmtNum(est.basePerSqm, 1) + ' €/m² × ' + fmtNum(wohnflaeche, 0) + ' m²' + baujahrPart + zustandPart + '. Frei überschreibbar.';
 }
 $('miete_markt').addEventListener('input', function(){ renteOverridden = true; });
 
 /* ============ Kennzahlen-Berechnung ============ */
+var HAUSGELD_PER_SQM = 2.8;
+
 function calcAll(){
   var kaufpreis = parseFloat($('kaufpreis').value) || 0;
   var wohnflaeche = parseFloat($('wohnflaeche').value) || 0;
   var vermietet = document.querySelector('input[name="vermietet"]:checked').value === 'ja';
-  var kaltmiete = vermietet ? (parseFloat($('miete_aktuell').value) || 0) : (parseFloat($('miete_markt').value) || 0);
-  var hausgeld = parseFloat($('hausgeld').value) || 0;
+
+  var flags = { hausgeld: false, makler: false, mieteAktuell: false, baujahr: isUnknown('baujahr') };
+
+  var mieteAktuellUnknown = vermietet && isUnknown('miete_aktuell');
+  flags.mieteAktuell = mieteAktuellUnknown;
+  var kaltmiete;
+  if (vermietet && !mieteAktuellUnknown) {
+    kaltmiete = parseFloat($('miete_aktuell').value) || 0;
+  } else {
+    kaltmiete = parseFloat($('miete_markt').value) || 0;
+  }
+
+  var hausgeld;
+  if (isUnknown('hausgeld')) {
+    flags.hausgeld = true;
+    hausgeld = HAUSGELD_PER_SQM * wohnflaeche;
+  } else {
+    hausgeld = parseFloat($('hausgeld').value) || 0;
+  }
+
   var hgnuPct = parseFloat($('hgnu').value) || 0;
   var gestPct = parseFloat($('bundesland').value) || 0;
-  var maklerPct = parseFloat($('makler').value) || 0;
+
+  var maklerPct;
+  if (isUnknown('makler')) {
+    flags.makler = true;
+    maklerPct = 0;
+  } else {
+    maklerPct = parseFloat($('makler').value) || 0;
+  }
+
   var eigenkapital = parseFloat($('eigenkapital').value) || 0;
   var zinsPct = parseFloat($('zins').value) || 0;
   var tilgungPct = parseFloat($('tilgung').value) || 0;
@@ -232,9 +295,11 @@ function calcAll(){
     vermietet: vermietet, kaltmiete: kaltmiete,
     ppqm: ppqm, faktor: faktor, gest: gest, gestPct: gestPct, notar: notar, grundbuch: grundbuch, makler: makler, maklerPct: maklerPct,
     nebenkosten: nebenkosten, gesamtkapital: gesamtkapital, renditeKP: renditeKP, renditeGK: renditeGK,
-    darlehen: darlehen, rate: rate, cashflowMtl: cashflowMtl, cashflowJahr: cashflowJahr, score: score
+    darlehen: darlehen, rate: rate, cashflowMtl: cashflowMtl, cashflowJahr: cashflowJahr, score: score, flags: flags
   };
 }
+function unknownBadge(text){ return ' <span class="badge badge-bad" style="margin-left:6px">🔴 ' + text + '</span>'; }
+function estBadge(text){ return ' <span class="badge badge-warn" style="margin-left:6px">🟡 ' + text + '</span>'; }
 
 function scoreBand(score){
   if (score >= 80) return { label: 'Kennzahlen stark', cls: 'good' };
@@ -275,9 +340,10 @@ $('btn-analyze').addEventListener('click', function(){
 
   var blocks = [];
 
+  var zustandText = d.zustand === 'unbekannt' ? 'nicht bekannt' : (d.zustand || '–');
   blocks.push('<div class="result-block reveal"><div class="card"><div class="rk"><span class="rk-num">01</span><h3>Objekt</h3></div>' +
     '<p class="sub" style="max-width:none">' + (d.zimmer ? d.zimmer + '-Zimmer-Wohnung' : 'Wohnung') + (d.ort ? ' in ' + d.ort : '') + (d.plz ? ' (' + d.plz + ')' : '') +
-    (d.baujahr ? ', Baujahr ' + d.baujahr : '') + ', ' + fmtNum(d.wohnflaeche, 0) + ' m², Zustand: ' + (d.zustand || '–') + '.</p></div></div>');
+    (d.baujahr ? ', Baujahr ' + d.baujahr : d.flags.baujahr ? ', Baujahr nicht bekannt' : '') + ', ' + fmtNum(d.wohnflaeche, 0) + ' m², Zustand: ' + zustandText + '.</p></div></div>');
 
   blocks.push('<div class="result-block reveal"><div class="card"><div class="rk"><span class="rk-num">02</span><h3>Kaufpreisanalyse</h3></div>' +
     '<div class="metric-grid three">' +
@@ -286,9 +352,11 @@ $('btn-analyze').addEventListener('click', function(){
     '<div class="metric"><span>Kaufpreisfaktor</span><b>' + (isFinite(d.faktor) ? fmtNum(d.faktor) + '×' : '–') + '</b></div>' +
     '</div></div></div>');
 
+  var mieteLabel = (d.vermietet && !d.flags.mieteAktuell) ? 'Aktuelle Kaltmiete' : 'Marktmiete (geschätzt)';
   blocks.push('<div class="result-block reveal"><div class="card"><div class="rk"><span class="rk-num">03</span><h3>Mietanalyse</h3></div>' +
+    (d.flags.mieteAktuell ? '<p class="field-hint" style="margin-bottom:14px">' + unknownBadge('Aktuelle Miete nicht bekannt') + ' — mit der Marktmiete-Schätzung aus Schritt 2 gerechnet.</p>' : '') +
     '<div class="metric-grid">' +
-    '<div class="metric"><span>' + (d.vermietet ? 'Aktuelle Kaltmiete' : 'Marktmiete (geschätzt)') + '</span><b>' + fmtEUR(d.kaltmiete) + ' / Monat</b></div>' +
+    '<div class="metric"><span>' + mieteLabel + '</span><b>' + fmtEUR(d.kaltmiete) + ' / Monat</b></div>' +
     '<div class="metric"><span>Jahreskaltmiete</span><b>' + fmtEUR(d.kaltmiete * 12) + '</b></div>' +
     '</div></div></div>');
 
@@ -300,11 +368,12 @@ $('btn-analyze').addEventListener('click', function(){
     '<div class="breakdown-row"><span>Grunderwerbsteuer (' + fmtPct(d.gestPct, 1) + ')</span><b>' + fmtEUR(d.gest) + '</b></div>' +
     '<div class="breakdown-row"><span>Notar (1,5 %)</span><b>' + fmtEUR(d.notar) + '</b></div>' +
     '<div class="breakdown-row"><span>Grundbuch (0,5 %)</span><b>' + fmtEUR(d.grundbuch) + '</b></div>' +
-    '<div class="breakdown-row"><span>Maklerprovision (' + fmtPct(d.maklerPct, 2) + ')</span><b>' + fmtEUR(d.makler) + '</b></div>' +
+    '<div class="breakdown-row"><span>Maklerprovision' + (d.flags.makler ? unknownBadge('unbekannt, mit 0 % gerechnet') : ' (' + fmtPct(d.maklerPct, 2) + ')') + '</span><b>' + fmtEUR(d.makler) + '</b></div>' +
     '<div class="breakdown-row total"><span>Gesamtkapitalbedarf</span><b>' + fmtEUR(d.gesamtkapital) + '</b></div>' +
     '</div></div>');
 
   blocks.push('<div class="result-block reveal"><div class="card"><div class="rk"><span class="rk-num">05</span><h3>Finanzierung &amp; Cashflow</h3></div>' +
+    (d.flags.hausgeld ? '<p class="field-hint" style="margin-bottom:14px">' + estBadge('Hausgeld nicht bekannt') + ' — mit ' + fmtNum(HAUSGELD_PER_SQM,1) + ' €/m² geschätzt, bitte vor der Besichtigung erfragen.</p>' : '') +
     '<div class="metric-grid">' +
     '<div class="metric"><span>Darlehenssumme</span><b>' + fmtEUR(d.darlehen) + '</b></div>' +
     '<div class="metric"><span>Monatliche Rate</span><b>' + fmtEUR(d.rate) + '</b></div>' +
@@ -312,12 +381,14 @@ $('btn-analyze').addEventListener('click', function(){
     '<div class="metric ' + cfPosNeg + '"><span>Cashflow / Jahr</span><b>' + (d.cashflowJahr >= 0 ? '+' : '') + fmtEUR(d.cashflowJahr) + '</b></div>' +
     '</div></div></div>');
 
+  var flagCount = (d.flags.baujahr?1:0) + (d.flags.hausgeld?1:0) + (d.flags.makler?1:0) + (d.flags.mieteAktuell?1:0);
   blocks.push('<div class="result-block reveal"><div class="card score-card">' +
     '<span class="field-hint">KENNZAHLEN-SCORE</span>' +
     '<div class="score-num" style="color:' + colorVar + '">' + d.score + '</div>' +
     '<span class="badge badge-' + band.cls + '"><span class="badge-dot"></span>' + band.label + '</span>' +
     '<div class="score-bar"><div class="score-bar-fill" style="width:' + Math.max(d.score, 2) + '%;background:' + colorVar + '"></div></div>' +
-    '<p class="field-hint" style="margin-top:18px;text-align:left">Score bewertet nur Kaufpreisfaktor, Rendite und Cashflow. Lage, Zustand, WEG-Risiken und Red Flags fließen hier <strong>nicht</strong> ein — dafür braucht es die echten Objektunterlagen. Zinssatz ist ein Platzhalter, kein aktuelles Bankangebot.</p>' +
+    (flagCount ? '<p class="field-hint" style="margin-top:16px;text-align:left">🔴/🟡 ' + flagCount + ' Angabe' + (flagCount===1?'':'n') + ' war' + (flagCount===1?'':'en') + ' nicht bekannt und wurde' + (flagCount===1?'':'n') + ' mit einer Schätzung ersetzt (markiert in den Blöcken oben) — Score entsprechend mit Vorsicht lesen.</p>' : '') +
+    '<p class="field-hint" style="margin-top:10px;text-align:left">Score bewertet nur Kaufpreisfaktor, Rendite und Cashflow. Lage, Zustand, WEG-Risiken und Red Flags fließen hier <strong>nicht</strong> ein — dafür braucht es die echten Objektunterlagen. Zinssatz ist ein Platzhalter, kein aktuelles Bankangebot.</p>' +
     '</div></div>');
 
   blocks.push('<div class="result-block reveal"><div class="card"><div class="rk"><span class="rk-num">06</span><h3>Checkliste für die Besichtigung</h3></div>' +
@@ -336,6 +407,12 @@ $('btn-analyze').addEventListener('click', function(){
   });
 
   window.scrollTo({ top: $('results').offsetTop - 80, behavior: 'smooth' });
+});
+
+$('btn-edit').addEventListener('click', function(){
+  $('results').style.display = 'none';
+  $('tool').style.display = 'block';
+  window.scrollTo({ top: $('tool').offsetTop - 90, behavior: 'smooth' });
 });
 
 /* ============ init ============ */

@@ -98,6 +98,10 @@ h3{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.01e
 .field{display:flex;flex-direction:column;gap:7px;min-width:0}
 .field label{font-size:12.5px;color:var(--dim);display:flex;align-items:center;gap:6px;justify-content:space-between}
 .field label .tag-auto{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--good);background:rgba(var(--good-rgb),.1);padding:2px 6px;border-radius:5px;text-transform:uppercase}
+.unknown-toggle{font-family:var(--mono);font-size:10px;letter-spacing:.02em;color:var(--faint);background:none;border:none;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:0;white-space:nowrap}
+.unknown-toggle:hover{color:var(--dim)}
+.unknown-toggle.active{color:var(--bad);text-decoration:none;background:rgba(var(--bad-rgb),.08);padding:2px 7px;border-radius:5px}
+.field input.is-unknown{background:var(--surface-2);color:var(--faint);border-style:dashed}
 .field input,.field select,.field textarea{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:12px 13px;
   color:var(--ink);font-family:var(--mono);font-size:14.5px;font-variant-numeric:tabular-nums;transition:border-color .15s,box-shadow .15s;width:100%;min-width:0}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(var(--ink-rgb),.06)}

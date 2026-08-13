@@ -4,151 +4,196 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CAPRATE · Immobilien-Investment-Analyse</title>
-<meta name="description" content="Rechner für Immobilien als Kapitalanlage: Kaufpreis, Rendite, Finanzierung und Cashflow in Echtzeit — nach Buy-and-Hold-Prinzipien.">
+<meta name="description" content="Geführte Analyse für Immobilien als Kapitalanlage: Objektdaten, Marktmiete-Schätzung, Rendite, Finanzierung, Cashflow und Besichtigungs-Checkliste — nach Buy-and-Hold-Prinzipien.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="glow"></div><div class="grid-bg"></div>
 
 <nav>
-  <a class="logo" href="index.html"><span class="dot"></span>CAPRATE</a>
+  <a class="logo" href="index.html"><span class="mark"></span>CAPRATE</a>
   <div class="nav-links">
-    <a href="#tool">Rechner</a>
+    <a href="#tool">Analyse</a>
     <a href="#methodik">Methodik</a>
-    <a href="#tool" class="btn btn-gold">Objekt prüfen</a>
+    <a href="#tool" class="btn btn-primary btn-sm">Objekt prüfen</a>
   </div>
 </nav>
 
 <main>
 
 <div class="hero">
-  <div>
-    <p class="eyebrow">Immobilien × Kapitalanlage · Buy &amp; Hold</p>
-    <h1>Ist diese Immobilie eine gute Kapitalanlage? <span style="color:var(--gold)">Rechne es aus.</span></h1>
-    <p class="sub" style="margin-top:20px"><strong>Kaufpreis, Rendite, Finanzierung und Cashflow in Echtzeit.</strong> Keine Schätzung nach Gefühl — nur Zahlen.</p>
-    <div class="hero-stats">
-      <div class="stat"><b>0</b><span>Kein Login nötig</span></div>
-      <div class="stat"><b>Live</b><span>Neuberechnung sofort</span></div>
-      <div class="stat"><b>1–100</b><span>Kennzahlen-Score</span></div>
-    </div>
+  <p class="eyebrow">Immobilien · Kapitalanlage · Buy &amp; Hold</p>
+  <h1>Ist diese Immobilie eine gute Kapitalanlage?</h1>
+  <p class="sub" style="margin-top:18px"><strong>Eine geführte Analyse, kein Bauchgefühl.</strong> Exposé einfügen oder Daten eintragen — Marktmiete, Rendite, Finanzierung, Cashflow und was du bei der Besichtigung prüfen solltest, Schritt für Schritt.</p>
+  <div class="hero-meta">
+    <div><b>5 Minuten</b><span>bis zum Ergebnis</span></div>
+    <div><b>Live</b><span>Marktmiete-Schätzung</span></div>
+    <div><b>1–100</b><span>Kennzahlen-Score</span></div>
   </div>
 </div>
 
-<section id="tool" class="reveal" style="padding-top:20px">
-  <p class="eyebrow">Der Rechner</p>
-  <h2>Objekt eingeben, Zahlen sehen</h2>
-  <p class="sub" style="margin-bottom:32px">Alle Werte sind Platzhalter zum Ausprobieren — trag dein Objekt ein, alles rechnet sich live neu.</p>
+<section id="tool" style="padding-top:24px">
+  <div class="wizard">
 
-  <div class="tool">
-    <form class="card" id="form" autocomplete="off">
+    <div class="stepper" id="stepper">
+      <div class="step-dot active" data-step="0"></div>
+      <div class="step-dot" data-step="1"></div>
+      <div class="step-dot" data-step="2"></div>
+      <div class="step-dot" data-step="3"></div>
+      <div class="step-dot" data-step="4"></div>
+    </div>
+    <p class="step-label" id="step-label">Schritt <b>1</b> von 5 — Exposé</p>
 
-      <div class="field-group">
-        <div class="field-group-title">Objekt</div>
-        <div class="field-row">
-          <div class="field"><label for="kaufpreis">Kaufpreis (€)</label><input type="number" id="kaufpreis" value="220000" min="0" step="1000"></div>
-          <div class="field"><label for="wohnflaeche">Wohnfläche (m²)</label><input type="number" id="wohnflaeche" value="65" min="1" step="1"></div>
+    <form id="form" autocomplete="off">
+
+      <!-- STEP 0: Exposé -->
+      <div class="step active" data-step="0">
+        <div class="card">
+          <h3>Exposé-Text einfügen (optional)</h3>
+          <p class="field-hint" style="margin:8px 0 14px">Kopier den Beschreibungstext aus dem Inserat hier rein — Kaufpreis, Wohnfläche, Zimmer, Baujahr und Ort werden automatisch erkannt und vorausgefüllt. Ein direkter Link kann von hier aus technisch nicht abgerufen werden.</p>
+          <div class="field">
+            <textarea id="expose" placeholder="z. B. „Gepflegte 3-Zimmer-Wohnung, Baujahr 1998, 78 m², Kaufpreis 245.000 €, Hausgeld 210 €, 69117 Heidelberg …“"></textarea>
+          </div>
+          <div class="wizard-nav">
+            <button type="button" class="skip-link" id="skip-expose">Ohne Exposé fortfahren</button>
+            <div class="spacer"></div>
+            <button type="button" class="btn btn-accent" id="parse-btn">Erkennen &amp; übernehmen</button>
+          </div>
+          <div class="parse-result" id="parse-result" style="display:none"></div>
         </div>
       </div>
 
-      <div class="field-group">
-        <div class="field-group-title">Miete &amp; Hausgeld</div>
-        <div class="field-row">
-          <div class="field"><label for="kaltmiete">Kaltmiete mtl. (€)</label><input type="number" id="kaltmiete" value="720" min="0" step="10"></div>
-          <div class="field"><label for="hausgeld">Hausgeld gesamt mtl. (€)</label><input type="number" id="hausgeld" value="260" min="0" step="5"></div>
-        </div>
-        <div class="field-row single">
-          <div class="field">
-            <label for="hgnu">davon nicht umlagefähig (%)</label>
-            <input type="range" id="hgnu" value="35" min="0" max="100" step="1">
-            <span class="field-hint" id="hgnu-out">35 % — Rücklage, Verwaltung u. a. trägt der Eigentümer</span>
+      <!-- STEP 1: Objekt & Lage -->
+      <div class="step" data-step="1">
+        <div class="card">
+          <div class="field-group">
+            <div class="field-row">
+              <div class="field"><label for="ort">Ort / Stadt <span class="tag-auto" id="tag-ort" style="display:none">erkannt</span></label><input type="text" id="ort" placeholder="z. B. Heidelberg"></div>
+              <div class="field"><label for="plz">PLZ (optional)</label><input type="text" id="plz" placeholder="69117" maxlength="5"></div>
+            </div>
+            <div class="field-row three">
+              <div class="field"><label for="kaufpreis">Kaufpreis (€) <span class="tag-auto" id="tag-kaufpreis" style="display:none">erkannt</span></label><input type="number" id="kaufpreis" min="0" step="1000" placeholder="245000"></div>
+              <div class="field"><label for="wohnflaeche">Wohnfläche (m²) <span class="tag-auto" id="tag-wohnflaeche" style="display:none">erkannt</span></label><input type="number" id="wohnflaeche" min="1" step="1" placeholder="78"></div>
+              <div class="field"><label for="zimmer">Zimmer <span class="tag-auto" id="tag-zimmer" style="display:none">erkannt</span></label><input type="number" id="zimmer" min="1" step="0.5" placeholder="3"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="baujahr">Baujahr <span class="tag-auto" id="tag-baujahr" style="display:none">erkannt</span></label><input type="number" id="baujahr" min="1850" max="2027" step="1" placeholder="1998"></div>
+              <div class="field">
+                <label>Zustand</label>
+                <div class="radio-row" id="zustand-row">
+                  <label class="radio-chip"><input type="radio" name="zustand" value="saniert">Saniert</label>
+                  <label class="radio-chip"><input type="radio" name="zustand" value="gepflegt" checked>Gepflegt</label>
+                  <label class="radio-chip"><input type="radio" name="zustand" value="renovierung">Renov.-bedürftig</label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="field-group">
-        <div class="field-group-title">Kaufnebenkosten</div>
-        <div class="field-row">
-          <div class="field">
-            <label for="bundesland">Bundesland (Grunderwerbsteuer)</label>
-            <select id="bundesland">
-              <option value="3.5">Bayern (3,5 %)</option>
-              <option value="5.0" selected>Baden-Württemberg (5,0 %)</option>
-              <option value="5.0">Bremen (5,0 %)</option>
-              <option value="5.0">Niedersachsen (5,0 %)</option>
-              <option value="5.0">Rheinland-Pfalz (5,0 %)</option>
-              <option value="5.0">Sachsen-Anhalt (5,0 %)</option>
-              <option value="5.5">Hamburg (5,5 %)</option>
-              <option value="5.5">Sachsen (5,5 %)</option>
-              <option value="6.0">Berlin (6,0 %)</option>
-              <option value="6.0">Hessen (6,0 %)</option>
-              <option value="6.0">Mecklenburg-Vorpommern (6,0 %)</option>
-              <option value="6.5">Brandenburg (6,5 %)</option>
-              <option value="6.5">Nordrhein-Westfalen (6,5 %)</option>
-              <option value="6.5">Saarland (6,5 %)</option>
-              <option value="6.5">Schleswig-Holstein (6,5 %)</option>
-              <option value="6.5">Thüringen (6,5 %)</option>
-            </select>
+      <!-- STEP 2: Miete -->
+      <div class="step" data-step="2">
+        <div class="card">
+          <div class="field-group">
+            <div class="field">
+              <label>Vermietungsstatus</label>
+              <div class="radio-row" id="vermietet-row">
+                <label class="radio-chip"><input type="radio" name="vermietet" value="nein" checked>Leerstand / Eigennutz</label>
+                <label class="radio-chip"><input type="radio" name="vermietet" value="ja">Bereits vermietet</label>
+              </div>
+            </div>
           </div>
-          <div class="field"><label for="makler">Maklerprovision (%)</label><input type="number" id="makler" value="3.57" min="0" step="0.01"></div>
+          <div class="field-group" id="miete-aktuell-group" style="display:none">
+            <div class="field-row single">
+              <div class="field"><label for="miete_aktuell">Aktuelle Kaltmiete mtl. (€)</label><input type="number" id="miete_aktuell" min="0" step="10" placeholder="0"></div>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field-row single">
+              <div class="field">
+                <label for="miete_markt">Marktmiete Kaltmiete mtl. (€) <span class="badge badge-warn" style="margin-left:4px">Geschätzt</span></label>
+                <input type="number" id="miete_markt" min="0" step="10">
+              </div>
+            </div>
+            <p class="field-hint" id="miete-basis">Schätzung erscheint, sobald Ort, Wohnfläche und Baujahr aus Schritt 1 vorliegen. Frei überschreibbar — kein amtlicher Mietspiegel, sondern grobe Orientierung.</p>
+          </div>
         </div>
-        <p class="field-hint">Zzgl. Notar ~1,5 % und Grundbuch ~0,5 % (fest eingerechnet)</p>
       </div>
 
-      <div class="field-group">
-        <div class="field-group-title">Finanzierung</div>
-        <div class="field-row">
-          <div class="field"><label for="eigenkapital">Eigenkapital (€)</label><input type="number" id="eigenkapital" value="40000" min="0" step="1000"></div>
-          <div class="field"><label for="zins">Zinssatz p.a. (%)</label><input type="number" id="zins" value="3.8" min="0" step="0.05"></div>
+      <!-- STEP 3: Hausgeld & Kaufnebenkosten -->
+      <div class="step" data-step="3">
+        <div class="card">
+          <div class="field-group">
+            <div class="field-row">
+              <div class="field"><label for="hausgeld">Hausgeld gesamt mtl. (€) <span class="tag-auto" id="tag-hausgeld" style="display:none">erkannt</span></label><input type="number" id="hausgeld" min="0" step="5" value="240"></div>
+              <div class="field"><label for="makler">Maklerprovision (%)</label><input type="number" id="makler" min="0" step="0.01" value="3.57"></div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label for="hgnu">davon nicht umlagefähig (%)</label>
+                <input type="range" id="hgnu" value="35" min="0" max="100" step="1">
+                <span class="field-hint" id="hgnu-out">35 % — Rücklage, Verwaltung u. a. trägt der Eigentümer</span>
+              </div>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field-row single">
+              <div class="field">
+                <label for="bundesland">Bundesland (Grunderwerbsteuer)</label>
+                <select id="bundesland">
+                  <option value="3.5">Bayern (3,5 %)</option>
+                  <option value="5.0" selected>Baden-Württemberg (5,0 %)</option>
+                  <option value="5.0">Bremen (5,0 %)</option>
+                  <option value="5.0">Niedersachsen (5,0 %)</option>
+                  <option value="5.0">Rheinland-Pfalz (5,0 %)</option>
+                  <option value="5.0">Sachsen-Anhalt (5,0 %)</option>
+                  <option value="5.5">Hamburg (5,5 %)</option>
+                  <option value="5.5">Sachsen (5,5 %)</option>
+                  <option value="6.0">Berlin (6,0 %)</option>
+                  <option value="6.0">Hessen (6,0 %)</option>
+                  <option value="6.0">Mecklenburg-Vorpommern (6,0 %)</option>
+                  <option value="6.5">Brandenburg (6,5 %)</option>
+                  <option value="6.5">Nordrhein-Westfalen (6,5 %)</option>
+                  <option value="6.5">Saarland (6,5 %)</option>
+                  <option value="6.5">Schleswig-Holstein (6,5 %)</option>
+                  <option value="6.5">Thüringen (6,5 %)</option>
+                </select>
+              </div>
+            </div>
+            <p class="field-hint">Zzgl. Notar ~1,5 % und Grundbuch ~0,5 % (fest eingerechnet)</p>
+          </div>
         </div>
-        <div class="field-row single">
-          <div class="field"><label for="tilgung">Anfängliche Tilgung p.a. (%)</label><input type="number" id="tilgung" value="2.0" min="0" step="0.1"></div>
+      </div>
+
+      <!-- STEP 4: Finanzierung -->
+      <div class="step" data-step="4">
+        <div class="card">
+          <div class="field-group">
+            <div class="field-row three">
+              <div class="field"><label for="eigenkapital">Eigenkapital (€)</label><input type="number" id="eigenkapital" min="0" step="1000" value="40000"></div>
+              <div class="field"><label for="zins">Zinssatz p.a. (%)</label><input type="number" id="zins" min="0" step="0.05" value="3.8"></div>
+              <div class="field"><label for="tilgung">Tilgung p.a. (%)</label><input type="number" id="tilgung" min="0" step="0.1" value="2.0"></div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="wizard-nav" id="wizard-nav">
+        <button type="button" class="btn btn-ghost" id="btn-back">Zurück</button>
+        <div class="spacer"></div>
+        <button type="button" class="btn btn-primary" id="btn-next">Weiter</button>
+        <button type="button" class="btn btn-accent" id="btn-analyze" style="display:none">Analysieren</button>
       </div>
     </form>
-
-    <div class="results">
-      <div class="card score-card">
-        <span class="field-hint">KENNZAHLEN-SCORE</span>
-        <div class="score-num" id="score">–</div>
-        <div class="score-label" id="score-label">–</div>
-        <div class="score-bar"><div class="score-bar-fill" id="score-bar"></div></div>
-      </div>
-
-      <div class="card" style="margin-top:16px">
-        <div class="metric-grid">
-          <div class="metric"><span>Preis / m²</span><b id="m-ppqm">–</b></div>
-          <div class="metric"><span>Kaufpreisfaktor</span><b id="m-faktor">–</b></div>
-          <div class="metric gold"><span>Bruttorendite (Kaufpreis)</span><b id="m-rendite-kp">–</b></div>
-          <div class="metric gold"><span>Bruttorendite (Gesamtkapital)</span><b id="m-rendite-gk">–</b></div>
-        </div>
-
-        <div class="breakdown">
-          <div class="breakdown-row"><span>Grunderwerbsteuer</span><b id="b-gest">–</b></div>
-          <div class="breakdown-row"><span>Notar (1,5 %)</span><b id="b-notar">–</b></div>
-          <div class="breakdown-row"><span>Grundbuch (0,5 %)</span><b id="b-grundbuch">–</b></div>
-          <div class="breakdown-row"><span>Maklerprovision</span><b id="b-makler">–</b></div>
-          <div class="breakdown-row total"><span>Gesamtkapitalbedarf</span><b id="b-gesamt">–</b></div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px">
-        <div class="metric-grid">
-          <div class="metric"><span>Darlehenssumme</span><b id="m-darlehen">–</b></div>
-          <div class="metric"><span>Monatliche Rate</span><b id="m-rate">–</b></div>
-          <div class="metric" id="m-cashflow-card"><span>Cashflow / Monat</span><b id="m-cashflow">–</b></div>
-          <div class="metric"><span>Cashflow / Jahr</span><b id="m-cashflow-jahr">–</b></div>
-        </div>
-        <div class="disclaimer">
-          Score bewertet nur die berechenbaren Kennzahlen (Kaufpreisfaktor, Rendite, Cashflow). Lage, Zustand, WEG-Risiken und Red Flags fließen hier <strong>nicht</strong> ein — dafür brauche ich das konkrete Exposé. 🔴 Zinssatz ist ein Platzhalter, kein aktuelles Bankangebot.
-        </div>
-      </div>
-    </div>
   </div>
+</section>
+
+<section id="results" style="display:none;padding-top:0">
+  <div class="wizard" id="results-inner"></div>
 </section>
 
 <section id="methodik" class="reveal">
   <p class="eyebrow">Methodik</p>
-  <h2>Wonach der Rechner bewertet</h2>
+  <h2>Wonach die Analyse bewertet</h2>
   <p class="sub">Buy-and-Hold-Kapitalanlage heißt: Rendite zählt weniger als Cashflow, und der Kaufpreisfaktor sagt oft mehr als die reine Rendite-Prozentzahl.</p>
   <div class="method-grid">
     <div class="card">
@@ -157,7 +202,7 @@
     </div>
     <div class="card">
       <b>Cashflow vor Rendite</b>
-      <p>Eine hohe Bruttorendite mit negativem monatlichem Cashflow ist kein gutes Investment. Der Rechner gewichtet Cashflow so hoch wie Rendite.</p>
+      <p>Eine hohe Bruttorendite mit negativem monatlichem Cashflow ist kein gutes Investment. Der Score gewichtet Cashflow so hoch wie Rendite.</p>
     </div>
     <div class="card">
       <b>Gesamtkapital, nicht nur Kaufpreis</b>
@@ -174,7 +219,7 @@
     <p>Immobilien-Investment-Analyse nach Buy-and-Hold-Prinzipien. Kein Anlage- oder Steuerberatungsersatz.</p>
   </div>
   <div style="display:flex;flex-direction:column;gap:9px">
-    <a href="#tool">Rechner</a>
+    <a href="#tool">Analyse</a>
     <a href="#methodik">Methodik</a>
   </div>
 </footer>

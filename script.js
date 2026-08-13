@@ -119,15 +119,12 @@ document.querySelectorAll('.step-dot').forEach(function(dot){
 });
 
 /* ============ Exposé step ============ */
-var URL_PATTERN = /^\s*(https?:\/\/|www\.)\S+\s*$/i;
+var URL_PATTERN = /https?:\/\/\S+|www\.\S+/i;
 $('parse-btn').addEventListener('click', function(){
   var raw = $('expose').value;
   var box = $('parse-result');
-  if (URL_PATTERN.test(raw)) {
-    box.style.display = 'block';
-    box.innerHTML = '<b style="color:var(--bad)">Diesen Link kann ich nicht selbst öffnen</b> — Browser blockieren das Nachladen fremder Seiten aus Sicherheitsgründen (Cross-Origin-Sperre), das lässt sich auf einer statischen Seite ohne eigenen Server nicht umgehen. Öffne den Link selbst, kopier den Beschreibungstext des Inserats und füg ihn hier ein — dann erkenne ich die Werte automatisch.';
-    return;
-  }
+  var containsUrl = URL_PATTERN.test(raw);
+
   var found = parseExpose(raw);
   var applied = [];
   ['ort','plz','kaufpreis','wohnflaeche','zimmer','baujahr','hausgeld'].forEach(function(key){
@@ -140,12 +137,17 @@ $('parse-btn').addEventListener('click', function(){
       if (tag) tag.style.display = 'inline';
     }
   });
-  var box = $('parse-result');
+
   box.style.display = 'block';
-  box.innerHTML = applied.length
-    ? '<b>' + applied.length + ' Feld' + (applied.length === 1 ? '' : 'er') + ' erkannt:</b> ' + applied.join(', ') + '. Bitte in Schritt 2 kurz prüfen.'
-    : 'Es konnten keine Werte erkannt werden — bitte manuell eintragen.';
-  setTimeout(function(){ goToStep(1); }, applied.length ? 900 : 0);
+  if (applied.length) {
+    box.innerHTML = '<b>' + applied.length + ' Feld' + (applied.length === 1 ? '' : 'er') + ' erkannt:</b> ' + applied.join(', ') + '. Bitte in Schritt 2 kurz prüfen.' +
+      (containsUrl ? ' <span style="color:var(--faint)">(Den Link darin konnte ich nicht öffnen — nur der Text drumherum wurde ausgewertet.)</span>' : '');
+  } else if (containsUrl) {
+    box.innerHTML = '<b style="color:var(--bad)">Diesen Link kann ich nicht selbst öffnen</b> — Browser blockieren das Nachladen fremder Seiten aus Sicherheitsgründen (Cross-Origin-Sperre), das lässt sich auf einer statischen Seite ohne eigenen Server nicht umgehen, auch nicht mit Tracking-Parametern oder Begleittext dran. Öffne den Link selbst, kopier den Beschreibungstext des Inserats (Kaufpreis, Wohnfläche, Zimmer, Baujahr, Hausgeld, Ort) und füg den hier ein — dann erkenne ich die Werte automatisch.';
+  } else {
+    box.innerHTML = 'Es konnten keine Werte erkannt werden — bitte manuell eintragen.';
+  }
+  if (applied.length) setTimeout(function(){ goToStep(1); }, 900);
 });
 $('skip-expose').addEventListener('click', function(){ goToStep(1); });
 

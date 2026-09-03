@@ -564,3 +564,85 @@ footer.site a:hover{ text-decoration:underline; }
   html{ scroll-behavior:auto; }
   *{ transition:none !important; }
 }
+
+/* ============================================================
+   Druck / „Als PDF speichern"
+   Die Seite selbst wird ausgeblendet, stattdessen erscheint die
+   per JS aufgebaute Druckansicht (#druck) als sauberes Dokument.
+   ============================================================ */
+#druck{ display:none; }
+
+@media print{
+  @page{ margin:18mm 16mm; }
+
+  body{
+    background:#fff !important;
+    color:#000;
+    font-size:10.5pt;
+    line-height:1.45;
+  }
+  body::before{ display:none !important; }   /* Farbauren kosten nur Tinte */
+
+  .page, footer.site{ display:none !important; }
+
+  #druck{
+    display:block;
+    max-width:none;
+    padding:0;
+  }
+  #druck h1{
+    font-size:19pt;
+    letter-spacing:-.01em;
+    margin:0 0 4pt;
+  }
+  #druck h2{
+    font-size:13pt;
+    margin:20pt 0 6pt;
+    padding-bottom:3pt;
+    border-bottom:1px solid #ccc;
+  }
+  #druck .sub{
+    color:#555;
+    font-size:9.5pt;
+    margin:0 0 16pt;
+    padding-bottom:10pt;
+    border-bottom:2px solid #000;
+  }
+  #druck table{
+    width:100%;
+    border-collapse:collapse;
+    margin:0 0 6pt;
+    font-size:10pt;
+  }
+  #druck th{
+    text-align:left;
+    font-size:8.5pt;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:#555;
+    border-bottom:1px solid #999;
+    padding:5pt 6pt;
+  }
+  #druck td{
+    padding:5pt 6pt;
+    border-bottom:1px solid #e2e2e2;
+    vertical-align:top;
+  }
+  #druck .r{ text-align:right; font-variant-numeric:tabular-nums; }
+  #druck tr.sum td{
+    font-weight:700;
+    border-top:1px solid #000;
+    border-bottom:none;
+    background:#f4f4f4;
+  }
+  #druck .fuss{
+    margin-top:22pt;
+    padding-top:8pt;
+    border-top:1px solid #ccc;
+    font-size:8.5pt;
+    color:#555;
+    max-width:none;
+  }
+  #druck tr{ page-break-inside:avoid; }
+  #druck h2{ page-break-after:avoid; }
+}

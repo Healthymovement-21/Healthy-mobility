@@ -192,6 +192,24 @@
       </div>
     </section>
 
+    <!-- ============ PDF ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 6</p>
+      <h2>Auswertung als PDF sichern</h2>
+      <p>Alle Zahlen, die Szenario-Tabelle und die Krankenkassen-Einschätzung in einem Dokument.</p>
+      <p class="hero-cta"><a class="btn" id="pdf" href="#">Als PDF speichern</a></p>
+      <div class="exclusions" style="margin-top:22px">
+        <p style="font-size:15.5px;margin-bottom:12px">
+          <strong>iPhone &amp; iPad</strong><br>
+          Auf „Als PDF speichern" tippen, dann <em>Drucken</em> wählen. In der Vorschau oben rechts auf das Teilen-Symbol und <em>In Dateien sichern</em>.
+        </p>
+        <p class="note" style="font-size:15.5px;border-top:none;padding-top:0">
+          <strong>Windows &amp; Mac</strong><br>
+          Auf „Als PDF speichern" klicken. Im Druckdialog als Drucker <em>Microsoft Print to PDF</em> wählen (Windows) bzw. unten links <em>Als PDF sichern</em> (Mac).
+        </p>
+      </div>
+    </section>
+
   </div>
 
   <footer class="site">
@@ -204,6 +222,9 @@
     </span>
   </footer>
 </div>
+
+<!-- Druckansicht: nur beim Drucken sichtbar, wird per JS befüllt -->
+<div id="druck" aria-hidden="true"></div>
 
 <script>
 const KEY = 'physionebenbei-gehalt';
@@ -345,6 +366,87 @@ function laden(){
     });
   } catch(e){}
 }
+
+/* ---------- Druckansicht ---------- */
+function baueDruckansicht(){
+  const brutto = val('brutto'), stunden = val('stunden'), q = quote();
+  const hauptNetto = brutto * (1 - q);
+  const gewinn = val('gewinn'), satz = val('satz') / 100;
+  const nebenNetto = gewinn * (1 - satz);
+  const nstunden = val('nstunden');
+  const gesamt = hauptNetto + nebenNetto;
+
+  const zeile = (label, wert, klasse) =>
+    `<tr class="${klasse || ''}"><td>${label}</td><td class="r">${wert}</td></tr>`;
+
+  /* Szenarien noch einmal für das Dokument aufbauen */
+  const stundenlohnBrutto = stunden > 0 ? brutto / stunden : 0;
+  const szenHtml = SZENARIEN.filter(s => s <= stunden).map(s => {
+    const b = stundenlohnBrutto * s;
+    const n = b * (1 - q);
+    const g = n + nebenNetto;
+    const diff = g - gesamt;
+    return `<tr>
+      <td>${s.toLocaleString('de-DE')} Std${Math.abs(s - stunden) < 0.01 ? ' (aktuell)' : ''}</td>
+      <td class="r">${eur(b)}</td>
+      <td class="r">${eur(n)}</td>
+      <td class="r">${eur(g)}</td>
+      <td class="r">${diff >= -0.5 ? '—' : eur(diff)}</td>
+      <td class="r">${s < stunden ? '+' + (stunden - s).toLocaleString('de-DE') + ' Std/Wo' : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  const ampelBox = document.getElementById('ampel');
+  const status = ampelBox.classList.contains('rot') ? 'Kritisch'
+               : ampelBox.classList.contains('gelb') ? 'Grenzbereich' : 'Unkritisch';
+
+  document.getElementById('druck').innerHTML = `
+    <h1>Einkommens-Auswertung</h1>
+    <p class="sub">Angestellt plus nebenberuflich selbstständig · erstellt am ${new Date().toLocaleDateString('de-DE')}</p>
+
+    <h2>Ausgangslage</h2>
+    <table><tbody>
+      ${zeile('Bruttogehalt Hauptjob', eur(brutto))}
+      ${zeile('Wochenstunden laut Vertrag', stunden.toLocaleString('de-DE') + ' Std')}
+      ${zeile('Effektive Abzugsquote', (q * 100).toLocaleString('de-DE', {maximumFractionDigits:1}) + ' %')}
+      ${zeile('Netto Hauptjob', eur(hauptNetto), 'sum')}
+      ${zeile('Gewinn Selbstständigkeit (vor Steuer)', eur(gewinn))}
+      ${zeile('Rücklage-Satz', Math.round(satz * 100) + ' %')}
+      ${zeile('Nebenverdienst nach Rücklage', eur(nebenNetto), 'sum')}
+      ${zeile('Stunden pro Woche selbstständig', nstunden.toLocaleString('de-DE') + ' Std')}
+      ${zeile('Gesamt pro Monat', eur(gesamt), 'sum')}
+      ${zeile('Gesamt-Arbeitszeit pro Woche', (stunden + nstunden).toLocaleString('de-DE') + ' Std')}
+    </tbody></table>
+
+    <h2>Wenn du im Hauptjob reduzierst</h2>
+    <table>
+      <thead><tr>
+        <th>Hauptjob</th><th class="r">Brutto</th><th class="r">Netto</th>
+        <th class="r">Gesamt</th><th class="r">Differenz</th><th class="r">Zeit frei</th>
+      </tr></thead>
+      <tbody>${szenHtml}</tbody>
+    </table>
+
+    <h2>Krankenkassen-Einschätzung: ${status}</h2>
+    <table><tbody>
+      ${zeile('Stunden pro Woche selbstständig', nstunden.toLocaleString('de-DE') + ' Std (Faustregel-Grenze: 20 Std)')}
+      ${zeile('Gewinn im Monat', eur(gewinn) + ' (halbe Bezugsgröße: ' + eur(val('bezug') / 2) + ')')}
+    </tbody></table>
+    <p style="font-size:9.5pt;margin-top:8pt">${document.getElementById('ampel_text').textContent}</p>
+
+    <p class="fuss">
+      Erstellt mit dem PhysioNebenbei-Gehaltsrechner. Die Netto-Werte der Szenarien sind mit der
+      aktuellen Abzugsquote hochgerechnet und daher eher vorsichtig — bei weniger Brutto sinkt der
+      Steuersatz mit. Die Krankenkassen-Einschätzung beruht auf den üblichen Faustregeln und ist
+      keine verbindliche Auskunft. Keine Steuer- oder Rechtsberatung.
+    </p>`;
+}
+
+document.getElementById('pdf').addEventListener('click', e => {
+  e.preventDefault();
+  baueDruckansicht();
+  window.print();
+});
 
 document.querySelectorAll('#brutto,#stunden,#netto,#gewinn,#satz,#nstunden,#bezug')
   .forEach(el => el.addEventListener('input', rechne));

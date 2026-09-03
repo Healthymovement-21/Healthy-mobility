@@ -23,42 +23,69 @@
     </section>
 
     <!-- ============ PREISLISTE ============ -->
-    <section class="sheet">
+    <section class="sheet wide">
       <p class="eyebrow">Schritt 1</p>
       <h2>Deine Preisliste</h2>
-      <p>Einmal eintragen, wird gespeichert. Alles Weitere rechnet damit.</p>
-      <div class="calc-card">
-        <div class="calc-row">
-          <label for="p_kg">KG — Krankengymnastik</label>
-          <div class="field"><input type="number" id="p_kg" value="45" step="1" data-price><span class="unit">€</span></div>
-        </div>
-        <div class="calc-row">
-          <label for="p_mt">MT — Manuelle Therapie</label>
-          <div class="field"><input type="number" id="p_mt" value="50" step="1" data-price><span class="unit">€</span></div>
-        </div>
-        <div class="calc-row">
-          <label for="p_mld30">MLD 30 — Manuelle Lymphdrainage</label>
-          <div class="field"><input type="number" id="p_mld30" value="42" step="1" data-price><span class="unit">€</span></div>
-        </div>
-        <div class="calc-row">
-          <label for="p_mld45">MLD 45 — Manuelle Lymphdrainage</label>
-          <div class="field"><input type="number" id="p_mld45" value="58" step="1" data-price><span class="unit">€</span></div>
-        </div>
-        <div class="calc-row">
-          <label for="p_waerme">Wärme / Fango (Zusatz)</label>
-          <div class="field"><input type="number" id="p_waerme" value="12" step="1" data-price><span class="unit">€</span></div>
-        </div>
-        <div class="calc-row">
-          <label for="p_hb">Hausbesuch — Zuschlag pro Termin</label>
-          <div class="field"><input type="number" id="p_hb" value="18" step="1" data-price><span class="unit">€</span></div>
-        </div>
+      <p>Zwei Spalten, weil die meisten bei Selbstzahler:innen anders kalkulieren als bei Privatpatient:innen mit Verordnung. Einmal eintragen, wird gespeichert.</p>
+
+      <div class="tbl-wrap">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Leistung</th>
+              <th style="width:145px">Privat</th>
+              <th style="width:145px">Selbstzahler</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="field">KG — Krankengymnastik</td>
+              <td><input type="number" id="pv_kg" value="45" step="1" data-price></td>
+              <td><input type="number" id="ps_kg" value="40" step="1" data-price></td>
+            </tr>
+            <tr>
+              <td class="field">MT — Manuelle Therapie</td>
+              <td><input type="number" id="pv_mt" value="50" step="1" data-price></td>
+              <td><input type="number" id="ps_mt" value="45" step="1" data-price></td>
+            </tr>
+            <tr>
+              <td class="field">MLD 30 — Lymphdrainage</td>
+              <td><input type="number" id="pv_mld30" value="42" step="1" data-price></td>
+              <td><input type="number" id="ps_mld30" value="38" step="1" data-price></td>
+            </tr>
+            <tr>
+              <td class="field">MLD 45 — Lymphdrainage</td>
+              <td><input type="number" id="pv_mld45" value="58" step="1" data-price></td>
+              <td><input type="number" id="ps_mld45" value="52" step="1" data-price></td>
+            </tr>
+            <tr>
+              <td class="field">Wärme / Fango (Zusatz)</td>
+              <td><input type="number" id="pv_waerme" value="12" step="1" data-price></td>
+              <td><input type="number" id="ps_waerme" value="10" step="1" data-price></td>
+            </tr>
+            <tr>
+              <td class="field">Hausbesuch — Zuschlag</td>
+              <td><input type="number" id="pv_hb" value="18" step="1" data-price></td>
+              <td><input type="number" id="ps_hb" value="15" step="1" data-price></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+      <p class="micro">Wellness-Leistungen rechnen mit der Selbstzahler-Spalte — dort wird nur die Umsatzsteuer anders behandelt.</p>
     </section>
 
     <!-- ============ BEHANDLUNGEN ============ -->
     <section class="sheet wide">
       <p class="eyebrow">Schritt 2</p>
       <h2>Behandlungen im Monat</h2>
+
+      <div class="calc-card" style="margin-bottom:22px">
+        <div class="calc-row">
+          <label for="monat">Welcher Monat ist das? <span class="micro">(steht später oben auf deinem PDF)</span></label>
+          <div class="field"><input type="month" id="monat" style="text-align:left"></div>
+        </div>
+      </div>
+
       <p>Keine Namen nötig — Patient 1, 2, 3. Eine Zeile pro Patient:in, mit der Anzahl der Termine im Monat.</p>
 
       <div class="tbl-wrap">
@@ -135,12 +162,29 @@
       </div>
 
       <div class="annotation">
-        Die Umsatzsteuer aus Wellness-Leistungen gehört dir nicht — die ist durchlaufender Posten und ist oben schon abgezogen. Solltest du unter der Kleinunternehmergrenze nach § 19 UStG liegen und keine USt ausweisen, stell alle Zeilen auf „Heilbehandlung" oder „Selbstzahler therapeutisch".
+        Die Umsatzsteuer aus Wellness-Leistungen gehört dir nicht — die ist durchlaufender Posten und oben schon abgezogen. Wenn du als Kleinunternehmer:in nach § 19 UStG keine Umsatzsteuer ausweist, stell alle Zeilen auf „Privat" oder „Selbstzahler".
       </div>
+    </section>
 
+    <!-- ============ PDF ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 4</p>
+      <h2>Monat als PDF sichern</h2>
+      <p>Erzeugt eine saubere Übersicht mit allen Behandlungen und der kompletten Auswertung — zum Ablegen, für die Steuerberatung oder als Beleg für dich selbst.</p>
       <p class="hero-cta">
+        <a class="btn" id="pdf" href="#">Als PDF speichern</a>
         <a class="btn ghost" id="reset" href="#">Monat zurücksetzen</a>
       </p>
+      <div class="exclusions" style="margin-top:22px">
+        <p style="font-size:15.5px;margin-bottom:12px">
+          <strong>iPhone &amp; iPad</strong><br>
+          Auf „Als PDF speichern" tippen, dann <em>Drucken</em> wählen. In der Vorschau oben rechts auf das Teilen-Symbol und <em>In Dateien sichern</em>.
+        </p>
+        <p class="note" style="font-size:15.5px;border-top:none;padding-top:0">
+          <strong>Windows &amp; Mac</strong><br>
+          Auf „Als PDF speichern" klicken. Im Druckdialog als Drucker <em>Microsoft Print to PDF</em> wählen (Windows) bzw. unten links <em>Als PDF sichern</em> (Mac).
+        </p>
+      </div>
     </section>
 
     <section class="sheet">
@@ -163,41 +207,48 @@
   </footer>
 </div>
 
+<!-- Druckansicht: nur beim Drucken sichtbar, wird per JS befüllt -->
+<div id="druck" aria-hidden="true"></div>
+
 <script>
 const KEY = 'physionebenbei-monat';
 const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
 const val = id => parseFloat(document.getElementById(id).value) || 0;
 
-/* Leistungen: Schlüssel -> Bestandteile aus der Preisliste */
+/* Leistungen: Bestandteile ohne Preis-Präfix.
+   Das Präfix (pv_ = privat, ps_ = selbstzahler) liefert die Abrechnungsart. */
 const LEISTUNGEN = {
-  kg:          {label:'KG',                 teile:['p_kg']},
-  mt:          {label:'MT',                 teile:['p_mt']},
-  mld30:       {label:'MLD 30',             teile:['p_mld30']},
-  mld45:       {label:'MLD 45',             teile:['p_mld45']},
-  kg_mt:       {label:'KG + MT',            teile:['p_kg','p_mt']},
-  kg_mld30:    {label:'KG + MLD 30',        teile:['p_kg','p_mld30']},
-  mt_mld30:    {label:'MT + MLD 30',        teile:['p_mt','p_mld30']},
-  kg_waerme:   {label:'KG + Wärme',         teile:['p_kg','p_waerme']},
-  mt_waerme:   {label:'MT + Wärme',         teile:['p_mt','p_waerme']},
+  kg:        {label:'KG',           teile:['kg']},
+  mt:        {label:'MT',           teile:['mt']},
+  mld30:     {label:'MLD 30',       teile:['mld30']},
+  mld45:     {label:'MLD 45',       teile:['mld45']},
+  kg_mt:     {label:'KG + MT',      teile:['kg','mt']},
+  kg_mld30:  {label:'KG + MLD 30',  teile:['kg','mld30']},
+  mt_mld30:  {label:'MT + MLD 30',  teile:['mt','mld30']},
+  kg_waerme: {label:'KG + Wärme',   teile:['kg','waerme']},
+  mt_waerme: {label:'MT + Wärme',   teile:['mt','waerme']},
 };
 
-/* Abrechnungsarten: bestimmen die Umsatzsteuer-Behandlung */
+/* Abrechnungsart bestimmt Preisspalte und Umsatzsteuer */
 const ARTEN = {
-  privat:      {label:'Privat',        ust:false},
-  selbst_ther: {label:'Selbstzahler',  ust:false},
-  selbst_well: {label:'Wellness',      ust:true},
+  privat:      {label:'Privat',       spalte:'pv', ust:false},
+  selbst_ther: {label:'Selbstzahler', spalte:'ps', ust:false},
+  selbst_well: {label:'Wellness',     spalte:'ps', ust:true},
 };
 
 let zeilen = [];
+const neueZeile = () => ({leistung:'kg', termine:1, hausbesuch:false, art:'privat'});
 
-function neueZeile(){
-  return {leistung:'kg', termine:1, hausbesuch:false, art:'privat'};
+function preisFuer(leistungKey, artKey){
+  const l = LEISTUNGEN[leistungKey], a = ARTEN[artKey];
+  if (!l || !a) return 0;
+  return l.teile.reduce((s, t) => s + val(a.spalte + '_' + t), 0);
 }
 
-function preisFuer(leistungKey){
-  const l = LEISTUNGEN[leistungKey];
-  if (!l) return 0;
-  return l.teile.reduce((s, id) => s + val(id), 0);
+function zeilenSumme(z){
+  const a = ARTEN[z.art];
+  const zuschlag = z.hausbesuch && a ? val(a.spalte + '_hb') : 0;
+  return (preisFuer(z.leistung, z.art) + zuschlag) * (z.termine || 0);
 }
 
 function render(){
@@ -205,13 +256,12 @@ function render(){
   tbody.innerHTML = '';
 
   zeilen.forEach((z, i) => {
-    const tr = document.createElement('tr');
-
     const optLeistung = Object.entries(LEISTUNGEN)
       .map(([k,v]) => `<option value="${k}"${z.leistung===k?' selected':''}>${v.label}</option>`).join('');
     const optArt = Object.entries(ARTEN)
       .map(([k,v]) => `<option value="${k}"${z.art===k?' selected':''}>${v.label}</option>`).join('');
 
+    const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>Patient ${i+1}</td>
       <td><select data-i="${i}" data-f="leistung">${optLeistung}</select></td>
@@ -227,54 +277,115 @@ function render(){
   speichern();
 }
 
-function zeilenSumme(z){
-  const proTermin = preisFuer(z.leistung) + (z.hausbesuch ? val('p_hb') : 0);
-  return proTermin * (z.termine || 0);
-}
-
-function rechne(){
+function auswertung(){
   let frei = 0, bruttoPflicht = 0;
-
   zeilen.forEach(z => {
-    const summe = zeilenSumme(z);
-    if (ARTEN[z.art] && ARTEN[z.art].ust) bruttoPflicht += summe;
-    else frei += summe;
+    const s = zeilenSumme(z);
+    if (ARTEN[z.art] && ARTEN[z.art].ust) bruttoPflicht += s; else frei += s;
   });
-
-  /* Der eingetragene Preis ist der Endpreis für die Patient:in.
-     Bei umsatzsteuerpflichtigen Leistungen steckt die USt also schon drin. */
+  /* Der eingetragene Preis ist der Endpreis — bei steuerpflichtigen
+     Leistungen steckt die Umsatzsteuer also bereits darin. */
   const nettoPflicht = bruttoPflicht / 1.19;
   const ust = bruttoPflicht - nettoPflicht;
-  const gesamt = frei + bruttoPflicht;
-
   const ausgaben = val('ausgaben');
   const gewinn = frei + nettoPflicht - ausgaben;
   const satz = val('satz') / 100;
   const ruecklage = Math.max(0, gewinn * satz);
-  const bleibt = gewinn - ruecklage;
+  return {frei, nettoPflicht, ust, gesamt: frei + bruttoPflicht,
+          ausgaben, gewinn, satz, ruecklage, bleibt: gewinn - ruecklage};
+}
 
+function rechne(){
+  const a = auswertung();
   const set = (id, v) => document.getElementById(id).textContent = eur(v);
-  set('o_frei', frei);
-  set('o_pflicht_netto', nettoPflicht);
-  set('o_ust', ust);
-  set('o_brutto', gesamt);
-  set('o_gewinn', gewinn);
-  set('o_ruecklage', ruecklage);
-  set('o_netto', bleibt);
+  set('o_frei', a.frei);
+  set('o_pflicht_netto', a.nettoPflicht);
+  set('o_ust', a.ust);
+  set('o_brutto', a.gesamt);
+  set('o_gewinn', a.gewinn);
+  set('o_ruecklage', a.ruecklage);
+  set('o_netto', a.bleibt);
 
-  /* für den Gehaltsrechner mitspeichern */
   try {
-    localStorage.setItem('physionebenbei-monat-ergebnis', JSON.stringify({gewinn, bleibt}));
+    localStorage.setItem('physionebenbei-monat-ergebnis', JSON.stringify({
+      gewinn: a.gewinn, bleibt: a.bleibt, monat: document.getElementById('monat').value
+    }));
   } catch(e){}
 }
 
+/* ---------- Druckansicht ---------- */
+const MONATSNAMEN = ['Januar','Februar','März','April','Mai','Juni',
+                     'Juli','August','September','Oktober','November','Dezember'];
+
+function monatsName(){
+  const v = document.getElementById('monat').value;
+  if (!v) return '';
+  const [j, m] = v.split('-');
+  return (MONATSNAMEN[parseInt(m, 10) - 1] || '') + ' ' + j;
+}
+
+function baueDruckansicht(){
+  const a = auswertung();
+
+  const zeilenHtml = zeilen.map((z, i) => `
+    <tr>
+      <td>Patient ${i+1}</td>
+      <td>${LEISTUNGEN[z.leistung] ? LEISTUNGEN[z.leistung].label : ''}${z.hausbesuch ? ' + Hausbesuch' : ''}</td>
+      <td class="r">${z.termine}</td>
+      <td>${ARTEN[z.art] ? ARTEN[z.art].label : ''}</td>
+      <td class="r">${eur(zeilenSumme(z))}</td>
+    </tr>`).join('');
+
+  const zeile = (label, wert, klasse) =>
+    `<tr class="${klasse || ''}"><td colspan="4">${label}</td><td class="r">${eur(wert)}</td></tr>`;
+
+  document.getElementById('druck').innerHTML = `
+    <h1>Monatsübersicht${monatsName() ? ' — ' + monatsName() : ''}</h1>
+    <p class="sub">Physiotherapie, nebenberuflich · erstellt am ${new Date().toLocaleDateString('de-DE')}</p>
+
+    <table>
+      <thead>
+        <tr><th>Patient</th><th>Leistung</th><th class="r">Termine</th><th>Art</th><th class="r">Summe</th></tr>
+      </thead>
+      <tbody>${zeilenHtml}</tbody>
+    </table>
+
+    <h2>Auswertung</h2>
+    <table>
+      <tbody>
+        ${zeile('Einnahmen aus Heilbehandlung (steuerfrei, § 4 Nr. 14 UStG)', a.frei)}
+        ${zeile('Einnahmen aus Wellness / Prävention (netto)', a.nettoPflicht)}
+        ${zeile('davon Umsatzsteuer 19 %', a.ust)}
+        ${zeile('Gesamt-Einnahmen', a.gesamt, 'sum')}
+        ${zeile('Betriebsausgaben', a.ausgaben > 0 ? -a.ausgaben : 0)}
+        ${zeile('Gewinn vor Steuer', a.gewinn, 'sum')}
+        ${zeile('Empfohlene Rücklage (' + Math.round(a.satz * 100) + ' %)', a.ruecklage)}
+        ${zeile('Bleibt', a.bleibt, 'sum')}
+      </tbody>
+    </table>
+
+    <p class="fuss">
+      Erstellt mit dem PhysioNebenbei-Monatsrechner. Diese Übersicht ist eine eigene Aufstellung,
+      keine Buchführung und keine Steuerberatung. Die Rücklage beruht auf dem selbst eingetragenen Satz.
+    </p>`;
+}
+
+document.getElementById('pdf').addEventListener('click', e => {
+  e.preventDefault();
+  baueDruckansicht();
+  window.print();
+});
+
+/* ---------- Speichern ---------- */
 function speichern(){
   try {
     const preise = {};
     document.querySelectorAll('[data-price]').forEach(el => preise[el.id] = el.value);
     localStorage.setItem(KEY, JSON.stringify({
-      zeilen, preise, ausgaben: document.getElementById('ausgaben').value,
+      zeilen, preise,
+      ausgaben: document.getElementById('ausgaben').value,
       satz: document.getElementById('satz').value,
+      monat: document.getElementById('monat').value,
     }));
   } catch(e){}
 }
@@ -286,14 +397,17 @@ function laden(){
     if (d.preise) Object.entries(d.preise).forEach(([id, v]) => {
       const el = document.getElementById(id); if (el) el.value = v;
     });
-    if (d.ausgaben !== undefined) document.getElementById('ausgaben').value = d.ausgaben;
-    if (d.satz !== undefined) document.getElementById('satz').value = d.satz;
+    ['ausgaben','satz','monat'].forEach(k => {
+      if (d[k] !== undefined && d[k] !== '') {
+        const el = document.getElementById(k); if (el) el.value = d[k];
+      }
+    });
     if (Array.isArray(d.zeilen) && d.zeilen.length) { zeilen = d.zeilen; return true; }
   } catch(e){}
   return false;
 }
 
-/* ---- Events ---- */
+/* ---------- Events ---------- */
 document.getElementById('rows').addEventListener('input', e => {
   const i = e.target.dataset.i, f = e.target.dataset.f;
   if (i === undefined || !f) return;
@@ -313,9 +427,7 @@ document.getElementById('rows').addEventListener('click', e => {
 });
 
 document.getElementById('add').addEventListener('click', e => {
-  e.preventDefault();
-  zeilen.push(neueZeile());
-  render();
+  e.preventDefault(); zeilen.push(neueZeile()); render();
 });
 
 document.getElementById('reset').addEventListener('click', e => {
@@ -325,9 +437,10 @@ document.getElementById('reset').addEventListener('click', e => {
   render();
 });
 
-document.querySelectorAll('[data-price], #ausgaben, #satz').forEach(el =>
-  el.addEventListener('input', render));
+document.querySelectorAll('[data-price], #ausgaben, #satz, #monat')
+  .forEach(el => el.addEventListener('input', render));
 
+document.getElementById('monat').value = new Date().toISOString().slice(0, 7);
 if (!laden()) zeilen = [neueZeile(), neueZeile(), neueZeile()];
 render();
 </script>

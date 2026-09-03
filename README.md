@@ -1,5 +1,9 @@
-# CAPRATE
+# PhysioNebenbei
 
-Geführte Immobilien-Investment-Analyse: ein Schritt-für-Schritt-Formular (Exposé einfügen oder manuell eintragen → Objekt & Lage → Miete mit Marktmiete-Schätzung → Hausgeld & Kaufnebenkosten → Finanzierung) mit Ergebnis-Report (Kaufpreisanalyse, Rendite, Cashflow, Kennzahlen-Score, Besichtigungs- und Unterlagen-Checkliste), nach Buy-and-Hold-Prinzipien.
+Landingpage-Test für ein Selbstzahler-Starter-Kit für Physiotherapeut:innen in Deutschland, die sich nebenberuflich selbstständig machen wollen. Statische Seite (eine Datei, keine Abhängigkeiten) — `index.html` ist der Einstiegspunkt.
 
-Statische Seite (HTML/CSS/JS, keine Abhängigkeiten) — `index.html` ist der Einstiegspunkt.
+Produkt und Werkzeuge liegen unter [`physio-nebenbei/`](physio-nebenbei/).
+
+## CAPRATE
+
+Das vorherige Projekt in diesem Repo, eine geführte Immobilien-Investment-Analyse, ist unverändert erhalten und liegt jetzt unter [`caprate/`](caprate/index.html) statt an der Wurzel.

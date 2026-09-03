@@ -32,108 +32,122 @@ Deutschland abmahnfähig. Das ist der einzige Punkt auf der Liste, bei dem Spare
 
 ---
 
-## Schritt 2 — Digistore24 einrichten
+## Schritt 2 — Stripe einrichten
 
-Digistore24 tritt als **Reseller** auf: Der Kaufvertrag läuft zwischen Kund:in und
-Digistore24, nicht zwischen Kund:in und dir. Damit übernimmt Digistore24 die
-Umsatzsteuer inklusive EU-OSS-Meldung, Rechnungsstellung und Auslieferung. Genau
-deshalb ist es für ein 29-€-Produkt der geringste Aufwand.
+Stripe ist reiner Zahlungsdienstleister, kein Reseller: Der Kaufvertrag läuft
+zwischen dir und der Kund:in, nicht über Stripe. Dafür ist die Gebühr deutlich
+niedriger als bei Digistore24 (ca. 1,5 % + 0,25 € pro Zahlung mit EU-Karte statt
+ca. 8 %), aber Umsatzsteuer, Rechnung und Dateiauslieferung sind jetzt deine
+Aufgabe, nicht die eines Resellers. Die Widerrufs-Checkbox auf der Verkaufsseite
+hast du schon, die läuft unabhängig vom Zahlungsanbieter mit.
 
 Du brauchst vorab: Personalausweis (Identitätsprüfung), IBAN, Steuernummer.
 
 ### 2a — Konto
 
-1. `digistore24.com` → Registrieren → **Verkäufer-Konto**.
-2. Profil vollständig ausfüllen: Anschrift, Steuernummer, Bankverbindung,
-   Kleinunternehmer nach § 19 UStG **ja/nein** (das steuert, ob auf der Rechnung
-   Umsatzsteuer ausgewiesen wird — muss zu deinem Impressum passen).
-3. Identitätsprüfung durchlaufen. Freischaltung dauert in der Regel 1–2 Werktage.
+1. `stripe.com` → Konto erstellen → Rechtsform **Einzelunternehmen** (das bist du
+   als Freiberufler:in).
+2. Unternehmensdaten eintragen: Anschrift, Steuernummer, Branche z. B. „Bildung /
+   digitale Produkte", Bankverbindung für Auszahlungen.
+3. Identitätsprüfung durchlaufen (Perso hochladen). Geht oft sehr schnell, manchmal
+   sofort, sonst 1–2 Werktage.
 
-### 2b — Produkt anlegen
+### 2b — Umsatzsteuer entscheiden, bevor du das Produkt anlegst
 
-**Produkte → Neues Produkt → Digitales Produkt**
+Wichtig: Diese Entscheidung nimmt dir bei Stripe niemand ab, im Gegensatz zu
+Digistore24. Sie betrifft nur den Fahrplan als Info-Produkt, nicht deine
+Physio-Behandlungen selbst, die bleiben nach § 4 Nr. 14 UStG steuerfrei.
+
+- **Bist du Kleinunternehmer:in nach § 19 UStG** (die Entscheidung aus Schritt 1,
+  Impressum): Dann berechnest du keine Umsatzsteuer, der Preis bleibt einfach
+  29 €. Auf der Stripe-Rechnung/Quittung vermerkst du „Gemäß § 19 Abs. 1 UStG wird
+  keine Umsatzsteuer berechnet." Für die meisten nebenberuflichen Starts trifft
+  das zu, und dann ist dieser ganze Punkt erledigt.
+- **Wenn nicht:** Du weist 19 % USt aus. Für Verkäufe innerhalb der EU darfst du
+  den deutschen Satz anwenden, solange dein Gesamtumsatz aus digitalen
+  B2C-Verkäufen ins EU-Ausland unter 10.000 €/Jahr bleibt (Ursprungslandprinzip).
+  Erst darüber wird eine OSS-Registrierung nötig. Bei einem 29-€-Nebenprodukt ist
+  das eine Schwelle, die du realistisch nicht in den ersten Jahren reißt.
+
+### 2c — Produkt & Zahlungslink anlegen
+
+**Dashboard → Produkte → Produkt hinzufügen**
 
 | Feld | Wert |
 |---|---|
-| Produktname | PhysioNebenbei Starter-Paket |
+| Name | PhysioNebenbei Starter-Paket |
 | Preis | 29 € |
-| Zahlungsart | Einmalzahlung (**kein** Abo) |
+| Abrechnung | Einmalig (**keine** wiederkehrende Zahlung) |
 | Währung | EUR |
-| Produktart | Digitaler Download |
-| Zielgruppe | Verbraucher (B2C) |
 
-Beschreibung kurz halten — die Verkaufsseite macht die Arbeit, der Checkout muss nur
-bestätigen, was man kauft.
+Danach am Produkt auf **Zahlungslink erstellen** klicken.
 
-### 2c — Die vier Dateien hochladen
+1. Unter „Nach der Zahlung" → „Kund:innen auf deine Website weiterleiten" die URL
+   deiner Danke-Seite eintragen, z. B.
+   `https://healthymovement-21.github.io/Healthy-mobility/danke.html`.
+2. Rechnungsadresse abfragen aktivieren, das brauchst du für deine eigene
+   Buchhaltung.
+3. Als Zahlungsart reicht Kreditkarte (Apple Pay/Google Pay laufen automatisch
+   mit). SEPA-Lastschrift lieber weglassen: Bei einem Sofort-Download willst du
+   nicht tagelang auf die Bestätigung warten oder ein Rückbuchungsrisiko tragen.
 
-**Produkte → dein Produkt → Auslieferung → Dateien**
+### 2d — Rechnung bzw. Zahlungsbeleg
 
-Lade diese vier Dateien hoch:
+Stripe schickt nach jeder Zahlung automatisch eine Quittung per Mail, das reicht
+bei einem B2C-Verkauf rechtlich meist aus (anders als bei B2B-Rechnungen gibt es
+hier keine strikte Rechnungspflicht). Aktivieren unter **Einstellungen → E-Mails
+an Kund:innen → „Erfolgreiche Zahlungen"**.
 
-```
-physio-nebenbei/PhysioNebenbei-Fahrplan.docx
-physio-nebenbei/PhysioNebenbei-Werkzeuge.xlsx
-physio-nebenbei/Honorarvereinbarung.pdf
-physio-nebenbei/Behandlungsvertrag.pdf
-```
+Willst du stattdessen echte Rechnungen mit allen Pflichtangaben verschicken,
+gibt es unter **Einstellungen → Rechnungsstellung** eine Vorlage mit deinem Namen
+und deiner Steuernummer, die du hinterlegen kannst. Wirkt etwas professioneller,
+ist aber kein Muss.
 
-Alternativ die fertige `physio-nebenbei/PhysioNebenbei-Paket.zip` — dann ist es
-ein Download statt vier. Empfehlung: **beides** hochladen, ZIP zuerst.
+### 2e — Testkauf
 
-Als Auslieferungsart „Dateien zum Download" wählen, nicht „externe URL". Sonst
-liefert Digistore24 auf `danke.html` aus, und diese Seite liegt öffentlich im Repo.
-
-**Wasserzeichen aktivieren**, falls angeboten: Name und E-Mail der Käufer:in werden
-auf jede PDF-Seite gestempelt. Das ist der realistische Kopierschutz — echte
-DRM-Sperren sind bei einem 29-€-PDF nicht durchsetzbar und nerven nur ehrliche
-Käufer:innen.
-
-### 2d — Widerrufs-Zustimmung im Checkout aktivieren
-
-**Produkte → dein Produkt → Rechtliches / Checkout-Einstellungen**
-
-Häkchen setzen bei der Option für digitale Inhalte („Kunde muss dem sofortigen
-Beginn der Vertragsausführung zustimmen und bestätigen, dass dadurch das
-Widerrufsrecht erlischt"). Rechtsgrundlage: **§ 356 Abs. 5 BGB**.
-
-Ohne diese Bestätigung im Checkout hast du 14 Tage Widerrufsrecht auf eine Datei,
-die die Kund:in längst heruntergeladen hat. Die Checkbox auf der Verkaufsseite ist
-die Vorbereitung — rechtlich zählt die im Checkout.
-
-Ebenfalls hier eintragen: Link auf deine `agb.html` und `widerruf.html`.
-
-### 2e — Bestätigungs-E-Mail
-
-**Produkte → dein Produkt → E-Mails**
-
-Standardvorlage reicht. Prüfe nur, dass drin steht: Download-Link, Rechnung als
-Anhang oder Link, deine Support-Adresse. Digistore24 hält den Download im
-Kundenkonto dauerhaft bereit — deshalb sind die Links in `checkout.js` bewusst
-ohne Ablaufdatum konfiguriert.
-
-### 2f — Testkauf
-
-Digistore24 hat einen **Testkauf-Modus** (Produkt → Vermarktung → Testkauf). Damit
-einmal durchlaufen und prüfen:
+Stripe startet im **Testmodus** (Schalter oben rechts im Dashboard). Zahlungslink
+im Testmodus öffnen, mit der Test-Kreditkarte `4242 4242 4242 4242`, beliebigem
+künftigem Datum und beliebiger Prüfziffer bezahlen. Prüfen:
 
 - [ ] Checkout lädt, Preis 29 €
-- [ ] Widerrufs-Bestätigung erscheint und ist Pflicht
-- [ ] nach der Zahlung kommen alle vier Dateien an
-- [ ] Bestätigungs-E-Mail kommt an, mit Rechnung
-- [ ] jede Datei öffnet sich (Word, Excel, zwei PDFs)
+- [ ] Widerrufs-Bestätigung auf der Verkaufsseite ist Pflicht, bevor der
+      Kauf-Button überhaupt anklickbar wird
+- [ ] nach der Zahlung landest du auf `danke.html`
+- [ ] alle vier Dateien öffnen sich von dort
+
+Wenn alles passt: Konto vollständig verifizieren, in den **Live-Modus**
+wechseln und dort denselben Zahlungslink neu erstellen. Testmodus-Links
+funktionieren live nicht.
+
+### 2f — Der wichtige Unterschied zu Digistore24: Dateiauslieferung
+
+Stripe liefert selbst keine Dateien aus, das kann nur ein Reseller wie
+Digistore24. Nach der Zahlung landet die Kund:in auf `danke.html`, und diese Seite
+verlinkt die vier Dateien direkt aus dem Repository. Das bedeutet konkret:
+
+- Die Dateien bleiben dauerhaft über ihre URL erreichbar, auch ohne Kauf. Anders
+  als beim Digistore24-Weg gibt es hier keinen späteren Schritt, sie „aus dem Repo
+  zu nehmen", weil niemand sonst sie ausliefert.
+- Kein automatisches Wasserzeichen pro Käufer:in mehr, das war eine
+  Digistore24-Funktion.
+- Für ein 29-€-Info-Produkt ist das ein vertretbares Risiko: `danke.html` ist
+  `noindex` und nirgends öffentlich verlinkt. Wer ohne Kauf drankommen will,
+  braucht die exakte URL, die nur nach der Zahlung erscheint.
+
+Wenn dir das zu wenig Kontrolle ist, bleibt Digistore24 die Alternative mit
+echter Zugriffssperre, siehe unten.
 
 ---
 
 ## Schritt 3 — Bestell-Link einsetzen
 
-Im Digistore24-Backend: **Produkte → dein Produkt → Vermarktung → Bestelllink**.
-Sieht aus wie `https://www.digistore24.com/product/612345`.
+Im Stripe-Dashboard beim Zahlungslink auf **Kopieren** klicken. Sieht aus wie
+`https://buy.stripe.com/xxxxxxxxxxxx`.
 
 Diesen Link in `checkout.js` in Zeile 15 eintragen — das ist die **einzige** Stelle:
 
 ```js
-const CHECKOUT_URL = 'https://www.digistore24.com/product/612345';
+const CHECKOUT_URL = 'https://buy.stripe.com/xxxxxxxxxxxx';
 ```
 
 Dann committen und pushen. Solange das Feld leer ist, sind die Kauf-Buttons sichtbar
@@ -141,7 +155,34 @@ deaktiviert und zeigen „Der Checkout wird gerade eingerichtet" — die Seite i
 nie kaputt, nur noch nicht verkaufsbereit.
 
 Nach dem Push einmal selbst prüfen: Button oben springt zum Preis-Abschnitt,
-Häkchen setzen, „Jetzt kaufen" öffnet den Digistore24-Checkout.
+Häkchen setzen, „Jetzt kaufen" öffnet den Stripe-Checkout.
+
+---
+
+## Alternative: Digistore24 statt Stripe
+
+Falls dir Stripes Gebühr trotzdem lieber gegen mehr Bequemlichkeit eingetauscht
+werden soll: Digistore24 tritt als **Reseller** auf, der Kaufvertrag läuft dann
+zwischen Kund:in und Digistore24, nicht zwischen Kund:in und dir. Dafür übernimmt
+Digistore24 automatisch Umsatzsteuer inklusive EU-OSS-Meldung, echte
+Rechnungsstellung, Dateiauslieferung mit Zugriffssperre und sogar ein
+Wasserzeichen pro Käufer:in. Kostet dafür ca. 8 % statt ca. 1,5–2 % pro Verkauf.
+
+Kurzfassung, falls du wechseln willst:
+
+1. `digistore24.com` → Verkäufer-Konto, Profil inkl. Kleinunternehmer-Status
+   ausfüllen, Identitätsprüfung.
+2. Produkt anlegen: digitales Produkt, 29 €, Einmalzahlung, B2C.
+3. Unter „Auslieferung" die vier Dateien hochladen (oder die fertige
+   `physio-nebenbei/PhysioNebenbei-Paket.zip`), Auslieferungsart „Dateien zum
+   Download" wählen, nicht „externe URL" — sonst landest du wieder bei den
+   öffentlich erreichbaren Dateien wie beim Stripe-Weg. Wasserzeichen aktivieren,
+   falls angeboten.
+4. Unter „Rechtliches" die Pflicht-Bestätigung für digitale Inhalte aktivieren
+   (§ 356 Abs. 5 BGB, „Kund:in stimmt sofortigem Beginn zu und verliert damit das
+   Widerrufsrecht").
+5. Testkauf-Modus durchlaufen, dann den Bestelllink aus „Vermarktung" in
+   `checkout.js` eintragen, genau wie beim Stripe-Link.
 
 ---
 
@@ -203,8 +244,12 @@ physio-nebenbei/
 ### Warum die Produktdateien öffentlich im Repo liegen
 
 Weil `danke.html` sie direkt verlinkt und GitHub Pages keine Zugangsbeschränkung
-kennt. Wer die URL kennt, kommt ohne Kauf ran. Sobald Schritt 2c erledigt ist und
-Digistore24 die Auslieferung übernimmt, kannst du die vier Dateien plus die ZIP aus
+kennt. Wer die URL kennt, kommt ohne Kauf ran. Bei Stripe (Schritt 2) bleibt das
+so, siehe „2f — Der wichtige Unterschied zu Digistore24" oben, das ist der
+Kompromiss für die niedrigere Gebühr.
+
+Nutzt du stattdessen Digistore24 (Alternative weiter oben) und lässt die
+Auslieferung dort laufen, kannst du die vier Dateien plus die ZIP aus
 `physio-nebenbei/` löschen und `danke.html` auf eine reine Danke-Seite ohne
-Download-Buttons zurückbauen. Bis dahin ist es ein bewusster Kompromiss: die Seite
-funktioniert, bevor das Zahlungskonto steht.
+Download-Buttons zurückbauen, dann gibt es keine öffentlich erreichbaren Dateien
+mehr.

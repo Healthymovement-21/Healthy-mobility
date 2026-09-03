@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Werkzeuge — PhysioNebenbei</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<div class="page">
+  <p class="crumb"><a href="../">← Landingpage</a> · <a href="fahrplan.html">← Fahrplan</a> · <span class="micro">INTERNE VORSCHAU, NOCH NICHT ÖFFENTLICH</span></p>
+
+  <div class="doc">
+
+    <section class="sheet wide">
+      <span class="doc-tag">FORMULAR PN&#8209;02<br>AUSGABE 2026</span>
+      <p class="eyebrow">Vorschau · Rechner</p>
+      <h1 class="title">Werkzeuge zum Rechnen</h1>
+      <p class="lede">Dieselben vier Rechner wie in der Excel-Datei, hier als echte, direkt im Browser nutzbare Werkzeuge. Zahl ändern, alles darunter rechnet sofort mit.</p>
+      <div class="annotation">Der Grenzsteuersatz ist überall eine Eingabe, keine eingebaute Tabelle — trag den Wert ein, den dir deine letzte Steuererklärung oder dein:e Steuerberater:in nennt. Kirchensteuer und Soli sind nicht eingerechnet. Physiotherapeutische Heilbehandlungen sind nach § 4 Nr. 14 UStG umsatzsteuerbefreit, deshalb taucht hier keine Umsatzsteuer auf. Das ersetzt keine Steuerberatung.</div>
+    </section>
+
+    <!-- ============ PREIS-KALKULATION ============ -->
+    <section class="sheet wide">
+      <p class="eyebrow">1 · Preis-Kalkulation</p>
+      <h2>Was muss ich verlangen?</h2>
+      <p>Trag ein, was du willst und was du hast — der Rechner ermittelt den nötigen Preis pro Behandlung.</p>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="pk_ziel">Gewünschtes Nebeneinkommen pro Monat (netto)</label>
+          <input type="number" id="pk_ziel" value="500" step="10">
+        </div>
+        <div class="calc-row">
+          <label for="pk_satz">Geschätzter Grenzsteuersatz</label>
+          <span class="field"><input type="number" id="pk_satz" value="35" step="1" min="0" max="60"><span class="unit">%</span></span>
+        </div>
+        <div class="calc-row">
+          <label for="pk_fix">Jährliche Fixkosten (Haftpflicht, Fortbildung, Material)</label>
+          <input type="number" id="pk_fix" value="250" step="10">
+        </div>
+        <div class="calc-row">
+          <label for="pk_dauer">Behandlungsdauer inkl. Fahrtzeit</label>
+          <span class="field"><input type="number" id="pk_dauer" value="60" step="5"><span class="unit">Min.</span></span>
+        </div>
+        <div class="calc-row">
+          <label for="pk_std">Verfügbare Stunden pro Woche</label>
+          <input type="number" id="pk_std" value="4" step="0.5">
+        </div>
+        <div class="calc-row">
+          <label>Fixkosten pro Monat</label>
+          <span class="out" id="pk_out_fixmonat">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Mögliche Behandlungen pro Monat</label>
+          <span class="out" id="pk_out_beh">–</span>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Nötiger Preis pro Behandlung</label>
+          <span class="out" id="pk_out_preis">–</span>
+        </div>
+      </div>
+
+      <h2>Die Gegenprobe: was bleibt bei meinem geplanten Preis?</h2>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="pk2_preis">Dein geplanter Preis pro Behandlung</label>
+          <input type="number" id="pk2_preis" value="70" step="5">
+        </div>
+        <div class="calc-row">
+          <label for="pk2_anzahl">Geplante Behandlungen pro Monat</label>
+          <input type="number" id="pk2_anzahl" value="8" step="1">
+        </div>
+        <div class="calc-row">
+          <label>Einnahmen pro Monat</label>
+          <span class="out" id="pk2_out_einnahmen">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Gewinn pro Monat, vor Steuer</label>
+          <span class="out" id="pk2_out_gewinn">–</span>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Netto pro Monat, nach Steuer-Rücklage</label>
+          <span class="out" id="pk2_out_netto">–</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEUER-RÜCKLAGE ============ -->
+    <section class="sheet wide">
+      <p class="eyebrow">2 · Steuer-Rücklage</p>
+      <h2>Was leg ich zur Seite?</h2>
+      <div class="calc-card">
+        <div class="calc-row"><label for="sr_haft">Berufshaftpflicht / Jahr</label><input type="number" id="sr_haft" value="120" step="10"></div>
+        <div class="calc-row"><label for="sr_fahrt">Fahrtkosten / Jahr</label><input type="number" id="sr_fahrt" value="300" step="10"></div>
+        <div class="calc-row"><label for="sr_material">Material / Verbrauchsmaterial / Jahr</label><input type="number" id="sr_material" value="150" step="10"></div>
+        <div class="calc-row"><label for="sr_fortbildung">Fortbildung / Jahr</label><input type="number" id="sr_fortbildung" value="200" step="10"></div>
+        <div class="calc-row"><label for="sr_sonstiges">Sonstiges / Jahr</label><input type="number" id="sr_sonstiges" value="0" step="10"></div>
+        <div class="calc-row"><label>Summe Betriebsausgaben</label><span class="out" id="sr_out_summe">–</span></div>
+        <div class="calc-row"><label for="sr_einnahmen">Einnahmen im Jahr</label><input type="number" id="sr_einnahmen" value="6000" step="100"></div>
+        <div class="calc-row"><label>Gewinn (Einnahmen − Ausgaben)</label><span class="out" id="sr_out_gewinn">–</span></div>
+        <div class="calc-row"><label for="sr_satz">Geschätzter Grenzsteuersatz</label><span class="field"><input type="number" id="sr_satz" value="35" step="1"><span class="unit">%</span></span></div>
+        <div class="calc-row"><label for="sr_puffer">Sicherheitspuffer</label><span class="field"><input type="number" id="sr_puffer" value="5" step="1"><span class="unit">%</span></span></div>
+        <div class="calc-row"><label>Geschätzte Einkommensteuer</label><span class="out" id="sr_out_steuer">–</span></div>
+        <div class="calc-row result"><label class="result-label">Empfohlene Rücklage</label><span class="out" id="sr_out_ruecklage">–</span></div>
+        <div class="calc-row result"><label class="result-label">Netto nach Rücklage</label><span class="out" id="sr_out_netto">–</span></div>
+      </div>
+    </section>
+
+    <!-- ============ EÜR ============ -->
+    <section class="sheet wide">
+      <p class="eyebrow">3 · EÜR — Einnahmen-Überschuss-Rechnung</p>
+      <h2>Die vereinfachte Gewinnermittlung nach § 4 Abs. 3 EStG</h2>
+      <p>Die Form, die Freiberufler:innen wie Physiotherapeut:innen nutzen dürfen, ohne Bilanz und ohne doppelte Buchführung. Monat für Monat, mit Jahressumme unten.</p>
+      <div class="tbl-wrap">
+        <table class="data" id="euer">
+          <thead>
+            <tr><th>Monat</th><th>Einnahmen</th><th>Versich.</th><th>Fahrt</th><th>Material</th><th>Fortb.</th><th>Sonst.</th><th>Ausgaben</th><th>Gewinn</th></tr>
+          </thead>
+          <tbody id="euer_body"></tbody>
+          <tfoot>
+            <tr>
+              <td>Jahressumme</td>
+              <td class="calc" id="euer_sum_0">–</td>
+              <td class="calc" id="euer_sum_1">–</td>
+              <td class="calc" id="euer_sum_2">–</td>
+              <td class="calc" id="euer_sum_3">–</td>
+              <td class="calc" id="euer_sum_4">–</td>
+              <td class="calc" id="euer_sum_5">–</td>
+              <td class="calc" id="euer_sum_6">–</td>
+              <td class="calc" id="euer_sum_7">–</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ DOKUMENTATION ============ -->
+    <section class="sheet wide">
+      <p class="eyebrow">4 · Dokumentation</p>
+      <h2>Behandlungs-Log</h2>
+      <p>Tipp aus Kapitel 07 des Fahrplans: Patient:innen hier mit Kürzel statt vollem Namen führen, volle Namen getrennt und sicher aufbewahren. Zum fortlaufenden Ausfüllen die Excel-Datei nutzen — hier nur zur Vorschau.</p>
+      <div class="tbl-wrap">
+        <table class="data">
+          <thead><tr><th>Datum</th><th>Patient:in</th><th>Anamnese &amp; Befund</th><th>Behandlung</th><th>Verlauf</th><th>Nächste Schritte</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="example">01.03.2026</td><td class="example">M.K.</td>
+              <td class="example">Verspannung LWS</td><td class="example">Manuelle Therapie, Wärme</td>
+              <td class="example">Deutlich weniger Schmerz</td><td class="example">Termin in 1 Woche</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hero-cta" style="margin-top:16px">
+        <a class="btn" href="PhysioNebenbei-Werkzeuge.xlsx">Excel-Datei laden</a>
+        <a class="btn ghost" href="PhysioNebenbei-Fahrplan.docx">Word-Fahrplan laden</a>
+      </p>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>PhysioNebenbei — Vorschau, noch nicht veröffentlicht.</span>
+    <span><a href="fahrplan.html">Zurück zum Fahrplan</a></span>
+  </footer>
+</div>
+
+<script>
+  const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
+  const num = id => parseFloat(document.getElementById(id).value) || 0;
+  const set = (id, text) => { document.getElementById(id).textContent = text; };
+
+  function calcPreis(){
+    const ziel = num('pk_ziel');
+    const satz = num('pk_satz')/100;
+    const fixJahr = num('pk_fix');
+    const dauer = num('pk_dauer');
+    const std = num('pk_std');
+
+    const fixMonat = fixJahr/12;
+    const gewinnMonat = satz < 1 ? ziel/(1-satz) : NaN;
+    const einnahmenMonat = gewinnMonat + fixMonat;
+    const behandlungen = dauer > 0 ? (std*4.33*60)/dauer : 0;
+    const preis = behandlungen > 0 ? einnahmenMonat/behandlungen : NaN;
+
+    set('pk_out_fixmonat', eur(fixMonat));
+    set('pk_out_beh', behandlungen.toLocaleString('de-DE', {maximumFractionDigits:1}));
+    set('pk_out_preis', eur(preis));
+
+    return fixMonat;
+  }
+
+  function calcGegenprobe(fixMonat){
+    const preis = num('pk2_preis');
+    const anzahl = num('pk2_anzahl');
+    const satz = num('pk_satz')/100;
+
+    const einnahmen = preis*anzahl;
+    const gewinn = einnahmen - fixMonat;
+    const netto = gewinn*(1-satz);
+
+    set('pk2_out_einnahmen', eur(einnahmen));
+    set('pk2_out_gewinn', eur(gewinn));
+    set('pk2_out_netto', eur(netto));
+  }
+
+  function calcSteuer(){
+    const summe = num('sr_haft')+num('sr_fahrt')+num('sr_material')+num('sr_fortbildung')+num('sr_sonstiges');
+    const einnahmen = num('sr_einnahmen');
+    const gewinn = einnahmen - summe;
+    const satz = num('sr_satz')/100;
+    const puffer = num('sr_puffer')/100;
+    const steuer = gewinn*satz;
+    const ruecklage = gewinn*(satz+puffer);
+    const netto = gewinn - ruecklage;
+
+    set('sr_out_summe', eur(summe));
+    set('sr_out_gewinn', eur(gewinn));
+    set('sr_out_steuer', eur(steuer));
+    set('sr_out_ruecklage', eur(ruecklage));
+    set('sr_out_netto', eur(netto));
+  }
+
+  const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+  function buildEuer(){
+    const body = document.getElementById('euer_body');
+    MONATE.forEach((m, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${m}</td>` +
+        [0,1,2,3,4,5].map(c => `<td><input type="number" class="euer-in" data-row="${i}" data-col="${c}" value="0" step="10"></td>`).join('') +
+        `<td class="calc" id="euer_ausg_${i}">–</td><td class="calc" id="euer_gewinn_${i}">–</td>`;
+      body.appendChild(tr);
+    });
+    body.addEventListener('input', calcEuer);
+  }
+
+  function calcEuer(){
+    const totals = [0,0,0,0,0,0,0,0];
+    MONATE.forEach((m, i) => {
+      const vals = [0,1,2,3,4,5].map(c => parseFloat(document.querySelector(`.euer-in[data-row="${i}"][data-col="${c}"]`).value) || 0);
+      const einnahmen = vals[0];
+      const ausgaben = vals[1]+vals[2]+vals[3]+vals[4]+vals[5];
+      const gewinn = einnahmen - ausgaben;
+      set(`euer_ausg_${i}`, eur(ausgaben));
+      set(`euer_gewinn_${i}`, eur(gewinn));
+      vals.forEach((v, c) => totals[c] += v);
+      totals[6] += ausgaben;
+      totals[7] += gewinn;
+    });
+    totals.forEach((t, c) => set(`euer_sum_${c}`, eur(t)));
+  }
+
+  function recalcAll(){
+    const fixMonat = calcPreis();
+    calcGegenprobe(fixMonat);
+    calcSteuer();
+  }
+
+  document.querySelectorAll('#pk_ziel,#pk_satz,#pk_fix,#pk_dauer,#pk_std,#pk2_preis,#pk2_anzahl').forEach(el => el.addEventListener('input', recalcAll));
+  document.querySelectorAll('#sr_haft,#sr_fahrt,#sr_material,#sr_fortbildung,#sr_sonstiges,#sr_einnahmen,#sr_satz,#sr_puffer').forEach(el => el.addEventListener('input', calcSteuer));
+
+  buildEuer();
+  recalcAll();
+  calcSteuer();
+  calcEuer();
+</script>
+</body>
+</html>

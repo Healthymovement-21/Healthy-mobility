@@ -65,11 +65,11 @@
         <table class="data" id="tbl">
           <thead>
             <tr>
-              <th style="width:90px">Patient</th>
-              <th style="width:210px">Leistung</th>
+              <th style="width:78px">Patient</th>
+              <th style="width:190px">Leistung</th>
               <th style="width:90px">Termine</th>
               <th style="width:80px">Hausbes.</th>
-              <th style="width:200px">Abrechnungsart</th>
+              <th style="width:150px">Abrechnungsart</th>
               <th style="width:110px">Summe</th>
               <th style="width:40px"></th>
             </tr>
@@ -79,6 +79,12 @@
       </div>
       <p class="hero-cta">
         <a class="btn ghost" id="add" href="#">+ Patient hinzufügen</a>
+      </p>
+      <p class="micro" style="margin-top:18px">
+        <strong>Privat</strong> — mit ärztlicher Verordnung &nbsp;·&nbsp;
+        <strong>Selbstzahler</strong> — ohne Verordnung, aber mit therapeutischem Zweck &nbsp;·&nbsp;
+        <strong>Wellness</strong> — ohne therapeutischen Zweck, dann 19 % Umsatzsteuer.
+        Die ersten beiden sind nach § 4 Nr. 14 UStG umsatzsteuerfrei.
       </p>
     </section>
 
@@ -177,9 +183,9 @@ const LEISTUNGEN = {
 
 /* Abrechnungsarten: bestimmen die Umsatzsteuer-Behandlung */
 const ARTEN = {
-  privat:      {label:'Privat mit Verordnung',        ust:false},
-  selbst_ther: {label:'Selbstzahler, therapeutisch',  ust:false},
-  selbst_well: {label:'Selbstzahler, Wellness (19 %)', ust:true},
+  privat:      {label:'Privat',        ust:false},
+  selbst_ther: {label:'Selbstzahler',  ust:false},
+  selbst_well: {label:'Wellness',      ust:true},
 };
 
 let zeilen = [];

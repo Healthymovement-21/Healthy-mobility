@@ -28,6 +28,10 @@
   --aura-1: rgba(14,107,92,.22);
   --aura-2: rgba(94,164,214,.20);
   --aura-3: rgba(168,57,31,.10);
+
+  /* Dateityp-Farben für die Paket-Übersicht */
+  --word:  #3B65A6;
+  --excel: #1F7A4D;
 }
 
 @media (prefers-color-scheme: dark){
@@ -53,6 +57,9 @@
     --aura-1: rgba(95,221,196,.14);
     --aura-2: rgba(94,164,214,.12);
     --aura-3: rgba(255,146,112,.07);
+
+    --word:  #8FBBEF;
+    --excel: #7BE0A8;
   }
 }
 :root[data-theme="dark"]{
@@ -75,6 +82,9 @@
   --aura-1: rgba(95,221,196,.14);
   --aura-2: rgba(94,164,214,.12);
   --aura-3: rgba(255,146,112,.07);
+
+  --word:  #8FBBEF;
+  --excel: #7BE0A8;
 }
 
 *{ box-sizing:border-box; }
@@ -563,23 +573,35 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   list-style:none;
   margin:18px 0;
   padding:0;
-  display:flex; flex-direction:column; gap:12px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:14px;
+  align-items:start;
 }
 .deliverables li{ padding:22px 24px; }
-.deliverables .d-name{ font-weight:600; font-size:17px; }
+.d-head{ display:flex; align-items:center; gap:12px; }
+.d-icon{
+  flex:none;
+  width:40px; height:40px;
+  border-radius:11px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; font-weight:700;
+  color:#fff;
+  letter-spacing:-.01em;
+}
+.d-icon.word{ background:var(--word); }
+.d-icon.excel{ background:var(--excel); }
+.d-icon.pdf{ background:var(--mark); }
+.deliverables .d-name{ display:block; font-weight:600; font-size:17px; }
 .deliverables .d-type{
+  display:block;
   font-size:11.5px;
   font-weight:600;
   letter-spacing:.06em;
-  color:var(--accent);
-  background:var(--accent-soft);
-  border-radius:999px;
-  padding:3px 10px;
-  margin-left:10px;
-  white-space:nowrap;
-  vertical-align:1px;
+  color:var(--ink-muted);
+  margin-top:2px;
 }
-.deliverables .d-desc{ color:var(--ink-muted); font-size:15.5px; margin-top:5px; }
+.deliverables .d-desc{ color:var(--ink-muted); font-size:15.5px; margin-top:12px; }
 
 /* Vorschaubilder der Produktdateien */
 img.vorschau{
@@ -590,6 +612,11 @@ img.vorschau{
   border-radius:14px;
   border:1px solid var(--glass-line);
   box-shadow:var(--shadow);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+img.vorschau:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-lift);
 }
 
 /* Kauf-Gate: Widerrufs-Zustimmung */

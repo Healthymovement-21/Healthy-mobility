@@ -4,28 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Fahrplan — PhysioNebenbei</title><link rel="stylesheet" href="base.css">
+<meta name="theme-color" content="#0E6B5C">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 </head>
 <body>
 
 <div class="page">
-  <p class="crumb"><a href="../">← Landingpage</a> · <a href="werkzeuge.html">Werkzeuge →</a></p>
+  <a class="brand" href="../">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
 
   <div class="doc">
 
-    <section class="sheet">
-      <span class="doc-tag">FORMULAR PN&#8209;01<br>AUSGABE 2026</span>
-      <p class="eyebrow">Vorschau · Produkt-Inhalt</p>
-      <h1 class="title">Der Fahrplan für deine ersten Privatpatient:innen</h1>
-      <p class="lede">Zehn Kapitel, in der Reihenfolge, in der die Themen beim Start tatsächlich drankommen, plus zwei fertige Vorlagen. Das hier ist der volle Inhalt des Word-Dokuments, zum Lesen und Korrigieren, bevor irgendwas rausgeht.</p>
-      <p>Ich bin selbst angestellt in der Physiotherapie und behandle nebenberuflich Privatpatient:innen. Bevor ich damit angefangen habe, hab ich Wochen mit verstreuter Recherche verbracht: Behördenseiten, Foren, Versicherungsvergleiche, halb widersprüchliche Tipps von Kolleg:innen.</p>
-      <p>Meine ersten Patient:innen kamen dann nicht über Werbung. Das waren Freunde, Familie, Leute aus dem Sportverein. Der Rest kam von allein, einfach weil die Behandlung gut war und sich das rumgesprochen hat. Später sind sogar Schulen, Städte und die Polizei auf mich zugekommen, weil mich jemand weiterempfohlen hatte.</p>
-      <div class="annotation">Wichtig: Orientierung und fertige Vorlagen für genau einen Fall — nebenberuflich, ausschließlich Selbstzahler:innen und Privatrezepte, keine eigene Praxis, keine Kassenzulassung. Ersetzt keine Steuerberatung, keine Rechtsberatung, keine medizinische Beratung. Angaben zu Preisen, Fristen und Paragraphen sorgfältig recherchiert (Stand 2026), im Zweifel bei der zuständigen Stelle nachfragen.</div>
+    <section class="sheet hero">
+      <h1>Der Fahrplan</h1>
+      <p class="lede">Zehn Kapitel bis zum ersten Termin. Nebenberuflich, Selbstzahler:innen, ohne Kassenzulassung.</p>
+      <details class="mehr">
+        <summary>Wofür das gilt — und wofür nicht</summary>
+        <div>
+          <p>Orientierung und Vorlagen für genau einen Fall: nebenberuflich, ausschließlich Selbstzahler:innen und Privatrezepte, keine eigene Praxis, keine Kassenzulassung.</p>
+          <p>Ersetzt keine Steuer-, Rechts- oder medizinische Beratung. Angaben zu Preisen, Fristen und Paragraphen sorgfältig recherchiert (Stand 2026), im Zweifel bei der zuständigen Stelle nachfragen.</p>
+        </div>
+      </details>
     </section>
 
     <section class="sheet">
-      <p class="eyebrow">Deine To-do-Liste</p>
-      <h2>Häkchen setzen, während du durcharbeitest</h2>
-      <p>Bleibt in diesem Browser gespeichert, auch wenn du die Seite schließt und später weitermachst.</p>
+      <p class="eyebrow">To-do</p>
+      <h2>Abhaken beim Durcharbeiten</h2>
       <div class="progress-bar"><div id="todo-bar" style="width:0%"></div></div>
       <p class="progress-label" id="todo-label">0 von 10 erledigt</p>
       <ul class="todo" id="todo-list">
@@ -261,6 +269,11 @@
   });
 
   render();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
 </script>
 </body>
 </html>

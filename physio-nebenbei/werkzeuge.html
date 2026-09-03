@@ -4,44 +4,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Werkzeuge — PhysioNebenbei</title><link rel="stylesheet" href="base.css">
+<meta name="theme-color" content="#0E6B5C">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 </head>
 <body>
 
 <div class="page">
-  <p class="crumb"><a href="../">← Landingpage</a> · <a href="fahrplan.html">← Fahrplan</a></p>
+  <a class="brand" href="../">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
 
   <div class="doc">
 
-    <section class="sheet wide">
-      <span class="doc-tag">FORMULAR PN&#8209;02<br>AUSGABE 2026</span>
-      <p class="eyebrow">Vorschau · Rechner</p>
-      <h1 class="title">Werkzeuge zum Rechnen</h1>
-      <p class="lede">Dieselben vier Rechner wie in der Excel-Datei, hier als echte, direkt im Browser nutzbare Werkzeuge. Zahl ändern, alles darunter rechnet sofort mit.</p>
-      <div class="annotation">Der Grenzsteuersatz ist überall eine Eingabe, keine eingebaute Tabelle — trag den Wert ein, den dir deine letzte Steuererklärung oder dein:e Steuerberater:in nennt. Kirchensteuer und Soli sind nicht eingerechnet. Physiotherapeutische Heilbehandlungen sind nach § 4 Nr. 14 UStG umsatzsteuerbefreit, deshalb taucht hier keine Umsatzsteuer auf. Das ersetzt keine Steuerberatung.</div>
+    <section class="sheet hero">
+      <h1>Rechner</h1>
+      <p class="lede">Alles rechnet sofort mit. Nichts verlässt dein Gerät.</p>
     </section>
 
     <section class="sheet wide">
-      <p class="eyebrow">Die großen Rechner</p>
-      <h2>Zwei Werkzeuge für den laufenden Betrieb</h2>
       <ul class="deliverables">
         <li>
-          <div><span class="d-name">Monats-Rechner</span><span class="d-type">NEU</span></div>
-          <div class="d-desc">Behandlungen des Monats eintragen — Patient für Patient, mit KG, MT, MLD und Kombinationen, privat oder Selbstzahler. Zeigt Einnahmen, Umsatzsteuer, Steuerrücklage und was dir bleibt.</div>
-          <p class="hero-cta" style="margin-top:12px"><a class="btn" href="monatsrechner.html">Monat durchrechnen</a></p>
+          <div><span class="d-name">Monats-Rechner</span></div>
+          <div class="d-desc">Behandlungen eintragen, sehen was bleibt. Mit PDF.</div>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="monatsrechner.html">Öffnen</a></p>
         </li>
         <li>
-          <div><span class="d-name">Gehalt &amp; Stunden</span><span class="d-type">NEU</span></div>
-          <div class="d-desc">Angestelltengehalt plus Nebenverdienst zusammengerechnet, mit Durchspielen von Stundenreduktion — und einer Einschätzung, ob deine Krankenkasse die Selbstständigkeit als hauptberuflich werten könnte.</div>
-          <p class="hero-cta" style="margin-top:12px"><a class="btn" href="gehaltsrechner.html">Gehalt durchrechnen</a></p>
+          <div><span class="d-name">Gehalt &amp; Stunden</span></div>
+          <div class="d-desc">Gehalt plus Nebenverdienst, mit Krankenkassen-Check.</div>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="gehaltsrechner.html">Öffnen</a></p>
         </li>
       </ul>
+      <details class="mehr">
+        <summary>Hinweis zu den Steuerzahlen</summary>
+        <div>
+          <p>Der Grenzsteuersatz ist überall eine Eingabe, keine eingebaute Tabelle. Kirchensteuer und Soli sind nicht eingerechnet.</p>
+          <p>Heilbehandlungen sind nach § 4 Nr. 14 UStG umsatzsteuerbefreit. Ersetzt keine Steuerberatung.</p>
+        </div>
+      </details>
     </section>
 
     <!-- ============ PREIS-KALKULATION ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">1 · Preis-Kalkulation</p>
+      <p class="eyebrow">Preis-Kalkulation</p>
       <h2>Was muss ich verlangen?</h2>
-      <p>Trag ein, was du willst und was du hast — der Rechner ermittelt den nötigen Preis pro Behandlung.</p>
       <div class="calc-card">
         <div class="calc-row">
           <label for="pk_ziel">Gewünschtes Nebeneinkommen pro Monat (netto)</label>
@@ -77,7 +85,7 @@
         </div>
       </div>
 
-      <h2>Die Gegenprobe: was bleibt bei meinem geplanten Preis?</h2>
+      <h2>Gegenprobe</h2>
       <div class="calc-card">
         <div class="calc-row">
           <label for="pk2_preis">Dein geplanter Preis pro Behandlung</label>
@@ -104,7 +112,7 @@
 
     <!-- ============ STEUER-RÜCKLAGE ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">2 · Steuer-Rücklage</p>
+      <p class="eyebrow">Steuer-Rücklage</p>
       <h2>Was leg ich zur Seite?</h2>
       <div class="calc-card">
         <div class="calc-row"><label for="sr_haft">Berufshaftpflicht / Jahr</label><input type="number" id="sr_haft" value="120" step="10"></div>
@@ -125,9 +133,9 @@
 
     <!-- ============ EÜR ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">3 · EÜR — Einnahmen-Überschuss-Rechnung</p>
-      <h2>Die vereinfachte Gewinnermittlung nach § 4 Abs. 3 EStG</h2>
-      <p>Die Form, die Freiberufler:innen wie Physiotherapeut:innen nutzen dürfen, ohne Bilanz und ohne doppelte Buchführung. Monat für Monat, mit Jahressumme unten.</p>
+      <p class="eyebrow">EÜR</p>
+      <h2>Einnahmen-Überschuss-Rechnung</h2>
+      <p class="micro">Die vereinfachte Gewinnermittlung nach § 4 Abs. 3 EStG — ohne Bilanz, ohne doppelte Buchführung.</p>
       <div class="tbl-wrap">
         <table class="data" id="euer">
           <thead>
@@ -153,9 +161,9 @@
 
     <!-- ============ DOKUMENTATION ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">4 · Dokumentation</p>
+      <p class="eyebrow">Dokumentation</p>
       <h2>Behandlungs-Log</h2>
-      <p>Tipp aus Kapitel 07 des Fahrplans: Patient:innen hier mit Kürzel statt vollem Namen führen, volle Namen getrennt und sicher aufbewahren. Zum fortlaufenden Ausfüllen die Excel-Datei nutzen — hier nur zur Vorschau.</p>
+      <p class="micro">Patient:innen mit Kürzel führen, volle Namen getrennt aufbewahren. Zum Ausfüllen die Excel-Datei.</p>
       <div class="tbl-wrap">
         <table class="data">
           <thead><tr><th>Datum</th><th>Patient:in</th><th>Anamnese &amp; Befund</th><th>Behandlung</th><th>Verlauf</th><th>Nächste Schritte</th></tr></thead>
@@ -171,9 +179,9 @@
     </section>
 
     <section class="sheet wide">
-      <p class="eyebrow">Im Paket enthalten</p>
-      <h2>Dieselben Rechner als Excel-Datei</h2>
-      <p>Hier im Browser kannst du alles kostenlos durchrechnen. Im Paket bekommst du die Excel-Datei dazu — mit denselben Formeln, aber zum Speichern deiner eigenen Zahlen, für die EÜR übers ganze Jahr und das Dokumentations-Log mit beliebig vielen Zeilen. Dazu den Fahrplan als Word-Datei und die zwei Vertragsvorlagen als PDF.</p>
+      <p class="eyebrow">Im Paket</p>
+      <h2>Als Excel zum Mitnehmen</h2>
+      <p>Dieselben Formeln, aber zum Speichern deiner Zahlen — plus Fahrplan als Word und zwei Vertragsvorlagen als PDF.</p>
       <p class="hero-cta">
         <a class="btn" href="../#kaufen">Paket sichern — 29 €</a>
         <a class="btn ghost" href="fahrplan.html">Fahrplan lesen</a>
@@ -291,6 +299,11 @@
   recalcAll();
   calcSteuer();
   calcEuer();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
 </script>
 </body>
 </html>

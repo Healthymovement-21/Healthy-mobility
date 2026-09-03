@@ -5,28 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Monats-Rechner — PhysioNebenbei</title>
 <link rel="stylesheet" href="base.css">
+<meta name="theme-color" content="#0E6B5C">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 </head>
 <body>
 
 <div class="page">
-  <p class="crumb"><a href="../">← Startseite</a> · <a href="werkzeuge.html">Rechner</a> · <a href="gehaltsrechner.html">Gehalt &amp; Stunden →</a></p>
+  <a class="brand" href="../">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
 
   <div class="doc">
 
     <section class="sheet hero">
-      <p class="eyebrow">Rechner</p>
-      <h1>Was du diesen Monat wirklich verdienst</h1>
-      <p class="lede">Trag deine Behandlungen ein, Patient für Patient. Unten steht schwarz auf weiß, was reinkommt, was davon Umsatzsteuer ist, was du zurücklegen solltest und was am Ende übrig bleibt.</p>
-      <div class="annotation">
-        <strong>Wichtig zu den Preisen:</strong> Für Physiotherapie bei Privatpatient:innen gibt es keine verbindliche Gebührenordnung — du kalkulierst frei. Die Werte unten sind marktübliche Startwerte, keine amtlichen Sätze. <strong>Trag deine eigenen Preise ein.</strong> Die Beihilfe-Höchstsätze (Bund, Stand 04/2024: KG 27,80 €, MT 33,40 €) sind nur Erstattungsgrenzen für deine Patient:innen und je Bundesland verschieden.
-      </div>
+      <h1>Monat berechnen</h1>
+      <p class="lede">Behandlungen eintragen. Unten steht, was bleibt.</p>
     </section>
 
     <!-- ============ PREISLISTE ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">Schritt 1</p>
+      <p class="eyebrow">1 · Preise</p>
       <h2>Deine Preisliste</h2>
-      <p>Zwei Spalten, weil die meisten bei Selbstzahler:innen anders kalkulieren als bei Privatpatient:innen mit Verordnung. Einmal eintragen, wird gespeichert.</p>
 
       <div class="tbl-wrap">
         <table class="data">
@@ -71,22 +73,27 @@
           </tbody>
         </table>
       </div>
-      <p class="micro">Wellness-Leistungen rechnen mit der Selbstzahler-Spalte — dort wird nur die Umsatzsteuer anders behandelt.</p>
+      <details class="mehr">
+        <summary>Woher kommen diese Preise?</summary>
+        <div>
+          <p>Startwerte, keine amtlichen Sätze — bei Privatpatient:innen gibt es keine verbindliche Gebührenordnung, du kalkulierst frei. Trag deine eigenen Preise ein.</p>
+          <p>Die Beihilfe-Höchstsätze (Bund, 04/2024: KG 27,80 €, MT 33,40 €) sind nur Erstattungsgrenzen für deine Patient:innen und je Bundesland verschieden.</p>
+          <p>Wellness rechnet mit der Selbstzahler-Spalte, nur die Umsatzsteuer läuft anders.</p>
+        </div>
+      </details>
     </section>
 
     <!-- ============ BEHANDLUNGEN ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">Schritt 2</p>
-      <h2>Behandlungen im Monat</h2>
+      <p class="eyebrow">2 · Behandlungen</p>
+      <h2>Wer war da?</h2>
 
       <div class="calc-card" style="margin-bottom:22px">
         <div class="calc-row">
-          <label for="monat">Welcher Monat ist das? <span class="micro">(steht später oben auf deinem PDF)</span></label>
-          <div class="field"><input type="month" id="monat" style="text-align:left"></div>
+          <label for="monat">Monat</label>
+          <div class="field"><input type="month" id="monat"></div>
         </div>
       </div>
-
-      <p>Keine Namen nötig — Patient 1, 2, 3. Eine Zeile pro Patient:in, mit der Anzahl der Termine im Monat.</p>
 
       <div class="tbl-wrap">
         <table class="data" id="tbl">
@@ -107,40 +114,43 @@
       <p class="hero-cta">
         <a class="btn ghost" id="add" href="#">+ Patient hinzufügen</a>
       </p>
-      <p class="micro" style="margin-top:18px">
-        <strong>Privat</strong> — mit ärztlicher Verordnung &nbsp;·&nbsp;
-        <strong>Selbstzahler</strong> — ohne Verordnung, aber mit therapeutischem Zweck &nbsp;·&nbsp;
-        <strong>Wellness</strong> — ohne therapeutischen Zweck, dann 19 % Umsatzsteuer.
-        Die ersten beiden sind nach § 4 Nr. 14 UStG umsatzsteuerfrei.
-      </p>
+      <details class="mehr">
+        <summary>Privat, Selbstzahler oder Wellness?</summary>
+        <div>
+          <p><strong>Privat</strong> — mit ärztlicher Verordnung.<br>
+          <strong>Selbstzahler</strong> — ohne Verordnung, aber therapeutisch.<br>
+          <strong>Wellness</strong> — ohne therapeutischen Zweck, 19 % USt.</p>
+          <p>Die ersten beiden sind nach § 4 Nr. 14 UStG umsatzsteuerfrei — entscheidend ist der therapeutische Zweck, nicht wer zahlt.</p>
+        </div>
+      </details>
     </section>
 
     <!-- ============ ERGEBNIS ============ -->
     <section class="sheet">
-      <p class="eyebrow">Schritt 3</p>
+      <p class="eyebrow">3 · Ergebnis</p>
       <h2>Dein Monat</h2>
       <div class="calc-card">
         <div class="calc-row">
-          <label>Einnahmen aus Heilbehandlung <span class="micro">(steuerfrei, § 4 Nr. 14 UStG)</span></label>
+          <label>Heilbehandlung <span class="micro">steuerfrei</span></label>
           <span class="out" id="o_frei">–</span>
         </div>
         <div class="calc-row">
-          <label>Einnahmen aus Wellness/Prävention <span class="micro">(netto, ohne USt)</span></label>
+          <label>Wellness <span class="micro">netto</span></label>
           <span class="out" id="o_pflicht_netto">–</span>
         </div>
         <div class="calc-row">
-          <label>davon Umsatzsteuer 19 % <span class="micro">(führst du ans Finanzamt ab)</span></label>
+          <label>Umsatzsteuer 19 %</label>
           <span class="out" id="o_ust">–</span>
         </div>
         <div class="calc-row result">
-          <label class="result-label">Gesamt-Einnahmen (das steht auf deinen Rechnungen)</label>
+          <label class="result-label">Einnahmen</label>
           <span class="out" id="o_brutto">–</span>
         </div>
       </div>
 
       <div class="calc-card">
         <div class="calc-row">
-          <label for="ausgaben">Betriebsausgaben diesen Monat <span class="micro">(Fahrtkosten, Material, anteilig Versicherung)</span></label>
+          <label for="ausgaben">Betriebsausgaben <span class="micro">Fahrt, Material, Versicherung</span></label>
           <div class="field"><input type="number" id="ausgaben" value="0" step="10"><span class="unit">€</span></div>
         </div>
         <div class="calc-row">
@@ -148,11 +158,11 @@
           <span class="out" id="o_gewinn">–</span>
         </div>
         <div class="calc-row">
-          <label for="satz">Rücklage-Satz <span class="micro">(dein Grenzsteuersatz plus Puffer)</span></label>
+          <label for="satz">Rücklage-Satz <span class="micro">Grenzsteuersatz plus Puffer</span></label>
           <div class="field"><input type="number" id="satz" value="30" step="1"><span class="unit">%</span></div>
         </div>
         <div class="calc-row">
-          <label>Empfohlene Rücklage — sofort wegpacken</label>
+          <label>Rücklage</label>
           <span class="out" id="o_ruecklage">–</span>
         </div>
         <div class="calc-row result">
@@ -161,37 +171,36 @@
         </div>
       </div>
 
-      <div class="annotation">
-        Die Umsatzsteuer aus Wellness-Leistungen gehört dir nicht — die ist durchlaufender Posten und oben schon abgezogen. Wenn du als Kleinunternehmer:in nach § 19 UStG keine Umsatzsteuer ausweist, stell alle Zeilen auf „Privat" oder „Selbstzahler".
-      </div>
+      <details class="mehr">
+        <summary>Warum ist die Umsatzsteuer schon abgezogen?</summary>
+        <div>
+          <p>Weil sie dir nicht gehört — sie ist ein durchlaufender Posten ans Finanzamt.</p>
+          <p>Als Kleinunternehmer:in nach § 19 UStG weist du keine aus: dann alle Zeilen auf „Privat" oder „Selbstzahler" stellen.</p>
+        </div>
+      </details>
     </section>
 
     <!-- ============ PDF ============ -->
     <section class="sheet">
-      <p class="eyebrow">Schritt 4</p>
-      <h2>Monat als PDF sichern</h2>
-      <p>Erzeugt eine saubere Übersicht mit allen Behandlungen und der kompletten Auswertung — zum Ablegen, für die Steuerberatung oder als Beleg für dich selbst.</p>
+      <p class="eyebrow">4 · Sichern</p>
+      <h2>Als PDF speichern</h2>
       <p class="hero-cta">
         <a class="btn" id="pdf" href="#">Als PDF speichern</a>
-        <a class="btn ghost" id="reset" href="#">Monat zurücksetzen</a>
+        <a class="btn ghost" id="reset" href="#">Zurücksetzen</a>
       </p>
-      <div class="exclusions" style="margin-top:22px">
-        <p style="font-size:15.5px;margin-bottom:12px">
-          <strong>iPhone &amp; iPad</strong><br>
-          Auf „Als PDF speichern" tippen, dann <em>Drucken</em> wählen. In der Vorschau oben rechts auf das Teilen-Symbol und <em>In Dateien sichern</em>.
-        </p>
-        <p class="note" style="font-size:15.5px;border-top:none;padding-top:0">
-          <strong>Windows &amp; Mac</strong><br>
-          Auf „Als PDF speichern" klicken. Im Druckdialog als Drucker <em>Microsoft Print to PDF</em> wählen (Windows) bzw. unten links <em>Als PDF sichern</em> (Mac).
-        </p>
-      </div>
+      <details class="mehr">
+        <summary>Wie speichere ich das auf dem Handy?</summary>
+        <div>
+          <p><strong>iPhone &amp; iPad</strong> — tippen, dann <em>Drucken</em>. In der Vorschau oben rechts das Teilen-Symbol, dann <em>In Dateien sichern</em>.</p>
+          <p><strong>Windows</strong> — als Drucker <em>Microsoft Print to PDF</em> wählen. <strong>Mac</strong> — unten links <em>Als PDF sichern</em>.</p>
+        </div>
+      </details>
     </section>
 
     <section class="sheet">
-      <p class="eyebrow">Nächster Schritt</p>
-      <h2>Und was heißt das für dein Gesamteinkommen?</h2>
-      <p>Der zweite Rechner nimmt diesen Betrag, stellt ihn neben dein Angestellten-Gehalt und zeigt dir, was insgesamt übrig bleibt — und ob deine Krankenkasse ein Problem damit bekommen könnte.</p>
-      <p class="hero-cta"><a class="btn" href="gehaltsrechner.html">Zum Gehalts- und Stundenrechner</a></p>
+      <h2>Und insgesamt?</h2>
+      <p>Neben dein Gehalt gestellt, mit Krankenkassen-Check.</p>
+      <p class="hero-cta"><a class="btn" href="gehaltsrechner.html">Gehalt &amp; Stunden</a></p>
     </section>
 
   </div>
@@ -443,6 +452,11 @@ document.querySelectorAll('[data-price], #ausgaben, #satz, #monat')
 document.getElementById('monat').value = new Date().toISOString().slice(0, 7);
 if (!laden()) zeilen = [neueZeile(), neueZeile(), neueZeile()];
 render();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
 </script>
 </body>
 </html>

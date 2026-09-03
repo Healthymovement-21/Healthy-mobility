@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Gehalt &amp; Stunden — PhysioNebenbei</title>
 <link rel="stylesheet" href="base.css">
+<meta name="theme-color" content="#0E6B5C">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <style>
   /* Ampel — erbt Glas aus base.css, hier nur die Zustandsfarben */
   .ampel{ padding:24px 26px; margin:20px 0; border-left-width:3px; }
@@ -53,73 +57,75 @@
 <body>
 
 <div class="page">
-  <p class="crumb"><a href="../">← Startseite</a> · <a href="monatsrechner.html">← Monats-Rechner</a> · <a href="werkzeuge.html">Alle Rechner</a></p>
+  <a class="brand" href="../">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
 
   <div class="doc">
 
     <section class="sheet hero">
-      <p class="eyebrow">Rechner</p>
-      <h1>Was bleibt dir insgesamt — und wie viel Zeit kostet es dich?</h1>
-      <p class="lede">Angestelltengehalt plus Nebenverdienst, zusammengerechnet. Dazu das Durchspielen: Was passiert mit deinem Einkommen, wenn du im Hauptjob auf 35, 30 oder 25 Stunden runtergehst?</p>
+      <h1>Gehalt &amp; Stunden</h1>
+      <p class="lede">Gehalt plus Nebenverdienst. Und was passiert, wenn du reduzierst.</p>
     </section>
 
     <!-- ============ HAUPTJOB ============ -->
     <section class="sheet">
-      <p class="eyebrow">Schritt 1</p>
+      <p class="eyebrow">1 · Hauptjob</p>
       <h2>Dein Hauptjob</h2>
       <div class="calc-card">
         <div class="calc-row">
-          <label for="brutto">Bruttogehalt pro Monat</label>
+          <label for="brutto">Brutto pro Monat</label>
           <div class="field"><input type="number" id="brutto" value="3200" step="50"><span class="unit">€</span></div>
         </div>
         <div class="calc-row">
-          <label for="stunden">Wochenstunden laut Vertrag</label>
+          <label for="stunden">Wochenstunden</label>
           <div class="field"><input type="number" id="stunden" value="40" step="0.5"><span class="unit">Std</span></div>
         </div>
         <div class="calc-row">
-          <label for="netto">Nettogehalt laut Abrechnung <span class="micro">(genauer als jede Schätzung — steht auf deiner Lohnabrechnung)</span></label>
+          <label for="netto">Netto <span class="micro">von deiner Abrechnung</span></label>
           <div class="field"><input type="number" id="netto" value="2100" step="50"><span class="unit">€</span></div>
         </div>
         <div class="calc-row">
-          <label>Deine effektive Abzugsquote</label>
+          <label>Abzugsquote</label>
           <span class="out" id="o_quote">–</span>
         </div>
       </div>
-      <p class="micro">Lass das Nettofeld auf 0, wenn du es gerade nicht zur Hand hast — dann rechnet der Rechner mit einer pauschalen Abzugsquote von 38 %, die für die meisten Vollzeit-Angestellten grob hinkommt.</p>
+      <p class="micro">Netto auf 0 lassen, wenn du es nicht zur Hand hast — dann rechnet er mit pauschal 38 %.</p>
     </section>
 
     <!-- ============ NEBENVERDIENST ============ -->
     <section class="sheet">
-      <p class="eyebrow">Schritt 2</p>
+      <p class="eyebrow">2 · Nebenverdienst</p>
       <h2>Dein Nebenverdienst</h2>
       <div class="calc-card">
         <div class="calc-row">
-          <label for="gewinn">Gewinn aus der Selbstständigkeit pro Monat <span class="micro">(vor Steuer, aus dem Monats-Rechner)</span></label>
+          <label for="gewinn">Gewinn pro Monat <span class="micro">vor Steuer</span></label>
           <div class="field"><input type="number" id="gewinn" value="600" step="50"><span class="unit">€</span></div>
         </div>
         <div class="calc-row">
-          <label for="satz">Rücklage-Satz für Steuern</label>
+          <label for="satz">Rücklage-Satz</label>
           <div class="field"><input type="number" id="satz" value="30" step="1"><span class="unit">%</span></div>
         </div>
         <div class="calc-row">
-          <label for="nstunden">Stunden pro Woche für die Selbstständigkeit <span class="micro">(inkl. Fahrt, Doku, Orga — nicht nur Behandlungszeit)</span></label>
+          <label for="nstunden">Stunden pro Woche <span class="micro">inkl. Fahrt, Doku, Orga</span></label>
           <div class="field"><input type="number" id="nstunden" value="6" step="0.5"><span class="unit">Std</span></div>
         </div>
         <div class="calc-row">
-          <label>Nebenverdienst nach Rücklage</label>
+          <label>Nach Rücklage</label>
           <span class="out" id="o_nebennetto">–</span>
         </div>
       </div>
-      <p class="hero-cta"><a class="btn ghost" id="uebernehmen" href="#">Zahlen aus dem Monats-Rechner übernehmen</a></p>
+      <p class="hero-cta"><a class="btn ghost" id="uebernehmen" href="#">Aus Monats-Rechner übernehmen</a></p>
     </section>
 
     <!-- ============ GESAMT ============ -->
     <section class="sheet">
-      <p class="eyebrow">Schritt 3</p>
-      <h2>Dein Gesamteinkommen</h2>
+      <p class="eyebrow">3 · Gesamt</p>
+      <h2>Was zusammenkommt</h2>
       <div class="calc-card">
         <div class="calc-row">
-          <label>Netto aus dem Hauptjob</label>
+          <label>Netto Hauptjob</label>
           <span class="out" id="o_hauptnetto">–</span>
         </div>
         <div class="calc-row">
@@ -131,11 +137,11 @@
           <span class="out" id="o_gesamt">–</span>
         </div>
         <div class="calc-row">
-          <label>Deine Gesamt-Arbeitszeit pro Woche</label>
+          <label>Arbeitszeit pro Woche</label>
           <span class="out" id="o_gesamtstunden">–</span>
         </div>
         <div class="calc-row">
-          <label>Was dir die Selbstständigkeit pro Stunde bringt <span class="micro">(nach Rücklage)</span></label>
+          <label>Stundenlohn nebenbei <span class="micro">nach Rücklage</span></label>
           <span class="out" id="o_stundenlohn">–</span>
         </div>
       </div>
@@ -143,9 +149,8 @@
 
     <!-- ============ SZENARIEN ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">Schritt 4</p>
-      <h2>Was, wenn du im Hauptjob reduzierst?</h2>
-      <p>Weniger Stunden im Angestelltenjob, gleicher Nebenverdienst. So verschiebt sich dein Einkommen und deine freie Zeit.</p>
+      <p class="eyebrow">4 · Szenarien</p>
+      <h2>Wenn du reduzierst</h2>
       <div class="tbl-wrap">
         <table class="szenarien" id="szenarien">
           <thead>
@@ -162,14 +167,13 @@
           <tbody id="szen_rows"></tbody>
         </table>
       </div>
-      <p class="micro">Die Netto-Werte sind mit deiner aktuellen Abzugsquote hochgerechnet. In Wirklichkeit bleibt bei weniger Brutto meist etwas <em>mehr</em> übrig als hier steht, weil der Steuersatz mitsinkt. Die Tabelle rechnet also eher vorsichtig.</p>
+      <p class="micro">Vorsichtig gerechnet — real bleibt bei weniger Brutto meist etwas mehr übrig, weil der Steuersatz mitsinkt.</p>
     </section>
 
     <!-- ============ KRANKENKASSE ============ -->
     <section class="sheet">
-      <p class="eyebrow">Schritt 5</p>
-      <h2>Wird deine Krankenkasse das zum Thema machen?</h2>
-      <p>Solange deine Selbstständigkeit <strong>nebenberuflich</strong> bleibt, bist du weiter über deinen Job pflichtversichert. Kippt die Einstufung auf „hauptberuflich selbstständig" (§ 5 Abs. 5 SGB V), fällt diese Pflichtversicherung weg und es wird deutlich teurer.</p>
+      <p class="eyebrow">5 · Krankenkasse</p>
+      <h2>Noch nebenberuflich?</h2>
 
       <div class="ampel" id="ampel">
         <h3 id="ampel_titel">–</h3>
@@ -178,36 +182,37 @@
 
       <div class="calc-card">
         <div class="calc-row">
-          <label for="bezug">Monatliche Bezugsgröße § 18 SGB IV <span class="micro">(ändert sich jährlich, 2026: 3.955 €)</span></label>
+          <label for="bezug">Bezugsgröße <span class="micro">2026: 3.955 €</span></label>
           <div class="field"><input type="number" id="bezug" value="3955" step="5"><span class="unit">€</span></div>
         </div>
         <div class="calc-row">
-          <label>Halbe Bezugsgröße — ab hier schauen Kassen genauer hin</label>
+          <label>Halbe Bezugsgröße</label>
           <span class="out" id="o_halb">–</span>
         </div>
       </div>
 
-      <div class="annotation">
-        Der Begriff „hauptberuflich selbstständig" ist gesetzlich nicht definiert — die Kassen entscheiden im Einzelfall. Als Faustregeln gelten: mehr als <strong>20 Stunden pro Woche</strong> selbstständig, ein Arbeitseinkommen über der <strong>halben Bezugsgröße</strong>, oder wenn die Selbstständigkeit <strong>mehr einbringt als der Job</strong>. Diese Einschätzung ist eine Orientierung, keine verbindliche Auskunft. Im Zweifel kostet ein Anruf bei deiner Kasse nichts — schriftliche Auskunft geben lassen.
-      </div>
+      <details class="mehr">
+        <summary>Wie entscheidet die Kasse das?</summary>
+        <div>
+          <p>Kippt die Einstufung auf „hauptberuflich selbstständig" (§ 5 Abs. 5 SGB V), fällt die Pflichtversicherung über den Job weg — und es wird teurer.</p>
+          <p>Faustregeln: über 20 Stunden pro Woche selbstständig, Einkommen über der halben Bezugsgröße, oder die Selbstständigkeit bringt mehr ein als der Job.</p>
+          <p>Der Begriff ist gesetzlich nicht definiert, die Kassen entscheiden im Einzelfall. Diese Ampel ist eine Orientierung, keine verbindliche Auskunft — im Zweifel schriftliche Auskunft von deiner Kasse geben lassen.</p>
+        </div>
+      </details>
     </section>
 
     <!-- ============ PDF ============ -->
     <section class="sheet">
-      <p class="eyebrow">Schritt 6</p>
-      <h2>Auswertung als PDF sichern</h2>
-      <p>Alle Zahlen, die Szenario-Tabelle und die Krankenkassen-Einschätzung in einem Dokument.</p>
+      <p class="eyebrow">6 · Sichern</p>
+      <h2>Als PDF speichern</h2>
       <p class="hero-cta"><a class="btn" id="pdf" href="#">Als PDF speichern</a></p>
-      <div class="exclusions" style="margin-top:22px">
-        <p style="font-size:15.5px;margin-bottom:12px">
-          <strong>iPhone &amp; iPad</strong><br>
-          Auf „Als PDF speichern" tippen, dann <em>Drucken</em> wählen. In der Vorschau oben rechts auf das Teilen-Symbol und <em>In Dateien sichern</em>.
-        </p>
-        <p class="note" style="font-size:15.5px;border-top:none;padding-top:0">
-          <strong>Windows &amp; Mac</strong><br>
-          Auf „Als PDF speichern" klicken. Im Druckdialog als Drucker <em>Microsoft Print to PDF</em> wählen (Windows) bzw. unten links <em>Als PDF sichern</em> (Mac).
-        </p>
-      </div>
+      <details class="mehr">
+        <summary>Wie speichere ich das auf dem Handy?</summary>
+        <div>
+          <p><strong>iPhone &amp; iPad</strong> — tippen, dann <em>Drucken</em>. In der Vorschau oben rechts das Teilen-Symbol, dann <em>In Dateien sichern</em>.</p>
+          <p><strong>Windows</strong> — als Drucker <em>Microsoft Print to PDF</em> wählen. <strong>Mac</strong> — unten links <em>Als PDF sichern</em>.</p>
+        </div>
+      </details>
     </section>
 
   </div>
@@ -453,6 +458,11 @@ document.querySelectorAll('#brutto,#stunden,#netto,#gewinn,#satz,#nstunden,#bezu
 
 laden();
 rechne();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
 </script>
 </body>
 </html>

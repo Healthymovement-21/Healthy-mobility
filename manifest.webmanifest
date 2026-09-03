@@ -1,0 +1,17 @@
+{
+  "name": "PhysioNebenbei",
+  "short_name": "PhysioNebenbei",
+  "description": "Rechner und Fahrplan für Physiotherapeut:innen, die nebenberuflich Privatpatient:innen behandeln.",
+  "start_url": "./physio-nebenbei/werkzeuge.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#EFF3F2",
+  "theme_color": "#0E6B5C",
+  "lang": "de",
+  "icons": [
+    { "src": "physio-nebenbei/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "physio-nebenbei/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "physio-nebenbei/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

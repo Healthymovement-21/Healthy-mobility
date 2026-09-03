@@ -1,9 +1,18 @@
 # PhysioNebenbei
 
-Landingpage-Test für ein Selbstzahler-Starter-Kit für Physiotherapeut:innen in Deutschland, die sich nebenberuflich selbstständig machen wollen. Statische Seite (eine Datei, keine Abhängigkeiten) — `index.html` ist der Einstiegspunkt.
+Verkaufsseite für ein digitales Starter-Paket für Physiotherapeut:innen in Deutschland, die
+nebenberuflich Selbstzahler:innen behandeln wollen. Statische Seite ohne Abhängigkeiten,
+`index.html` ist der Einstiegspunkt.
 
-Produkt und Werkzeuge liegen unter [`physio-nebenbei/`](physio-nebenbei/).
+**Vor dem ersten echten Verkauf:** [`VERKAUFSSTART.md`](VERKAUFSSTART.md) durchgehen — dort
+stehen die Platzhalter in den Rechtsseiten, die Einrichtung des Zahlungsanbieters und der
+Kauf-Link, die noch fehlen.
+
+Geschäftsmodell: Fahrplan und Rechner sind unter [`physio-nebenbei/`](physio-nebenbei/)
+kostenlos im Browser nutzbar und dienen als Verkaufsmotor. Verkauft wird das Datei-Paket
+(Word, Excel, zwei Vertrags-PDFs) für 29 €.
 
 ## CAPRATE
 
-Das vorherige Projekt in diesem Repo, eine geführte Immobilien-Investment-Analyse, ist unverändert erhalten und liegt jetzt unter [`caprate/`](caprate/index.html) statt an der Wurzel.
+Das vorherige Projekt in diesem Repo, eine geführte Immobilien-Investment-Analyse, ist
+unverändert erhalten und liegt unter [`caprate/`](caprate/index.html).

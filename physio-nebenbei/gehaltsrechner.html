@@ -6,30 +6,46 @@
 <title>Gehalt &amp; Stunden — PhysioNebenbei</title>
 <link rel="stylesheet" href="base.css">
 <style>
-  .ampel{
-    border-radius:12px;
-    padding:20px 22px;
-    margin:18px 0;
-    border-left:6px solid var(--line-strong);
-    background:var(--paper-raised);
-  }
+  /* Ampel — erbt Glas aus base.css, hier nur die Zustandsfarben */
+  .ampel{ padding:24px 26px; margin:20px 0; border-left-width:3px; }
   .ampel h3{ margin:0 0 8px; font-size:19px; }
-  .ampel p{ margin:0; font-size:16px; }
-  .ampel.gruen{ border-left-color:#2E7D57; background:var(--accent-soft); }
-  .ampel.gruen h3{ color:#1C6647; }
-  .ampel.gelb{ border-left-color:#B8860B; background:#FBF3DE; }
-  .ampel.gelb h3{ color:#8A6508; }
-  .ampel.rot{ border-left-color:var(--mark); background:var(--mark-soft); }
-  .ampel.rot h3{ color:var(--mark); }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]) .ampel.gelb{ background:#2E2716; }
-    :root:not([data-theme="light"]) .ampel.gelb h3{ color:#E8C34F; }
-    :root:not([data-theme="light"]) .ampel.gruen h3{ color:var(--accent); }
+  .ampel p{ margin:0; font-size:16px; max-width:62ch; }
+  .ampel .dot{
+    display:inline-block;
+    width:9px; height:9px;
+    border-radius:50%;
+    margin-right:9px;
+    vertical-align:2px;
   }
-  .szenarien{ width:100%; border-collapse:collapse; margin:16px 0; font-size:16px; }
-  .szenarien th, .szenarien td{ border-bottom:1px solid var(--line); padding:12px 10px; text-align:right; }
+  .ampel.gruen{ border-left-color:#1F8A63; }
+  .ampel.gruen h3{ color:#177055; }
+  .ampel.gruen .dot{ background:#1F8A63; box-shadow:0 0 0 4px rgba(31,138,99,.16); }
+  .ampel.gelb{ border-left-color:#B4870C; }
+  .ampel.gelb h3{ color:#8A6508; }
+  .ampel.gelb .dot{ background:#D3A21A; box-shadow:0 0 0 4px rgba(211,162,26,.18); }
+  .ampel.rot{ border-left-color:var(--mark); }
+  .ampel.rot h3{ color:var(--mark); }
+  .ampel.rot .dot{ background:var(--mark); box-shadow:0 0 0 4px var(--mark-soft); }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .ampel.gruen h3{ color:#5FDDC4; }
+    :root:not([data-theme="light"]) .ampel.gelb h3{ color:#E8C34F; }
+  }
+
+  .szenarien{ width:100%; border-collapse:collapse; margin:0; font-size:15.5px; }
+  .szenarien th, .szenarien td{
+    border-bottom:1px solid var(--glass-line);
+    padding:14px 12px;
+    text-align:right;
+  }
+  .szenarien tr:last-child td{ border-bottom:none; }
   .szenarien th:first-child, .szenarien td:first-child{ text-align:left; }
-  .szenarien th{ font-size:14px; color:var(--ink-muted); font-weight:600; }
+  .szenarien th{
+    font-size:12.5px;
+    color:var(--ink-muted);
+    font-weight:600;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
   .szenarien tr.aktuell{ background:var(--accent-soft); font-weight:600; }
   .szenarien td{ font-variant-numeric:tabular-nums; }
 </style>
@@ -276,7 +292,7 @@ function ampel(gewinn, nstunden, brutto){
 
   if (zuVielStunden || mehrAlsJob) {
     box.classList.add('rot');
-    titel.textContent = 'Kritisch — das kann als hauptberuflich gewertet werden';
+    titel.innerHTML = '<span class="dot"></span>Kritisch — das kann als hauptberuflich gewertet werden';
     text.textContent = zuVielStunden && mehrAlsJob
       ? 'Du liegst über 20 Stunden pro Woche und verdienst selbstständig mehr als im Hauptjob. Beide Faustregeln sprechen dafür, dass deine Kasse dich als hauptberuflich selbstständig einstuft. Kläre das aktiv mit deiner Krankenkasse, bevor sie von selbst darauf kommt.'
       : zuVielStunden
@@ -284,7 +300,7 @@ function ampel(gewinn, nstunden, brutto){
       : 'Dein Gewinn aus der Selbstständigkeit liegt über deinem Bruttogehalt aus dem Job. Damit gilt die Selbstständigkeit als prägend, auch bei wenigen Stunden. Kläre das mit deiner Krankenkasse.';
   } else if (knappStunden || ueberHalb) {
     box.classList.add('gelb');
-    titel.textContent = 'Grenzbereich — im Blick behalten';
+    titel.innerHTML = '<span class="dot"></span>Grenzbereich — im Blick behalten';
     text.textContent = knappStunden && ueberHalb
       ? 'Du näherst dich der 20-Stunden-Grenze und liegst über der halben Bezugsgröße. Noch unkritisch, aber wenn beides weiter steigt, wird deine Kasse nachfragen. Dokumentiere deine Stunden.'
       : knappStunden
@@ -292,7 +308,7 @@ function ampel(gewinn, nstunden, brutto){
       : 'Dein Gewinn liegt über der halben Bezugsgröße. Solange du deutlich unter 20 Wochenstunden bleibst und im Job mehr verdienst, ist das in der Regel unproblematisch — aber behalt es im Auge.';
   } else {
     box.classList.add('gruen');
-    titel.textContent = 'Unkritisch — klar nebenberuflich';
+    titel.innerHTML = '<span class="dot"></span>Unkritisch — klar nebenberuflich';
     text.textContent = 'Du liegst unter 20 Wochenstunden, unter der halben Bezugsgröße und verdienst im Hauptjob mehr. Nach den üblichen Faustregeln der Krankenkassen ist das eindeutig eine nebenberufliche Selbstständigkeit.';
   }
 }

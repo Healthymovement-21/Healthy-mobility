@@ -3,231 +3,458 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>CAPRATE · Immobilien-Investment-Analyse</title>
-<meta name="description" content="Geführte Analyse für Immobilien als Kapitalanlage: Objektdaten, Marktmiete-Schätzung, Rendite, Finanzierung, Cashflow und Besichtigungs-Checkliste — nach Buy-and-Hold-Prinzipien.">
-<link rel="stylesheet" href="styles.css">
+<title>PhysioNebenbei</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:        #EEF1EE;
+    --paper-raised: #F8FAF8;
+    --ink:          #16221E;
+    --ink-muted:    #56645D;
+    --line:         #C7D1C9;
+    --line-strong:  #9DAAA1;
+    --accent:       #145C56;
+    --accent-ink:   #F3FAF8;
+    --accent-soft:  #DCEAE6;
+    --mark:         #B8412A;
+    --mark-soft:    #F1DED5;
+    --focus:        #145C56;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:        #0F1715;
+      --paper-raised: #16201D;
+      --ink:          #E7ECE8;
+      --ink-muted:    #93A69C;
+      --line:         #2C3A35;
+      --line-strong:  #445248;
+      --accent:       #55D8C1;
+      --accent-ink:   #07201B;
+      --accent-soft:  #17322C;
+      --mark:         #FF8B69;
+      --mark-soft:    #33241D;
+      --focus:        #55D8C1;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:        #0F1715;
+    --paper-raised: #16201D;
+    --ink:          #E7ECE8;
+    --ink-muted:    #93A69C;
+    --line:         #2C3A35;
+    --line-strong:  #445248;
+    --accent:       #55D8C1;
+    --accent-ink:   #07201B;
+    --accent-soft:  #17322C;
+    --mark:         #FF8B69;
+    --mark-soft:    #33241D;
+    --focus:        #55D8C1;
+  }
+
+  *{ box-sizing:border-box; }
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+  h1,h2{
+    font-family:"Fraunces", ui-serif, Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+
+  .page{
+    max-width:920px;
+    margin:0 auto;
+    padding:clamp(24px,5vw,56px) clamp(16px,4vw,24px) 64px;
+  }
+
+  .doc{
+    position:relative;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-top:4px solid var(--accent);
+    border-radius:3px;
+    overflow:hidden;
+  }
+
+  .sheet{
+    padding:clamp(28px,5vw,52px) clamp(20px,6vw,64px);
+    max-width:680px;
+  }
+  .sheet + .sheet{
+    border-top:1px dashed var(--line-strong);
+  }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 14px;
+  }
+
+  .doc-tag{
+    position:absolute;
+    top:clamp(20px,4vw,32px);
+    right:clamp(20px,6vw,64px);
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11.5px;
+    letter-spacing:.06em;
+    color:var(--ink-muted);
+    text-align:right;
+    line-height:1.5;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero h1{
+    font-size:clamp(30px,4.4vw,44px);
+    line-height:1.12;
+    max-width:14ch;
+  }
+  .hero p.lede{
+    margin:20px 0 0;
+    max-width:56ch;
+    font-size:17px;
+    color:var(--ink-muted);
+  }
+  .hero-cta{
+    margin-top:30px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:16px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--accent);
+    color:var(--accent-ink);
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:14px;
+    letter-spacing:.02em;
+    font-weight:500;
+    text-decoration:none;
+    padding:14px 22px;
+    border-radius:4px;
+    border:1px solid var(--accent);
+  }
+  .btn:hover{ filter:brightness(1.06); }
+  .btn:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; }
+  .btn .price{ font-variant-numeric:tabular-nums; opacity:.85; }
+
+  .micro{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:12px;
+    color:var(--ink-muted);
+    letter-spacing:.01em;
+  }
+
+  /* ---------- CHECKLIST ---------- */
+  h2{
+    font-size:clamp(21px,2.6vw,26px);
+    line-height:1.25;
+    margin-bottom:22px;
+    max-width:24ch;
+  }
+
+  .checklist{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+  }
+  .checklist li{
+    display:grid;
+    grid-template-columns:18px 1fr;
+    gap:12px;
+    align-items:start;
+    font-size:15.5px;
+  }
+  .checklist li::before{
+    content:"";
+    width:16px;
+    height:16px;
+    margin-top:3px;
+    border:1.5px solid var(--line-strong);
+    border-radius:2px;
+  }
+
+  .annotation{
+    margin-top:26px;
+    padding:16px 18px;
+    background:var(--mark-soft);
+    border-left:2.5px solid var(--mark);
+    font-family:"Fraunces", ui-serif, serif;
+    font-style:italic;
+    font-size:16px;
+    line-height:1.5;
+    color:var(--ink);
+    max-width:58ch;
+  }
+
+  /* ---------- CREDIBILITY ---------- */
+  .credibility p{
+    margin:0 0 16px;
+    max-width:58ch;
+    color:var(--ink);
+  }
+  .signature{
+    margin-top:20px;
+    font-family:"Fraunces", ui-serif, serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--ink-muted);
+  }
+
+  /* ---------- TOC ---------- */
+  .toc{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .toc li{
+    display:grid;
+    grid-template-columns:38px 1fr;
+    gap:16px;
+    padding:13px 0;
+    border-top:1px dashed var(--line);
+  }
+  .toc li:first-child{ border-top:none; }
+  .toc .num{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:14px;
+    color:var(--accent);
+    font-variant-numeric:tabular-nums;
+    padding-top:1px;
+  }
+  .toc .t-title{
+    font-weight:500;
+    font-size:15.5px;
+  }
+  .toc .t-desc{
+    color:var(--ink-muted);
+    font-size:14px;
+    margin-top:2px;
+  }
+
+  /* ---------- EXCLUSIONS ---------- */
+  .exclusions{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:20px 22px;
+  }
+  .exclusions ul{
+    margin:0 0 16px;
+    padding:0 0 0 18px;
+    color:var(--ink-muted);
+    font-size:15px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .exclusions .note{
+    font-size:14px;
+    color:var(--ink-muted);
+    margin:0;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq{ display:flex; flex-direction:column; gap:22px; }
+  .faq .q{
+    font-weight:600;
+    font-size:15.5px;
+    margin:0 0 6px;
+  }
+  .faq .a{
+    margin:0;
+    color:var(--ink-muted);
+    font-size:15px;
+    max-width:58ch;
+  }
+
+  /* ---------- PRICE ---------- */
+  .fee-line{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:8px 20px;
+    padding:16px 0;
+    border-top:1px dashed var(--line-strong);
+    border-bottom:1px dashed var(--line-strong);
+    margin-bottom:26px;
+  }
+  .fee-line .label{ font-size:15.5px; }
+  .fee-line .terms{ font-size:13px; color:var(--ink-muted); }
+  .fee-line .amount{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:22px;
+    font-variant-numeric:tabular-nums;
+    color:var(--accent);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:920px;
+    margin:22px auto 0;
+    padding:0 clamp(16px,4vw,24px);
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 20px;
+    justify-content:space-between;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11.5px;
+    color:var(--ink-muted);
+  }
+
+  @media (max-width:560px){
+    .doc-tag{ display:none; }
+  }
+</style>
 </head>
 <body>
 
-<nav>
-  <a class="logo" href="index.html"><span class="mark"></span>CAPRATE</a>
-  <div class="nav-links">
-    <a href="#tool">Analyse</a>
-    <a href="#methodik">Methodik</a>
-    <a href="#tool" class="btn btn-primary btn-sm">Objekt prüfen</a>
-  </div>
-</nav>
+<div class="page">
+  <div class="doc">
 
-<main>
+    <section class="sheet hero">
+      <span class="doc-tag">FORMULAR&nbsp;PN&#8209;01<br>AUSGABE&nbsp;2026</span>
+      <p class="eyebrow">Startkit &middot; Selbstzahler-Praxis nebenberuflich</p>
+      <h1>Der Fahrplan für deine ersten Privatpatient:innen.</h1>
+      <p class="lede">Alles, was du als angestellte:r Physiotherapeut:in für den Start als Selbstzahler-Behandler:in brauchst: Anmeldung, Versicherung, Rechnung, Preise, erste Kund:innen. Kompakt, in der richtigen Reihenfolge, ohne Kassenzulassung, ohne eigene Praxisräume.</p>
+      <div class="hero-cta">
+        <a class="btn" href="mailto:nick1405.kkstr@gmail.com?subject=Interesse%3A%20Physio-Nebenjob-Fahrplan&body=Hallo%2C%0A%0Aich%20habe%20Interesse%20am%20Physio-Nebenjob-Fahrplan%20zum%20Fr%C3%BChbucher-Preis%20von%2029%20%E2%82%AC.%0A%0AName%3A%0APLZ%2FOrt%20(optional)%3A%0A%0AViele%20Gr%C3%BC%C3%9Fe">
+          Jetzt vormerken <span class="price">— 29&nbsp;€</span>
+        </a>
+        <span class="micro">Erscheint in Kürze · Preis für Frühbucher:innen fixiert</span>
+      </div>
+    </section>
 
-<div class="hero">
-  <p class="eyebrow">Immobilien · Kapitalanlage · Buy &amp; Hold</p>
-  <h1>Ist diese Immobilie eine gute Kapitalanlage?</h1>
-  <p class="sub" style="margin-top:18px"><strong>Eine geführte Analyse, kein Bauchgefühl.</strong> Exposé einfügen oder Daten eintragen — Marktmiete, Rendite, Finanzierung, Cashflow und was du bei der Besichtigung prüfen solltest, Schritt für Schritt.</p>
-  <div class="hero-meta">
-    <div><b>5 Minuten</b><span>bis zum Ergebnis</span></div>
-    <div><b>Live</b><span>Marktmiete-Schätzung</span></div>
-    <div><b>1–100</b><span>Kennzahlen-Score</span></div>
+    <section class="sheet">
+      <p class="eyebrow">Abschnitt 00 · Dein Ist-Zustand</p>
+      <h2>Diese Fragen kennst du vermutlich schon</h2>
+      <ul class="checklist">
+        <li>Gewerbe oder freiberuflich — was gilt für mich als Physio?</li>
+        <li>Brauche ich zwingend eine Berufshaftpflicht, und was kostet die wirklich?</li>
+        <li>Wie schreibe ich eine rechtssichere Rechnung?</li>
+        <li>Was muss in meine Behandlungsdokumentation, was nicht?</li>
+        <li>Wie kalkuliere ich einen Preis, ohne mich unter Wert zu verkaufen?</li>
+        <li>Woher kommen die ersten zahlenden Patient:innen?</li>
+        <li>Was brauche ich wirklich sofort — und was kann warten?</li>
+      </ul>
+      <p class="annotation">Die Antworten gibt's alle kostenlos irgendwo im Netz. Ich hab sie mir auch alle selbst zusammengesucht, über Wochen, mit zu vielen offenen Tabs. Genau das will ich dir ersparen.</p>
+    </section>
+
+    <section class="sheet credibility">
+      <p class="eyebrow">Abschnitt 01 · Warum ich das schreibe</p>
+      <h2>Wie meine ersten Patient:innen wirklich kamen</h2>
+      <p>Meine ersten Patient:innen waren keine Werbeanzeige. Das waren Freunde, Familie, Leute aus dem Sportverein. Irgendwann kam der Rest von allein, einfach weil die Behandlung gut war und sich das rumgesprochen hat. Später sind sogar Schulen, Städte und die Polizei auf mich zugekommen, weil mich jemand weiterempfohlen hatte.</p>
+      <p>Genau dieser Teil hat mir am meisten Kopfzerbrechen gemacht: woher kommt der erste Mensch, der mir vertraut? Anmeldung und Versicherung waren am Ende reine Fleißarbeit. Diesen Fahrplan schreibe ich, damit du für die Fleißarbeit nicht so lange brauchst wie ich.</p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Abschnitt 02 · Inhalt</p>
+      <h2>10 Schritte vom Gedanken bis zum ersten Termin</h2>
+      <ol class="toc">
+        <li><span class="num">01</span><div><div class="t-title">Bist du bereit?</div><div class="t-desc">Kurzer Realitäts-Check vor dem Start</div></div></li>
+        <li><span class="num">02</span><div><div class="t-title">Anmeldung &amp; Formalitäten</div><div class="t-desc">Freiberuflich vs. Gewerbe, Finanzamt, BGW</div></div></li>
+        <li><span class="num">03</span><div><div class="t-title">Versicherungen</div><div class="t-desc">Was du wirklich brauchst, was optional ist</div></div></li>
+        <li><span class="num">04</span><div><div class="t-title">Preise &amp; Kalkulation</div><div class="t-desc">Deinen Satz realistisch berechnen</div></div></li>
+        <li><span class="num">05</span><div><div class="t-title">Rechnung</div><div class="t-desc">Fertige, rechtssichere Vorlage zum Ausfüllen</div></div></li>
+        <li><span class="num">06</span><div><div class="t-title">Dokumentation</div><div class="t-desc">Vorlage für Anamnese &amp; Verlauf</div></div></li>
+        <li><span class="num">07</span><div><div class="t-title">Datenschutz-Grundlagen</div><div class="t-desc">Die wichtigsten Basics für Patientendaten</div></div></li>
+        <li><span class="num">08</span><div><div class="t-title">Erste Patient:innen</div><div class="t-desc">Wo Nebenberufler:innen realistisch starten</div></div></li>
+        <li><span class="num">09</span><div><div class="t-title">Die ersten 30 Tage</div><div class="t-desc">Was in welcher Reihenfolge zu tun ist</div></div></li>
+        <li><span class="num">10</span><div><div class="t-title">Typische Anfänger-Fehler</div><div class="t-desc">Und wie du sie vermeidest</div></div></li>
+      </ol>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Ausschlüsse</p>
+      <h2>Was bewusst NICHT drin ist</h2>
+      <div class="exclusions">
+        <ul>
+          <li>Vollständige Praxisgründung mit Kassenzulassung und eigenen Räumen</li>
+          <li>Individuelle Steuerberatung</li>
+          <li>Individuelle Rechtsberatung</li>
+          <li>Medizinische Beratung zu Behandlungsmethoden</li>
+        </ul>
+        <p class="note">Der Fahrplan ist Orientierung und fertige Vorlagen — keine individuelle Beratung. Für deinen Einzelfall brauchst du weiterhin eine:n Steuerberater:in.</p>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Häufige Fragen</p>
+      <div class="faq">
+        <div>
+          <p class="q">Kann ich mir das nicht einfach mit ChatGPT zusammensuchen?</p>
+          <p class="a">Ehrlich gesagt: teilweise schon. Aber du musst erst mal wissen, was du überhaupt fragen sollst, und die Antworten danach selbst sortieren. Genau diese Sortierarbeit nimmt dir der Fahrplan ab.</p>
+        </div>
+        <div>
+          <p class="q">Das deckt doch auch mein Berufsverband ab?</p>
+          <p class="a">Stimmt, mein Verband deckt das teilweise ab. Meistens geht es dort aber um die große Variante: eigene Praxis, Kassenzulassung, ein großes Investment. Der kleinere, viel häufigere Fall fällt dabei oft hinten runter: nebenberuflich, nur Selbstzahler:innen und Privatrezepte, ohne eigene Räume. Genau da setzt der Fahrplan an.</p>
+        </div>
+        <div>
+          <p class="q">Ersetzt das eine Steuerberatung?</p>
+          <p class="a">Nein. Orientierung und Vorlagen, keine Steuer- oder Rechtsberatung. Für deinen Einzelfall brauchst du trotzdem eine:n Steuerberater:in.</p>
+        </div>
+        <div>
+          <p class="q">Wann ist es fertig, und was passiert nach der Vormerkung?</p>
+          <p class="a">Ich sitze gerade mittendrin dran. Wenn genug Leute sich vormerken, geht er in den nächsten Wochen live, zum Preis von 29 €. Meldet sich zu wenig Interesse, sag ich dir auch das.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Preis</p>
+      <div class="fee-line">
+        <div>
+          <div class="label">Physio-Nebenjob-Fahrplan — digital, PDF &amp; Vorlagen</div>
+          <div class="terms">Einmalig · kein Abo · sofort startklar</div>
+        </div>
+        <div class="amount">29&nbsp;€</div>
+      </div>
+      <div class="hero-cta">
+        <a class="btn" href="mailto:nick1405.kkstr@gmail.com?subject=Interesse%3A%20Physio-Nebenjob-Fahrplan&body=Hallo%2C%0A%0Aich%20habe%20Interesse%20am%20Physio-Nebenjob-Fahrplan%20zum%20Fr%C3%BChbucher-Preis%20von%2029%20%E2%82%AC.%0A%0AName%3A%0APLZ%2FOrt%20(optional)%3A%0A%0AViele%20Gr%C3%BC%C3%9Fe">
+          Jetzt vormerken <span class="price">— 29&nbsp;€</span>
+        </a>
+        <span class="micro">Kein Konto nötig. Eine kurze E-Mail reicht.</span>
+      </div>
+    </section>
+
   </div>
+
+  <footer>
+    <span>PhysioNebenbei — Orientierung &amp; Vorlagen, keine Steuer-, Rechts- oder medizinische Beratung.</span>
+    <span>© <span id="y">2026</span> PhysioNebenbei</span>
+  </footer>
 </div>
 
-<section id="tool" style="padding-top:24px">
-  <div class="wizard">
-
-    <div class="stepper" id="stepper">
-      <div class="step-dot active" data-step="0"></div>
-      <div class="step-dot" data-step="1"></div>
-      <div class="step-dot" data-step="2"></div>
-      <div class="step-dot" data-step="3"></div>
-      <div class="step-dot" data-step="4"></div>
-    </div>
-    <p class="step-label" id="step-label">Schritt <b>1</b> von 5 — Exposé</p>
-
-    <form id="form" autocomplete="off">
-
-      <!-- STEP 0: Exposé -->
-      <div class="step active" data-step="0">
-        <div class="card">
-          <h3>Link oder Exposé-Text einfügen</h3>
-          <p class="field-hint" style="margin:8px 0 14px">Fügt du einen Link ein, sag ich dir sofort, warum ich ihn nicht selbst öffnen kann (Browser-Sperre, keine Ausrede). Fügt du den Beschreibungstext ein, werden Kaufpreis, Wohnfläche, Zimmer, Baujahr, Hausgeld und Ort automatisch erkannt und vorausgefüllt.</p>
-          <div class="field">
-            <textarea id="expose" placeholder="Link ODER Beschreibungstext, z. B. „Gepflegte 3-Zimmer-Wohnung, Baujahr 1998, 78 m², Kaufpreis 245.000 €, Hausgeld 210 €, 69117 Heidelberg …“"></textarea>
-          </div>
-          <div class="wizard-nav">
-            <button type="button" class="skip-link" id="skip-expose">Ohne Exposé fortfahren</button>
-            <div class="spacer"></div>
-            <button type="button" class="btn btn-accent" id="parse-btn">Erkennen &amp; übernehmen</button>
-          </div>
-          <div class="parse-result" id="parse-result" style="display:none"></div>
-        </div>
-      </div>
-
-      <!-- STEP 1: Objekt & Lage -->
-      <div class="step" data-step="1">
-        <div class="card">
-          <div class="field-group">
-            <div class="field-row">
-              <div class="field"><label for="ort">Ort / Stadt <span class="tag-auto" id="tag-ort" style="display:none">erkannt</span></label><input type="text" id="ort" placeholder="z. B. Heidelberg"></div>
-              <div class="field"><label for="plz">PLZ (optional)</label><input type="text" id="plz" placeholder="69117" maxlength="5"></div>
-            </div>
-            <div class="field-row three">
-              <div class="field"><label for="kaufpreis">Kaufpreis (€) <span class="tag-auto" id="tag-kaufpreis" style="display:none">erkannt</span></label><input type="number" id="kaufpreis" min="0" step="1000" placeholder="245000"></div>
-              <div class="field"><label for="wohnflaeche">Wohnfläche (m²) <span class="tag-auto" id="tag-wohnflaeche" style="display:none">erkannt</span></label><input type="number" id="wohnflaeche" min="1" step="1" placeholder="78"></div>
-              <div class="field"><label for="zimmer">Zimmer <span class="tag-auto" id="tag-zimmer" style="display:none">erkannt</span></label><input type="number" id="zimmer" min="1" step="0.5" placeholder="3"></div>
-            </div>
-            <div class="field-row">
-              <div class="field"><label for="baujahr">Baujahr <span class="tag-auto" id="tag-baujahr" style="display:none">erkannt</span><button type="button" class="unknown-toggle" data-target="baujahr">weiß ich nicht</button></label><input type="number" id="baujahr" min="1850" max="2027" step="1" placeholder="1998"></div>
-              <div class="field">
-                <label>Zustand</label>
-                <div class="radio-row" id="zustand-row">
-                  <label class="radio-chip"><input type="radio" name="zustand" value="saniert">Saniert</label>
-                  <label class="radio-chip"><input type="radio" name="zustand" value="gepflegt" checked>Gepflegt</label>
-                  <label class="radio-chip"><input type="radio" name="zustand" value="renovierung">Renov.-bedürftig</label>
-                  <label class="radio-chip"><input type="radio" name="zustand" value="unbekannt">Weiß ich nicht</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 2: Miete -->
-      <div class="step" data-step="2">
-        <div class="card">
-          <div class="field-group">
-            <div class="field">
-              <label>Vermietungsstatus</label>
-              <div class="radio-row" id="vermietet-row">
-                <label class="radio-chip"><input type="radio" name="vermietet" value="nein" checked>Leerstand / Eigennutz</label>
-                <label class="radio-chip"><input type="radio" name="vermietet" value="ja">Bereits vermietet</label>
-              </div>
-            </div>
-          </div>
-          <div class="field-group" id="miete-aktuell-group" style="display:none">
-            <div class="field-row single">
-              <div class="field"><label for="miete_aktuell">Aktuelle Kaltmiete mtl. (€) <button type="button" class="unknown-toggle" data-target="miete_aktuell">weiß ich nicht</button></label><input type="number" id="miete_aktuell" min="0" step="10" placeholder="0"></div>
-            </div>
-          </div>
-          <div class="field-group">
-            <div class="field-row single">
-              <div class="field">
-                <label for="miete_markt">Marktmiete Kaltmiete mtl. (€) <span class="badge badge-warn" style="margin-left:4px">Geschätzt</span></label>
-                <input type="number" id="miete_markt" min="0" step="10">
-              </div>
-            </div>
-            <p class="field-hint" id="miete-basis">Schätzung erscheint, sobald Ort, Wohnfläche und Baujahr aus Schritt 1 vorliegen. Frei überschreibbar — kein amtlicher Mietspiegel, sondern grobe Orientierung.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 3: Hausgeld & Kaufnebenkosten -->
-      <div class="step" data-step="3">
-        <div class="card">
-          <div class="field-group">
-            <div class="field-row">
-              <div class="field"><label for="hausgeld">Hausgeld gesamt mtl. (€) <span class="tag-auto" id="tag-hausgeld" style="display:none">erkannt</span><button type="button" class="unknown-toggle" data-target="hausgeld">weiß ich nicht</button></label><input type="number" id="hausgeld" min="0" step="5" value="240"></div>
-              <div class="field"><label for="makler">Maklerprovision (%) <button type="button" class="unknown-toggle" data-target="makler">weiß ich nicht</button></label><input type="number" id="makler" min="0" step="0.01" value="3.57"></div>
-            </div>
-            <div class="field-row single">
-              <div class="field">
-                <label for="hgnu">davon nicht umlagefähig (%)</label>
-                <input type="range" id="hgnu" value="35" min="0" max="100" step="1">
-                <span class="field-hint" id="hgnu-out">35 % — Rücklage, Verwaltung u. a. trägt der Eigentümer</span>
-              </div>
-            </div>
-          </div>
-          <div class="field-group">
-            <div class="field-row single">
-              <div class="field">
-                <label for="bundesland">Bundesland (Grunderwerbsteuer)</label>
-                <select id="bundesland">
-                  <option value="3.5">Bayern (3,5 %)</option>
-                  <option value="5.0" selected>Baden-Württemberg (5,0 %)</option>
-                  <option value="5.0">Bremen (5,0 %)</option>
-                  <option value="5.0">Niedersachsen (5,0 %)</option>
-                  <option value="5.0">Rheinland-Pfalz (5,0 %)</option>
-                  <option value="5.0">Sachsen-Anhalt (5,0 %)</option>
-                  <option value="5.5">Hamburg (5,5 %)</option>
-                  <option value="5.5">Sachsen (5,5 %)</option>
-                  <option value="6.0">Berlin (6,0 %)</option>
-                  <option value="6.0">Hessen (6,0 %)</option>
-                  <option value="6.0">Mecklenburg-Vorpommern (6,0 %)</option>
-                  <option value="6.5">Brandenburg (6,5 %)</option>
-                  <option value="6.5">Nordrhein-Westfalen (6,5 %)</option>
-                  <option value="6.5">Saarland (6,5 %)</option>
-                  <option value="6.5">Schleswig-Holstein (6,5 %)</option>
-                  <option value="6.5">Thüringen (6,5 %)</option>
-                </select>
-              </div>
-            </div>
-            <p class="field-hint">Zzgl. Notar ~1,5 % und Grundbuch ~0,5 % (fest eingerechnet)</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- STEP 4: Finanzierung -->
-      <div class="step" data-step="4">
-        <div class="card">
-          <div class="field-group">
-            <div class="field-row three">
-              <div class="field"><label for="eigenkapital">Eigenkapital (€)</label><input type="number" id="eigenkapital" min="0" step="1000" value="40000"></div>
-              <div class="field"><label for="zins">Zinssatz p.a. (%)</label><input type="number" id="zins" min="0" step="0.05" value="3.8"></div>
-              <div class="field"><label for="tilgung">Tilgung p.a. (%)</label><input type="number" id="tilgung" min="0" step="0.1" value="2.0"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="wizard-nav" id="wizard-nav">
-        <button type="button" class="btn btn-ghost" id="btn-back">Zurück</button>
-        <div class="spacer"></div>
-        <button type="button" class="btn btn-primary" id="btn-next">Weiter</button>
-        <button type="button" class="btn btn-accent" id="btn-analyze" style="display:none">Analysieren</button>
-      </div>
-    </form>
-  </div>
-</section>
-
-<section id="results" style="display:none;padding-top:0">
-  <div class="wizard">
-    <button type="button" class="btn btn-ghost btn-sm" id="btn-edit" style="margin-bottom:24px">← Angaben bearbeiten</button>
-    <div id="results-inner"></div>
-  </div>
-</section>
-
-<section id="methodik" class="reveal">
-  <p class="eyebrow">Methodik</p>
-  <h2>Wonach die Analyse bewertet</h2>
-  <p class="sub">Buy-and-Hold-Kapitalanlage heißt: Rendite zählt weniger als Cashflow, und der Kaufpreisfaktor sagt oft mehr als die reine Rendite-Prozentzahl.</p>
-  <div class="method-grid">
-    <div class="card">
-      <b>Kaufpreisfaktor</b>
-      <p>Kaufpreis ÷ Jahreskaltmiete. Unter 20 gilt als günstig, 20–25 als fair, über 25 als teuer — unabhängig von der Lage ein erster Fingerzeig.</p>
-    </div>
-    <div class="card">
-      <b>Cashflow vor Rendite</b>
-      <p>Eine hohe Bruttorendite mit negativem monatlichem Cashflow ist kein gutes Investment. Der Score gewichtet Cashflow so hoch wie Rendite.</p>
-    </div>
-    <div class="card">
-      <b>Gesamtkapital, nicht nur Kaufpreis</b>
-      <p>Nebenkosten von 8–12 % gehören zur Investitionssumme dazu — Rendite auf Gesamtkapital ist ehrlicher als Rendite auf den nackten Kaufpreis.</p>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <div class="footer-brand">
-    <strong>CAPRATE</strong>
-    <p>Immobilien-Investment-Analyse nach Buy-and-Hold-Prinzipien. Kein Anlage- oder Steuerberatungsersatz.</p>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:9px">
-    <a href="#tool">Analyse</a>
-    <a href="#methodik">Methodik</a>
-  </div>
-</footer>
-
-<script src="script.js" defer></script>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

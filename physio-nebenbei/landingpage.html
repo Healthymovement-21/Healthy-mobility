@@ -1,0 +1,451 @@
+<title>PhysioNebenbei</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:        #EEF1EE;
+    --paper-raised: #F8FAF8;
+    --ink:          #16221E;
+    --ink-muted:    #56645D;
+    --line:         #C7D1C9;
+    --line-strong:  #9DAAA1;
+    --accent:       #145C56;
+    --accent-ink:   #F3FAF8;
+    --accent-soft:  #DCEAE6;
+    --mark:         #B8412A;
+    --mark-soft:    #F1DED5;
+    --focus:        #145C56;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:        #0F1715;
+      --paper-raised: #16201D;
+      --ink:          #E7ECE8;
+      --ink-muted:    #93A69C;
+      --line:         #2C3A35;
+      --line-strong:  #445248;
+      --accent:       #55D8C1;
+      --accent-ink:   #07201B;
+      --accent-soft:  #17322C;
+      --mark:         #FF8B69;
+      --mark-soft:    #33241D;
+      --focus:        #55D8C1;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:        #0F1715;
+    --paper-raised: #16201D;
+    --ink:          #E7ECE8;
+    --ink-muted:    #93A69C;
+    --line:         #2C3A35;
+    --line-strong:  #445248;
+    --accent:       #55D8C1;
+    --accent-ink:   #07201B;
+    --accent-soft:  #17322C;
+    --mark:         #FF8B69;
+    --mark-soft:    #33241D;
+    --focus:        #55D8C1;
+  }
+
+  *{ box-sizing:border-box; }
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+  h1,h2{
+    font-family:"Fraunces", ui-serif, Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+
+  .page{
+    max-width:920px;
+    margin:0 auto;
+    padding:clamp(24px,5vw,56px) clamp(16px,4vw,24px) 64px;
+  }
+
+  .doc{
+    position:relative;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-top:4px solid var(--accent);
+    border-radius:3px;
+    overflow:hidden;
+  }
+
+  .sheet{
+    padding:clamp(28px,5vw,52px) clamp(20px,6vw,64px);
+    max-width:680px;
+  }
+  .sheet + .sheet{
+    border-top:1px dashed var(--line-strong);
+  }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11.5px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 14px;
+  }
+
+  .doc-tag{
+    position:absolute;
+    top:clamp(20px,4vw,32px);
+    right:clamp(20px,6vw,64px);
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11.5px;
+    letter-spacing:.06em;
+    color:var(--ink-muted);
+    text-align:right;
+    line-height:1.5;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero h1{
+    font-size:clamp(30px,4.4vw,44px);
+    line-height:1.12;
+    max-width:14ch;
+  }
+  .hero p.lede{
+    margin:20px 0 0;
+    max-width:56ch;
+    font-size:17px;
+    color:var(--ink-muted);
+  }
+  .hero-cta{
+    margin-top:30px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:16px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--accent);
+    color:var(--accent-ink);
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:14px;
+    letter-spacing:.02em;
+    font-weight:500;
+    text-decoration:none;
+    padding:14px 22px;
+    border-radius:4px;
+    border:1px solid var(--accent);
+  }
+  .btn:hover{ filter:brightness(1.06); }
+  .btn:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; }
+  .btn .price{ font-variant-numeric:tabular-nums; opacity:.85; }
+
+  .micro{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:12px;
+    color:var(--ink-muted);
+    letter-spacing:.01em;
+  }
+
+  /* ---------- CHECKLIST ---------- */
+  h2{
+    font-size:clamp(21px,2.6vw,26px);
+    line-height:1.25;
+    margin-bottom:22px;
+    max-width:24ch;
+  }
+
+  .checklist{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:13px;
+  }
+  .checklist li{
+    display:grid;
+    grid-template-columns:18px 1fr;
+    gap:12px;
+    align-items:start;
+    font-size:15.5px;
+  }
+  .checklist li::before{
+    content:"";
+    width:16px;
+    height:16px;
+    margin-top:3px;
+    border:1.5px solid var(--line-strong);
+    border-radius:2px;
+  }
+
+  .annotation{
+    margin-top:26px;
+    padding:16px 18px;
+    background:var(--mark-soft);
+    border-left:2.5px solid var(--mark);
+    font-family:"Fraunces", ui-serif, serif;
+    font-style:italic;
+    font-size:16px;
+    line-height:1.5;
+    color:var(--ink);
+    max-width:58ch;
+  }
+
+  /* ---------- CREDIBILITY ---------- */
+  .credibility p{
+    margin:0 0 16px;
+    max-width:58ch;
+    color:var(--ink);
+  }
+  .signature{
+    margin-top:20px;
+    font-family:"Fraunces", ui-serif, serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--ink-muted);
+  }
+
+  /* ---------- TOC ---------- */
+  .toc{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .toc li{
+    display:grid;
+    grid-template-columns:38px 1fr;
+    gap:16px;
+    padding:13px 0;
+    border-top:1px dashed var(--line);
+  }
+  .toc li:first-child{ border-top:none; }
+  .toc .num{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:14px;
+    color:var(--accent);
+    font-variant-numeric:tabular-nums;
+    padding-top:1px;
+  }
+  .toc .t-title{
+    font-weight:500;
+    font-size:15.5px;
+  }
+  .toc .t-desc{
+    color:var(--ink-muted);
+    font-size:14px;
+    margin-top:2px;
+  }
+
+  /* ---------- EXCLUSIONS ---------- */
+  .exclusions{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:20px 22px;
+  }
+  .exclusions ul{
+    margin:0 0 16px;
+    padding:0 0 0 18px;
+    color:var(--ink-muted);
+    font-size:15px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .exclusions .note{
+    font-size:14px;
+    color:var(--ink-muted);
+    margin:0;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq{ display:flex; flex-direction:column; gap:22px; }
+  .faq .q{
+    font-weight:600;
+    font-size:15.5px;
+    margin:0 0 6px;
+  }
+  .faq .a{
+    margin:0;
+    color:var(--ink-muted);
+    font-size:15px;
+    max-width:58ch;
+  }
+
+  /* ---------- PRICE ---------- */
+  .fee-line{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:8px 20px;
+    padding:16px 0;
+    border-top:1px dashed var(--line-strong);
+    border-bottom:1px dashed var(--line-strong);
+    margin-bottom:26px;
+  }
+  .fee-line .label{ font-size:15.5px; }
+  .fee-line .terms{ font-size:13px; color:var(--ink-muted); }
+  .fee-line .amount{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:22px;
+    font-variant-numeric:tabular-nums;
+    color:var(--accent);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:920px;
+    margin:22px auto 0;
+    padding:0 clamp(16px,4vw,24px);
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 20px;
+    justify-content:space-between;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11.5px;
+    color:var(--ink-muted);
+  }
+
+  @media (max-width:560px){
+    .doc-tag{ display:none; }
+  }
+</style>
+
+<div class="page">
+  <div class="doc">
+
+    <section class="sheet hero">
+      <span class="doc-tag">FORMULAR&nbsp;PN&#8209;01<br>AUSGABE&nbsp;2026</span>
+      <p class="eyebrow">Startkit &middot; Selbstzahler-Praxis nebenberuflich</p>
+      <h1>Der Fahrplan für deine ersten Privatpatient:innen.</h1>
+      <p class="lede">Alles, was du als angestellte:r Physiotherapeut:in für den Start als Selbstzahler-Behandler:in brauchst: Anmeldung, Versicherung, Rechnung, Preise, erste Kund:innen. Kompakt, in der richtigen Reihenfolge, ohne Kassenzulassung, ohne eigene Praxisräume.</p>
+      <div class="hero-cta">
+        <a class="btn" href="mailto:nick1405.kkstr@gmail.com?subject=Interesse%3A%20Physio-Nebenjob-Fahrplan&body=Hallo%2C%0A%0Aich%20habe%20Interesse%20am%20Physio-Nebenjob-Fahrplan%20zum%20Fr%C3%BChbucher-Preis%20von%2029%20%E2%82%AC.%0A%0AName%3A%0APLZ%2FOrt%20(optional)%3A%0A%0AViele%20Gr%C3%BC%C3%9Fe">
+          Jetzt vormerken <span class="price">— 29&nbsp;€</span>
+        </a>
+        <span class="micro">Erscheint in Kürze · Preis für Frühbucher:innen fixiert</span>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Abschnitt 00 · Dein Ist-Zustand</p>
+      <h2>Diese Fragen kennst du vermutlich schon</h2>
+      <ul class="checklist">
+        <li>Gewerbe oder freiberuflich — was gilt für mich als Physio?</li>
+        <li>Brauche ich zwingend eine Berufshaftpflicht, und was kostet die wirklich?</li>
+        <li>Wie schreibe ich eine rechtssichere Rechnung?</li>
+        <li>Was muss in meine Behandlungsdokumentation, was nicht?</li>
+        <li>Wie kalkuliere ich einen Preis, ohne mich unter Wert zu verkaufen?</li>
+        <li>Woher kommen die ersten zahlenden Patient:innen?</li>
+        <li>Was brauche ich wirklich sofort — und was kann warten?</li>
+      </ul>
+      <p class="annotation">Die Antworten gibt's alle kostenlos irgendwo im Netz. Ich hab sie mir auch alle selbst zusammengesucht, über Wochen, mit zu vielen offenen Tabs. Genau das will ich dir ersparen.</p>
+    </section>
+
+    <section class="sheet credibility">
+      <p class="eyebrow">Abschnitt 01 · Warum ich das schreibe</p>
+      <h2>Wie meine ersten Patient:innen wirklich kamen</h2>
+      <p>Meine ersten Patient:innen waren keine Werbeanzeige. Das waren Freunde, Familie, Leute aus dem Sportverein. Irgendwann kam der Rest von allein, einfach weil die Behandlung gut war und sich das rumgesprochen hat. Später sind sogar Schulen, Städte und die Polizei auf mich zugekommen, weil mich jemand weiterempfohlen hatte.</p>
+      <p>Genau dieser Teil hat mir am meisten Kopfzerbrechen gemacht: woher kommt der erste Mensch, der mir vertraut? Anmeldung und Versicherung waren am Ende reine Fleißarbeit. Diesen Fahrplan schreibe ich, damit du für die Fleißarbeit nicht so lange brauchst wie ich.</p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Abschnitt 02 · Inhalt</p>
+      <h2>10 Schritte vom Gedanken bis zum ersten Termin</h2>
+      <ol class="toc">
+        <li><span class="num">01</span><div><div class="t-title">Bist du bereit?</div><div class="t-desc">Kurzer Realitäts-Check vor dem Start</div></div></li>
+        <li><span class="num">02</span><div><div class="t-title">Anmeldung &amp; Formalitäten</div><div class="t-desc">Freiberuflich vs. Gewerbe, Finanzamt, BGW</div></div></li>
+        <li><span class="num">03</span><div><div class="t-title">Versicherungen</div><div class="t-desc">Was du wirklich brauchst, was optional ist</div></div></li>
+        <li><span class="num">04</span><div><div class="t-title">Preise &amp; Kalkulation</div><div class="t-desc">Deinen Satz realistisch berechnen</div></div></li>
+        <li><span class="num">05</span><div><div class="t-title">Rechnung</div><div class="t-desc">Fertige, rechtssichere Vorlage zum Ausfüllen</div></div></li>
+        <li><span class="num">06</span><div><div class="t-title">Dokumentation</div><div class="t-desc">Vorlage für Anamnese &amp; Verlauf</div></div></li>
+        <li><span class="num">07</span><div><div class="t-title">Datenschutz-Grundlagen</div><div class="t-desc">Die wichtigsten Basics für Patientendaten</div></div></li>
+        <li><span class="num">08</span><div><div class="t-title">Erste Patient:innen</div><div class="t-desc">Wo Nebenberufler:innen realistisch starten</div></div></li>
+        <li><span class="num">09</span><div><div class="t-title">Die ersten 30 Tage</div><div class="t-desc">Was in welcher Reihenfolge zu tun ist</div></div></li>
+        <li><span class="num">10</span><div><div class="t-title">Typische Anfänger-Fehler</div><div class="t-desc">Und wie du sie vermeidest</div></div></li>
+      </ol>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Ausschlüsse</p>
+      <h2>Was bewusst NICHT drin ist</h2>
+      <div class="exclusions">
+        <ul>
+          <li>Vollständige Praxisgründung mit Kassenzulassung und eigenen Räumen</li>
+          <li>Individuelle Steuerberatung</li>
+          <li>Individuelle Rechtsberatung</li>
+          <li>Medizinische Beratung zu Behandlungsmethoden</li>
+        </ul>
+        <p class="note">Der Fahrplan ist Orientierung und fertige Vorlagen — keine individuelle Beratung. Für deinen Einzelfall brauchst du weiterhin eine:n Steuerberater:in.</p>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Häufige Fragen</p>
+      <div class="faq">
+        <div>
+          <p class="q">Kann ich mir das nicht einfach mit ChatGPT zusammensuchen?</p>
+          <p class="a">Ehrlich gesagt: teilweise schon. Aber du musst erst mal wissen, was du überhaupt fragen sollst, und die Antworten danach selbst sortieren. Genau diese Sortierarbeit nimmt dir der Fahrplan ab.</p>
+        </div>
+        <div>
+          <p class="q">Das deckt doch auch mein Berufsverband ab?</p>
+          <p class="a">Stimmt, mein Verband deckt das teilweise ab. Meistens geht es dort aber um die große Variante: eigene Praxis, Kassenzulassung, ein großes Investment. Der kleinere, viel häufigere Fall fällt dabei oft hinten runter: nebenberuflich, nur Selbstzahler:innen und Privatrezepte, ohne eigene Räume. Genau da setzt der Fahrplan an.</p>
+        </div>
+        <div>
+          <p class="q">Ersetzt das eine Steuerberatung?</p>
+          <p class="a">Nein. Orientierung und Vorlagen, keine Steuer- oder Rechtsberatung. Für deinen Einzelfall brauchst du trotzdem eine:n Steuerberater:in.</p>
+        </div>
+        <div>
+          <p class="q">Wann ist es fertig, und was passiert nach der Vormerkung?</p>
+          <p class="a">Ich sitze gerade mittendrin dran. Wenn genug Leute sich vormerken, geht er in den nächsten Wochen live, zum Preis von 29 €. Meldet sich zu wenig Interesse, sag ich dir auch das.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Preis</p>
+      <div class="fee-line">
+        <div>
+          <div class="label">Physio-Nebenjob-Fahrplan — digital, PDF &amp; Vorlagen</div>
+          <div class="terms">Einmalig · kein Abo · sofort startklar</div>
+        </div>
+        <div class="amount">29&nbsp;€</div>
+      </div>
+      <div class="hero-cta">
+        <a class="btn" href="mailto:nick1405.kkstr@gmail.com?subject=Interesse%3A%20Physio-Nebenjob-Fahrplan&body=Hallo%2C%0A%0Aich%20habe%20Interesse%20am%20Physio-Nebenjob-Fahrplan%20zum%20Fr%C3%BChbucher-Preis%20von%2029%20%E2%82%AC.%0A%0AName%3A%0APLZ%2FOrt%20(optional)%3A%0A%0AViele%20Gr%C3%BC%C3%9Fe">
+          Jetzt vormerken <span class="price">— 29&nbsp;€</span>
+        </a>
+        <span class="micro">Kein Konto nötig. Eine kurze E-Mail reicht.</span>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>PhysioNebenbei — Orientierung &amp; Vorlagen, keine Steuer-, Rechts- oder medizinische Beratung.</span>
+    <span>© <span id="y">2026</span> PhysioNebenbei</span>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>

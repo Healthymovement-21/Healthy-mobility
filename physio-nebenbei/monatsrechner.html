@@ -113,7 +113,9 @@
       </div>
       <p class="hero-cta">
         <a class="btn ghost" id="add" href="#">+ Patient hinzufügen</a>
+        <a class="btn ghost" id="leeren" href="#">Eigene Zahlen eingeben</a>
       </p>
+      <p class="micro warnung" id="beispiel-hinweis" hidden>Beispieldaten, damit du siehst wie es läuft. „Eigene Zahlen eingeben" leert die Tabelle.</p>
       <details class="mehr">
         <summary>Privat, Selbstzahler oder Wellness?</summary>
         <div>
@@ -206,7 +208,7 @@
   </div>
 
   <footer class="site">
-    <span><a href="../">Startseite</a> · <a href="fahrplan.html">Fahrplan</a></span>
+    <span>Vertragsvorlagen sind Muster, vor Einsatz prüfen lassen.<br>Fragen? <a href="mailto:nick1405.kkstr@gmail.com">nick1405.kkstr@gmail.com</a><br><a href="../">Startseite</a> · <a href="fahrplan.html">Fahrplan</a></span>
     <span>
       <a href="../impressum.html">Impressum</a> ·
       <a href="../datenschutz.html">Datenschutz</a> ·
@@ -439,19 +441,36 @@ document.getElementById('add').addEventListener('click', e => {
   e.preventDefault(); zeilen.push(neueZeile()); render();
 });
 
-document.getElementById('reset').addEventListener('click', e => {
-  e.preventDefault();
+function leeren(){
   zeilen = [neueZeile()];
   document.getElementById('ausgaben').value = 0;
+  beispiel = false;
+  document.getElementById('beispiel-hinweis').hidden = true;
   render();
-});
+}
+document.getElementById('reset').addEventListener('click', e => { e.preventDefault(); leeren(); });
+document.getElementById('leeren').addEventListener('click', e => { e.preventDefault(); leeren(); });
 
 document.querySelectorAll('[data-price], #ausgaben, #satz, #monat')
   .forEach(el => el.addEventListener('input', render));
 
 document.getElementById('monat').value = new Date().toISOString().slice(0, 7);
-if (!laden()) zeilen = [neueZeile(), neueZeile(), neueZeile()];
+/* Beispieldaten beim ersten Öffnen: sonst sieht man nicht, was das Tool tut.
+   Werden überschrieben, sobald eigene Zahlen gespeichert sind. */
+let beispiel = false;
+if (!laden()) {
+  zeilen = [
+    {leistung:'kg',        termine:6, hausbesuch:false, art:'privat'},
+    {leistung:'mt',        termine:4, hausbesuch:true,  art:'privat'},
+    {leistung:'kg_mt',     termine:3, hausbesuch:false, art:'selbst_ther'},
+    {leistung:'mld30',     termine:5, hausbesuch:false, art:'privat'},
+    {leistung:'kg_waerme', termine:2, hausbesuch:false, art:'selbst_well'},
+  ];
+  document.getElementById('ausgaben').value = 90;
+  beispiel = true;
+}
 render();
+if (beispiel) document.getElementById('beispiel-hinweis').hidden = false;
 </script>
 <script>
   if ('serviceWorker' in navigator) {

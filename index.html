@@ -4,12 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PhysioNebenbei — Nebenberuflich Privatpatient:innen behandeln</title>
-<meta name="description" content="Rechner, Fahrplan und Vorlagen für Physiotherapeut:innen, die nebenberuflich Selbstzahler:innen behandeln. Einmalig 29 €.">
+<meta name="description" content="Rechner, Fahrplan und Vertragsvorlagen für Physiotherapeut:innen, die nebenberuflich Selbstzahler:innen behandeln. Einmalig 29 €.">
 <meta name="theme-color" content="#0E6B5C">
+
+<!-- Vorschau beim Teilen in WhatsApp, LinkedIn, Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PhysioNebenbei">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Nebenbei Privatpatient:innen behandeln">
+<meta property="og:description" content="Anmeldung, Preise, Rechnung, Vertragsvorlagen — in der richtigen Reihenfolge. Für Physiotherapeut:innen, die nebenberuflich starten. Einmalig 29 €.">
+<meta property="og:url" content="https://healthymovement-21.github.io/Healthy-mobility/">
+<meta property="og:image" content="https://healthymovement-21.github.io/Healthy-mobility/physio-nebenbei/img/og-vorschau.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PhysioNebenbei — Starter-Paket für nebenberuflich selbstständige Physiotherapeut:innen">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nebenbei Privatpatient:innen behandeln">
+<meta name="twitter:description" content="Anmeldung, Preise, Rechnung, Vertragsvorlagen — in der richtigen Reihenfolge. Einmalig 29 €.">
+<meta name="twitter:image" content="https://healthymovement-21.github.io/Healthy-mobility/physio-nebenbei/img/og-vorschau.png">
+
 <link rel="stylesheet" href="physio-nebenbei/base.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="physio-nebenbei/apple-touch-icon.png">
 <link rel="icon" href="physio-nebenbei/logo.svg" type="image/svg+xml">
+
+<!-- Analytics: cookiefrei, kein Banner nötig. Nach Konto-Anlage bei
+     plausible.io die nächste Zeile entkommentieren und die Domain
+     eintragen. Siehe VERKAUFSSTART.md, Schritt 4.
+<script defer data-domain="DEINE-DOMAIN.de" src="https://plausible.io/js/script.outbound-links.js"></script>
+-->
 </head>
 <body>
 
@@ -26,10 +49,10 @@
       <h1>Nebenbei Privatpatient:innen behandeln.</h1>
       <p class="lede">Anmeldung, Preise, Rechnung, Vorlagen. In der richtigen Reihenfolge. Ohne Kassenzulassung.</p>
       <div class="hero-cta">
-        <a class="btn" href="#kaufen">Paket sichern — 29 €</a>
+        <a class="btn" href="#kaufen" data-checkout-jump>Paket sichern — 29 €</a>
         <a class="btn ghost" href="physio-nebenbei/werkzeuge.html">Rechner testen</a>
       </div>
-      <p class="micro" style="margin-top:16px">Einmalzahlung · Sofort-Download · 14 Tage Widerrufsrecht</p>
+      <p class="micro" style="margin-top:16px">Einmalzahlung · Sofort-Download · Sichere Zahlung über Digistore24</p>
     </section>
 
     <!-- PROBLEM -->
@@ -53,14 +76,23 @@
         <li>
           <div><span class="d-name">Fahrplan</span><span class="d-type">WORD</span></div>
           <div class="d-desc">10 Kapitel bis zum ersten Termin, frei anpassbar.</div>
+          <img class="vorschau" src="physio-nebenbei/img/vorschau-fahrplan.png"
+               alt="Seite aus dem Word-Fahrplan: Kapitel 2 zu Anmeldung und Formalitäten mit nummerierter Schrittfolge von der Anzeige beim Arbeitgeber über ELSTER bis zur BGW-Anmeldung"
+               loading="lazy" width="900" height="1180">
         </li>
         <li>
           <div><span class="d-name">Rechner</span><span class="d-type">EXCEL</span></div>
           <div class="d-desc">Preise, Steuerrücklage, EÜR, Dokumentation. Formeln fertig.</div>
+          <img class="vorschau" src="physio-nebenbei/img/vorschau-rechner.png"
+               alt="Excel-Tabellenblatt Preis-Kalkulation mit ausgefüllten Beispielwerten: 500 Euro Wunscheinkommen ergeben einen nötigen Preis von 45,62 Euro pro Behandlung"
+               loading="lazy" width="920" height="390">
         </li>
         <li>
           <div><span class="d-name">Honorarvereinbarung</span><span class="d-type">PDF</span></div>
           <div class="d-desc">Muster zum Ausfüllen und unterschreiben lassen.</div>
+          <img class="vorschau" src="physio-nebenbei/img/vorschau-vertrag.png"
+               alt="Erste Seite der Honorarvereinbarung mit Feldern für Vertragsparteien, Honorar pro Behandlungseinheit, Zahlungsziel und Ausfallhonorar"
+               loading="lazy" width="637" height="900">
         </li>
         <li>
           <div><span class="d-name">Behandlungsvertrag</span><span class="d-type">PDF</span></div>
@@ -109,22 +141,56 @@
     <section class="sheet credibility">
       <p class="eyebrow">Wer dahintersteckt</p>
       <h2>Ich hab denselben Weg gerade hinter mir.</h2>
-      <p>Angestellt in der Physiotherapie, nebenberuflich Privatpatient:innen. Meine ersten kamen über Freunde, Familie und den Sportverein — der Rest über Weiterempfehlung. Der Papierkram davor hat mich Wochen gekostet. Das Paket ist das, was ich damals gebraucht hätte.</p>
+      <!-- TODO: Platzhalter in eckigen Klammern durch echte Angaben ersetzen -->
+      <p>Ich bin [VORNAME NACHNAME], seit [JAHRESZAHL] Physiotherapeut:in und arbeite angestellt in [ORT ODER REGION]. Seit [JAHRESZAHL] behandle ich nebenberuflich Privatpatient:innen — angefangen hat das mit Freunden, Familie und Leuten aus dem Sportverein, der Rest kam über Weiterempfehlung.</p>
+      <p>Der Papierkram davor hat mich Wochen gekostet: Behördenseiten, Foren, Versicherungsvergleiche, widersprüchliche Tipps von Kolleg:innen. [EIN SATZ, WARUM DU DAS PAKET GEBAUT HAST — z. B. „Als mich die dritte Kollegin nach demselben Kram gefragt hat, hab ich alles aufgeschrieben."]</p>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="sheet">
+      <p class="eyebrow">Rückmeldungen</p>
+      <h2>Was andere sagen.</h2>
+      <ul class="stimmen">
+        <!-- TODO: echtes Testimonial einsetzen -->
+        <li>
+          <p class="zitat">[EIN SATZ ERGEBNIS — z. B. „Zwei Abende statt vier Wochen, und die erste Rechnung war raus."]</p>
+          <p class="wer">[KÜRZEL ODER VORNAME], [ORT]</p>
+        </li>
+        <!-- TODO: echtes Testimonial einsetzen -->
+        <li>
+          <p class="zitat">[EIN SATZ ERGEBNIS]</p>
+          <p class="wer">[KÜRZEL ODER VORNAME], [ORT]</p>
+        </li>
+        <!-- TODO: echtes Testimonial einsetzen -->
+        <li>
+          <p class="zitat">[EIN SATZ ERGEBNIS]</p>
+          <p class="wer">[KÜRZEL ODER VORNAME], [ORT]</p>
+        </li>
+      </ul>
+      <p class="micro">Noch keine echten Rückmeldungen — diese Sektion wird ausgefüllt, sobald die ersten Käufer:innen berichtet haben.</p>
     </section>
 
     <!-- PREIS -->
     <section class="sheet" id="kaufen">
       <div class="price-box">
         <div class="amount">29 €<small> einmalig</small></div>
-        <!--
-          HIER DEINEN ECHTEN ZAHLUNGSLINK EINSETZEN (Digistore24, Lemonsqueezy, Payhip).
-          Im Checkout die Zustimmung zum Sofort-Download aktivieren (§ 356 Abs. 5 BGB).
-        -->
-        <a class="btn" href="#" data-checkout-placeholder>Jetzt kaufen</a>
+
+        <!-- Widerrufs-Zustimmung nach § 356 Abs. 5 BGB: ohne Häkchen
+             ist der Kauf-Button gesperrt (siehe checkout.js). -->
+        <label class="gate">
+          <input type="checkbox" id="widerruf-ok">
+          <span>Ich stimme zu, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen wird, und mir ist bekannt, dass ich dadurch mein <a href="widerruf.html">Widerrufsrecht</a> verliere.</span>
+        </label>
+
+        <a class="btn" href="#" data-checkout>Jetzt kaufen</a>
+        <p class="micro warnung" id="checkout-hinweis" hidden></p>
+
+        <p class="micro" style="margin-top:4px">Die beiden Vertragsvorlagen sind <strong>Muster</strong> — lass sie vor dem ersten Einsatz anwaltlich oder vom Rechtsservice deines Berufsverbands prüfen.</p>
+
         <ul class="trust">
           <li>Sofort-Download nach der Zahlung</li>
           <li>Kein Abo, keine Folgekosten</li>
-          <li>14 Tage Widerrufsrecht</li>
+          <li>Rechnung mit ausgewiesener USt. per Mail</li>
         </ul>
       </div>
     </section>
@@ -138,8 +204,12 @@
           <p class="a">Für die Dateien: Word zum Anpassen, Excel mit Formeln, zwei Vertrags-PDFs zum Ausdrucken. Lesen kannst du vorher alles.</p>
         </div>
         <div>
-          <p class="q">Reicht nicht ChatGPT?</p>
-          <p class="a">Für Einzelfragen ja. Aber du musst wissen, was du fragen sollst, und die Antworten sortieren. Genau das nimmt dir das Paket ab.</p>
+          <p class="q">Wie bekomme ich die Dateien?</p>
+          <p class="a">Direkt nach der Zahlung — Download-Seite plus E-Mail mit Rechnung und Link. Der Link läuft nicht ab.</p>
+        </div>
+        <div>
+          <p class="q">Kann ich widerrufen?</p>
+          <p class="a">Bei digitalen Dateien erlischt das Widerrufsrecht mit dem Start des Downloads, dem du vorher ausdrücklich zustimmst. Details in der <a href="widerruf.html">Widerrufsbelehrung</a>. Deshalb kannst du vorher alles kostenlos ansehen.</p>
         </div>
         <div>
           <p class="q">Ersetzt das Steuer- oder Rechtsberatung?</p>
@@ -166,7 +236,8 @@
   </div>
 
   <footer class="site">
-    <span>Keine Steuer-, Rechts- oder medizinische Beratung.</span>
+    <span>Vertragsvorlagen sind Muster, vor Einsatz prüfen lassen. Keine Steuer-, Rechts- oder medizinische Beratung.<br>
+      Fragen? <a href="mailto:nick1405.kkstr@gmail.com">nick1405.kkstr@gmail.com</a></span>
     <span>
       <a href="impressum.html">Impressum</a> ·
       <a href="datenschutz.html">Datenschutz</a> ·
@@ -176,6 +247,7 @@
   </footer>
 </div>
 
+<script src="checkout.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));

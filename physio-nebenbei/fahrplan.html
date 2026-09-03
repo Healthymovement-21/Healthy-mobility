@@ -23,19 +23,23 @@
     </section>
 
     <section class="sheet">
-      <p class="eyebrow">Inhalt</p>
-      <ol class="steps" style="max-width:60ch">
-        <li>Bist du bereit? — ein kurzer Realitäts-Check</li>
-        <li>Anmeldung &amp; Formalitäten</li>
-        <li>Versicherungen</li>
-        <li>Preise &amp; Kalkulation</li>
-        <li>Rechnung — mit Vorlage</li>
-        <li>Dokumentation — mit Vorlage</li>
-        <li>Datenschutz-Grundlagen</li>
-        <li>Erste Patient:innen gewinnen</li>
-        <li>Die ersten 30 Tage</li>
-        <li>Typische Anfänger-Fehler</li>
-      </ol>
+      <p class="eyebrow">Deine To-do-Liste</p>
+      <h2>Häkchen setzen, während du durcharbeitest</h2>
+      <p>Bleibt in diesem Browser gespeichert, auch wenn du die Seite schließt und später weitermachst.</p>
+      <div class="progress-bar"><div id="todo-bar" style="width:0%"></div></div>
+      <p class="progress-label" id="todo-label">0 von 10 erledigt</p>
+      <ul class="todo" id="todo-list">
+        <li data-id="1"><input type="checkbox" id="todo-1"><label for="todo-1"><div class="t-title">1. Bist du bereit?</div><div class="t-desc">Ein kurzer Realitäts-Check</div></label></li>
+        <li data-id="2"><input type="checkbox" id="todo-2"><label for="todo-2"><div class="t-title">2. Anmeldung &amp; Formalitäten</div></label></li>
+        <li data-id="3"><input type="checkbox" id="todo-3"><label for="todo-3"><div class="t-title">3. Versicherungen</div></label></li>
+        <li data-id="4"><input type="checkbox" id="todo-4"><label for="todo-4"><div class="t-title">4. Preise &amp; Kalkulation</div></label></li>
+        <li data-id="5"><input type="checkbox" id="todo-5"><label for="todo-5"><div class="t-title">5. Rechnung</div><div class="t-desc">Mit Vorlage</div></label></li>
+        <li data-id="6"><input type="checkbox" id="todo-6"><label for="todo-6"><div class="t-title">6. Dokumentation</div><div class="t-desc">Mit Vorlage</div></label></li>
+        <li data-id="7"><input type="checkbox" id="todo-7"><label for="todo-7"><div class="t-title">7. Datenschutz-Grundlagen</div></label></li>
+        <li data-id="8"><input type="checkbox" id="todo-8"><label for="todo-8"><div class="t-title">8. Erste Patient:innen gewinnen</div></label></li>
+        <li data-id="9"><input type="checkbox" id="todo-9"><label for="todo-9"><div class="t-title">9. Die ersten 30 Tage</div></label></li>
+        <li data-id="10"><input type="checkbox" id="todo-10"><label for="todo-10"><div class="t-title">10. Typische Anfänger-Fehler</div></label></li>
+      </ul>
     </section>
 
     <section class="sheet">
@@ -196,10 +200,38 @@
   </div>
 
   <footer class="site">
-    <span>PhysioNebenbei — Vorschau, noch nicht veröffentlicht.</span>
-    <span><a href="PhysioNebenbei-Fahrplan.docx">Word-Datei laden</a></span>
+    <span>PhysioNebenbei</span>
+    <span><a href="PhysioNebenbei-Fahrplan.docx">Word-Datei laden</a> · <a href="werkzeuge.html">Zu den Rechnern</a></span>
   </footer>
 </div>
 
+<script>
+  const KEY = 'physionebenbei-todo';
+  const total = document.querySelectorAll('#todo-list input').length;
+  const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+
+  function render(){
+    let done = 0;
+    document.querySelectorAll('#todo-list li').forEach(li => {
+      const id = li.dataset.id;
+      const box = li.querySelector('input');
+      box.checked = !!saved[id];
+      li.classList.toggle('done', box.checked);
+      if (box.checked) done++;
+    });
+    document.getElementById('todo-bar').style.width = (done/total*100) + '%';
+    document.getElementById('todo-label').textContent = done + ' von ' + total + ' erledigt';
+  }
+
+  document.getElementById('todo-list').addEventListener('change', e => {
+    if (e.target.type !== 'checkbox') return;
+    const li = e.target.closest('li');
+    saved[li.dataset.id] = e.target.checked;
+    localStorage.setItem(KEY, JSON.stringify(saved));
+    render();
+  });
+
+  render();
+</script>
 </body>
 </html>

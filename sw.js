@@ -3,7 +3,7 @@
    zum Home-Bildschirm hinzugefügt wurde. Kein Tracking, keine Netzwerkzugriffe
    nach außen — es wird nur gecacht, was von dieser Domain kommt. */
 
-const CACHE = 'physionebenbei-v1';
+const CACHE = 'physionebenbei-v2';
 
 const DATEIEN = [
   './',

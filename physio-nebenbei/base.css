@@ -322,6 +322,27 @@ table.data td input{
   padding:2px 0;
 }
 table.data td input:focus{ outline:none; background:var(--input-bg); }
+/* In Rechner-Tabellen sollen Eingabefelder als solche erkennbar sein */
+table.data td input[type=number]{
+  background:var(--input-bg);
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+  padding:8px 10px;
+  text-align:center;
+}
+table.data td input[type=checkbox]{ width:20px; height:20px; accent-color:var(--accent); cursor:pointer; }
+table.data td select{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+  background:var(--paper-raised);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:15px;
+}
+table.data td a[data-del]{ color:var(--ink-muted); text-decoration:none; font-size:22px; line-height:1; }
+table.data td a[data-del]:hover{ color:var(--mark); }
 table.data td.calc{ text-align:right; font-variant-numeric:tabular-nums; }
 
 /* ---------- calculator forms — big, one column, easy to use ---------- */

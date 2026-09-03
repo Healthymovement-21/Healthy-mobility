@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Gehalt &amp; Stunden — PhysioNebenbei</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  .ampel{
+    border-radius:12px;
+    padding:20px 22px;
+    margin:18px 0;
+    border-left:6px solid var(--line-strong);
+    background:var(--paper-raised);
+  }
+  .ampel h3{ margin:0 0 8px; font-size:19px; }
+  .ampel p{ margin:0; font-size:16px; }
+  .ampel.gruen{ border-left-color:#2E7D57; background:var(--accent-soft); }
+  .ampel.gruen h3{ color:#1C6647; }
+  .ampel.gelb{ border-left-color:#B8860B; background:#FBF3DE; }
+  .ampel.gelb h3{ color:#8A6508; }
+  .ampel.rot{ border-left-color:var(--mark); background:var(--mark-soft); }
+  .ampel.rot h3{ color:var(--mark); }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .ampel.gelb{ background:#2E2716; }
+    :root:not([data-theme="light"]) .ampel.gelb h3{ color:#E8C34F; }
+    :root:not([data-theme="light"]) .ampel.gruen h3{ color:var(--accent); }
+  }
+  .szenarien{ width:100%; border-collapse:collapse; margin:16px 0; font-size:16px; }
+  .szenarien th, .szenarien td{ border-bottom:1px solid var(--line); padding:12px 10px; text-align:right; }
+  .szenarien th:first-child, .szenarien td:first-child{ text-align:left; }
+  .szenarien th{ font-size:14px; color:var(--ink-muted); font-weight:600; }
+  .szenarien tr.aktuell{ background:var(--accent-soft); font-weight:600; }
+  .szenarien td{ font-variant-numeric:tabular-nums; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <p class="crumb"><a href="../">← Startseite</a> · <a href="monatsrechner.html">← Monats-Rechner</a> · <a href="werkzeuge.html">Alle Rechner</a></p>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <p class="eyebrow">Rechner</p>
+      <h1>Was bleibt dir insgesamt — und wie viel Zeit kostet es dich?</h1>
+      <p class="lede">Angestelltengehalt plus Nebenverdienst, zusammengerechnet. Dazu das Durchspielen: Was passiert mit deinem Einkommen, wenn du im Hauptjob auf 35, 30 oder 25 Stunden runtergehst?</p>
+    </section>
+
+    <!-- ============ HAUPTJOB ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 1</p>
+      <h2>Dein Hauptjob</h2>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="brutto">Bruttogehalt pro Monat</label>
+          <div class="field"><input type="number" id="brutto" value="3200" step="50"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="stunden">Wochenstunden laut Vertrag</label>
+          <div class="field"><input type="number" id="stunden" value="40" step="0.5"><span class="unit">Std</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="netto">Nettogehalt laut Abrechnung <span class="micro">(genauer als jede Schätzung — steht auf deiner Lohnabrechnung)</span></label>
+          <div class="field"><input type="number" id="netto" value="2100" step="50"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label>Deine effektive Abzugsquote</label>
+          <span class="out" id="o_quote">–</span>
+        </div>
+      </div>
+      <p class="micro">Lass das Nettofeld auf 0, wenn du es gerade nicht zur Hand hast — dann rechnet der Rechner mit einer pauschalen Abzugsquote von 38 %, die für die meisten Vollzeit-Angestellten grob hinkommt.</p>
+    </section>
+
+    <!-- ============ NEBENVERDIENST ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 2</p>
+      <h2>Dein Nebenverdienst</h2>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="gewinn">Gewinn aus der Selbstständigkeit pro Monat <span class="micro">(vor Steuer, aus dem Monats-Rechner)</span></label>
+          <div class="field"><input type="number" id="gewinn" value="600" step="50"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="satz">Rücklage-Satz für Steuern</label>
+          <div class="field"><input type="number" id="satz" value="30" step="1"><span class="unit">%</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="nstunden">Stunden pro Woche für die Selbstständigkeit <span class="micro">(inkl. Fahrt, Doku, Orga — nicht nur Behandlungszeit)</span></label>
+          <div class="field"><input type="number" id="nstunden" value="6" step="0.5"><span class="unit">Std</span></div>
+        </div>
+        <div class="calc-row">
+          <label>Nebenverdienst nach Rücklage</label>
+          <span class="out" id="o_nebennetto">–</span>
+        </div>
+      </div>
+      <p class="hero-cta"><a class="btn ghost" id="uebernehmen" href="#">Zahlen aus dem Monats-Rechner übernehmen</a></p>
+    </section>
+
+    <!-- ============ GESAMT ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 3</p>
+      <h2>Dein Gesamteinkommen</h2>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label>Netto aus dem Hauptjob</label>
+          <span class="out" id="o_hauptnetto">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Nebenverdienst nach Rücklage</label>
+          <span class="out" id="o_neben2">–</span>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Gesamt pro Monat</label>
+          <span class="out" id="o_gesamt">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Deine Gesamt-Arbeitszeit pro Woche</label>
+          <span class="out" id="o_gesamtstunden">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Was dir die Selbstständigkeit pro Stunde bringt <span class="micro">(nach Rücklage)</span></label>
+          <span class="out" id="o_stundenlohn">–</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SZENARIEN ============ -->
+    <section class="sheet wide">
+      <p class="eyebrow">Schritt 4</p>
+      <h2>Was, wenn du im Hauptjob reduzierst?</h2>
+      <p>Weniger Stunden im Angestelltenjob, gleicher Nebenverdienst. So verschiebt sich dein Einkommen und deine freie Zeit.</p>
+      <div class="tbl-wrap">
+        <table class="szenarien" id="szenarien">
+          <thead>
+            <tr>
+              <th>Hauptjob</th>
+              <th>Brutto</th>
+              <th>Netto</th>
+              <th>+ Nebenverdienst</th>
+              <th>Gesamt</th>
+              <th>Differenz</th>
+              <th>Zeit frei</th>
+            </tr>
+          </thead>
+          <tbody id="szen_rows"></tbody>
+        </table>
+      </div>
+      <p class="micro">Die Netto-Werte sind mit deiner aktuellen Abzugsquote hochgerechnet. In Wirklichkeit bleibt bei weniger Brutto meist etwas <em>mehr</em> übrig als hier steht, weil der Steuersatz mitsinkt. Die Tabelle rechnet also eher vorsichtig.</p>
+    </section>
+
+    <!-- ============ KRANKENKASSE ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 5</p>
+      <h2>Wird deine Krankenkasse das zum Thema machen?</h2>
+      <p>Solange deine Selbstständigkeit <strong>nebenberuflich</strong> bleibt, bist du weiter über deinen Job pflichtversichert. Kippt die Einstufung auf „hauptberuflich selbstständig" (§ 5 Abs. 5 SGB V), fällt diese Pflichtversicherung weg und es wird deutlich teurer.</p>
+
+      <div class="ampel" id="ampel">
+        <h3 id="ampel_titel">–</h3>
+        <p id="ampel_text">–</p>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="bezug">Monatliche Bezugsgröße § 18 SGB IV <span class="micro">(ändert sich jährlich, 2026: 3.955 €)</span></label>
+          <div class="field"><input type="number" id="bezug" value="3955" step="5"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label>Halbe Bezugsgröße — ab hier schauen Kassen genauer hin</label>
+          <span class="out" id="o_halb">–</span>
+        </div>
+      </div>
+
+      <div class="annotation">
+        Der Begriff „hauptberuflich selbstständig" ist gesetzlich nicht definiert — die Kassen entscheiden im Einzelfall. Als Faustregeln gelten: mehr als <strong>20 Stunden pro Woche</strong> selbstständig, ein Arbeitseinkommen über der <strong>halben Bezugsgröße</strong>, oder wenn die Selbstständigkeit <strong>mehr einbringt als der Job</strong>. Diese Einschätzung ist eine Orientierung, keine verbindliche Auskunft. Im Zweifel kostet ein Anruf bei deiner Kasse nichts — schriftliche Auskunft geben lassen.
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span><a href="../">Startseite</a> · <a href="monatsrechner.html">Monats-Rechner</a></span>
+    <span>
+      <a href="../impressum.html">Impressum</a> ·
+      <a href="../datenschutz.html">Datenschutz</a> ·
+      <a href="../agb.html">AGB</a> ·
+      <a href="../widerruf.html">Widerruf</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+const KEY = 'physionebenbei-gehalt';
+const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
+const val = id => parseFloat(document.getElementById(id).value) || 0;
+const set = (id, t) => document.getElementById(id).textContent = t;
+
+const PAUSCHALQUOTE = 0.38;   // wenn kein echtes Netto eingetragen ist
+const SZENARIEN = [40, 37.5, 35, 32, 30, 25, 20];
+
+function quote(){
+  const b = val('brutto'), n = val('netto');
+  if (b > 0 && n > 0 && n < b) return 1 - n / b;
+  return PAUSCHALQUOTE;
+}
+
+function rechne(){
+  const brutto = val('brutto');
+  const stunden = val('stunden');
+  const q = quote();
+  const hauptNetto = brutto * (1 - q);
+
+  const gewinn = val('gewinn');
+  const satz = val('satz') / 100;
+  const nebenNetto = gewinn * (1 - satz);
+  const nstunden = val('nstunden');
+
+  const gesamt = hauptNetto + nebenNetto;
+  const gesamtStunden = stunden + nstunden;
+
+  set('o_quote', (q * 100).toLocaleString('de-DE', {maximumFractionDigits:1}) + ' %');
+  set('o_nebennetto', eur(nebenNetto));
+  set('o_hauptnetto', eur(hauptNetto));
+  set('o_neben2', eur(nebenNetto));
+  set('o_gesamt', eur(gesamt));
+  set('o_gesamtstunden', gesamtStunden.toLocaleString('de-DE', {maximumFractionDigits:1}) + ' Std');
+  set('o_stundenlohn', nstunden > 0 ? eur(nebenNetto / (nstunden * 4.33)) + ' / Std' : '–');
+
+  szenarien(brutto, stunden, q, nebenNetto, gesamt);
+  ampel(gewinn, nstunden, brutto);
+  speichern();
+}
+
+function szenarien(brutto, stunden, q, nebenNetto, gesamtAktuell){
+  const tbody = document.getElementById('szen_rows');
+  tbody.innerHTML = '';
+  if (stunden <= 0) return;
+
+  const stundenlohnBrutto = brutto / stunden;
+
+  SZENARIEN.filter(s => s <= stunden).forEach(s => {
+    const b = stundenlohnBrutto * s;
+    const n = b * (1 - q);
+    const g = n + nebenNetto;
+    const diff = g - gesamtAktuell;
+    const zeit = (stunden - s);
+
+    const tr = document.createElement('tr');
+    if (Math.abs(s - stunden) < 0.01) tr.className = 'aktuell';
+    tr.innerHTML = `
+      <td>${s.toLocaleString('de-DE')} Std${Math.abs(s - stunden) < 0.01 ? ' (jetzt)' : ''}</td>
+      <td>${eur(b)}</td>
+      <td>${eur(n)}</td>
+      <td>${eur(nebenNetto)}</td>
+      <td><strong>${eur(g)}</strong></td>
+      <td style="color:${diff < -0.5 ? 'var(--mark)' : 'var(--ink-muted)'}">${diff >= -0.5 ? '—' : eur(diff)}</td>
+      <td>${zeit > 0 ? '+' + zeit.toLocaleString('de-DE') + ' Std/Wo' : '—'}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function ampel(gewinn, nstunden, brutto){
+  const halb = val('bezug') / 2;
+  set('o_halb', eur(halb));
+
+  const box = document.getElementById('ampel');
+  const titel = document.getElementById('ampel_titel');
+  const text = document.getElementById('ampel_text');
+
+  const zuVielStunden = nstunden > 20;
+  const knappStunden  = nstunden > 15 && nstunden <= 20;
+  const ueberHalb     = gewinn > halb;
+  const mehrAlsJob    = gewinn > brutto;
+
+  box.className = 'ampel';
+
+  if (zuVielStunden || mehrAlsJob) {
+    box.classList.add('rot');
+    titel.textContent = 'Kritisch — das kann als hauptberuflich gewertet werden';
+    text.textContent = zuVielStunden && mehrAlsJob
+      ? 'Du liegst über 20 Stunden pro Woche und verdienst selbstständig mehr als im Hauptjob. Beide Faustregeln sprechen dafür, dass deine Kasse dich als hauptberuflich selbstständig einstuft. Kläre das aktiv mit deiner Krankenkasse, bevor sie von selbst darauf kommt.'
+      : zuVielStunden
+      ? 'Du arbeitest mehr als 20 Stunden pro Woche selbstständig. Das ist die Schwelle, ab der Kassen regelmäßig von hauptberuflicher Selbstständigkeit ausgehen. Sprich das mit deiner Krankenkasse ab.'
+      : 'Dein Gewinn aus der Selbstständigkeit liegt über deinem Bruttogehalt aus dem Job. Damit gilt die Selbstständigkeit als prägend, auch bei wenigen Stunden. Kläre das mit deiner Krankenkasse.';
+  } else if (knappStunden || ueberHalb) {
+    box.classList.add('gelb');
+    titel.textContent = 'Grenzbereich — im Blick behalten';
+    text.textContent = knappStunden && ueberHalb
+      ? 'Du näherst dich der 20-Stunden-Grenze und liegst über der halben Bezugsgröße. Noch unkritisch, aber wenn beides weiter steigt, wird deine Kasse nachfragen. Dokumentiere deine Stunden.'
+      : knappStunden
+      ? 'Mit über 15 Stunden pro Woche näherst du dich der 20-Stunden-Grenze. Führ eine einfache Stundenaufstellung, damit du im Zweifel belegen kannst, dass du darunter liegst.'
+      : 'Dein Gewinn liegt über der halben Bezugsgröße. Solange du deutlich unter 20 Wochenstunden bleibst und im Job mehr verdienst, ist das in der Regel unproblematisch — aber behalt es im Auge.';
+  } else {
+    box.classList.add('gruen');
+    titel.textContent = 'Unkritisch — klar nebenberuflich';
+    text.textContent = 'Du liegst unter 20 Wochenstunden, unter der halben Bezugsgröße und verdienst im Hauptjob mehr. Nach den üblichen Faustregeln der Krankenkassen ist das eindeutig eine nebenberufliche Selbstständigkeit.';
+  }
+}
+
+document.getElementById('uebernehmen').addEventListener('click', e => {
+  e.preventDefault();
+  try {
+    const d = JSON.parse(localStorage.getItem('physionebenbei-monat-ergebnis') || 'null');
+    if (d && isFinite(d.gewinn)) {
+      document.getElementById('gewinn').value = Math.round(d.gewinn);
+      rechne();
+    } else {
+      alert('Im Monats-Rechner sind noch keine Zahlen gespeichert. Trag dort zuerst deine Behandlungen ein.');
+    }
+  } catch(err){
+    alert('Konnte die Zahlen nicht laden.');
+  }
+});
+
+function speichern(){
+  try {
+    const d = {};
+    ['brutto','stunden','netto','gewinn','satz','nstunden','bezug'].forEach(id => d[id] = document.getElementById(id).value);
+    localStorage.setItem(KEY, JSON.stringify(d));
+  } catch(e){}
+}
+
+function laden(){
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (!d) return;
+    Object.entries(d).forEach(([id, v]) => {
+      const el = document.getElementById(id); if (el) el.value = v;
+    });
+  } catch(e){}
+}
+
+document.querySelectorAll('#brutto,#stunden,#netto,#gewinn,#satz,#nstunden,#bezug')
+  .forEach(el => el.addEventListener('input', rechne));
+
+laden();
+rechne();
+</script>
+</body>
+</html>

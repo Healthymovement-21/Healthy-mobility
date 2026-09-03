@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Monats-Rechner — PhysioNebenbei</title>
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+
+<div class="page">
+  <p class="crumb"><a href="../">← Startseite</a> · <a href="werkzeuge.html">Rechner</a> · <a href="gehaltsrechner.html">Gehalt &amp; Stunden →</a></p>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <p class="eyebrow">Rechner</p>
+      <h1>Was du diesen Monat wirklich verdienst</h1>
+      <p class="lede">Trag deine Behandlungen ein, Patient für Patient. Unten steht schwarz auf weiß, was reinkommt, was davon Umsatzsteuer ist, was du zurücklegen solltest und was am Ende übrig bleibt.</p>
+      <div class="annotation">
+        <strong>Wichtig zu den Preisen:</strong> Für Physiotherapie bei Privatpatient:innen gibt es keine verbindliche Gebührenordnung — du kalkulierst frei. Die Werte unten sind marktübliche Startwerte, keine amtlichen Sätze. <strong>Trag deine eigenen Preise ein.</strong> Die Beihilfe-Höchstsätze (Bund, Stand 04/2024: KG 27,80 €, MT 33,40 €) sind nur Erstattungsgrenzen für deine Patient:innen und je Bundesland verschieden.
+      </div>
+    </section>
+
+    <!-- ============ PREISLISTE ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 1</p>
+      <h2>Deine Preisliste</h2>
+      <p>Einmal eintragen, wird gespeichert. Alles Weitere rechnet damit.</p>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="p_kg">KG — Krankengymnastik</label>
+          <div class="field"><input type="number" id="p_kg" value="45" step="1" data-price><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="p_mt">MT — Manuelle Therapie</label>
+          <div class="field"><input type="number" id="p_mt" value="50" step="1" data-price><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="p_mld30">MLD 30 — Manuelle Lymphdrainage</label>
+          <div class="field"><input type="number" id="p_mld30" value="42" step="1" data-price><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="p_mld45">MLD 45 — Manuelle Lymphdrainage</label>
+          <div class="field"><input type="number" id="p_mld45" value="58" step="1" data-price><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="p_waerme">Wärme / Fango (Zusatz)</label>
+          <div class="field"><input type="number" id="p_waerme" value="12" step="1" data-price><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="p_hb">Hausbesuch — Zuschlag pro Termin</label>
+          <div class="field"><input type="number" id="p_hb" value="18" step="1" data-price><span class="unit">€</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BEHANDLUNGEN ============ -->
+    <section class="sheet wide">
+      <p class="eyebrow">Schritt 2</p>
+      <h2>Behandlungen im Monat</h2>
+      <p>Keine Namen nötig — Patient 1, 2, 3. Eine Zeile pro Patient:in, mit der Anzahl der Termine im Monat.</p>
+
+      <div class="tbl-wrap">
+        <table class="data" id="tbl">
+          <thead>
+            <tr>
+              <th style="width:90px">Patient</th>
+              <th style="width:210px">Leistung</th>
+              <th style="width:90px">Termine</th>
+              <th style="width:80px">Hausbes.</th>
+              <th style="width:200px">Abrechnungsart</th>
+              <th style="width:110px">Summe</th>
+              <th style="width:40px"></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p class="hero-cta">
+        <a class="btn ghost" id="add" href="#">+ Patient hinzufügen</a>
+      </p>
+    </section>
+
+    <!-- ============ ERGEBNIS ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Schritt 3</p>
+      <h2>Dein Monat</h2>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label>Einnahmen aus Heilbehandlung <span class="micro">(steuerfrei, § 4 Nr. 14 UStG)</span></label>
+          <span class="out" id="o_frei">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Einnahmen aus Wellness/Prävention <span class="micro">(netto, ohne USt)</span></label>
+          <span class="out" id="o_pflicht_netto">–</span>
+        </div>
+        <div class="calc-row">
+          <label>davon Umsatzsteuer 19 % <span class="micro">(führst du ans Finanzamt ab)</span></label>
+          <span class="out" id="o_ust">–</span>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Gesamt-Einnahmen (das steht auf deinen Rechnungen)</label>
+          <span class="out" id="o_brutto">–</span>
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="ausgaben">Betriebsausgaben diesen Monat <span class="micro">(Fahrtkosten, Material, anteilig Versicherung)</span></label>
+          <div class="field"><input type="number" id="ausgaben" value="0" step="10"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label>Gewinn vor Steuer</label>
+          <span class="out" id="o_gewinn">–</span>
+        </div>
+        <div class="calc-row">
+          <label for="satz">Rücklage-Satz <span class="micro">(dein Grenzsteuersatz plus Puffer)</span></label>
+          <div class="field"><input type="number" id="satz" value="30" step="1"><span class="unit">%</span></div>
+        </div>
+        <div class="calc-row">
+          <label>Empfohlene Rücklage — sofort wegpacken</label>
+          <span class="out" id="o_ruecklage">–</span>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Bleibt dir</label>
+          <span class="out" id="o_netto">–</span>
+        </div>
+      </div>
+
+      <div class="annotation">
+        Die Umsatzsteuer aus Wellness-Leistungen gehört dir nicht — die ist durchlaufender Posten und ist oben schon abgezogen. Solltest du unter der Kleinunternehmergrenze nach § 19 UStG liegen und keine USt ausweisen, stell alle Zeilen auf „Heilbehandlung" oder „Selbstzahler therapeutisch".
+      </div>
+
+      <p class="hero-cta">
+        <a class="btn ghost" id="reset" href="#">Monat zurücksetzen</a>
+      </p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Nächster Schritt</p>
+      <h2>Und was heißt das für dein Gesamteinkommen?</h2>
+      <p>Der zweite Rechner nimmt diesen Betrag, stellt ihn neben dein Angestellten-Gehalt und zeigt dir, was insgesamt übrig bleibt — und ob deine Krankenkasse ein Problem damit bekommen könnte.</p>
+      <p class="hero-cta"><a class="btn" href="gehaltsrechner.html">Zum Gehalts- und Stundenrechner</a></p>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span><a href="../">Startseite</a> · <a href="fahrplan.html">Fahrplan</a></span>
+    <span>
+      <a href="../impressum.html">Impressum</a> ·
+      <a href="../datenschutz.html">Datenschutz</a> ·
+      <a href="../agb.html">AGB</a> ·
+      <a href="../widerruf.html">Widerruf</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+const KEY = 'physionebenbei-monat';
+const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
+const val = id => parseFloat(document.getElementById(id).value) || 0;
+
+/* Leistungen: Schlüssel -> Bestandteile aus der Preisliste */
+const LEISTUNGEN = {
+  kg:          {label:'KG',                 teile:['p_kg']},
+  mt:          {label:'MT',                 teile:['p_mt']},
+  mld30:       {label:'MLD 30',             teile:['p_mld30']},
+  mld45:       {label:'MLD 45',             teile:['p_mld45']},
+  kg_mt:       {label:'KG + MT',            teile:['p_kg','p_mt']},
+  kg_mld30:    {label:'KG + MLD 30',        teile:['p_kg','p_mld30']},
+  mt_mld30:    {label:'MT + MLD 30',        teile:['p_mt','p_mld30']},
+  kg_waerme:   {label:'KG + Wärme',         teile:['p_kg','p_waerme']},
+  mt_waerme:   {label:'MT + Wärme',         teile:['p_mt','p_waerme']},
+};
+
+/* Abrechnungsarten: bestimmen die Umsatzsteuer-Behandlung */
+const ARTEN = {
+  privat:      {label:'Privat mit Verordnung',        ust:false},
+  selbst_ther: {label:'Selbstzahler, therapeutisch',  ust:false},
+  selbst_well: {label:'Selbstzahler, Wellness (19 %)', ust:true},
+};
+
+let zeilen = [];
+
+function neueZeile(){
+  return {leistung:'kg', termine:1, hausbesuch:false, art:'privat'};
+}
+
+function preisFuer(leistungKey){
+  const l = LEISTUNGEN[leistungKey];
+  if (!l) return 0;
+  return l.teile.reduce((s, id) => s + val(id), 0);
+}
+
+function render(){
+  const tbody = document.getElementById('rows');
+  tbody.innerHTML = '';
+
+  zeilen.forEach((z, i) => {
+    const tr = document.createElement('tr');
+
+    const optLeistung = Object.entries(LEISTUNGEN)
+      .map(([k,v]) => `<option value="${k}"${z.leistung===k?' selected':''}>${v.label}</option>`).join('');
+    const optArt = Object.entries(ARTEN)
+      .map(([k,v]) => `<option value="${k}"${z.art===k?' selected':''}>${v.label}</option>`).join('');
+
+    tr.innerHTML = `
+      <td>Patient ${i+1}</td>
+      <td><select data-i="${i}" data-f="leistung">${optLeistung}</select></td>
+      <td><input type="number" min="0" step="1" value="${z.termine}" data-i="${i}" data-f="termine"></td>
+      <td style="text-align:center"><input type="checkbox" data-i="${i}" data-f="hausbesuch"${z.hausbesuch?' checked':''}></td>
+      <td><select data-i="${i}" data-f="art">${optArt}</select></td>
+      <td class="calc">${eur(zeilenSumme(z))}</td>
+      <td style="text-align:center"><a href="#" data-del="${i}" title="Zeile löschen">×</a></td>`;
+    tbody.appendChild(tr);
+  });
+
+  rechne();
+  speichern();
+}
+
+function zeilenSumme(z){
+  const proTermin = preisFuer(z.leistung) + (z.hausbesuch ? val('p_hb') : 0);
+  return proTermin * (z.termine || 0);
+}
+
+function rechne(){
+  let frei = 0, bruttoPflicht = 0;
+
+  zeilen.forEach(z => {
+    const summe = zeilenSumme(z);
+    if (ARTEN[z.art] && ARTEN[z.art].ust) bruttoPflicht += summe;
+    else frei += summe;
+  });
+
+  /* Der eingetragene Preis ist der Endpreis für die Patient:in.
+     Bei umsatzsteuerpflichtigen Leistungen steckt die USt also schon drin. */
+  const nettoPflicht = bruttoPflicht / 1.19;
+  const ust = bruttoPflicht - nettoPflicht;
+  const gesamt = frei + bruttoPflicht;
+
+  const ausgaben = val('ausgaben');
+  const gewinn = frei + nettoPflicht - ausgaben;
+  const satz = val('satz') / 100;
+  const ruecklage = Math.max(0, gewinn * satz);
+  const bleibt = gewinn - ruecklage;
+
+  const set = (id, v) => document.getElementById(id).textContent = eur(v);
+  set('o_frei', frei);
+  set('o_pflicht_netto', nettoPflicht);
+  set('o_ust', ust);
+  set('o_brutto', gesamt);
+  set('o_gewinn', gewinn);
+  set('o_ruecklage', ruecklage);
+  set('o_netto', bleibt);
+
+  /* für den Gehaltsrechner mitspeichern */
+  try {
+    localStorage.setItem('physionebenbei-monat-ergebnis', JSON.stringify({gewinn, bleibt}));
+  } catch(e){}
+}
+
+function speichern(){
+  try {
+    const preise = {};
+    document.querySelectorAll('[data-price]').forEach(el => preise[el.id] = el.value);
+    localStorage.setItem(KEY, JSON.stringify({
+      zeilen, preise, ausgaben: document.getElementById('ausgaben').value,
+      satz: document.getElementById('satz').value,
+    }));
+  } catch(e){}
+}
+
+function laden(){
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (!d) return false;
+    if (d.preise) Object.entries(d.preise).forEach(([id, v]) => {
+      const el = document.getElementById(id); if (el) el.value = v;
+    });
+    if (d.ausgaben !== undefined) document.getElementById('ausgaben').value = d.ausgaben;
+    if (d.satz !== undefined) document.getElementById('satz').value = d.satz;
+    if (Array.isArray(d.zeilen) && d.zeilen.length) { zeilen = d.zeilen; return true; }
+  } catch(e){}
+  return false;
+}
+
+/* ---- Events ---- */
+document.getElementById('rows').addEventListener('input', e => {
+  const i = e.target.dataset.i, f = e.target.dataset.f;
+  if (i === undefined || !f) return;
+  zeilen[i][f] = e.target.type === 'checkbox' ? e.target.checked
+               : e.target.type === 'number' ? (parseFloat(e.target.value) || 0)
+               : e.target.value;
+  render();
+});
+
+document.getElementById('rows').addEventListener('click', e => {
+  const del = e.target.dataset.del;
+  if (del === undefined) return;
+  e.preventDefault();
+  zeilen.splice(del, 1);
+  if (!zeilen.length) zeilen.push(neueZeile());
+  render();
+});
+
+document.getElementById('add').addEventListener('click', e => {
+  e.preventDefault();
+  zeilen.push(neueZeile());
+  render();
+});
+
+document.getElementById('reset').addEventListener('click', e => {
+  e.preventDefault();
+  zeilen = [neueZeile()];
+  document.getElementById('ausgaben').value = 0;
+  render();
+});
+
+document.querySelectorAll('[data-price], #ausgaben, #satz').forEach(el =>
+  el.addEventListener('input', render));
+
+if (!laden()) zeilen = [neueZeile(), neueZeile(), neueZeile()];
+render();
+</script>
+</body>
+</html>

@@ -1,51 +1,71 @@
 /* ============================================================
    PhysioNebenbei — Design-System
-   Helles, ruhiges Grundgeruest: weißer Grund, dunkelgraue Schrift,
-   eine gedeckte Akzentfarbe (Tanne), sonst nichts. Kein Verlauf,
-   kein Glow, kein Glassmorphism, keine 3D-Effekte.
+
+   Weiß und Blau. Weißer Grund, dunkelblaue Baender fuer Auftakt,
+   Preis und Fuss, dazwischen ein sehr helles Blaugrau als zweite
+   Flaeche. Blau ist die einzige Farbe: kraeftiges Blau auf Weiß,
+   helles Blau auf Dunkelblau. Ueberschriften in einer Serifenschrift,
+   Fliesstext serifenlos.
 
    Schrift: Systemschriften. Kein Google Fonts, keine externen
-   Schriftdienste, damit keine Besucher-IPs an Dritte gehen.
-   Auf iPhone/Mac ist das SF Pro, auf Windows Segoe UI Variable.
+   Schriftdienste, damit keine Besucher-IPs an Dritte gehen. Die
+   Serifenschrift ist auf jedem System vorhanden (Georgia bzw. Iowan
+   Old Style auf Apple-Geraeten).
+
+   Alle Farben sind auf Kontrast geprueft: Fliesstext liegt ueberall
+   ueber 4,5:1, die meisten Paarungen deutlich darueber.
    ============================================================ */
 
 :root{
   color-scheme: light;
 
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Basis */
+  /* Basis: Weiß, dazu ein sehr helles Blaugrau als zweite Flaeche */
   --paper:        #FFFFFF;
-  --surface:      #F7F7F5;
-  --surface-2:    #F1F1EE;
+  --surface:      #F4F7FB;
+  --surface-2:    #E8EEF6;
 
-  --ink:          #17191B;
-  --ink-muted:    #55595D;
-  --ink-faint:    #85898D;
+  --ink:          #14181D;
+  --ink-muted:    #4C5560;
+  --ink-faint:    #69737F;
 
-  /* Einzige Akzentfarbe: gedecktes Tannengrün, sparsam eingesetzt */
-  --accent:       #0F6B5C;
-  --accent-dark:  #0B5348;
+  /* Die Farbe: kraeftiges Blau */
+  --accent:       #14509B;
+  --accent-dark:  #0F3D77;
   --accent-ink:   #FFFFFF;
-  --accent-soft:  rgba(15,107,92,.08);
-  --accent-line:  rgba(15,107,92,.35);
+  --accent-soft:  rgba(20,80,155,.07);
+  --accent-line:  rgba(20,80,155,.32);
+
+  /* Dunkelblaues Band: traegt Auftakt, Preis und Fuss */
+  --tief:         #0E2340;
+  --tief-2:       #143254;
+  --auf-tief:     #EDF2F8;
+  --auf-tief-leise: #A9BDD4;
+
+  /* Dieselbe Farbe in zwei Helligkeiten: hell auf Dunkelblau,
+     kraeftig auf Weiß. */
+  --blau-tief:    #14509B;
+  --blau-hell:    #9CC3F2;
+  --blau-linie:   rgba(20,80,155,.34);
+  --blau-soft:    rgba(20,80,155,.10);
 
   /* Warnung / Hinweis, gedeckt statt grell */
-  --mark:         #A6362D;
-  --mark-soft:    rgba(166,54,45,.06);
-  --focus:        #0F6B5C;
+  --mark:         #B0281C;
+  --mark-soft:    rgba(176,40,28,.06);
+  --focus:        #14509B;
 
-  /* Karten und Trennlinien: reine Randfarben, kein Glas, kein Blur */
+  /* Karten und Trennlinien */
   --glass:        var(--surface);
   --glass-strong: var(--surface);
-  --glass-edge:   #E2E2DE;
-  --glass-line:   #EBEBE7;
-  --input-bg:     #FAFAF8;
+  --glass-edge:   #D9E1EC;
+  --glass-line:   #E6ECF4;
+  --input-bg:     #FFFFFF;
 
-  --shadow:       0 1px 2px rgba(20,20,18,.05);
-  --shadow-lift:  0 4px 16px rgba(20,20,18,.08);
+  --shadow:       0 1px 2px rgba(14,35,64,.06);
+  --shadow-lift:  0 6px 22px rgba(14,35,64,.10);
   --glow-cyan:    none;
 
   --aura-1: transparent;
@@ -76,8 +96,8 @@ body{
 a{ color:var(--accent); }
 h1,h2,h3{
   font-family:var(--font-display);
-  font-weight:500;
-  letter-spacing:-.018em;
+  font-weight:600;
+  letter-spacing:-.012em;
   text-wrap:balance;
   margin:0;
   color:var(--ink);
@@ -248,6 +268,14 @@ p:last-child{ margin-bottom:0; }
   border-color:var(--accent);
   color:var(--accent);
 }
+/* Der eine Weg nach vorn. Auf dunklem Grund helles Blau mit dunkler
+   Schrift, sonst wuerde ein blauer Button im blauen Band verschwinden. */
+.btn.stark{
+  background:var(--blau-hell);
+  border-color:var(--blau-hell);
+  color:var(--tief);
+}
+.btn.stark:hover{ background:#A9C6EE; border-color:#A9C6EE; }
 
 .micro{ font-size:14px; color:var(--ink-muted); }
 

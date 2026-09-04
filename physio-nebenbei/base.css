@@ -395,6 +395,23 @@ p:last-child{ margin-bottom:0; }
 }
 .progress-label{ font-size:14px; color:var(--ink-muted); }
 
+/* Persoenliche To-do-Liste: wie .todo, aber mit einem dritten Knopf
+   je Zeile, um Punkte auszublenden, die nicht zutreffen. */
+.todo.persoenlich li{ grid-template-columns:26px 1fr 30px; }
+.todo.persoenlich li.versteckt{ display:none; }
+.t-aus{
+  grid-column:3; align-self:start; margin-top:2px;
+  width:28px; height:28px; border-radius:8px;
+  border:1px solid transparent; background:none;
+  color:var(--ink-faint); font-size:15px; line-height:1; cursor:pointer;
+}
+.t-aus:hover{ color:var(--mark); border-color:var(--glass-edge); }
+#eigene-ausgeblendet-info{ margin:4px 0 0; }
+#eigene-ausgeblendet-info button{
+  background:none; border:none; padding:0; color:var(--accent);
+  font:inherit; cursor:pointer; text-decoration:underline;
+}
+
 /* ---------- Hinweisblock ---------- */
 .annotation{
   margin:20px 0;

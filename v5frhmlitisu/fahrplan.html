@@ -52,6 +52,59 @@
     </section>
 
     <section class="sheet">
+      <p class="eyebrow">Deine Liste</p>
+      <h2>Persönliche To-do-Liste</h2>
+      <p>Der Tracker oben hält fest, welche Kapitel du gelesen hast. Diese Liste ist konkreter: einzelne Handlungsschritte aus allen zehn Kapiteln, zum Abhaken, sobald du sie erledigt hast. Was auf dich nicht zutrifft, blendest du mit dem Kreuz aus, zum Beispiel wenn dein Bundesland keine Meldung beim Gesundheitsamt verlangt oder du kein eigenes Konto einrichten willst. So bleibt am Ende deine eigene, kürzere Liste übrig. Alles wird nur auf diesem Gerät gespeichert, ganz ohne Konto.</p>
+
+      <div class="progress-bar"><div id="eigene-bar" style="width:0%"></div></div>
+      <p class="progress-label" id="eigene-label">0 von 0 erledigt</p>
+      <p class="micro" id="eigene-ausgeblendet-info" hidden></p>
+
+      <div id="eigene-liste">
+
+        <h3>Bevor du startest</h3>
+        <ul class="todo persoenlich" data-phase="start">
+          <li data-id="p1"><input type="checkbox" id="td-p1"><label for="td-p1"><div class="t-title">Arbeitsvertrag auf eine Nebentätigkeits-Klausel geprüft</div><div class="t-desc">Kapitel 1</div></label><button type="button" class="t-aus" data-id="p1" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p2"><input type="checkbox" id="td-p2"><label for="td-p2"><div class="t-title">Nebentätigkeit mit dem Arbeitgeber abgesprochen, falls der Vertrag es verlangt</div><div class="t-desc">Kapitel 1</div></label><button type="button" class="t-aus" data-id="p2" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p3"><input type="checkbox" id="td-p3"><label for="td-p3"><div class="t-title">Realistisch drei bis fünf Stunden pro Woche eingeplant, inklusive Fahrt und Papierkram</div><div class="t-desc">Kapitel 1</div></label><button type="button" class="t-aus" data-id="p3" aria-label="Nicht relevant, ausblenden">✕</button></li>
+        </ul>
+
+        <h3>Anmeldung</h3>
+        <ul class="todo persoenlich" data-phase="anmeldung">
+          <li data-id="p4"><input type="checkbox" id="td-p4"><label for="td-p4"><div class="t-title">Fragebogen zur steuerlichen Erfassung über ELSTER ausgefüllt</div><div class="t-desc">Kapitel 2</div></label><button type="button" class="t-aus" data-id="p4" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p5"><input type="checkbox" id="td-p5"><label for="td-p5"><div class="t-title">Bei der BGW angemeldet, innerhalb einer Woche nach Beginn der Tätigkeit</div><div class="t-desc">Kapitel 2</div></label><button type="button" class="t-aus" data-id="p5" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p6"><input type="checkbox" id="td-p6"><label for="td-p6"><div class="t-title">Eigenes Konto für die Einnahmen aus der Nebentätigkeit eingerichtet</div><div class="t-desc">Kapitel 2 · optional</div></label><button type="button" class="t-aus" data-id="p6" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p7"><input type="checkbox" id="td-p7"><label for="td-p7"><div class="t-title">Geprüft, ob deine Kommune zusätzlich eine Meldung beim Gesundheitsamt verlangt</div><div class="t-desc">Kapitel 2 · je nach Bundesland</div></label><button type="button" class="t-aus" data-id="p7" aria-label="Nicht relevant, ausblenden">✕</button></li>
+        </ul>
+
+        <h3>Absicherung</h3>
+        <ul class="todo persoenlich" data-phase="absicherung">
+          <li data-id="p8"><input type="checkbox" id="td-p8"><label for="td-p8"><div class="t-title">Berufshaftpflicht abgeschlossen, vor der ersten Behandlung</div><div class="t-desc">Kapitel 3</div></label><button type="button" class="t-aus" data-id="p8" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p9"><input type="checkbox" id="td-p9"><label for="td-p9"><div class="t-title">Krankenkasse kurz über die Nebentätigkeit informiert</div><div class="t-desc">Kapitel 3</div></label><button type="button" class="t-aus" data-id="p9" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p10"><input type="checkbox" id="td-p10"><label for="td-p10"><div class="t-title">Geprüft, ob Scheinselbstständigkeit droht, falls fast alle Einnahmen von einem einzigen Auftraggeber kommen</div><div class="t-desc">Kapitel 3 &amp; 10</div></label><button type="button" class="t-aus" data-id="p10" aria-label="Nicht relevant, ausblenden">✕</button></li>
+        </ul>
+
+        <h3>Vorbereitung</h3>
+        <ul class="todo persoenlich" data-phase="vorbereitung">
+          <li data-id="p11"><input type="checkbox" id="td-p11"><label for="td-p11"><div class="t-title">Preis pro Behandlung festgelegt, inklusive Fahrtzeit und Steuer-Rücklage</div><div class="t-desc">Kapitel 4</div></label><button type="button" class="t-aus" data-id="p11" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p12"><input type="checkbox" id="td-p12"><label for="td-p12"><div class="t-title">Steuerrücklage von 25 bis 30 Prozent eingeplant, am besten auf einem eigenen Konto</div><div class="t-desc">Kapitel 4</div></label><button type="button" class="t-aus" data-id="p12" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p13"><input type="checkbox" id="td-p13"><label for="td-p13"><div class="t-title">Rechnungsvorlage mit allen Pflichtangaben vorbereitet</div><div class="t-desc">Kapitel 5</div></label><button type="button" class="t-aus" data-id="p13" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p14"><input type="checkbox" id="td-p14"><label for="td-p14"><div class="t-title">Dokumentationsvorlage vorbereitet</div><div class="t-desc">Kapitel 6</div></label><button type="button" class="t-aus" data-id="p14" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p15"><input type="checkbox" id="td-p15"><label for="td-p15"><div class="t-title">Umgang mit Patientendaten geklärt: Aufbewahrung, Weitergabe nur mit Einwilligung</div><div class="t-desc">Kapitel 7</div></label><button type="button" class="t-aus" data-id="p15" aria-label="Nicht relevant, ausblenden">✕</button></li>
+        </ul>
+
+        <h3>Loslegen</h3>
+        <ul class="todo persoenlich" data-phase="loslegen">
+          <li data-id="p16"><input type="checkbox" id="td-p16"><label for="td-p16"><div class="t-title">Direktes Umfeld informiert: Familie, Freundeskreis, Sportverein</div><div class="t-desc">Kapitel 8</div></label><button type="button" class="t-aus" data-id="p16" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p17"><input type="checkbox" id="td-p17"><label for="td-p17"><div class="t-title">Erste zwei bis drei Termine vereinbart, bewusst nicht mehr auf einmal</div><div class="t-desc">Kapitel 8 &amp; 9</div></label><button type="button" class="t-aus" data-id="p17" aria-label="Nicht relevant, ausblenden">✕</button></li>
+          <li data-id="p18"><input type="checkbox" id="td-p18"><label for="td-p18"><div class="t-title">Geklärt, ob du für die Behandlung eine ärztliche Verordnung brauchst</div><div class="t-desc">Kapitel 10</div></label><button type="button" class="t-aus" data-id="p18" aria-label="Nicht relevant, ausblenden">✕</button></li>
+        </ul>
+
+      </div>
+      <p class="micro">Diese Liste ist eine Orientierung aus den zehn Kapiteln, keine vollständige Checkliste für jeden Einzelfall und keine Rechts- oder Steuerberatung.</p>
+    </section>
+
+    <section class="sheet">
       <p class="eyebrow">01</p>
       <h2>Bist du bereit? Ein kurzer Realitäts-Check</h2>
       <p>Bevor du irgendwo ein Formular ausfüllst, lohnt sich ein ehrliches Gespräch mit dir selbst. Nicht das motivierende „Du schaffst das schon", sondern das nüchterne: Passt das gerade wirklich in mein Leben. Die meisten der folgenden Fragen kosten dich fünf Minuten Nachdenken, aber genau diese fünf Minuten ersparen dir später Wochen voller Ärger oder ein schlechtes Gewissen gegenüber deinem Arbeitgeber.</p>
@@ -294,6 +347,72 @@
   });
 
   render();
+</script>
+<script>
+  /* ---------- Persoenliche To-do-Liste ----------
+     Eigener Speicher, unabhaengig vom Kapitel-Tracker oben.
+     Pro Punkt wird gemerkt: erledigt (done) und ausgeblendet (aus). */
+  const EKEY = 'physionebenbei-todo-eigene';
+  let eigene = {};
+  try { eigene = JSON.parse(localStorage.getItem(EKEY) || '{}'); } catch(e){}
+
+  function eigeneSpeichern(){
+    try { localStorage.setItem(EKEY, JSON.stringify(eigene)); } catch(e){}
+  }
+
+  function eigeneRender(){
+    const alle = document.querySelectorAll('#eigene-liste li[data-id]');
+    let sichtbar = 0, erledigt = 0, ausgeblendet = 0;
+
+    alle.forEach(li => {
+      const id = li.dataset.id;
+      const stand = eigene[id] || {};
+      const box = li.querySelector('input[type=checkbox]');
+      box.checked = !!stand.done;
+      li.classList.toggle('done', !!stand.done);
+      li.classList.toggle('versteckt', !!stand.aus);
+      if (stand.aus) { ausgeblendet++; return; }
+      sichtbar++;
+      if (stand.done) erledigt++;
+    });
+
+    document.getElementById('eigene-bar').style.width = (sichtbar ? erledigt/sichtbar*100 : 0) + '%';
+    document.getElementById('eigene-label').textContent = erledigt + ' von ' + sichtbar + ' erledigt';
+
+    const info = document.getElementById('eigene-ausgeblendet-info');
+    if (ausgeblendet > 0) {
+      info.hidden = false;
+      info.innerHTML = ausgeblendet + (ausgeblendet === 1 ? ' Punkt ausgeblendet. ' : ' Punkte ausgeblendet. ') +
+        '<button type="button" id="eigene-reset">Alle wieder einblenden</button>';
+      document.getElementById('eigene-reset').addEventListener('click', () => {
+        Object.keys(eigene).forEach(id => { if (eigene[id]) eigene[id].aus = false; });
+        eigeneSpeichern();
+        eigeneRender();
+      });
+    } else {
+      info.hidden = true;
+      info.innerHTML = '';
+    }
+  }
+
+  document.getElementById('eigene-liste').addEventListener('change', e => {
+    if (e.target.type !== 'checkbox') return;
+    const id = e.target.closest('li').dataset.id;
+    eigene[id] = Object.assign({}, eigene[id], { done: e.target.checked });
+    eigeneSpeichern();
+    eigeneRender();
+  });
+
+  document.getElementById('eigene-liste').addEventListener('click', e => {
+    const btn = e.target.closest('.t-aus');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    eigene[id] = Object.assign({}, eigene[id], { aus: true });
+    eigeneSpeichern();
+    eigeneRender();
+  });
+
+  eigeneRender();
 </script>
 <script>
   if ('serviceWorker' in navigator) {

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Planungs-Rechner — PhysioNebenbei</title>
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<meta name="theme-color" content="#050B12">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  /* Nur für diese Seite: Frequenz-Auswahl, Schieberegler, Besuchsraster */
+  .wahlreihe{ display:flex; flex-wrap:wrap; gap:7px; margin-top:4px; }
+  .wahlreihe button{
+    flex:1 1 auto; min-width:74px;
+    border:1px solid var(--glass-edge); background:transparent; color:var(--ink-muted);
+    border-radius:12px; padding:9px 10px 7px; cursor:pointer;
+    font-family:inherit; font-size:15px; line-height:1.2; text-align:center;
+  }
+  .wahlreihe button b{ display:block; font-weight:600; color:var(--ink); font-size:16px; }
+  .wahlreihe button small{ display:block; font-size:11.5px; color:var(--ink-faint); margin-top:2px; }
+  .wahlreihe button[aria-pressed="true"]{
+    border-color:var(--accent); background:rgba(53,214,232,.12);
+  }
+  .wahlreihe button[aria-pressed="true"] b{ color:var(--accent); }
+
+  .regler{ display:flex; align-items:center; gap:14px; margin-top:6px; }
+  .regler input[type=range]{ flex:1; accent-color:var(--accent); background:none; border:none; padding:0; }
+  .regler .zahl{
+    font-variant-numeric:tabular-nums; font-size:26px; color:var(--accent);
+    min-width:2.2em; text-align:right;
+  }
+  .reglerskala{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-faint); margin-top:2px; }
+
+  .besuchsraster{ display:grid; gap:6px; margin-top:14px; }
+  .besuchsraster .zeile{ display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--ink-muted); }
+  .besuchsraster .name{ flex:0 0 5.6em; }
+  .besuchsraster .punkte{ display:flex; flex-wrap:wrap; gap:3px; flex:1; }
+  .besuchsraster .punkt{ width:15px; height:9px; border-radius:3px; background:var(--accent); opacity:.75; }
+  .besuchsraster .anzahl{ font-variant-numeric:tabular-nums; color:var(--ink); }
+  .besuchsraster .rest{ font-size:12.5px; color:var(--ink-faint); }
+
+  .kacheln{ display:grid; gap:10px; margin-top:14px; }
+  @media (min-width:560px){ .kacheln.zwei{ grid-template-columns:1fr 1fr; } }
+  .kachel{
+    border:1px solid var(--glass-edge); border-radius:14px; padding:13px 15px;
+    background:rgba(255,255,255,.03);
+  }
+  .kachel .k-titel{ font-size:12px; color:var(--ink-faint); letter-spacing:.04em; }
+  .kachel .k-wert{ font-size:23px; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:3px; }
+  .kachel .k-unter{ font-size:12.5px; color:var(--ink-muted); margin-top:3px; }
+  .kachel.hell{ border-color:rgba(53,214,232,.35); background:rgba(53,214,232,.08); }
+  .kachel.hell .k-wert{ color:var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="../">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <h1>Auslastung planen</h1>
+      <p class="lede">Wie viele Patient:innen brauchst du, was frisst die Fahrt, wie viel Zeit kostet es dich und wann kommt das Geld an?</p>
+    </section>
+
+    <!-- ============ 1 · EIN BESUCH ============ -->
+    <section class="sheet">
+      <p class="eyebrow">1 · Ein Besuch</p>
+      <h2>Was bringt ein Termin?</h2>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="preis">Preis der Behandlung</label>
+          <div class="field"><input type="number" id="preis" value="45" step="1" min="0"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="wegegeld">Wegegeld, das du berechnest <span class="micro">pro Hausbesuch</span></label>
+          <div class="field"><input type="number" id="wegegeld" value="10" step="1" min="0"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="dauer">Behandlungszeit</label>
+          <div class="field"><input type="number" id="dauer" value="30" step="5" min="0"><span class="unit">Min</span></div>
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="fahrzeit">Fahrzeit hin und zurück</label>
+          <div class="field"><input type="number" id="fahrzeit" value="30" step="5" min="0"><span class="unit">Min</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="km">Strecke hin und zurück</label>
+          <div class="field"><input type="number" id="km" value="20" step="1" min="0"><span class="unit">km</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="kmsatz">Kosten je Kilometer</label>
+          <div class="field"><input type="number" id="kmsatz" value="0.30" step="0.05" min="0"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="doku">Doku und Orga je Termin</label>
+          <div class="field"><input type="number" id="doku" value="5" step="5" min="0"><span class="unit">Min</span></div>
+        </div>
+      </div>
+
+      <div class="kacheln zwei">
+        <div class="kachel">
+          <div class="k-titel">Einnahme je Besuch</div>
+          <div class="k-wert" id="k_ein">–</div>
+          <div class="k-unter" id="k_ein_u">Behandlung plus Wegegeld</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Nach Fahrtkosten</div>
+          <div class="k-wert" id="k_nachfahrt">–</div>
+          <div class="k-unter" id="k_nachfahrt_u">–</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Zeit je Besuch</div>
+          <div class="k-wert" id="k_zeit">–</div>
+          <div class="k-unter" id="k_zeit_u">inklusive Fahrt und Doku</div>
+        </div>
+        <div class="kachel hell">
+          <div class="k-titel">Verdienst je Stunde</div>
+          <div class="k-wert" id="k_stunde">–</div>
+          <div class="k-unter">nach Fahrtkosten, vor Steuer</div>
+        </div>
+      </div>
+
+      <details class="mehr">
+        <summary>Woher kommen 0,30 € pro Kilometer?</summary>
+        <div>
+          <p>Das ist die Kilometerpauschale, die du für Fahrten mit dem eigenen Auto als Betriebsausgabe ansetzen darfst. Sie deckt nicht nur den Sprit ab, sondern auch Verschleiß, Versicherung und Wertverlust.</p>
+          <p>Wenn du lieber mit dem echten Verbrauch rechnest, trag hier deinen eigenen Wert ein. Für die Frage „lohnt sich diese Fahrt" ist die Pauschale der ehrlichere Maßstab, weil sie mehr als nur die Tankfüllung sieht.</p>
+          <p>Das Wegegeld darüber ist etwas anderes: das ist der Betrag, den du deinen Patient:innen für den Hausbesuch in Rechnung stellst. Setz es auf 0, wenn du keine Hausbesuche machst.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============ 2 · PATIENTEN ============ -->
+    <section class="sheet">
+      <p class="eyebrow">2 · Patient:innen</p>
+      <h2>Wie viele parallel?</h2>
+
+      <div class="calc-card">
+        <div class="calc-row" style="display:block">
+          <label for="patienten">Patient:innen gleichzeitig in Behandlung</label>
+          <div class="regler">
+            <input type="range" id="patienten" min="1" max="20" step="1" value="3">
+            <span class="zahl" id="p_zahl">3</span>
+          </div>
+          <div class="reglerskala"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></div>
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-row" style="display:block">
+          <label>Termine je Patient:in im Monat</label>
+          <div class="wahlreihe" id="frequenz">
+            <button type="button" data-f="1"><b>1×</b><small>monatlich</small></button>
+            <button type="button" data-f="2"><b>2×</b><small>alle 2 Wochen</small></button>
+            <button type="button" data-f="4" aria-pressed="true"><b>4×</b><small>wöchentlich</small></button>
+            <button type="button" data-f="6"><b>6×</b><small>1,5× pro Woche</small></button>
+            <button type="button" data-f="8"><b>8×</b><small>2× pro Woche</small></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="besuchsraster" id="raster"></div>
+
+      <div class="kacheln zwei">
+        <div class="kachel hell">
+          <div class="k-titel">Besuche im Monat</div>
+          <div class="k-wert" id="k_besuche">–</div>
+          <div class="k-unter" id="k_besuche_u">–</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Zeitaufwand pro Woche</div>
+          <div class="k-wert" id="k_wochen">–</div>
+          <div class="k-unter">inklusive Fahrt und Doku</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 · MONAT UND JAHR ============ -->
+    <section class="sheet">
+      <p class="eyebrow">3 · Ergebnis</p>
+      <h2>Was bleibt im Monat?</h2>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label>Einnahmen</label>
+          <span class="out" id="o_umsatz">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Fahrtkosten <span class="micro" id="o_km_micro">–</span></label>
+          <span class="out" id="o_fahrt">–</span>
+        </div>
+        <div class="calc-row">
+          <label for="fix">Weitere Ausgaben <span class="micro">Versicherung, Material, Handy</span></label>
+          <div class="field"><input type="number" id="fix" value="60" step="10" min="0"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label>Gewinn vor Steuer</label>
+          <span class="out" id="o_gewinn">–</span>
+        </div>
+        <div class="calc-row">
+          <label for="satz">Rücklage-Satz <span class="micro">Steuer plus Puffer</span></label>
+          <div class="field"><input type="number" id="satz" value="30" step="1" min="0" max="60"><span class="unit">%</span></div>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Bleibt dir</label>
+          <span class="out" id="o_bleibt">–</span>
+        </div>
+      </div>
+
+      <div class="kacheln zwei">
+        <div class="kachel">
+          <div class="k-titel">Einnahmen im Jahr</div>
+          <div class="k-wert" id="k_jahr">–</div>
+          <div class="k-unter">bei gleichbleibender Auslastung</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Stundenlohn nach allem</div>
+          <div class="k-wert" id="k_effektiv">–</div>
+          <div class="k-unter">nach Ausgaben und Rücklage</div>
+        </div>
+      </div>
+
+      <div class="ampel" id="ampel">
+        <h3 id="ampel_titel">–</h3>
+        <p id="ampel_text">–</p>
+      </div>
+
+      <details class="mehr">
+        <summary>Was bedeutet die Kleinunternehmer-Grenze?</summary>
+        <div>
+          <p>Als Kleinunternehmer:in nach § 19 UStG weist du keine Umsatzsteuer aus. Das geht, solange dein Umsatz im vorangegangenen Kalenderjahr 25.000 € nicht überschritten hat und im laufenden Jahr 100.000 € nicht übersteigt.</p>
+          <p>Für Heilbehandlungen ist das ohnehin meist zweitrangig, weil sie nach § 4 Nr. 14 UStG umsatzsteuerfrei sind. Wichtig wird die Grenze, sobald du Leistungen ohne therapeutischen Zweck anbietest, also Training, Massage aus Wohlfühlgründen oder Coaching.</p>
+          <p>Die Zahl oben ist eine Hochrechnung aus deinem Planmonat, keine Prognose. Im ersten Jahr zählt außerdem der tatsächliche Umsatz ab Beginn deiner Tätigkeit.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============ 4 · REZEPT UND GELDEINGANG ============ -->
+    <section class="sheet">
+      <p class="eyebrow">4 · Geldeingang</p>
+      <h2>Wann kommt das Geld an?</h2>
+      <p>Wenn du erst nach dem letzten Termin eines Rezepts abrechnest, arbeitest du wochenlang, bevor die erste Überweisung kommt. Das ist der Punkt, an dem sich viele im ersten Quartal verrechnen.</p>
+
+      <div class="calc-card">
+        <div class="calc-row" style="display:block">
+          <label>Wie viele Termine hat ein Rezept?</label>
+          <div class="wahlreihe" id="rezept">
+            <button type="button" data-r="6" aria-pressed="true"><b>6er</b><small>Rezept</small></button>
+            <button type="button" data-r="10"><b>10er</b><small>Rezept</small></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kacheln zwei">
+        <div class="kachel">
+          <div class="k-titel">Laufzeit je Rezept</div>
+          <div class="k-wert" id="k_laufzeit">–</div>
+          <div class="k-unter" id="k_laufzeit_u">–</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Rechnungsbetrag je Rezept</div>
+          <div class="k-wert" id="k_rezeptsumme">–</div>
+          <div class="k-unter" id="k_rezeptsumme_u">–</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Arbeitszeit je Rezept</div>
+          <div class="k-wert" id="k_rezeptzeit">–</div>
+          <div class="k-unter">inklusive Fahrt und Doku</div>
+        </div>
+        <div class="kachel hell">
+          <div class="k-titel">Erste Zahlung frühestens</div>
+          <div class="k-wert" id="k_erstgeld">–</div>
+          <div class="k-unter">nach dem letzten Termin plus Zahlungsziel</div>
+        </div>
+      </div>
+
+      <div class="annotation" id="cashflow">–</div>
+
+      <details class="mehr">
+        <summary>Muss ich wirklich bis zum Schluss warten?</summary>
+        <div>
+          <p>Nein. Du darfst auch nach jedem Termin oder monatlich abrechnen, das ist deine Entscheidung und gehört in die Honorarvereinbarung. Monatlich abrechnen kostet dich etwas mehr Schreibarbeit, bringt das Geld aber deutlich früher.</p>
+          <p>Bei Privatpatient:innen hat eine Sammelrechnung am Ende einen praktischen Vorteil: die Einreichung bei der Versicherung wird für deine Patient:innen einfacher. Sprich es beim ersten Termin an, dann gibt es später keine Überraschung.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============ 5 · SICHERN ============ -->
+    <section class="sheet">
+      <p class="eyebrow">5 · Sichern</p>
+      <h2>Als PDF speichern</h2>
+      <p class="hero-cta">
+        <a class="btn" id="pdf" href="#">Als PDF speichern</a>
+        <a class="btn ghost" id="reset" href="#">Zurücksetzen</a>
+      </p>
+    </section>
+
+    <section class="sheet">
+      <h2>Und in echten Monatszahlen?</h2>
+      <p>Der Monats-Rechner rechnet mit deinen tatsächlichen Terminen statt mit einer Planung.</p>
+      <p class="hero-cta">
+        <a class="btn" href="monatsrechner.html">Monat berechnen</a>
+        <a class="btn ghost" href="gehaltsrechner.html">Gehalt &amp; Stunden</a>
+      </p>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Keine Steuer- oder Rechtsberatung.<br>Fragen? <a href="mailto:info@physiotherapie-grausam.com">info@physiotherapie-grausam.com</a><br><a href="../">Startseite</a> · <a href="fahrplan.html">Fahrplan</a></span>
+    <span>
+      <a href="../impressum.html">Impressum</a> ·
+      <a href="../datenschutz.html">Datenschutz</a> ·
+      <a href="../agb.html">AGB</a> ·
+      <a href="../widerruf.html">Widerruf</a>
+    </span>
+  </footer>
+</div>
+
+<div id="druck" aria-hidden="true"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var KEY = 'physionebenbei-planung';
+  var $ = function(id){ return document.getElementById(id); };
+  var eur = function(n){
+    return isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
+  };
+  var eur0 = function(n){
+    return isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
+  };
+  var val = function(id){ return parseFloat($(id).value) || 0; };
+  var FELDER = ['preis','wegegeld','dauer','fahrzeit','km','kmsatz','doku','fix','satz'];
+
+  var stand = { frequenz:4, patienten:3, rezept:6 };
+
+  /* Minuten hübsch ausgeben: 95 wird zu "1 Std 35 Min" */
+  function zeit(min){
+    min = Math.round(min);
+    if (min < 60) return min + ' Min';
+    var s = Math.floor(min / 60), r = min % 60;
+    return s + ' Std' + (r ? ' ' + r + ' Min' : '');
+  }
+  function stunden(min){
+    return (min / 60).toLocaleString('de-DE', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' Std';
+  }
+
+  function werte(){
+    var einnahme   = val('preis') + val('wegegeld');
+    var fahrtkosten = val('km') * val('kmsatz');
+    var zeitJeBesuch = val('dauer') + val('fahrzeit') + val('doku');
+    var besuche = stand.patienten * stand.frequenz;
+
+    var umsatz = einnahme * besuche;
+    var fahrt  = fahrtkosten * besuche;
+    var gewinn = umsatz - fahrt - val('fix');
+    var ruecklage = Math.max(0, gewinn * val('satz') / 100);
+    var bleibt = gewinn - ruecklage;
+    var minutenMonat = zeitJeBesuch * besuche;
+
+    return {
+      einnahme: einnahme,
+      fahrtkosten: fahrtkosten,
+      nachFahrt: einnahme - fahrtkosten,
+      zeitJeBesuch: zeitJeBesuch,
+      proStunde: zeitJeBesuch > 0 ? (einnahme - fahrtkosten) / (zeitJeBesuch / 60) : 0,
+      besuche: besuche,
+      umsatz: umsatz,
+      fahrt: fahrt,
+      gewinn: gewinn,
+      ruecklage: ruecklage,
+      bleibt: bleibt,
+      minutenMonat: minutenMonat,
+      /* Ein Monat hat im Schnitt 4,345 Wochen */
+      minutenWoche: minutenMonat / 4.345,
+      jahr: umsatz * 12,
+      effektiv: minutenMonat > 0 ? bleibt / (minutenMonat / 60) : 0
+    };
+  }
+
+  function rasterZeichnen(w){
+    var box = $('raster'), h = '', zeigen = Math.min(stand.patienten, 6);
+    for (var i = 0; i < zeigen; i++){
+      var punkte = '';
+      for (var j = 0; j < stand.frequenz; j++) punkte += '<span class="punkt"></span>';
+      h += '<div class="zeile"><span class="name">Patient ' + (i+1) + '</span>' +
+           '<span class="punkte">' + punkte + '</span>' +
+           '<span class="anzahl">' + stand.frequenz + '×</span></div>';
+    }
+    if (stand.patienten > zeigen){
+      h += '<div class="zeile"><span class="name"></span><span class="rest">und ' +
+           (stand.patienten - zeigen) + ' weitere mit je ' + stand.frequenz + ' Terminen</span></div>';
+    }
+    box.innerHTML = h;
+  }
+
+  function ampel(w){
+    var k = $('ampel'), t = $('ampel_titel'), p = $('ampel_text');
+    var jahr = w.jahr;
+    var farbe, titel, text;
+    if (jahr <= 25000 * 0.7){
+      farbe = '#34D399';
+      titel = 'Kleinunternehmer-Grenze: reichlich Luft';
+      text = 'Hochgerechnet ' + eur0(jahr) + ' im Jahr. Die Grenze von 25.000 € ist weit weg.';
+    } else if (jahr <= 25000){
+      farbe = '#FBBF24';
+      titel = 'Kleinunternehmer-Grenze: wird eng';
+      text = 'Hochgerechnet ' + eur0(jahr) + ' im Jahr, das sind ' +
+             Math.round(jahr / 25000 * 100) + ' Prozent der Grenze von 25.000 €. ' +
+             'Behalte den Umsatz im Blick, damit dich der Wechsel nicht überrascht.';
+    } else {
+      farbe = 'var(--mark)';
+      titel = 'Kleinunternehmer-Grenze überschritten';
+      text = 'Hochgerechnet ' + eur0(jahr) + ' im Jahr, also über 25.000 €. ' +
+             'Für Heilbehandlungen nach § 4 Nr. 14 UStG ändert das nichts. ' +
+             'Sobald du aber Training, Wellness oder Coaching anbietest, wird davon Umsatzsteuer fällig.';
+    }
+    k.style.borderColor = farbe;
+    t.style.color = farbe;
+    t.textContent = titel;
+    p.textContent = text;
+  }
+
+  function rezept(w){
+    var termine = stand.rezept;
+    var monate = stand.frequenz > 0 ? termine / stand.frequenz : 0;
+    var wochen = monate * 4.345;
+    var summe = w.einnahme * termine;
+    var minuten = w.zeitJeBesuch * termine;
+
+    $('k_laufzeit').textContent = monate > 0
+      ? monate.toLocaleString('de-DE', {maximumFractionDigits:1}) + ' Monate'
+      : '–';
+    $('k_laufzeit_u').textContent = termine + ' Termine bei ' + stand.frequenz +
+      ' pro Monat, das sind rund ' + Math.round(wochen) + ' Wochen';
+    $('k_rezeptsumme').textContent = eur(summe);
+    $('k_rezeptsumme_u').textContent = termine + ' × ' + eur(w.einnahme);
+    $('k_rezeptzeit').textContent = stunden(minuten);
+
+    var tage = Math.round(wochen * 7) + 14;
+    $('k_erstgeld').textContent = 'Tag ' + tage;
+    $('cashflow').textContent =
+      'Wenn du erst am Ende des Rezepts abrechnest und 14 Tage Zahlungsziel gibst, ' +
+      'liegen zwischen dem ersten Termin und dem Geldeingang etwa ' + tage + ' Tage. ' +
+      'In dieser Zeit hast du bereits ' + stunden(minuten) + ' gearbeitet und ' +
+      eur(w.fahrtkosten * termine) + ' an Fahrtkosten ausgelegt.';
+  }
+
+  function rechne(){
+    var w = werte();
+
+    $('k_ein').textContent = eur(w.einnahme);
+    $('k_ein_u').textContent = eur(val('preis')) + ' Behandlung' +
+      (val('wegegeld') ? ' plus ' + eur(val('wegegeld')) + ' Wegegeld' : '');
+    $('k_nachfahrt').textContent = eur(w.nachFahrt);
+    $('k_nachfahrt_u').textContent = 'abzüglich ' + eur(w.fahrtkosten) + ' für ' +
+      val('km').toLocaleString('de-DE') + ' km';
+    $('k_zeit').textContent = zeit(w.zeitJeBesuch);
+    $('k_zeit_u').textContent = val('dauer') + ' Min Behandlung, ' + val('fahrzeit') +
+      ' Min Fahrt, ' + val('doku') + ' Min Doku';
+    $('k_stunde').textContent = eur(w.proStunde);
+
+    $('k_besuche').textContent = w.besuche + '';
+    $('k_besuche_u').textContent = stand.patienten + ' Patient:innen × ' + stand.frequenz + ' Termine';
+    $('k_wochen').textContent = stunden(w.minutenWoche);
+
+    $('o_umsatz').textContent = eur(w.umsatz);
+    $('o_fahrt').textContent = eur(w.fahrt);
+    $('o_km_micro').textContent = (val('km') * w.besuche).toLocaleString('de-DE') + ' km im Monat';
+    $('o_gewinn').textContent = eur(w.gewinn);
+    $('o_bleibt').textContent = eur(w.bleibt);
+    $('k_jahr').textContent = eur0(w.jahr);
+    $('k_effektiv').textContent = eur(w.effektiv);
+
+    rasterZeichnen(w);
+    ampel(w);
+    rezept(w);
+    speichern();
+  }
+
+  /* ---------- Bedienung ---------- */
+  function gruppe(id, schluessel, feld){
+    $(id).addEventListener('click', function(e){
+      var b = e.target.closest('button');
+      if (!b) return;
+      Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      stand[schluessel] = parseInt(b.getAttribute(feld), 10);
+      rechne();
+    });
+  }
+  gruppe('frequenz', 'frequenz', 'data-f');
+  gruppe('rezept', 'rezept', 'data-r');
+
+  $('patienten').addEventListener('input', function(){
+    stand.patienten = parseInt(this.value, 10) || 1;
+    $('p_zahl').textContent = stand.patienten;
+    rechne();
+  });
+
+  FELDER.forEach(function(f){ $(f).addEventListener('input', rechne); });
+
+  /* ---------- Speichern ---------- */
+  function speichern(){
+    var d = { stand: stand, felder: {} };
+    FELDER.forEach(function(f){ d.felder[f] = $(f).value; });
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){}
+  }
+  function laden(){
+    try {
+      var d = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (!d) return;
+      if (d.stand) stand = Object.assign(stand, d.stand);
+      if (d.felder) FELDER.forEach(function(f){
+        if (d.felder[f] !== undefined) $(f).value = d.felder[f];
+      });
+      $('patienten').value = stand.patienten;
+      $('p_zahl').textContent = stand.patienten;
+      [['frequenz','frequenz','data-f'], ['rezept','rezept','data-r']].forEach(function(g){
+        Array.prototype.forEach.call($(g[0]).querySelectorAll('button'), function(b){
+          b.setAttribute('aria-pressed',
+            parseInt(b.getAttribute(g[2]), 10) === stand[g[1]] ? 'true' : 'false');
+        });
+      });
+    } catch(e){}
+  }
+
+  $('reset').addEventListener('click', function(e){
+    e.preventDefault();
+    if (!confirm('Alle Eingaben auf dieser Seite zurücksetzen?')) return;
+    try { localStorage.removeItem(KEY); } catch(e2){}
+    location.reload();
+  });
+
+  /* ---------- Druckansicht ---------- */
+  $('pdf').addEventListener('click', function(e){
+    e.preventDefault();
+    var w = werte();
+    var reihe = function(a, b){ return '<tr><td>' + a + '</td><td class="r">' + b + '</td></tr>'; };
+    $('druck').innerHTML =
+      '<h1>Auslastungs-Planung</h1>' +
+      '<p class="sub">Erstellt am ' + new Date().toLocaleDateString('de-DE') + ' mit PhysioNebenbei</p>' +
+      '<h2>Ein Besuch</h2><table>' +
+        reihe('Behandlung', eur(val('preis'))) +
+        reihe('Wegegeld', eur(val('wegegeld'))) +
+        reihe('Fahrtkosten (' + val('km').toLocaleString('de-DE') + ' km × ' + eur(val('kmsatz')) + ')', '&minus; ' + eur(w.fahrtkosten)) +
+        reihe('<strong>Bleibt je Besuch</strong>', '<strong>' + eur(w.nachFahrt) + '</strong>') +
+        reihe('Zeit je Besuch', zeit(w.zeitJeBesuch)) +
+        reihe('Verdienst je Stunde', eur(w.proStunde)) +
+      '</table>' +
+      '<h2>Planung</h2><table>' +
+        reihe('Patient:innen gleichzeitig', stand.patienten) +
+        reihe('Termine je Patient:in im Monat', stand.frequenz) +
+        reihe('<strong>Besuche im Monat</strong>', '<strong>' + w.besuche + '</strong>') +
+        reihe('Zeitaufwand pro Woche', stunden(w.minutenWoche)) +
+      '</table>' +
+      '<h2>Monat</h2><table>' +
+        reihe('Einnahmen', eur(w.umsatz)) +
+        reihe('Fahrtkosten', '&minus; ' + eur(w.fahrt)) +
+        reihe('Weitere Ausgaben', '&minus; ' + eur(val('fix'))) +
+        reihe('Gewinn vor Steuer', eur(w.gewinn)) +
+        reihe('Rücklage ' + val('satz') + ' %', '&minus; ' + eur(w.ruecklage)) +
+        reihe('<strong>Bleibt dir</strong>', '<strong>' + eur(w.bleibt) + '</strong>') +
+        reihe('Einnahmen hochgerechnet aufs Jahr', eur0(w.jahr)) +
+      '</table>' +
+      '<h2>' + stand.rezept + 'er Rezept</h2><table>' +
+        reihe('Laufzeit', (stand.rezept / stand.frequenz).toLocaleString('de-DE', {maximumFractionDigits:1}) + ' Monate') +
+        reihe('Rechnungsbetrag', eur(w.einnahme * stand.rezept)) +
+        reihe('Arbeitszeit', stunden(w.zeitJeBesuch * stand.rezept)) +
+      '</table>' +
+      '<p class="fuss">Eine Planung, keine Prognose und keine Steuerberatung. ' +
+      'Die Kleinunternehmer-Grenze liegt bei 25.000 € Vorjahresumsatz.</p>';
+    window.print();
+  });
+
+  laden();
+  rechne();
+})();
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+<script src="../physio-nebenbei/zahlenfeld.js" defer></script>
+</body>
+</html>

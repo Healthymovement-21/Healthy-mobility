@@ -26,7 +26,6 @@ physio-nebenbei/
   base.css                     Design für alle Seiten
   zahlenfeld.js                Ziffernraster statt Handytastatur auf Touch-Geräten
   fahrplan.html                Leseprobe: Kapitelliste plus Kapitel 1
-  demo-rechner.html            Kurzfassung des Rechners
   vorlagen-generator.py        erzeugt die PDF-Vorlagen neu
 
 NUR MIT LINK

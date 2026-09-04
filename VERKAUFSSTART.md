@@ -125,7 +125,7 @@ finden.
 | Seite | Was sichtbar ist |
 |---|---|
 | `physio-nebenbei/fahrplan.html` | Kapitelübersicht plus Kapitel 1 komplett |
-| `physio-nebenbei/demo-rechner.html` | eine Behandlungsart, Umsatz und Stundensatz |
+| Startseite, Abschnitt „Rechner" | eine Behandlungsart, Umsatz und Stundensatz |
 
 **Was du beim Zahlungsanbieter eintragen musst:** als Weiterleitung nach
 erfolgreicher Zahlung diese Adresse:
@@ -264,7 +264,6 @@ physio-nebenbei/
   base.css                      Design für die ganze Seite
   zahlenfeld.js                 Ziffernraster statt Handytastatur
   fahrplan.html                 LESEPROBE: Kapitelliste plus Kapitel 1
-  demo-rechner.html             KURZFASSUNG: eine Behandlungsart
   img/, logo.svg, icon-*.png    Bilder und Symbole
   vorlagen-generator.py         erzeugt die PDF-Vorlagen neu
 

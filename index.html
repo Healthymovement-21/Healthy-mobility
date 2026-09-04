@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PhysioNebenbei — Nebenberuflich Privatpatient:innen behandeln</title>
 <meta name="description" content="Rechner, Fahrplan und Vertragsvorlagen für Physiotherapeut:innen, die nebenberuflich Selbstzahler:innen behandeln. Einmalig 29 €.">
-<meta name="theme-color" content="#0E6B5C">
+<meta name="theme-color" content="#050B12">
 
 <!-- Vorschau beim Teilen in WhatsApp, LinkedIn, Facebook -->
 <meta property="og:type" content="website">
@@ -24,6 +24,7 @@
 <meta name="twitter:image" content="https://healthymovement-21.github.io/Healthy-mobility/physio-nebenbei/img/og-vorschau.png">
 
 <link rel="stylesheet" href="physio-nebenbei/base.css">
+<link rel="stylesheet" href="landing.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="physio-nebenbei/apple-touch-icon.png">
 <link rel="icon" href="physio-nebenbei/logo.svg" type="image/svg+xml">
@@ -34,115 +35,408 @@
 <script defer data-domain="DEINE-DOMAIN.de" src="https://plausible.io/js/script.outbound-links.js"></script>
 -->
 </head>
-<body>
+<body class="lp" id="top">
 
-<div class="page">
-  <a class="brand" href="./">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
-    <span>Physio<b>Nebenbei</b></span>
-  </a>
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+      <span>Physio<b>Nebenbei</b></span>
+    </a>
 
-  <div class="doc">
+    <ul class="nav-links">
+      <li><a href="#top">Start</a></li>
+      <li><a href="#rechner">Rechner</a></li>
+      <li><a href="#produkt">Produkt</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
 
-    <!-- HERO -->
-    <section class="sheet hero">
-      <h1>Nebenbei Privatpatient:innen behandeln.</h1>
-      <p class="lede">Anmeldung, Preise, Rechnung, Vorlagen. In der richtigen Reihenfolge. Ohne Kassenzulassung.</p>
-      <div class="hero-cta">
-        <a class="btn" href="#kaufen" data-checkout-jump>Paket sichern — 29 €</a>
-        <a class="btn ghost" href="physio-nebenbei/werkzeuge.html">Rechner testen</a>
+    <a class="btn" href="#kaufen" data-checkout-jump>Jetzt starten →</a>
+
+    <button class="nav-burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navsheet">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="nav-sheet" id="navsheet" hidden>
+  <a href="#top">Start</a>
+  <a href="#rechner">Rechner</a>
+  <a href="#produkt">Produkt</a>
+  <a href="#faq">FAQ</a>
+  <a href="#kaufen">Jetzt starten →</a>
+</nav>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-light" aria-hidden="true"></div>
+
+    <!-- Bewegungsbahnen: das Markenzeichen (Bogen + Punkt) als abstrakte,
+         sehr leise Hintergrundform. Keine Anatomie-Illustration. -->
+    <svg class="hero-arcs" viewBox="0 0 900 720" aria-hidden="true">
+      <defs>
+        <linearGradient id="a1" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#35D6E8" stop-opacity="0"/>
+          <stop offset=".55" stop-color="#35D6E8" stop-opacity=".5"/>
+          <stop offset="1" stop-color="#7C6CFF" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="a2" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#7C6CFF" stop-opacity="0"/>
+          <stop offset=".6" stop-color="#35D6E8" stop-opacity=".28"/>
+          <stop offset="1" stop-color="#35D6E8" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="M60 660 A 600 600 0 0 1 760 60"  stroke="url(#a1)" stroke-width="1.4"/>
+      <path d="M150 690 A 520 520 0 0 1 780 170" stroke="url(#a2)" stroke-width="1.1"/>
+      <path d="M250 700 A 430 430 0 0 1 800 300" stroke="url(#a2)" stroke-width=".9"/>
+      <circle cx="760" cy="60" r="4" fill="#35D6E8" opacity=".8"/>
+    </svg>
+
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Für angestellte Physiotherapeut:innen</p>
+        <h1 class="reveal" data-d="1">
+          <span>Deine eigenen</span>
+          <span>Privatpatient:innen.</span>
+          <span class="glow">Neben deinem Job.</span>
+        </h1>
+        <p class="sub reveal" data-d="2">
+          Alles Wichtige, um Privatpatient:innen professionell zu behandeln,
+          deine Leistungen zu kalkulieren und dir nebenbei ein zusätzliches
+          Einkommen aufzubauen.
+        </p>
+        <div class="cta reveal" data-d="3">
+          <a class="btn" href="#kaufen" data-checkout-jump>Jetzt starten →</a>
+          <a class="btn ghost" href="#rechner">Rechner ansehen</a>
+        </div>
       </div>
-      <p class="micro" style="margin-top:16px">Einmalzahlung · Sofort-Download · Sichere Zahlung über Digistore24</p>
-    </section>
 
-    <!-- PROBLEM -->
-    <section class="sheet">
-      <p class="eyebrow">Das Problem</p>
-      <h2>Zuerst kommen 30 offene Fragen.</h2>
-      <ul class="checklist">
-        <li>Gewerbe oder freiberuflich?</li>
-        <li>Welche Versicherung, und was kostet sie?</li>
-        <li>Wie schreibe ich eine Rechnung, die vor dem Finanzamt besteht?</li>
-        <li>Was verlange ich, ohne mich unter Wert zu verkaufen?</li>
-        <li>Woher kommen die ersten zahlenden Patient:innen?</li>
+      <!-- Produktbühne: der Rechner als schwebendes UI-Panel -->
+      <div class="hero-stage reveal" data-d="2">
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">Privatpatienten-Rechner</span>
+            <span class="panel-tag">Beispiel</span>
+          </div>
+
+          <div class="panel-rows">
+            <div class="panel-row">
+              <b>KG<span class="m">Krankengymnastik · 30 Min.</span></b>
+              <span class="v">10 × 45,00 €</span>
+            </div>
+            <div class="panel-row">
+              <b>MT<span class="m">Manuelle Therapie · 30 Min.</span></b>
+              <span class="v">5 × 50,00 €</span>
+            </div>
+            <div class="panel-row">
+              <b>MLD 30<span class="m">Lymphdrainage · 30 Min.</span></b>
+              <span class="v">5 × 42,00 €</span>
+            </div>
+          </div>
+
+          <div class="panel-out">
+            <div>
+              <span class="lab">Monatlicher Umsatz</span>
+              <div class="panel-sum">910 €</div>
+            </div>
+            <div class="panel-side">
+              <span class="lab">Behandlungszeit</span>
+              <div class="num">10,0 h</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chip chip-a">
+          <span class="k">Umsatz / Stunde</span>
+          <span class="n"><em>91 €</em></span>
+        </div>
+        <div class="chip chip-b">
+          <span class="k">Termine im Monat</span>
+          <span class="n">20</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust-Zeile: keine erfundenen Zahlen, keine Fremdlogos -->
+    <div class="wrap">
+      <div class="trustline reveal">
+        <span class="lead">Entwickelt für Physiotherapeut:innen in Deutschland</span>
+        <ul>
+          <li>Praxisnah</li>
+          <li>Einfach</li>
+          <li>Direkt einsetzbar</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow reveal">Das Problem</p>
+      <h2 class="big reveal" data-d="1">
+        <span>Privatpatient:innen behandeln</span>
+        <span class="dim">klingt einfach.</span>
+      </h2>
+      <p class="say reveal" data-d="2">In der Praxis entstehen schnell viele Fragen.</p>
+
+      <ul class="asks">
+        <li class="reveal"><i>01</i><span>Was darf ich berechnen?</span></li>
+        <li class="reveal"><i>02</i><span>Was kann ich verlangen?</span></li>
+        <li class="reveal"><i>03</i><span>Welche Unterlagen brauche ich?</span></li>
+        <li class="reveal"><i>04</i><span>Was bleibt am Ende übrig?</span></li>
+        <li class="reveal"><i>05</i><span>Wie viel geht neben meinem Hauptjob?</span></li>
       </ul>
-    </section>
+    </div>
+  </section>
 
-    <!-- PAKET -->
-    <section class="sheet" id="inhalt">
-      <p class="eyebrow">Das Paket</p>
-      <h2>Vier Dateien.</h2>
-      <ul class="deliverables">
-        <li>
-          <div class="d-head">
-            <span class="d-icon word" aria-hidden="true">W</span>
-            <div><span class="d-name">Fahrplan</span><span class="d-type">WORD-DATEI</span></div>
-          </div>
-          <div class="d-desc">10 Kapitel bis zum ersten Termin, frei anpassbar.</div>
-          <img class="vorschau" src="physio-nebenbei/img/vorschau-fahrplan.png"
-               alt="Seite aus dem Word-Fahrplan: Kapitel 2 zu Anmeldung und Formalitäten mit nummerierter Schrittfolge von der Anzeige beim Arbeitgeber über ELSTER bis zur BGW-Anmeldung"
-               loading="lazy" width="900" height="1180">
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon excel" aria-hidden="true">X</span>
-            <div><span class="d-name">Rechner</span><span class="d-type">EXCEL-DATEI</span></div>
-          </div>
-          <div class="d-desc">Preise, Steuerrücklage, EÜR, Dokumentation. Formeln fertig.</div>
-          <img class="vorschau" src="physio-nebenbei/img/vorschau-rechner.png"
-               alt="Excel-Tabellenblatt Preis-Kalkulation mit ausgefüllten Beispielwerten: 500 Euro Wunscheinkommen ergeben einen nötigen Preis von 45,62 Euro pro Behandlung"
-               loading="lazy" width="920" height="390">
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
-            <div><span class="d-name">Honorarvereinbarung</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Muster zum Ausfüllen und unterschreiben lassen.</div>
-          <img class="vorschau" src="physio-nebenbei/img/vorschau-vertrag.png"
-               alt="Erste Seite der Honorarvereinbarung mit Feldern für Vertragsparteien, Honorar pro Behandlungseinheit, Zahlungsziel und Ausfallhonorar"
-               loading="lazy" width="637" height="900">
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
-            <div><span class="d-name">Behandlungsvertrag</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Muster zum Ausfüllen und unterschreiben lassen.</div>
-          <img class="vorschau" src="physio-nebenbei/img/vorschau-behandlungsvertrag.png"
-               alt="Erste Seite des Behandlungsvertrags mit Feldern für Vertragsparteien, Behandlungsziel, Aufklärung und Einwilligung sowie Mitwirkungspflichten"
-               loading="lazy" width="637" height="900">
-        </li>
-      </ul>
-      <p class="micro">Word, Excel, PDF — läuft auf jedem Gerät. Keine App, kein Konto.</p>
-    </section>
-
-    <!-- KOSTENLOS -->
-    <section class="sheet">
-      <p class="eyebrow">Vorher testen</p>
-      <h2>Alles kostenlos ansehen.</h2>
-      <p>Fahrplan lesen und Rechner nutzen kostet nichts. Gekauft werden die Dateien zum Mitnehmen.</p>
-      <p class="hero-cta">
-        <a class="btn ghost" href="physio-nebenbei/fahrplan.html">Fahrplan</a>
-        <a class="btn ghost" href="physio-nebenbei/monatsrechner.html">Monats-Rechner</a>
-        <a class="btn ghost" href="physio-nebenbei/gehaltsrechner.html">Gehalt &amp; Stunden</a>
+  <!-- ============ ALLES AN EINEM ORT ============ -->
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow reveal">Alles an einem Ort</p>
+      <h2 class="big reveal" data-d="1">
+        <span>Weniger suchen.</span>
+        <span class="dim">Mehr machen.</span>
+      </h2>
+      <p class="say reveal" data-d="2">
+        PhysioNebenbei bündelt die wichtigsten Werkzeuge, Vorlagen und
+        Informationen für deinen Start mit Privatpatient:innen.
       </p>
-    </section>
 
-    <!-- FÜR WEN -->
-    <section class="sheet">
-      <p class="eyebrow">Passt das?</p>
-      <div class="split">
-        <div>
-          <h3>Ja, wenn …</h3>
+      <div class="pillars">
+        <div class="pillar reveal">
+          <span class="no">01</span>
+          <span class="ti">Verstehen</span>
+          <p>Klare Informationen statt stundenlanger Recherche.</p>
+        </div>
+        <div class="pillar reveal" data-d="1">
+          <span class="no">02</span>
+          <span class="ti">Berechnen</span>
+          <p>Erkenne sofort, was deine Behandlungen wert sind.</p>
+        </div>
+        <div class="pillar reveal" data-d="2">
+          <span class="no">03</span>
+          <span class="ti">Vorbereiten</span>
+          <p>Professionelle Vorlagen für deine Patient:innen.</p>
+        </div>
+        <div class="pillar reveal" data-d="3">
+          <span class="no">04</span>
+          <span class="ti">Starten</span>
+          <p>Strukturiert in deine nebenberufliche Tätigkeit starten.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECHNER ============ -->
+  <section class="band" id="rechner">
+    <div class="wrap">
+      <p class="eyebrow reveal">Rechner</p>
+      <h2 class="big reveal" data-d="1">
+        <span>Was kannst du</span>
+        <span class="dim">damit verdienen?</span>
+      </h2>
+      <p class="say reveal" data-d="2">
+        Stelle deine Behandlungen zusammen und sieh sofort, was daraus werden kann.
+      </p>
+
+      <div class="calcwrap">
+        <div class="calcbox reveal">
+          <div class="crow">
+            <span class="nm">KG<em>Krankengymnastik · 30 Min.</em></span>
+            <span class="stepper">
+              <button type="button" data-step="kg" data-dir="-1" aria-label="KG weniger">−</button>
+              <input type="number" id="n_kg" value="10" min="0" max="200" step="1" inputmode="numeric" aria-label="Anzahl KG-Termine">
+              <button type="button" data-step="kg" data-dir="1" aria-label="KG mehr">+</button>
+            </span>
+            <span class="priceinp">
+              <input type="number" id="p_kg" value="45" min="0" max="500" step="1" inputmode="decimal" aria-label="Preis pro KG-Behandlung">
+              <span>€</span>
+            </span>
+          </div>
+
+          <div class="crow">
+            <span class="nm">MT<em>Manuelle Therapie · 30 Min.</em></span>
+            <span class="stepper">
+              <button type="button" data-step="mt" data-dir="-1" aria-label="MT weniger">−</button>
+              <input type="number" id="n_mt" value="5" min="0" max="200" step="1" inputmode="numeric" aria-label="Anzahl MT-Termine">
+              <button type="button" data-step="mt" data-dir="1" aria-label="MT mehr">+</button>
+            </span>
+            <span class="priceinp">
+              <input type="number" id="p_mt" value="50" min="0" max="500" step="1" inputmode="decimal" aria-label="Preis pro MT-Behandlung">
+              <span>€</span>
+            </span>
+          </div>
+
+          <div class="crow">
+            <span class="nm">MLD 30<em>Lymphdrainage · 30 Min.</em></span>
+            <span class="stepper">
+              <button type="button" data-step="mld" data-dir="-1" aria-label="MLD weniger">−</button>
+              <input type="number" id="n_mld" value="5" min="0" max="200" step="1" inputmode="numeric" aria-label="Anzahl MLD-Termine">
+              <button type="button" data-step="mld" data-dir="1" aria-label="MLD mehr">+</button>
+            </span>
+            <span class="priceinp">
+              <input type="number" id="p_mld" value="42" min="0" max="500" step="1" inputmode="decimal" aria-label="Preis pro MLD-Behandlung">
+              <span>€</span>
+            </span>
+          </div>
+
+          <div class="quick">
+            <span>Termine im Monat</span>
+            <button type="button" data-total="10">10</button>
+            <button type="button" data-total="20">20</button>
+            <button type="button" data-total="30">30</button>
+            <button type="button" data-total="40">40</button>
+          </div>
+        </div>
+
+        <div class="outbox reveal" data-d="1">
+          <span class="lab">Monatlicher Umsatz</span>
+          <div class="bignum" id="o_umsatz">910 €</div>
+
+          <div class="outrow">
+            <span class="k">Behandlungszeit</span>
+            <span class="n" id="o_zeit">10,0 h</span>
+          </div>
+          <div class="outrow">
+            <span class="k">Umsatz / Stunde</span>
+            <span class="n" id="o_std">91 €</span>
+          </div>
+          <div class="outrow">
+            <span class="k">Termine</span>
+            <span class="n" id="o_termine">20</span>
+          </div>
+
+          <p class="outnote">
+            Preise sind frei anpassbare Startwerte, keine verbindliche
+            Gebührenordnung — für private Physiotherapie gibt es keine.
+            Umsatz ist nicht Gewinn: Steuer, Versicherung und Fahrtzeit
+            gehen davon ab.
+          </p>
+          <p class="outnote">
+            <a href="physio-nebenbei/monatsrechner.html">Ausführlicher Monats-Rechner →</a><br>
+            Mit Kombi-Behandlungen, Hausbesuchen, Selbstzahler-Preisen und PDF-Export.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRODUKT ============ -->
+  <section class="band" id="produkt">
+    <div class="wrap">
+      <p class="eyebrow reveal">Das Paket</p>
+      <h2 class="big reveal" data-d="1">
+        <span>Dein Werkzeugkasten</span>
+        <span class="dim">für Privatpatient:innen.</span>
+      </h2>
+
+      <div class="shelf">
+
+        <!-- 01 Rechner -->
+        <div class="piece reveal">
+          <div class="txt">
+            <span class="no">01 — RECHNER</span>
+            <h3>Zwei Rechner, die rechnen, was du wirklich verdienst.</h3>
+            <p>
+              Monatsumsatz aus deinen Behandlungen, inklusive Kombinationen und
+              Hausbesuchen. Dazu ein Rechner für Gehalt und Stunden, der dir
+              zeigt, was neben deinem Hauptjob noch reinpasst — mit Ampel für
+              die Krankenkassen-Grenze.
+            </p>
+            <p class="go">
+              <a class="btn ghost" href="physio-nebenbei/monatsrechner.html">Rechner öffnen →</a>
+            </p>
+          </div>
+          <div class="art">
+            <img class="tilt" src="physio-nebenbei/img/vorschau-rechner.png"
+                 alt="Excel-Tabellenblatt Preis-Kalkulation mit ausgefüllten Beispielwerten: 500 Euro Wunscheinkommen ergeben einen nötigen Preis von 45,62 Euro pro Behandlung"
+                 loading="lazy" width="920" height="390">
+          </div>
+        </div>
+
+        <!-- 02 Vorlagen -->
+        <div class="piece flip reveal">
+          <div class="txt">
+            <span class="no">02 — VORLAGEN</span>
+            <h3>Honorarvereinbarung, Behandlungsvertrag, Rechnung.</h3>
+            <p>
+              Fertige Muster zum Ausfüllen und Unterschreiben lassen. Dazu eine
+              Rechnungsvorlage mit allen Pflichtangaben nach § 14 UStG und dem
+              Hinweis auf die Steuerbefreiung für Heilbehandlungen.
+            </p>
+            <p class="go">
+              <a class="btn ghost" href="#kaufen" data-checkout-jump>Ins Paket sehen →</a>
+            </p>
+          </div>
+          <div class="art">
+            <div class="stack">
+              <img src="physio-nebenbei/img/vorschau-vertrag.png"
+                   alt="Erste Seite der Honorarvereinbarung mit Feldern für Vertragsparteien, Honorar pro Behandlungseinheit, Zahlungsziel und Ausfallhonorar"
+                   loading="lazy" width="637" height="900">
+              <img src="physio-nebenbei/img/vorschau-behandlungsvertrag.png"
+                   alt="Erste Seite des Behandlungsvertrags mit Feldern für Vertragsparteien, Behandlungsziel, Aufklärung und Einwilligung sowie Mitwirkungspflichten"
+                   loading="lazy" width="637" height="900">
+              <img src="physio-nebenbei/img/vorschau-fahrplan.png"
+                   alt="Seite aus dem Word-Fahrplan mit der Schrittfolge von der Anzeige beim Arbeitgeber über ELSTER bis zur BGW-Anmeldung"
+                   loading="lazy" width="900" height="1180">
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 Anleitungen -->
+        <div class="piece reveal">
+          <div class="txt">
+            <span class="no">03 — ANLEITUNG</span>
+            <h3>Zehn Kapitel in der Reihenfolge, in der es drankommt.</h3>
+            <p>
+              Vom Blick in den Arbeitsvertrag bis zur ersten Rechnung. Als
+              Word-Datei zum Anpassen, plus dieselbe Anleitung kostenlos zum
+              Lesen auf der Fahrplan-Seite.
+            </p>
+            <p class="go">
+              <a class="btn ghost" href="physio-nebenbei/fahrplan.html">Fahrplan lesen →</a>
+            </p>
+          </div>
+          <div class="art">
+            <ol class="flow">
+              <li>Arbeitsvertrag prüfen, Nebentätigkeit anzeigen</li>
+              <li>Beim Finanzamt über ELSTER anmelden</li>
+              <li>BGW-Anmeldung und Berufshaftpflicht</li>
+              <li>Preise kalkulieren, Steuerrücklage einplanen</li>
+              <li>Rechnung und Dokumentation vorbereiten</li>
+              <li>Erste Termine, erste Rechnung</li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PASST DAS ============ -->
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow reveal">Passt das?</p>
+      <h2 class="big reveal" data-d="1">
+        <span>Für einen Fall gemacht.</span>
+        <span class="dim">Nicht für jeden.</span>
+      </h2>
+
+      <div class="fitgrid">
+        <div class="fitcol yes reveal">
+          <h3>Ja, wenn</h3>
           <ul>
             <li>du angestellt bist und nebenbei startest</li>
             <li>du Selbstzahler:innen behandelst</li>
             <li>du keine eigenen Räume mietest</li>
           </ul>
         </div>
-        <div>
-          <h3>Nein, wenn …</h3>
+        <div class="fitcol no reveal" data-d="1">
+          <h3>Nein, wenn</h3>
           <ul>
             <li>du eine volle Praxis mit Kassenzulassung willst</li>
             <li>du Personal einstellst</li>
@@ -150,45 +444,44 @@
           </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ÜBER MICH -->
-    <section class="sheet credibility">
-      <p class="eyebrow">Wer dahintersteckt</p>
-      <h2>Ich hab denselben Weg gerade hinter mir.</h2>
+  <!-- ============ WER DAHINTERSTECKT ============ -->
+  <section class="band-tight">
+    <div class="wrap">
+      <p class="eyebrow reveal">Wer dahintersteckt</p>
+      <h2 class="big reveal" data-d="1">
+        <span>Ich hab denselben Weg</span>
+        <span class="dim">gerade hinter mir.</span>
+      </h2>
       <!-- TODO: Platzhalter in eckigen Klammern durch echte Angaben ersetzen -->
-      <p>Ich bin [VORNAME NACHNAME], seit [JAHRESZAHL] Physiotherapeut:in und arbeite angestellt in [ORT ODER REGION]. Seit [JAHRESZAHL] behandle ich nebenberuflich Privatpatient:innen — angefangen hat das mit Freunden, Familie und Leuten aus dem Sportverein, der Rest kam über Weiterempfehlung.</p>
-      <p>Der Papierkram davor hat mich Wochen gekostet: Behördenseiten, Foren, Versicherungsvergleiche, widersprüchliche Tipps von Kolleg:innen. [EIN SATZ, WARUM DU DAS PAKET GEBAUT HAST — z. B. „Als mich die dritte Kollegin nach demselben Kram gefragt hat, hab ich alles aufgeschrieben."]</p>
-    </section>
+      <p class="say reveal" data-d="2">
+        Ich bin [VORNAME NACHNAME], seit [JAHRESZAHL] Physiotherapeut:in und
+        arbeite angestellt in [ORT ODER REGION]. Seit [JAHRESZAHL] behandle ich
+        nebenberuflich Privatpatient:innen — angefangen hat das mit Freunden,
+        Familie und Leuten aus dem Sportverein, der Rest kam über Weiterempfehlung.
+      </p>
+      <p class="say reveal" data-d="3">
+        Der Papierkram davor hat mich Wochen gekostet: Behördenseiten, Foren,
+        Versicherungsvergleiche, widersprüchliche Tipps von Kolleg:innen.
+        [EIN SATZ, WARUM DU DAS PAKET GEBAUT HAST — z. B. „Als mich die dritte
+        Kollegin nach demselben Kram gefragt hat, hab ich alles aufgeschrieben."]
+      </p>
+    </div>
+  </section>
 
-    <!-- TESTIMONIALS -->
-    <section class="sheet">
-      <p class="eyebrow">Rückmeldungen</p>
-      <h2>Was andere sagen.</h2>
-      <ul class="stimmen">
-        <!-- TODO: echtes Testimonial einsetzen -->
-        <li>
-          <p class="zitat">[EIN SATZ ERGEBNIS — z. B. „Zwei Abende statt vier Wochen, und die erste Rechnung war raus."]</p>
-          <p class="wer">[KÜRZEL ODER VORNAME], [ORT]</p>
-        </li>
-        <!-- TODO: echtes Testimonial einsetzen -->
-        <li>
-          <p class="zitat">[EIN SATZ ERGEBNIS]</p>
-          <p class="wer">[KÜRZEL ODER VORNAME], [ORT]</p>
-        </li>
-        <!-- TODO: echtes Testimonial einsetzen -->
-        <li>
-          <p class="zitat">[EIN SATZ ERGEBNIS]</p>
-          <p class="wer">[KÜRZEL ODER VORNAME], [ORT]</p>
-        </li>
-      </ul>
-      <p class="micro">Noch keine echten Rückmeldungen — diese Sektion wird ausgefüllt, sobald die ersten Käufer:innen berichtet haben.</p>
-    </section>
+  <!-- ============ KAUF ============ -->
+  <section class="band" id="kaufen">
+    <div class="wrap">
+      <p class="eyebrow reveal">Das Paket</p>
+      <h2 class="big reveal" data-d="1">
+        <span>Vier Dateien.</span>
+        <span class="dim">Einmal zahlen.</span>
+      </h2>
 
-    <!-- PREIS -->
-    <section class="sheet" id="kaufen">
-      <div class="price-box">
-        <div class="amount">29 €<small> einmalig</small></div>
+      <div class="buybox reveal" data-d="2">
+        <div class="amount">29 €<small>einmalig</small></div>
 
         <!-- Widerrufs-Zustimmung nach § 356 Abs. 5 BGB: ohne Häkchen
              ist der Kauf-Button gesperrt (siehe checkout.js). -->
@@ -200,69 +493,214 @@
         <a class="btn" href="#" data-checkout>Jetzt kaufen</a>
         <p class="micro warnung" id="checkout-hinweis" hidden></p>
 
-        <p class="micro" style="margin-top:4px">Die beiden Vertragsvorlagen sind <strong>Muster</strong> — lass sie vor dem ersten Einsatz anwaltlich oder vom Rechtsservice deines Berufsverbands prüfen.</p>
+        <p class="micro">
+          Die beiden Vertragsvorlagen sind <strong>Muster</strong> — lass sie vor
+          dem ersten Einsatz anwaltlich oder vom Rechtsservice deines
+          Berufsverbands prüfen.
+        </p>
 
         <ul class="trust">
-          <li>Sofort-Download nach der Zahlung</li>
+          <li>Word, Excel und zwei PDF, sofort nach der Zahlung</li>
           <li>Kein Abo, keine Folgekosten</li>
-          <li>Rechnung mit ausgewiesener USt. per Mail</li>
+          <li>Fahrplan und Rechner vorher kostenlos ansehen</li>
         </ul>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FAQ -->
-    <section class="sheet">
-      <p class="eyebrow">Fragen</p>
-      <div class="faq">
-        <div>
-          <p class="q">Warum zahlen, wenn alles kostenlos online steht?</p>
-          <p class="a">Für die Dateien: Word zum Anpassen, Excel mit Formeln, zwei Vertrags-PDFs zum Ausdrucken. Lesen kannst du vorher alles.</p>
-        </div>
-        <div>
-          <p class="q">Wie bekomme ich die Dateien?</p>
-          <p class="a">Direkt nach der Zahlung — Download-Seite plus E-Mail mit Rechnung und Link. Der Link läuft nicht ab.</p>
-        </div>
-        <div>
-          <p class="q">Kann ich widerrufen?</p>
-          <p class="a">Bei digitalen Dateien erlischt das Widerrufsrecht mit dem Start des Downloads, dem du vorher ausdrücklich zustimmst. Details in der <a href="widerruf.html">Widerrufsbelehrung</a>. Deshalb kannst du vorher alles kostenlos ansehen.</p>
-        </div>
-        <div>
-          <p class="q">Ersetzt das Steuer- oder Rechtsberatung?</p>
-          <p class="a">Nein. Orientierung und Vorlagen. Die Verträge sind Muster — vor dem ersten Einsatz anwaltlich prüfen lassen.</p>
-        </div>
+  <!-- ============ FAQ ============ -->
+  <section class="band" id="faq">
+    <div class="wrap">
+      <p class="eyebrow reveal">FAQ</p>
+      <h2 class="big reveal" data-d="1"><span>Noch Fragen?</span></h2>
+
+      <div class="acc reveal" data-d="2">
+        <details>
+          <summary>Warum zahlen, wenn alles kostenlos online steht?</summary>
+          <p class="ans">Für die Dateien: Word zum Anpassen, Excel mit fertigen Formeln, zwei Vertrags-PDF zum Ausdrucken. Lesen und rechnen kannst du vorher alles kostenlos.</p>
+        </details>
+        <details>
+          <summary>Wie bekomme ich die Dateien?</summary>
+          <p class="ans">Direkt nach der Zahlung: Download-Seite plus E-Mail mit Beleg und Link. Der Link läuft nicht ab.</p>
+        </details>
+        <details>
+          <summary>Kann ich widerrufen?</summary>
+          <p class="ans">Bei digitalen Dateien erlischt das Widerrufsrecht mit dem Start des Downloads, dem du vorher ausdrücklich zustimmst. Details in der <a href="widerruf.html">Widerrufsbelehrung</a>. Deshalb kannst du vorher alles kostenlos ansehen.</p>
+        </details>
+        <details>
+          <summary>Ersetzt das Steuer- oder Rechtsberatung?</summary>
+          <p class="ans">Nein. Orientierung und Vorlagen. Die Verträge sind Muster, vor dem ersten Einsatz anwaltlich prüfen lassen.</p>
+        </details>
+        <details>
+          <summary>Laufen die Rechner auch offline?</summary>
+          <p class="ans">Ja. Die Rechner lassen sich ohne App Store und ohne Konto aufs Handy legen: auf dem iPhone in Safari über das Teilen-Symbol <em>Zum Home-Bildschirm</em>, auf Android über das Menü <em>App installieren</em>. Danach funktionieren sie auch ohne Internet.</p>
+        </details>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ALS APP -->
-    <section class="sheet">
-      <p class="eyebrow">Offline</p>
-      <h2>Rechner als App aufs Handy.</h2>
-      <p>Kein App Store, kein Konto, kein Login. Einmal hinzufügen, danach funktionieren die Rechner auch ohne Internet.</p>
-      <details class="mehr">
-        <summary>So geht's</summary>
-        <div>
-          <p><strong>iPhone &amp; iPad</strong> — in Safari das Teilen-Symbol antippen, dann <em>Zum Home-Bildschirm</em>.</p>
-          <p><strong>Android</strong> — Menü (drei Punkte), dann <em>App installieren</em>.</p>
-          <p><strong>Windows &amp; Mac</strong> — im Browser rechts in der Adresszeile auf das Installieren-Symbol.</p>
-        </div>
-      </details>
-    </section>
+  <!-- ============ ABSCHLUSS ============ -->
+  <section class="finale">
+    <div class="wrap">
+      <h2 class="reveal">Starte mit Privatpatient:innen.</h2>
+      <p class="reveal" data-d="1">Strukturiert. Professionell. Neben deinem Job.</p>
+      <p class="reveal" data-d="2">
+        <a class="btn" href="#kaufen" data-checkout-jump>Jetzt starten →</a>
+      </p>
+    </div>
+  </section>
 
+</main>
+
+<!-- ============ FUSS ============ -->
+<footer class="lpfoot">
+  <div class="wrap">
+    <div class="footgrid">
+      <a class="brand" href="./">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+        <span>Physio<b>Nebenbei</b></span>
+      </a>
+
+      <nav aria-label="Seiten">
+        <a href="#top">Start</a>
+        <a href="#rechner">Rechner</a>
+        <a href="#produkt">Produkt</a>
+        <a href="#faq">FAQ</a>
+        <a href="physio-nebenbei/fahrplan.html">Fahrplan</a>
+        <a href="physio-nebenbei/werkzeuge.html">Werkzeuge</a>
+      </nav>
+
+      <nav aria-label="Rechtliches">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+        <a href="widerruf.html">Widerruf</a>
+      </nav>
+    </div>
+
+    <p class="fine">
+      Vertragsvorlagen sind Muster und vor dem Einsatz prüfen zu lassen. Keine
+      Steuer-, Rechts- oder medizinische Beratung. Angaben zu Preisen, Fristen
+      und Paragraphen sorgfältig recherchiert, im Zweifel bei der zuständigen
+      Stelle nachfragen.<br>
+      Fragen? <a href="mailto:nick1405.kkstr@gmail.com">nick1405.kkstr@gmail.com</a>
+    </p>
   </div>
-
-  <footer class="site">
-    <span>Vertragsvorlagen sind Muster, vor Einsatz prüfen lassen. Keine Steuer-, Rechts- oder medizinische Beratung.<br>
-      Fragen? <a href="mailto:nick1405.kkstr@gmail.com">nick1405.kkstr@gmail.com</a></span>
-    <span>
-      <a href="impressum.html">Impressum</a> ·
-      <a href="datenschutz.html">Datenschutz</a> ·
-      <a href="agb.html">AGB</a> ·
-      <a href="widerruf.html">Widerruf</a>
-    </span>
-  </footer>
-</div>
+</footer>
 
 <script src="checkout.js"></script>
+<script>
+(function(){
+  'use strict';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Navigation ---------- */
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  const burger = document.getElementById('burger');
+  const sheet  = document.getElementById('navsheet');
+  const setMenu = open => {
+    sheet.hidden = !open;
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger.addEventListener('click', () => setMenu(sheet.hidden));
+  sheet.addEventListener('click', e => { if (e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !sheet.hidden) setMenu(false); });
+
+  /* ---------- Einblenden beim Scrollen ---------- */
+  const revealables = document.querySelectorAll('.reveal');
+  if (reduced || !('IntersectionObserver' in window)) {
+    revealables.forEach(el => el.classList.add('is-in'));
+  } else {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('is-in');
+        obs.unobserve(en.target);
+      });
+    }, {rootMargin:'0px 0px -12% 0px', threshold:.12});
+    revealables.forEach(el => io.observe(el));
+  }
+
+  /* ---------- Rechner ----------
+     Dauer je Behandlung in Minuten. Bewusst feste, gängige Werte:
+     die Feinheiten (Kombinationen, Hausbesuche, Selbstzahler-Preise)
+     stehen im ausführlichen Monats-Rechner. */
+  const DAUER = {kg:30, mt:30, mld:30};
+  const KEYS  = ['kg','mt','mld'];
+
+  const el = id => document.getElementById(id);
+  const num = id => Math.max(0, parseFloat(el(id).value) || 0);
+
+  const fmtEur = n => n.toLocaleString('de-DE', {maximumFractionDigits:0}) + ' €';
+  const fmtStd = n => n.toLocaleString('de-DE', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' h';
+
+  /* Zahlen weich hochzählen statt springen */
+  const tweens = new WeakMap();
+  function setNum(node, to, fmt){
+    const from = tweens.get(node);
+    tweens.set(node, to);
+    if (reduced || from === undefined || from === to) { node.textContent = fmt(to); return; }
+    const t0 = performance.now(), dur = 420;
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    (function step(now){
+      const t = Math.min(1, (now - t0) / dur);
+      node.textContent = fmt(from + (to - from) * ease(t));
+      if (t < 1 && tweens.get(node) === to) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  function rechne(){
+    let umsatz = 0, minuten = 0, termine = 0;
+    KEYS.forEach(k => {
+      const anzahl = num('n_' + k), preis = num('p_' + k);
+      umsatz  += anzahl * preis;
+      minuten += anzahl * DAUER[k];
+      termine += anzahl;
+    });
+    const stunden = minuten / 60;
+
+    setNum(el('o_umsatz'), umsatz, fmtEur);
+    setNum(el('o_zeit'), stunden, fmtStd);
+    setNum(el('o_std'), stunden > 0 ? umsatz / stunden : 0, fmtEur);
+    setNum(el('o_termine'), termine, n => Math.round(n).toLocaleString('de-DE'));
+  }
+
+  document.querySelectorAll('.calcbox input').forEach(inp => {
+    inp.addEventListener('input', rechne);
+  });
+
+  /* Plus/Minus */
+  document.querySelectorAll('[data-step]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inp = el('n_' + btn.dataset.step);
+      const next = (parseInt(inp.value, 10) || 0) + parseInt(btn.dataset.dir, 10);
+      inp.value = Math.min(200, Math.max(0, next));
+      rechne();
+    });
+  });
+
+  /* Schnellwahl: Gesamttermine im Verhältnis 2:1:1 verteilen */
+  document.querySelectorAll('[data-total]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const total = parseInt(btn.dataset.total, 10);
+      const kg = Math.round(total / 2);
+      const mt = Math.round(total / 4);
+      el('n_kg').value  = kg;
+      el('n_mt').value  = mt;
+      el('n_mld').value = Math.max(0, total - kg - mt);
+      rechne();
+    });
+  });
+
+  rechne();
+})();
+</script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));

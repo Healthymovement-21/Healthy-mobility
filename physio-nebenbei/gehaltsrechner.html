@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Gehalt &amp; Stunden — PhysioNebenbei</title>
 <link rel="stylesheet" href="base.css">
-<meta name="theme-color" content="#0E6B5C">
+<meta name="theme-color" content="#050B12">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
@@ -21,19 +21,15 @@
     margin-right:9px;
     vertical-align:2px;
   }
-  .ampel.gruen{ border-left-color:#1F8A63; }
-  .ampel.gruen h3{ color:#177055; }
-  .ampel.gruen .dot{ background:#1F8A63; box-shadow:0 0 0 4px rgba(31,138,99,.16); }
-  .ampel.gelb{ border-left-color:#B4870C; }
-  .ampel.gelb h3{ color:#8A6508; }
-  .ampel.gelb .dot{ background:#D3A21A; box-shadow:0 0 0 4px rgba(211,162,26,.18); }
+  .ampel.gruen{ border-left-color:#34D399; }
+  .ampel.gruen h3{ color:#34D399; }
+  .ampel.gruen .dot{ background:#34D399; box-shadow:0 0 0 4px rgba(52,211,153,.18); }
+  .ampel.gelb{ border-left-color:#FBBF24; }
+  .ampel.gelb h3{ color:#FBBF24; }
+  .ampel.gelb .dot{ background:#FBBF24; box-shadow:0 0 0 4px rgba(251,191,36,.18); }
   .ampel.rot{ border-left-color:var(--mark); }
   .ampel.rot h3{ color:var(--mark); }
   .ampel.rot .dot{ background:var(--mark); box-shadow:0 0 0 4px var(--mark-soft); }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]) .ampel.gruen h3{ color:#5FDDC4; }
-    :root:not([data-theme="light"]) .ampel.gelb h3{ color:#E8C34F; }
-  }
 
   .szenarien{ width:100%; border-collapse:collapse; margin:0; font-size:15.5px; }
   .szenarien th, .szenarien td{

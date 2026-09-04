@@ -30,48 +30,98 @@
       <p class="eyebrow">1 · Preise</p>
       <h2>Deine Preisliste</h2>
 
-      <div class="tbl-wrap">
-        <table class="data">
-          <thead>
-            <tr>
-              <th>Leistung</th>
-              <th style="width:145px">Privat</th>
-              <th style="width:145px">Selbstzahler</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="field">KG — Krankengymnastik</td>
-              <td><input type="number" id="pv_kg" value="45" step="1" data-price></td>
-              <td><input type="number" id="ps_kg" value="40" step="1" data-price></td>
-            </tr>
-            <tr>
-              <td class="field">MT — Manuelle Therapie</td>
-              <td><input type="number" id="pv_mt" value="50" step="1" data-price></td>
-              <td><input type="number" id="ps_mt" value="45" step="1" data-price></td>
-            </tr>
-            <tr>
-              <td class="field">MLD 30 — Lymphdrainage</td>
-              <td><input type="number" id="pv_mld30" value="42" step="1" data-price></td>
-              <td><input type="number" id="ps_mld30" value="38" step="1" data-price></td>
-            </tr>
-            <tr>
-              <td class="field">MLD 45 — Lymphdrainage</td>
-              <td><input type="number" id="pv_mld45" value="58" step="1" data-price></td>
-              <td><input type="number" id="ps_mld45" value="52" step="1" data-price></td>
-            </tr>
-            <tr>
-              <td class="field">Wärme / Fango (Zusatz)</td>
-              <td><input type="number" id="pv_waerme" value="12" step="1" data-price></td>
-              <td><input type="number" id="ps_waerme" value="10" step="1" data-price></td>
-            </tr>
-            <tr>
-              <td class="field">Hausbesuch — Zuschlag</td>
-              <td><input type="number" id="pv_hb" value="18" step="1" data-price></td>
-              <td><input type="number" id="ps_hb" value="15" step="1" data-price></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="preisliste">
+        <div class="pl-kopf" aria-hidden="true"><span>Leistung</span><span>Privat</span><span>Selbstzahler</span></div>
+        <div class="pl-zeile">
+          <span class="pl-name">KG<em>Krankengymnastik</em></span>
+          <label class="pl-feld">
+            <span class="pl-tag">Privat</span>
+            <input type="number" id="pv_kg" value="45" step="1" min="0" data-price
+                   aria-label="KG Krankengymnastik, Preis für Privatpatient:innen">
+            <span class="unit">€</span>
+          </label>
+          <label class="pl-feld">
+            <span class="pl-tag">Selbstzahler</span>
+            <input type="number" id="ps_kg" value="40" step="1" min="0" data-price
+                   aria-label="KG Krankengymnastik, Preis für Selbstzahler:innen">
+            <span class="unit">€</span>
+          </label>
+        </div>
+        <div class="pl-zeile">
+          <span class="pl-name">MT<em>Manuelle Therapie</em></span>
+          <label class="pl-feld">
+            <span class="pl-tag">Privat</span>
+            <input type="number" id="pv_mt" value="50" step="1" min="0" data-price
+                   aria-label="MT Manuelle Therapie, Preis für Privatpatient:innen">
+            <span class="unit">€</span>
+          </label>
+          <label class="pl-feld">
+            <span class="pl-tag">Selbstzahler</span>
+            <input type="number" id="ps_mt" value="45" step="1" min="0" data-price
+                   aria-label="MT Manuelle Therapie, Preis für Selbstzahler:innen">
+            <span class="unit">€</span>
+          </label>
+        </div>
+        <div class="pl-zeile">
+          <span class="pl-name">MLD 30<em>Lymphdrainage 30 Min.</em></span>
+          <label class="pl-feld">
+            <span class="pl-tag">Privat</span>
+            <input type="number" id="pv_mld30" value="42" step="1" min="0" data-price
+                   aria-label="MLD 30 Lymphdrainage 30 Min., Preis für Privatpatient:innen">
+            <span class="unit">€</span>
+          </label>
+          <label class="pl-feld">
+            <span class="pl-tag">Selbstzahler</span>
+            <input type="number" id="ps_mld30" value="38" step="1" min="0" data-price
+                   aria-label="MLD 30 Lymphdrainage 30 Min., Preis für Selbstzahler:innen">
+            <span class="unit">€</span>
+          </label>
+        </div>
+        <div class="pl-zeile">
+          <span class="pl-name">MLD 45<em>Lymphdrainage 45 Min.</em></span>
+          <label class="pl-feld">
+            <span class="pl-tag">Privat</span>
+            <input type="number" id="pv_mld45" value="58" step="1" min="0" data-price
+                   aria-label="MLD 45 Lymphdrainage 45 Min., Preis für Privatpatient:innen">
+            <span class="unit">€</span>
+          </label>
+          <label class="pl-feld">
+            <span class="pl-tag">Selbstzahler</span>
+            <input type="number" id="ps_mld45" value="52" step="1" min="0" data-price
+                   aria-label="MLD 45 Lymphdrainage 45 Min., Preis für Selbstzahler:innen">
+            <span class="unit">€</span>
+          </label>
+        </div>
+        <div class="pl-zeile">
+          <span class="pl-name">Wärme<em>Fango, als Zusatz</em></span>
+          <label class="pl-feld">
+            <span class="pl-tag">Privat</span>
+            <input type="number" id="pv_waerme" value="12" step="1" min="0" data-price
+                   aria-label="Wärme Fango, als Zusatz, Preis für Privatpatient:innen">
+            <span class="unit">€</span>
+          </label>
+          <label class="pl-feld">
+            <span class="pl-tag">Selbstzahler</span>
+            <input type="number" id="ps_waerme" value="10" step="1" min="0" data-price
+                   aria-label="Wärme Fango, als Zusatz, Preis für Selbstzahler:innen">
+            <span class="unit">€</span>
+          </label>
+        </div>
+        <div class="pl-zeile">
+          <span class="pl-name">Hausbesuch<em>Zuschlag pro Termin</em></span>
+          <label class="pl-feld">
+            <span class="pl-tag">Privat</span>
+            <input type="number" id="pv_hb" value="18" step="1" min="0" data-price
+                   aria-label="Hausbesuch Zuschlag pro Termin, Preis für Privatpatient:innen">
+            <span class="unit">€</span>
+          </label>
+          <label class="pl-feld">
+            <span class="pl-tag">Selbstzahler</span>
+            <input type="number" id="ps_hb" value="15" step="1" min="0" data-price
+                   aria-label="Hausbesuch Zuschlag pro Termin, Preis für Selbstzahler:innen">
+            <span class="unit">€</span>
+          </label>
+        </div>
       </div>
       <details class="mehr">
         <summary>Woher kommen diese Preise?</summary>
@@ -95,22 +145,7 @@
         </div>
       </div>
 
-      <div class="tbl-wrap">
-        <table class="data" id="tbl">
-          <thead>
-            <tr>
-              <th style="width:78px">Patient</th>
-              <th style="width:190px">Leistung</th>
-              <th style="width:90px">Termine</th>
-              <th style="width:80px">Hausbes.</th>
-              <th style="width:150px">Abrechnungsart</th>
-              <th style="width:110px">Summe</th>
-              <th style="width:40px"></th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
+      <div class="behandlungen" id="rows"></div>
       <p class="hero-cta">
         <a class="btn ghost" id="add" href="#">+ Patient hinzufügen</a>
         <a class="btn ghost" id="leeren" href="#">Eigene Zahlen eingeben</a>
@@ -208,7 +243,7 @@
   </div>
 
   <footer class="site">
-    <span>Vertragsvorlagen sind Muster, vor Einsatz prüfen lassen.<br>Fragen? <a href="mailto:nick1405.kkstr@gmail.com">nick1405.kkstr@gmail.com</a><br><a href="../">Startseite</a> · <a href="fahrplan.html">Fahrplan</a></span>
+    <span>Vertragsvorlagen sind Muster, vor Einsatz prüfen lassen.<br>Fragen? <a href="mailto:info@physiotherapie-grausam.com">info@physiotherapie-grausam.com</a><br><a href="../">Startseite</a> · <a href="fahrplan.html">Fahrplan</a></span>
     <span>
       <a href="../impressum.html">Impressum</a> ·
       <a href="../datenschutz.html">Datenschutz</a> ·
@@ -262,28 +297,60 @@ function zeilenSumme(z){
   return (preisFuer(z.leistung, z.art) + zuschlag) * (z.termine || 0);
 }
 
+function karteHtml(z, i){
+  const optLeistung = Object.entries(LEISTUNGEN)
+    .map(([k,v]) => `<option value="${k}"${z.leistung===k?' selected':''}>${v.label}</option>`).join('');
+  const optArt = Object.entries(ARTEN)
+    .map(([k,v]) => `<option value="${k}"${z.art===k?' selected':''}>${v.label}</option>`).join('');
+
+  return `
+    <div class="bh-kopf">
+      <span class="bh-nr">Patient ${i+1}</span>
+      <span class="bh-summe" data-summe="${i}">${eur(zeilenSumme(z))}</span>
+      <a href="#" data-del="${i}" class="bh-weg" aria-label="Patient ${i+1} entfernen">×</a>
+    </div>
+    <div class="bh-felder">
+      <label class="bh-feld bh-breit">
+        <span class="bh-tag">Leistung</span>
+        <select data-i="${i}" data-f="leistung" aria-label="Leistung für Patient ${i+1}">${optLeistung}</select>
+      </label>
+      <label class="bh-feld">
+        <span class="bh-tag">Termine</span>
+        <input type="number" min="0" max="99" step="1" value="${z.termine}"
+               data-i="${i}" data-f="termine" aria-label="Anzahl Termine für Patient ${i+1}">
+      </label>
+      <label class="bh-feld bh-breit">
+        <span class="bh-tag">Abrechnungsart</span>
+        <select data-i="${i}" data-f="art" aria-label="Abrechnungsart für Patient ${i+1}">${optArt}</select>
+      </label>
+      <label class="bh-haken">
+        <input type="checkbox" data-i="${i}" data-f="hausbesuch"${z.hausbesuch?' checked':''}>
+        <span>Hausbesuch</span>
+      </label>
+    </div>`;
+}
+
 function render(){
-  const tbody = document.getElementById('rows');
-  tbody.innerHTML = '';
-
+  const box = document.getElementById('rows');
+  box.innerHTML = '';
   zeilen.forEach((z, i) => {
-    const optLeistung = Object.entries(LEISTUNGEN)
-      .map(([k,v]) => `<option value="${k}"${z.leistung===k?' selected':''}>${v.label}</option>`).join('');
-    const optArt = Object.entries(ARTEN)
-      .map(([k,v]) => `<option value="${k}"${z.art===k?' selected':''}>${v.label}</option>`).join('');
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>Patient ${i+1}</td>
-      <td><select data-i="${i}" data-f="leistung">${optLeistung}</select></td>
-      <td><input type="number" min="0" step="1" value="${z.termine}" data-i="${i}" data-f="termine"></td>
-      <td style="text-align:center"><input type="checkbox" data-i="${i}" data-f="hausbesuch"${z.hausbesuch?' checked':''}></td>
-      <td><select data-i="${i}" data-f="art">${optArt}</select></td>
-      <td class="calc">${eur(zeilenSumme(z))}</td>
-      <td style="text-align:center"><a href="#" data-del="${i}" title="Zeile löschen">×</a></td>`;
-    tbody.appendChild(tr);
+    const karte = document.createElement('div');
+    karte.className = 'bh-karte';
+    karte.innerHTML = karteHtml(z, i);
+    box.appendChild(karte);
   });
+  rechne();
+  speichern();
+}
 
+/* Beim Tippen in ein Zahlenfeld darf die Karte nicht neu gebaut werden,
+   sonst verliert das Ziffernraster das Feld unter den Fingern.
+   Deshalb hier nur die Summen aktualisieren. */
+function summenAuffrischen(){
+  zeilen.forEach((z, i) => {
+    const el = document.querySelector('[data-summe="' + i + '"]');
+    if (el) el.textContent = eur(zeilenSumme(z));
+  });
   rechne();
   speichern();
 }
@@ -422,10 +489,11 @@ function laden(){
 document.getElementById('rows').addEventListener('input', e => {
   const i = e.target.dataset.i, f = e.target.dataset.f;
   if (i === undefined || !f) return;
+  const istZahl = e.target.type === 'number';
   zeilen[i][f] = e.target.type === 'checkbox' ? e.target.checked
-               : e.target.type === 'number' ? (parseFloat(e.target.value) || 0)
+               : istZahl ? (parseFloat(e.target.value) || 0)
                : e.target.value;
-  render();
+  if (istZahl) summenAuffrischen(); else render();
 });
 
 document.getElementById('rows').addEventListener('click', e => {
@@ -477,5 +545,6 @@ if (beispiel) document.getElementById('beispiel-hinweis').hidden = false;
     window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
   }
 </script>
+<script src="zahlenfeld.js" defer></script>
 </body>
 </html>

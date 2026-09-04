@@ -800,3 +800,334 @@ footer.site a:hover{ text-decoration:underline; }
   #druck tr{ page-break-inside:avoid; }
   #druck h2{ page-break-after:avoid; }
 }
+
+/* ============================================================
+   Zahlenfeld-Raster (siehe zahlenfeld.js)
+   Faehrt auf Touch-Geraeten unten hoch, statt die System-Tastatur
+   zu oeffnen. Grosse Flaechen, weil das mit dem Daumen bedient wird.
+   ============================================================ */
+body.zpad-offen{ overflow:hidden; }
+
+.zpad{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:flex;
+  align-items:flex-end;
+  background:rgba(3,8,13,.55);
+  -webkit-backdrop-filter:blur(3px);
+  backdrop-filter:blur(3px);
+  animation:zpadFade .18s ease both;
+}
+.zpad[hidden]{ display:none; }
+
+@keyframes zpadFade{ from{ opacity:0 } to{ opacity:1 } }
+@keyframes zpadUp{ from{ transform:translateY(14px) } to{ transform:none } }
+
+.zpad-sheet{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+  padding:16px 14px calc(16px + env(safe-area-inset-bottom));
+  border-radius:24px 24px 0 0;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), #0A1824;
+  border-top:1px solid var(--glass-edge);
+  box-shadow:0 -20px 60px -20px rgba(0,0,0,.9);
+  animation:zpadUp .22s cubic-bezier(.22,.8,.28,1) both;
+}
+
+.zpad-kopf{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:14px;
+  padding:2px 6px 14px;
+  border-bottom:1px solid var(--glass-line);
+  margin-bottom:12px;
+}
+.zpad-name{
+  font-size:14px;
+  color:var(--ink-muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.zpad-wert{
+  flex:none;
+  font-size:27px;
+  font-weight:400;
+  letter-spacing:-.02em;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+}
+.zpad-einheit{ font-size:16px; color:var(--ink-muted); }
+
+.zpad-schritt{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:8px;
+}
+.zpad-schritt button{
+  height:48px;
+  border-radius:14px;
+  border:1px solid var(--glass-edge);
+  background:var(--glass);
+  color:var(--ink);
+  font-size:22px;
+  cursor:pointer;
+}
+
+.zpad-raster{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:8px;
+}
+.zpad-raster button{
+  height:56px;
+  border-radius:14px;
+  border:1px solid var(--glass-edge);
+  background:var(--glass);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:22px;
+  font-weight:400;
+  font-variant-numeric:tabular-nums;
+  cursor:pointer;
+  transition:background .12s ease;
+}
+.zpad-raster button:active,
+.zpad-schritt button:active{ background:var(--accent-soft); }
+
+.zpad-fertig{
+  width:100%;
+  height:52px;
+  margin-top:10px;
+  border-radius:14px;
+  border:none;
+  background:var(--accent);
+  color:var(--accent-ink);
+  font-family:var(--font-sans);
+  font-size:17px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* Schreibgeschuetzte Felder sollen trotzdem antippbar wirken */
+input[type=number][readonly]{
+  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .zpad, .zpad-sheet{ animation:none; }
+}
+
+@media print{
+  .zpad{ display:none !important; }
+}
+
+/* ============================================================
+   Preisliste im Monats-Rechner
+   Auf breiten Schirmen drei Spalten wie eine Tabelle, auf dem
+   Handy bricht der Name in eine eigene Zeile um. Kein Wischen
+   nach rechts mehr.
+   ============================================================ */
+.preisliste{
+  margin:18px 0 6px;
+  border:1px solid var(--glass-edge);
+  border-radius:18px;
+  overflow:hidden;
+  background:rgba(10,24,36,.4);
+}
+.pl-kopf,
+.pl-zeile{
+  display:grid;
+  grid-template-columns:1fr 132px 132px;
+  gap:12px;
+  align-items:center;
+  padding:12px 16px;
+}
+.pl-kopf{
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  border-bottom:1px solid var(--glass-line);
+  padding-top:14px; padding-bottom:14px;
+}
+.pl-kopf span:not(:first-child){ text-align:center; }
+.pl-zeile + .pl-zeile{ border-top:1px solid var(--glass-line); }
+.pl-name{ font-size:15.5px; font-weight:500; }
+.pl-name em{
+  display:block;
+  font-style:normal;
+  font-size:13px;
+  color:var(--ink-faint);
+  margin-top:1px;
+}
+.pl-feld{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid var(--glass-edge);
+  border-radius:11px;
+  background:var(--input-bg);
+  padding:0 11px 0 0;
+  cursor:pointer;
+}
+.pl-feld input{
+  width:100%;
+  min-width:0;
+  border:none;
+  background:transparent;
+  color:var(--ink);
+  font-family:var(--font-mono);
+  font-size:15px;
+  text-align:right;
+  padding:11px 0 11px 11px;
+  -moz-appearance:textfield;
+}
+.pl-feld input::-webkit-outer-spin-button,
+.pl-feld input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.pl-feld input:focus{ outline:2px solid var(--focus); outline-offset:2px; border-radius:8px; }
+.pl-feld .unit{ font-size:14px; color:var(--ink-faint); }
+.pl-tag{ display:none; }
+
+@media (max-width:620px){
+  .pl-kopf{ display:none; }
+  .pl-zeile{
+    grid-template-columns:1fr 1fr;
+    row-gap:9px;
+    padding:14px 14px 16px;
+  }
+  .pl-name{ grid-column:1 / -1; }
+  .pl-feld{
+    flex-wrap:wrap;
+    padding:9px 11px 10px;
+    gap:0 7px;
+  }
+  .pl-tag{
+    display:block;
+    width:100%;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:2px;
+  }
+  .pl-feld input{
+    flex:1;
+    text-align:left;
+    padding:0;
+    font-size:16px;
+  }
+}
+
+/* ============================================================
+   Behandlungen im Monats-Rechner
+   Frueher eine Tabelle mit sieben Spalten, die auf dem Handy
+   nur per Wischen erreichbar war. Jetzt eine Karte pro Patient,
+   die auf jeder Breite komplett sichtbar bleibt.
+   ============================================================ */
+.behandlungen{ display:flex; flex-direction:column; gap:10px; margin:18px 0 6px; }
+
+.bh-karte{
+  border:1px solid var(--glass-edge);
+  border-radius:16px;
+  background:rgba(10,24,36,.42);
+  padding:13px 15px 15px;
+}
+.bh-kopf{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding-bottom:11px;
+  margin-bottom:12px;
+  border-bottom:1px solid var(--glass-line);
+}
+.bh-nr{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.bh-summe{
+  margin-left:auto;
+  font-size:16.5px;
+  font-weight:600;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+}
+.bh-weg{
+  flex:none;
+  width:28px; height:28px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:8px;
+  color:var(--ink-faint);
+  text-decoration:none;
+  font-size:19px;
+  line-height:1;
+}
+.bh-weg:hover{ color:var(--mark); background:var(--mark-soft); }
+
+.bh-felder{
+  display:grid;
+  grid-template-columns:1fr 104px;
+  gap:9px 10px;
+  align-items:end;
+}
+.bh-breit{ grid-column:1 / -1; }
+
+.bh-feld{ display:block; cursor:pointer; }
+.bh-tag{
+  display:block;
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:5px;
+}
+.bh-feld select,
+.bh-feld input{
+  width:100%;
+  border:1px solid var(--glass-edge);
+  border-radius:11px;
+  background:var(--input-bg);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:15.5px;
+  padding:11px 12px;
+}
+.bh-feld input{ font-family:var(--font-mono); text-align:center; -moz-appearance:textfield; }
+.bh-feld input::-webkit-outer-spin-button,
+.bh-feld input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.bh-feld select:focus,
+.bh-feld input:focus{ outline:2px solid var(--focus); outline-offset:2px; }
+
+.bh-haken{
+  grid-column:1 / -1;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding-top:3px;
+  font-size:15px;
+  color:var(--ink-muted);
+  cursor:pointer;
+}
+.bh-haken input{
+  width:21px; height:21px;
+  accent-color:var(--accent);
+  cursor:pointer;
+}
+
+@media (min-width:620px){
+  .bh-felder{ grid-template-columns:1fr 104px 1fr auto; align-items:end; }
+  .bh-breit{ grid-column:auto; }
+  .bh-haken{ grid-column:auto; padding-top:0; padding-bottom:11px; white-space:nowrap; }
+}

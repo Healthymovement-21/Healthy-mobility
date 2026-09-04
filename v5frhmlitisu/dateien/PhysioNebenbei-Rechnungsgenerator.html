@@ -23,12 +23,13 @@
     --field:rgba(255,255,255,.05);
   }
   *{ box-sizing:border-box; }
+  html{ overflow-x:hidden; }
   body{
     margin:0; background:var(--paper); color:var(--ink);
     font-family:var(--font); font-size:16px; line-height:1.55;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{ max-width:840px; margin:0 auto; padding:26px 18px 90px; }
+  .wrap{ max-width:860px; margin:0 auto; padding:26px 18px 90px; }
 
   h1{ font-size:26px; font-weight:300; letter-spacing:-.02em; margin:0 0 6px; }
   h2{
@@ -42,7 +43,14 @@
     background:rgba(10,24,36,.5); padding:16px 18px;
   }
   .reihe{ display:grid; gap:12px; }
-  @media (min-width:620px){ .zwei{ grid-template-columns:1fr 1fr; } .drei{ grid-template-columns:2fr 1fr 1fr; } }
+  .reihe + .reihe{ margin-top:12px; }
+  @media (min-width:640px){
+    .zwei{ grid-template-columns:1fr 1fr; }
+    .drei{ grid-template-columns:1fr 1fr 1fr; }
+    .schmal-breit{ grid-template-columns:1fr 2fr; }
+    .breit-schmal{ grid-template-columns:2fr 1fr; }
+    .posten-gitter{ grid-template-columns:2.4fr .7fr 1fr 1fr; }
+  }
 
   label{ display:block; font-size:12.5px; color:var(--faint); margin-bottom:5px; }
   input, textarea, select{
@@ -53,6 +61,17 @@
   input[type=number]{ font-family:var(--mono); text-align:right; }
   textarea{ resize:vertical; min-height:70px; }
   input:focus, textarea:focus, select:focus{ outline:2px solid var(--accent); outline-offset:2px; }
+  input:disabled, select:disabled{ opacity:.45; }
+
+  .wahl{ display:grid; gap:8px; }
+  .wahl label{
+    display:flex; gap:10px; align-items:flex-start; margin:0;
+    border:1px solid var(--edge); border-radius:12px; padding:11px 13px;
+    font-size:14.5px; color:var(--ink); cursor:pointer;
+  }
+  .wahl label:has(input:checked){ border-color:var(--accent); background:var(--accent-soft); }
+  .wahl input{ width:auto; margin:3px 0 0; accent-color:var(--accent); flex:none; }
+  .wahl small{ display:block; color:var(--faint); font-size:12.5px; line-height:1.4; }
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -64,26 +83,40 @@
   .btn.ghost{ background:transparent; color:var(--ink); border-color:var(--edge); }
   .btn.ghost:hover{ border-color:var(--accent); color:var(--accent); }
   .btn.klein{ padding:8px 14px; font-size:14px; }
+  .knopfreihe{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
 
   .posten{ border-top:1px solid var(--line); padding-top:12px; margin-top:12px; }
   .posten:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
   .posten-kopf{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
   .posten-nr{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
-  .weg{ background:none; border:none; color:var(--faint); font-size:19px; cursor:pointer; padding:2px 6px; }
+  .weg{ background:none; border:none; color:var(--faint); font-size:19px; cursor:pointer; padding:2px 6px; line-height:1; }
   .weg:hover{ color:var(--mark); }
+  .zeilensumme{ font-family:var(--mono); font-size:13px; color:var(--muted); text-align:right; margin-top:6px; }
 
-  .schnell{ display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; }
+  .schnell{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
   .schnell button{
     border:1px solid var(--edge); background:transparent; color:var(--muted);
     border-radius:999px; padding:7px 14px; font-family:var(--font); font-size:13.5px; cursor:pointer;
   }
   .schnell button:hover{ color:var(--accent); border-color:var(--accent); }
 
-  .summe{
-    display:flex; align-items:baseline; justify-content:space-between;
-    border-top:1px solid var(--line); margin-top:16px; padding-top:14px;
+  .marken{ display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; }
+  .marke{
+    display:inline-flex; align-items:center; gap:7px;
+    border:1px solid var(--edge); border-radius:999px; padding:5px 8px 5px 13px;
+    font-size:13.5px; font-family:var(--mono); color:var(--ink); background:var(--field);
   }
-  .summe .z{ font-size:26px; font-weight:400; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .marke button{ background:none; border:none; color:var(--faint); cursor:pointer; font-size:16px; line-height:1; padding:0 3px; }
+  .marke button:hover{ color:var(--mark); }
+
+  .summen{ border-top:1px solid var(--line); margin-top:16px; padding-top:14px; }
+  .summen div{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+  .summen div + div{ margin-top:6px; }
+  .summen .klein{ color:var(--muted); font-size:14px; }
+  .summen .klein span:last-child{ font-family:var(--mono); }
+  .summen .end{ margin-top:10px; }
+  .summen .end span:first-child{ color:var(--muted); font-size:14.5px; }
+  .summen .end span:last-child{ font-size:26px; color:var(--accent); font-variant-numeric:tabular-nums; }
 
   .hinweis{
     border-left:3px solid var(--accent); background:var(--accent-soft);
@@ -91,35 +124,63 @@
     font-size:13.5px; color:var(--muted);
   }
   .warn{ border-left-color:var(--mark); background:rgba(255,124,150,.09); }
+  .hinweis b{ color:var(--ink); font-weight:600; }
+
+  .vorschau-qr{ display:flex; align-items:center; gap:14px; margin-top:14px; flex-wrap:wrap; }
+  .vorschau-qr svg{ border-radius:8px; }
+  .vorschau-qr p{ margin:0; font-size:13px; color:var(--faint); max-width:340px; }
+
+  .schalter{ display:flex; gap:10px; align-items:flex-start; font-size:14.5px; color:var(--ink); }
+  .schalter input{ width:auto; margin:4px 0 0; accent-color:var(--accent); flex:none; }
 
   .aktionen{
     position:sticky; bottom:0; margin-top:26px; padding:14px 0;
     background:linear-gradient(to top, var(--paper) 62%, transparent);
     display:flex; flex-wrap:wrap; gap:10px;
   }
+  .fuss-hinweis{ color:var(--faint); font-size:12.5px; margin-top:22px; }
 
   /* ---------- Druckansicht ---------- */
   #druck{ display:none; }
   @media print{
-    @page{ margin:20mm 18mm; }
-    body{ background:#fff; color:#000; font-size:10.5pt; line-height:1.45; }
+    @page{ margin:16mm 16mm 14mm; }
+    body{ background:#fff; color:#111; font-size:10.5pt; line-height:1.45; }
     .wrap{ display:none !important; }
     #druck{ display:block; }
-    #druck .kopfzeile{ display:flex; justify-content:space-between; align-items:flex-start; gap:30px; }
-    #druck .absender{ font-size:9pt; color:#444; white-space:pre-line; text-align:right; }
-    #druck h1{ font-size:17pt; margin:26pt 0 2pt; font-weight:bold; }
-    #druck .meta{ font-size:9.5pt; color:#444; margin-bottom:22pt; }
-    #druck .an{ white-space:pre-line; margin-bottom:8pt; }
-    #druck table{ width:100%; border-collapse:collapse; margin:14pt 0 0; font-size:10pt; }
+    #druck .kopf{ display:flex; justify-content:space-between; align-items:flex-start; gap:24pt; }
+    #druck .kopf .marke{ font-size:13pt; font-weight:bold; letter-spacing:.02em; border:none; padding:0; background:none; font-family:inherit; }
+    #druck .kopf .marke small{ display:block; font-size:8.5pt; font-weight:normal; color:#555; letter-spacing:0; }
+    #druck .absender{ font-size:8.5pt; color:#555; white-space:pre-line; text-align:right; }
+    #druck .fenster{ margin-top:26pt; }
+    #druck .ruecklauf{ font-size:7pt; color:#777; border-bottom:.5pt solid #aaa; padding-bottom:2pt; margin-bottom:6pt; width:75mm; }
+    #druck .an{ white-space:pre-line; }
+    #druck h1{ font-size:16pt; margin:24pt 0 3pt; font-weight:bold; letter-spacing:.01em; }
+    #druck .meta{ font-size:9pt; color:#444; }
+    #druck .meta span{ display:inline-block; margin-right:14pt; }
+    #druck .anrede{ margin:16pt 0 0; }
+    #druck table{ width:100%; border-collapse:collapse; margin:14pt 0 0; font-size:9.5pt; }
     #druck th{
-      text-align:left; font-size:8.5pt; letter-spacing:.04em; text-transform:uppercase;
-      color:#555; border-bottom:1px solid #999; padding:5pt 6pt;
+      text-align:left; font-size:8pt; letter-spacing:.05em; text-transform:uppercase;
+      color:#fff; background:#1B2733; padding:5pt 6pt; font-weight:600;
     }
-    #druck td{ padding:6pt 6pt; border-bottom:1px solid #e2e2e2; vertical-align:top; }
+    #druck td{ padding:5.5pt 6pt; border-bottom:.5pt solid #ddd; vertical-align:top; }
     #druck td.r, #druck th.r{ text-align:right; }
-    #druck tr.gesamt td{ font-weight:bold; border-top:1.4px solid #000; border-bottom:none; font-size:11.5pt; }
-    #druck .fuss{ margin-top:22pt; padding-top:9pt; border-top:1px solid #ccc; font-size:9pt; color:#333; white-space:pre-line; }
-    #druck .steuerhinweis{ margin-top:14pt; font-size:9.5pt; }
+    #druck td.m, #druck th.m{ text-align:center; }
+    #druck tr.zwischen td{ border-bottom:none; padding-top:7pt; }
+    #druck tr.gesamt td{ font-weight:bold; border-top:1pt solid #111; border-bottom:none; font-size:11pt; padding-top:6pt; }
+    #druck .zusatz{ margin-top:12pt; font-size:9pt; color:#333; }
+    #druck .zusatz p{ margin:0 0 4pt; }
+    #druck .zahlung{ display:flex; gap:16pt; align-items:flex-start; margin-top:14pt; }
+    #druck .zahlung .text{ flex:1; font-size:9.5pt; }
+    #druck .zahlung .qr{ text-align:center; font-size:7.5pt; color:#555; width:30mm; }
+    #druck .zahlung .qr svg{ width:26mm; height:26mm; display:block; margin:0 auto 2pt; }
+    #druck .gruss{ margin-top:16pt; white-space:pre-line; font-size:9.5pt; }
+    #druck .fussleiste{
+      margin-top:20pt; padding-top:7pt; border-top:.5pt solid #bbb;
+      display:flex; gap:14pt; font-size:7.5pt; color:#555; line-height:1.4;
+    }
+    #druck .fussleiste div{ flex:1; white-space:pre-line; }
+    #druck .seitenumbruch{ page-break-inside:avoid; }
   }
 </style>
 </head>
@@ -129,7 +190,7 @@
   <h1>Rechnungsgenerator</h1>
   <p class="lede">Deine Daten trägst du einmal ein, danach ist jede Rechnung eine Sache von zwei Minuten. Alles bleibt auf diesem Gerät.</p>
 
-  <!-- ============ ABSENDER ============ -->
+  <!-- ============ 1 ABSENDER ============ -->
   <h2>1 · Deine Daten</h2>
   <div class="karte">
     <div class="reihe zwei">
@@ -138,70 +199,196 @@
         <input id="a_name" placeholder="Vor- und Nachname">
       </div>
       <div>
+        <label for="a_zusatz">Zusatz (optional)</label>
+        <input id="a_zusatz" placeholder="z. B. Physiotherapie · Nebenberuflich">
+      </div>
+    </div>
+    <div class="reihe zwei">
+      <div>
+        <label for="a_strasse">Straße und Hausnummer</label>
+        <input id="a_strasse" placeholder="Musterweg 1">
+      </div>
+      <div>
+        <label for="a_ort">PLZ und Ort</label>
+        <input id="a_ort" placeholder="12345 Musterstadt">
+      </div>
+    </div>
+    <div class="reihe drei">
+      <div>
+        <label for="a_telefon">Telefon</label>
+        <input id="a_telefon" placeholder="0170 1234567">
+      </div>
+      <div>
+        <label for="a_email">E-Mail</label>
+        <input id="a_email" type="email" placeholder="name@beispiel.de">
+      </div>
+      <div>
+        <label for="a_web">Website (optional)</label>
+        <input id="a_web" placeholder="www.beispiel.de">
+      </div>
+    </div>
+    <div class="reihe zwei">
+      <div>
         <label for="a_steuer">Steuernummer</label>
         <input id="a_steuer" placeholder="z. B. 12/345/67890">
       </div>
-    </div>
-    <div class="reihe" style="margin-top:12px">
       <div>
-        <label for="a_anschrift">Anschrift</label>
-        <textarea id="a_anschrift" placeholder="Straße und Hausnummer&#10;PLZ Ort"></textarea>
+        <label for="a_ustid">USt-IdNr. (nur falls vorhanden)</label>
+        <input id="a_ustid" placeholder="DE123456789">
       </div>
     </div>
-    <div class="reihe zwei" style="margin-top:12px">
-      <div>
-        <label for="a_kontakt">Telefon und E-Mail</label>
-        <input id="a_kontakt" placeholder="0170 1234567 · name@beispiel.de">
-      </div>
+    <div class="reihe drei">
       <div>
         <label for="a_iban">IBAN</label>
         <input id="a_iban" placeholder="DE00 0000 0000 0000 0000 00">
       </div>
+      <div>
+        <label for="a_bic">BIC (optional)</label>
+        <input id="a_bic" placeholder="ABCDDEFFXXX">
+      </div>
+      <div>
+        <label for="a_bank">Bank (optional)</label>
+        <input id="a_bank" placeholder="Name der Bank">
+      </div>
     </div>
-    <div class="reihe zwei" style="margin-top:12px">
+    <div class="reihe zwei">
       <div>
         <label for="a_inhaber">Kontoinhaber:in</label>
         <input id="a_inhaber" placeholder="falls abweichend vom Namen">
       </div>
       <div>
-        <label for="a_status">Umsatzsteuer</label>
+        <label for="a_status">Dein Status beim Finanzamt</label>
         <select id="a_status">
-          <option value="heil">Heilbehandlung, steuerfrei nach § 4 Nr. 14 UStG</option>
           <option value="klein">Kleinunternehmer nach § 19 UStG</option>
-          <option value="beides">Beides zutreffend</option>
+          <option value="regel">Regelbesteuerung, ich weise Umsatzsteuer aus</option>
         </select>
       </div>
     </div>
-    <div class="hinweis" id="steuer_vorschau"></div>
+    <div class="hinweis" id="iban_pruefung" hidden></div>
   </div>
 
-  <!-- ============ EMPFÄNGER ============ -->
-  <h2>2 · Empfänger:in</h2>
+  <!-- ============ 2 PATIENT ============ -->
+  <h2>2 · Patient:in</h2>
   <div class="karte">
     <div class="reihe zwei">
       <div>
-        <label for="e_gespeichert">Gespeicherte Patient:innen</label>
+        <label for="e_suche">Suchen</label>
+        <input id="e_suche" placeholder="Nachname eintippen" autocomplete="off">
+      </div>
+      <div>
+        <label for="e_gespeichert">Gespeicherte Patient:innen <span id="e_zahl"></span></label>
         <select id="e_gespeichert"><option value="">Neu eingeben …</option></select>
       </div>
+    </div>
+    <div class="reihe drei">
       <div>
-        <label for="e_name">Name</label>
-        <input id="e_name" placeholder="Vor- und Nachname">
+        <label for="e_anrede">Anrede</label>
+        <select id="e_anrede">
+          <option value="">ohne Anrede</option>
+          <option value="Frau">Frau</option>
+          <option value="Herr">Herr</option>
+        </select>
+      </div>
+      <div>
+        <label for="e_vorname">Vorname</label>
+        <input id="e_vorname" autocomplete="off">
+      </div>
+      <div>
+        <label for="e_nachname">Nachname</label>
+        <input id="e_nachname" autocomplete="off">
       </div>
     </div>
-    <div class="reihe" style="margin-top:12px">
+    <div class="reihe drei">
       <div>
-        <label for="e_anschrift">Anschrift</label>
-        <textarea id="e_anschrift" placeholder="Straße und Hausnummer&#10;PLZ Ort"></textarea>
+        <label for="e_strasse">Straße und Hausnummer</label>
+        <input id="e_strasse" autocomplete="off">
+      </div>
+      <div>
+        <label for="e_plz">PLZ</label>
+        <input id="e_plz" autocomplete="off">
+      </div>
+      <div>
+        <label for="e_ort">Ort</label>
+        <input id="e_ort" autocomplete="off">
       </div>
     </div>
-    <p style="margin:12px 0 0">
+    <div class="reihe drei">
+      <div>
+        <label for="e_email">E-Mail (optional)</label>
+        <input id="e_email" type="email" autocomplete="off">
+      </div>
+      <div>
+        <label for="e_telefon">Telefon (optional)</label>
+        <input id="e_telefon" autocomplete="off">
+      </div>
+      <div>
+        <label for="e_geburt">Geburtsdatum (optional)</label>
+        <input id="e_geburt" type="date">
+      </div>
+    </div>
+    <div class="knopfreihe">
       <button class="btn ghost klein" id="e_merken" type="button">Patient:in merken</button>
       <button class="btn ghost klein" id="e_loeschen" type="button">Aus Liste entfernen</button>
-    </p>
+      <button class="btn ghost klein" id="e_import" type="button">Liste importieren</button>
+      <button class="btn ghost klein" id="e_export" type="button">Liste exportieren</button>
+      <input type="file" id="e_datei" accept=".csv,text/csv,text/plain" hidden>
+    </div>
+    <div class="hinweis" id="import_hinweis" hidden></div>
   </div>
 
-  <!-- ============ RECHNUNGSDATEN ============ -->
-  <h2>3 · Rechnung</h2>
+  <!-- ============ 3 ART DER LEISTUNG ============ -->
+  <h2>3 · Art der Leistung</h2>
+  <div class="karte">
+    <div class="wahl">
+      <label>
+        <input type="radio" name="art" value="heil" checked>
+        <span>Heilbehandlung, Physiotherapie
+          <small>Behandlung mit therapeutischem Ziel. Umsatzsteuerfrei nach § 4 Nr. 14 UStG.</small>
+        </span>
+      </label>
+      <label>
+        <input type="radio" name="art" value="training">
+        <span>Training, Prävention, Coaching
+          <small>Kein therapeutisches Ziel, also keine Heilbehandlung. Umsatzsteuer richtet sich nach deinem Status.</small>
+        </span>
+      </label>
+      <label>
+        <input type="radio" name="art" value="selbst">
+        <span>Selbstzahler:in ohne ärztliche Verordnung
+          <small>Steuerliche Einordnung wählst du selbst. Bitte lies den Hinweis darunter.</small>
+        </span>
+      </label>
+    </div>
+
+    <div class="reihe zwei" id="feld_selbst" hidden>
+      <div>
+        <label for="s_steuer">Steuerliche Einordnung dieser Rechnung</label>
+        <select id="s_steuer">
+          <option value="heil">Heilbehandlung, steuerfrei nach § 4 Nr. 14 UStG</option>
+          <option value="klein">Kleinunternehmer, keine Umsatzsteuer nach § 19 UStG</option>
+          <option value="ust">Umsatzsteuerpflichtig</option>
+        </select>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="reihe zwei" id="feld_ust" hidden>
+      <div>
+        <label for="r_ustsatz">Umsatzsteuersatz</label>
+        <select id="r_ustsatz">
+          <option value="19">19 Prozent</option>
+          <option value="7">7 Prozent</option>
+        </select>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="hinweis" id="steuer_vorschau"></div>
+    <div class="hinweis warn" id="steuer_warnung" hidden></div>
+  </div>
+
+  <!-- ============ 4 RECHNUNGSDATEN ============ -->
+  <h2>4 · Rechnung</h2>
   <div class="karte">
     <div class="reihe drei">
       <div>
@@ -209,47 +396,93 @@
         <input id="r_nummer" placeholder="2026-001">
       </div>
       <div>
+        <label for="r_kreis">Nummernkreis</label>
+        <select id="r_kreis">
+          <option value="jahr">Jahr und laufende Nummer, 2026-001</option>
+          <option value="lfd">Sechsstellig fortlaufend, 000001</option>
+        </select>
+      </div>
+      <div>
         <label for="r_datum">Rechnungsdatum</label>
         <input id="r_datum" type="date">
       </div>
+    </div>
+    <div class="reihe drei">
+      <div>
+        <label for="r_von">Leistungszeitraum von</label>
+        <input id="r_von" type="date">
+      </div>
+      <div>
+        <label for="r_bis">bis</label>
+        <input id="r_bis" type="date">
+      </div>
       <div>
         <label for="r_ziel">Zahlungsziel in Tagen</label>
-        <input id="r_ziel" type="number" value="14" min="0" max="90" step="1">
+        <input id="r_ziel" type="number" inputmode="numeric" value="14" min="0" max="90" step="1">
       </div>
     </div>
-    <div class="reihe zwei" style="margin-top:12px">
+
+    <div class="reihe drei" id="block_verordnung">
       <div>
-        <label for="r_leistung_von">Leistungszeitraum von</label>
-        <input id="r_leistung_von" type="date">
+        <label for="v_datum">Datum der Verordnung (optional)</label>
+        <input id="v_datum" type="date">
       </div>
       <div>
-        <label for="r_leistung_bis">bis</label>
-        <input id="r_leistung_bis" type="date">
+        <label for="v_diagnose">Diagnose (optional)</label>
+        <input id="v_diagnose" placeholder="z. B. M54.5 Rückenschmerzen">
+      </div>
+      <div>
+        <label for="v_arzt">Verordnende Praxis (optional)</label>
+        <input id="v_arzt" placeholder="Name der Arztpraxis">
+      </div>
+    </div>
+
+    <div class="reihe" style="margin-top:16px">
+      <div>
+        <label for="t_datum">Behandlungstermine (optional)</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="t_datum" type="date" style="flex:1 1 180px">
+          <button class="btn ghost klein" id="t_neu" type="button">Termin hinzufügen</button>
+        </div>
+        <div class="marken" id="termine"></div>
+        <div class="knopfreihe" id="termin_aktionen" hidden>
+          <button class="btn ghost klein" id="t_menge" type="button">Anzahl in Position 1 übernehmen</button>
+          <button class="btn ghost klein" id="t_zeitraum" type="button">Leistungszeitraum daraus setzen</button>
+          <button class="btn ghost klein" id="t_leeren" type="button">Termine leeren</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ============ POSITIONEN ============ -->
-  <h2>4 · Leistungen</h2>
+  <!-- ============ 5 POSITIONEN ============ -->
+  <h2>5 · Leistungen</h2>
   <div class="karte">
     <div id="posten"></div>
-    <p style="margin:16px 0 0">
+    <div class="knopfreihe">
       <button class="btn ghost klein" id="p_neu" type="button">Position hinzufügen</button>
-    </p>
+    </div>
     <div class="schnell" id="schnellwahl">
       <span style="font-size:13px;color:var(--faint);align-self:center;margin-right:2px">Schnellwahl</span>
     </div>
-    <div class="summe">
-      <span style="color:var(--muted);font-size:14.5px">Rechnungsbetrag</span>
-      <span class="z" id="gesamt">0,00 €</span>
-    </div>
+    <div class="summen" id="summen"></div>
   </div>
 
-  <!-- ============ FUSSTEXT ============ -->
-  <h2>5 · Schlusstext</h2>
+  <!-- ============ 6 ABSCHLUSS ============ -->
+  <h2>6 · Abschluss</h2>
   <div class="karte">
-    <label for="r_fuss">Wird unter die Rechnung gedruckt</label>
+    <label for="r_fuss">Schlusstext, wird unter die Rechnung gedruckt</label>
     <textarea id="r_fuss"></textarea>
+
+    <label class="schalter" style="margin-top:16px" for="r_qr">
+      <input type="checkbox" id="r_qr" checked>
+      <span>QR-Code für die Überweisung mitdrucken
+        <small style="display:block;color:var(--faint);font-size:12.5px">
+          Der Code trägt Empfänger, IBAN, Betrag und Rechnungsnummer. Die meisten Banking-Apps füllen die Überweisung damit selbst aus.
+        </small>
+      </span>
+    </label>
+    <div class="vorschau-qr" id="qr_vorschau"></div>
+
     <div class="hinweis warn">
       Bewahre eine Kopie jeder Rechnung zehn Jahre lang auf (§ 147 AO). Am einfachsten:
       beim Speichern als PDF gleich in einen Ordner pro Jahr legen.
@@ -258,11 +491,12 @@
 
   <div class="aktionen">
     <button class="btn" id="drucken" type="button">Rechnung als PDF speichern</button>
+    <button class="btn ghost" id="mail" type="button">E-Mail öffnen</button>
     <button class="btn ghost" id="naechste" type="button">Nächste Rechnung</button>
     <button class="btn ghost" id="alles_weg" type="button">Alle Daten löschen</button>
   </div>
 
-  <p style="color:var(--faint);font-size:12.5px;margin-top:22px">
+  <p class="fuss-hinweis">
     Diese Datei ersetzt keine Steuerberatung. Sie füllt die Pflichtangaben nach § 14 UStG
     aus, prüft aber nicht, ob dein Einzelfall Besonderheiten hat.
   </p>
@@ -272,6 +506,332 @@
 <div id="druck"></div>
 
 <script>
+/* =========================================================================
+   QR-Code, Byte-Modus, Fehlerkorrektur M, Version 1 bis 13.
+   Reicht für den EPC-Überweisungscode (höchstens 331 Zeichen).
+   ========================================================================= */
+var QR = (function(){
+  'use strict';
+
+  var DATEN = [
+    /* [Datenwörter gesamt, EC je Block, Blöcke A, Wörter A, Blöcke B, Wörter B] */
+    [16,10,1,16,0,0],[28,16,1,28,0,0],[44,26,1,44,0,0],[64,18,2,32,0,0],
+    [86,24,2,43,0,0],[108,16,4,27,0,0],[124,18,4,31,0,0],[154,22,2,38,2,39],
+    [182,22,3,36,2,37],[216,26,4,43,1,44],[254,30,1,50,4,51],[290,22,6,36,2,37],
+    [334,22,8,37,1,38]
+  ];
+  var AUSRICHT = [[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],
+    [6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62]];
+  var VERSINFO = [0x07C94,0x085BC,0x09A99,0x0A4D3,0x0BBF6,0x0C762,0x0D847];
+  var FORMAT_M = [0x5412,0x5125,0x5E7C,0x5B4B,0x45F9,0x40CE,0x4F97,0x4AA0];
+
+  var EXP = new Array(512), LOG = new Array(256);
+  (function(){
+    var x = 1;
+    for (var i = 0; i < 255; i++){
+      EXP[i] = x; LOG[x] = i;
+      x <<= 1; if (x & 0x100) x ^= 0x11D;
+    }
+    for (i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+  })();
+  function mul(a, b){ return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
+
+  function generator(grad){
+    var g = [1];
+    for (var i = 0; i < grad; i++){
+      var neu = new Array(g.length + 1), j;
+      for (j = 0; j < neu.length; j++) neu[j] = 0;
+      for (j = 0; j < g.length; j++){
+        neu[j] ^= mul(g[j], 1);
+        neu[j+1] ^= mul(g[j], EXP[i]);
+      }
+      g = neu;
+    }
+    return g;
+  }
+
+  function ecWoerter(bloecke, anzahl){
+    var g = generator(anzahl), rest = bloecke.slice(), i, j;
+    for (i = 0; i < anzahl; i++) rest.push(0);
+    for (i = 0; i < bloecke.length; i++){
+      var f = rest[i];
+      if (f === 0) continue;
+      for (j = 1; j < g.length; j++) rest[i+j] ^= mul(g[j], f);
+    }
+    return rest.slice(bloecke.length);
+  }
+
+  function bytes(text){
+    var out = [];
+    for (var i = 0; i < text.length; i++){
+      var c = text.charCodeAt(i);
+      if (c < 0x80) out.push(c);
+      else if (c < 0x800){ out.push(0xC0 | (c >> 6), 0x80 | (c & 63)); }
+      else if (c < 0xD800 || c >= 0xE000){ out.push(0xE0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63)); }
+      else {
+        i++;
+        var p = 0x10000 + (((c & 0x3FF) << 10) | (text.charCodeAt(i) & 0x3FF));
+        out.push(0xF0 | (p >> 18), 0x80 | ((p >> 12) & 63), 0x80 | ((p >> 6) & 63), 0x80 | (p & 63));
+      }
+    }
+    return out;
+  }
+
+  function version(laenge){
+    for (var v = 1; v <= 13; v++){
+      var kopf = v < 10 ? 12 : 20;
+      if (laenge <= Math.floor((DATEN[v-1][0] * 8 - kopf) / 8)) return v;
+    }
+    return 0;
+  }
+
+  function datenwoerter(roh, v){
+    var bits = [], i;
+    function schiebe(wert, anzahl){
+      for (var k = anzahl - 1; k >= 0; k--) bits.push((wert >> k) & 1);
+    }
+    schiebe(4, 4);
+    schiebe(roh.length, v < 10 ? 8 : 16);
+    for (i = 0; i < roh.length; i++) schiebe(roh[i], 8);
+
+    var gesamt = DATEN[v-1][0] * 8;
+    for (i = 0; i < 4 && bits.length < gesamt; i++) bits.push(0);
+    while (bits.length % 8) bits.push(0);
+
+    var woerter = [], j;
+    for (i = 0; i < bits.length; i += 8){
+      var b = 0;
+      for (j = 0; j < 8; j++) b = (b << 1) | bits[i+j];
+      woerter.push(b);
+    }
+    var fueller = [0xEC, 0x11], k = 0;
+    while (woerter.length < DATEN[v-1][0]) woerter.push(fueller[k++ % 2]);
+    return woerter;
+  }
+
+  function endwoerter(woerter, v){
+    var t = DATEN[v-1], ec = t[1], bloecke = [], ecs = [], pos = 0, i, b;
+    for (i = 0; i < t[2]; i++){ bloecke.push(woerter.slice(pos, pos + t[3])); pos += t[3]; }
+    for (i = 0; i < t[4]; i++){ bloecke.push(woerter.slice(pos, pos + t[5])); pos += t[5]; }
+    for (i = 0; i < bloecke.length; i++) ecs.push(ecWoerter(bloecke[i], ec));
+
+    var out = [], max = Math.max(t[3], t[5]);
+    for (i = 0; i < max; i++)
+      for (b = 0; b < bloecke.length; b++)
+        if (i < bloecke[b].length) out.push(bloecke[b][i]);
+    for (i = 0; i < ec; i++)
+      for (b = 0; b < ecs.length; b++) out.push(ecs[b][i]);
+    return out;
+  }
+
+  function leer(n){
+    var m = [], i, j;
+    for (i = 0; i < n; i++){
+      m.push([]);
+      for (j = 0; j < n; j++) m[i].push(null);
+    }
+    return m;
+  }
+
+  function funktionen(m, v){
+    var n = m.length, i, j;
+    function sucher(r, c){
+      for (i = -1; i <= 7; i++) for (j = -1; j <= 7; j++){
+        var y = r + i, x = c + j;
+        if (y < 0 || y >= n || x < 0 || x >= n) continue;
+        var rand = (i >= 0 && i <= 6 && (j === 0 || j === 6)) || (j >= 0 && j <= 6 && (i === 0 || i === 6));
+        var kern = i >= 2 && i <= 4 && j >= 2 && j <= 4;
+        m[y][x] = (rand || kern) ? 1 : 0;
+      }
+    }
+    sucher(0, 0); sucher(0, n - 7); sucher(n - 7, 0);
+
+    for (i = 8; i < n - 8; i++){
+      m[6][i] = i % 2 === 0 ? 1 : 0;
+      m[i][6] = i % 2 === 0 ? 1 : 0;
+    }
+
+    var mitten = AUSRICHT[v-1], letzt = mitten.length - 1;
+    for (i = 0; i < mitten.length; i++) for (j = 0; j < mitten.length; j++){
+      /* die drei Ecken liegen in den Suchmustern und bleiben frei */
+      if ((i === 0 && j === 0) || (i === 0 && j === letzt) || (i === letzt && j === 0)) continue;
+      var r = mitten[i], c = mitten[j];
+      for (var a = -2; a <= 2; a++) for (var b = -2; b <= 2; b++)
+        m[r+a][c+b] = (Math.max(Math.abs(a), Math.abs(b)) !== 1) ? 1 : 0;
+    }
+
+    m[n-8][8] = 1;
+
+    for (i = 0; i <= 8; i++){
+      if (m[8][i] === null) m[8][i] = 0;
+      if (m[i][8] === null) m[i][8] = 0;
+    }
+    for (i = n - 8; i < n; i++){
+      if (m[8][i] === null) m[8][i] = 0;
+      if (m[i][8] === null) m[i][8] = 0;
+    }
+    if (v >= 7){
+      for (i = 0; i < 6; i++) for (j = 0; j < 3; j++){
+        m[i][n-11+j] = 0; m[n-11+j][i] = 0;
+      }
+    }
+  }
+
+  function belegt(v){
+    var n = v * 4 + 17, m = leer(n);
+    funktionen(m, v);
+    return m;
+  }
+
+  function fuellen(m, woerter){
+    var n = m.length, bit = 0, gesamt = woerter.length * 8;
+    function next(){
+      if (bit >= gesamt) return 0;
+      var b = (woerter[bit >> 3] >> (7 - (bit & 7))) & 1;
+      bit++;
+      return b;
+    }
+    var auf = true;
+    for (var c = n - 1; c > 0; c -= 2){
+      if (c === 6) c--;
+      for (var s = 0; s < n; s++){
+        var r = auf ? n - 1 - s : s;
+        for (var k = 0; k < 2; k++){
+          var x = c - k;
+          if (m[r][x] === null) m[r][x] = next();
+        }
+      }
+      auf = !auf;
+    }
+  }
+
+  function maske(nr, r, c){
+    switch (nr){
+      case 0: return (r + c) % 2 === 0;
+      case 1: return r % 2 === 0;
+      case 2: return c % 3 === 0;
+      case 3: return (r + c) % 3 === 0;
+      case 4: return (Math.floor(r/2) + Math.floor(c/3)) % 2 === 0;
+      case 5: return (r*c) % 2 + (r*c) % 3 === 0;
+      case 6: return ((r*c) % 2 + (r*c) % 3) % 2 === 0;
+      default: return ((r+c) % 2 + (r*c) % 3) % 2 === 0;
+    }
+  }
+
+  function strafe(m){
+    var n = m.length, p = 0, i, j, laenge, letzt, dunkel = 0;
+    for (i = 0; i < n; i++){
+      laenge = 1; letzt = m[i][0];
+      for (j = 1; j < n; j++){
+        if (m[i][j] === letzt) laenge++;
+        else { if (laenge >= 5) p += 3 + (laenge - 5); letzt = m[i][j]; laenge = 1; }
+      }
+      if (laenge >= 5) p += 3 + (laenge - 5);
+    }
+    for (j = 0; j < n; j++){
+      laenge = 1; letzt = m[0][j];
+      for (i = 1; i < n; i++){
+        if (m[i][j] === letzt) laenge++;
+        else { if (laenge >= 5) p += 3 + (laenge - 5); letzt = m[i][j]; laenge = 1; }
+      }
+      if (laenge >= 5) p += 3 + (laenge - 5);
+    }
+    for (i = 0; i < n - 1; i++) for (j = 0; j < n - 1; j++){
+      var v = m[i][j];
+      if (v === m[i][j+1] && v === m[i+1][j] && v === m[i+1][j+1]) p += 3;
+    }
+    var m1 = [1,0,1,1,1,0,1,0,0,0,0], m2 = [0,0,0,0,1,0,1,1,1,0,1];
+    function passt(hol, start, muster){
+      for (var k = 0; k < 11; k++) if (hol(start + k) !== muster[k]) return false;
+      return true;
+    }
+    for (i = 0; i < n; i++){
+      var zeile = (function(r){ return function(k){ return m[r][k]; }; })(i);
+      var spalte = (function(c){ return function(k){ return m[k][c]; }; })(i);
+      for (j = 0; j <= n - 11; j++){
+        if (passt(zeile, j, m1) || passt(zeile, j, m2)) p += 40;
+        if (passt(spalte, j, m1) || passt(spalte, j, m2)) p += 40;
+      }
+    }
+    for (i = 0; i < n; i++) for (j = 0; j < n; j++) if (m[i][j]) dunkel++;
+    p += Math.floor(Math.abs(dunkel * 100 / (n * n) - 50) / 5) * 10;
+    return p;
+  }
+
+  function format(m, nr){
+    var n = m.length, bits = FORMAT_M[nr], i;
+    function b(k){ return (bits >> k) & 1; }
+    for (i = 0; i <= 5; i++) m[8][i] = b(14 - i);
+    m[8][7] = b(8);
+    m[8][8] = b(7);
+    m[7][8] = b(6);
+    for (i = 0; i <= 5; i++) m[i][8] = b(i);
+    for (i = 0; i <= 6; i++) m[n-1-i][8] = b(14 - i);
+    for (i = 0; i <= 7; i++) m[8][n-1-i] = b(i);
+    m[n-8][8] = 1;
+  }
+
+  function versionsinfo(m, v){
+    if (v < 7) return;
+    var n = m.length, bits = VERSINFO[v-7];
+    for (var i = 0; i < 18; i++){
+      var b = (bits >> i) & 1;
+      m[Math.floor(i/3)][n - 11 + (i % 3)] = b;
+      m[n - 11 + (i % 3)][Math.floor(i/3)] = b;
+    }
+  }
+
+  function kopie(m){ return m.map(function(z){ return z.slice(); }); }
+
+  function bauen(text){
+    var roh = bytes(text), v = version(roh.length);
+    if (!v) return null;
+    var woerter = endwoerter(datenwoerter(roh, v), v);
+    var geruest = belegt(v);
+    var frei = geruest.map(function(z){ return z.map(function(w){ return w === null; }); });
+    var voll = kopie(geruest);
+    fuellen(voll, woerter);
+
+    var beste = null, bestwert = Infinity;
+    for (var nr = 0; nr < 8; nr++){
+      var m = kopie(voll), r, c;
+      for (r = 0; r < m.length; r++) for (c = 0; c < m.length; c++)
+        if (frei[r][c] && maske(nr, r, c)) m[r][c] ^= 1;
+      format(m, nr);
+      versionsinfo(m, v);
+      var wert = strafe(m);
+      if (wert < bestwert){ bestwert = wert; beste = m; }
+    }
+    return beste;
+  }
+
+  function svg(text, groesse){
+    var m = bauen(text);
+    if (!m) return '';
+    var n = m.length, rand = 4, feld = n + rand * 2, teile = [], r, c;
+    for (r = 0; r < n; r++){
+      c = 0;
+      while (c < n){
+        if (!m[r][c]) { c++; continue; }
+        var start = c;
+        while (c < n && m[r][c]) c++;
+        teile.push('M' + (start + rand) + ' ' + (r + rand) + 'h' + (c - start) + 'v1h-' + (c - start) + 'z');
+      }
+    }
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + feld + ' ' + feld + '" ' +
+      'width="' + groesse + '" height="' + groesse + '" shape-rendering="crispEdges" ' +
+      'role="img" aria-label="QR-Code für die Überweisung">' +
+      '<rect width="' + feld + '" height="' + feld + '" fill="#fff"/>' +
+      '<path fill="#000" d="' + teile.join('') + '"/></svg>';
+  }
+
+  return { svg: svg };
+})();
+
+
+/* =========================================================================
+   Rechnungsgenerator
+   ========================================================================= */
 (function(){
   'use strict';
 
@@ -282,108 +842,257 @@
     'Vielen Dank für Ihr Vertrauen.\n' +
     'Bitte überweisen Sie den Betrag unter Angabe der Rechnungsnummer.';
 
-  /* Schnellwahl entspricht den Startwerten aus dem Monats-Rechner.
-     Preise sind frei anpassbar, es gibt keine verbindliche
-     Gebührenordnung für private Physiotherapie. */
+  /* Vorschläge, keine Vorgabe. Für private Physiotherapie gibt es keine
+     verbindliche Gebührenordnung, die Preise legst du selbst fest. */
   var SCHNELL = [
-    ['Krankengymnastik', 45],
-    ['Manuelle Therapie', 50],
-    ['Manuelle Lymphdrainage 30 Min.', 42],
-    ['Manuelle Lymphdrainage 45 Min.', 58],
-    ['Wärmetherapie / Fango', 12],
-    ['Hausbesuch (Zuschlag)', 18]
+    ['Krankengymnastik', 'Sitzung', 45],
+    ['Manuelle Therapie', 'Sitzung', 50],
+    ['Manuelle Lymphdrainage 30 Min.', 'Sitzung', 42],
+    ['Manuelle Lymphdrainage 45 Min.', 'Sitzung', 58],
+    ['Wärmetherapie / Fango', 'Anwendung', 12],
+    ['Hausbesuch inkl. Wegegeld', 'Termin', 18]
   ];
+  var EINHEITEN = ['Sitzung', 'Termin', 'Anwendung', 'Stunde', 'Pauschale', 'Stück', 'km'];
 
-  var daten = { absender:{}, patienten:[], letzteNummer:'', posten:[] };
+  var ABSENDERFELDER = ['name','zusatz','strasse','ort','telefon','email','web',
+                        'steuer','ustid','iban','bic','bank','inhaber'];
+  var PATIENTFELDER  = ['anrede','vorname','nachname','strasse','plz','ort','email','telefon','geburt'];
+
+  var daten = {
+    absender:{}, patienten:[], letzteNummer:'', nummernkreis:'jahr',
+    posten:[], termine:[], qr:true
+  };
+
+  /* ---------- Kleinkram ---------- */
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function eur(n){
+    return (isFinite(n) ? n : 0).toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €';
+  }
+  function heute(){
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function deDatum(iso){
+    if (!iso) return '';
+    var t = String(iso).split('-');
+    return t.length === 3 ? t[2] + '.' + t[1] + '.' + t[0] : iso;
+  }
+  function plusTage(iso, tage){
+    if (!iso) return '';
+    var d = new Date(iso + 'T12:00:00');
+    if (isNaN(d)) return '';
+    d.setDate(d.getDate() + (parseInt(tage,10) || 0));
+    return d.getDate() + '.' + (d.getMonth()+1) + '.' + d.getFullYear();
+  }
 
   /* ---------- Speichern ---------- */
   function laden(){
     try {
       var roh = localStorage.getItem(KEY);
       if (roh) daten = Object.assign(daten, JSON.parse(roh));
-    } catch(e){ /* privater Modus o. ä. — dann eben ohne Speichern */ }
+    } catch(e){ /* privater Modus, dann eben ohne Speichern */ }
+    wandelnAlteDaten();
   }
+
+  /* Ältere Fassungen dieser Datei hatten ein Feld "Anschrift" und einen
+     zusammengesetzten Namen. Das wird hier einmalig aufgeteilt. */
+  function wandelnAlteDaten(){
+    var a = daten.absender || {};
+    if (a.kontakt && !a.telefon && !a.email){
+      var teile = String(a.kontakt).split('·');
+      a.telefon = (teile[0] || '').trim();
+      a.email = (teile[1] || '').trim();
+      delete a.kontakt;
+    }
+    if (a.anschrift && !a.strasse){
+      var z = String(a.anschrift).split('\n');
+      a.strasse = (z[0] || '').trim();
+      a.ort = (z[1] || '').trim();
+      delete a.anschrift;
+    }
+    if (a.status === 'heil' || a.status === 'beides') a.status = 'klein';
+    daten.absender = a;
+
+    daten.patienten = (daten.patienten || []).map(function(p){
+      if (p.vorname !== undefined || p.nachname !== undefined) return p;
+      var name = String(p.name || '').trim();
+      var luecke = name.lastIndexOf(' ');
+      var neu = {
+        anrede:'', vorname: luecke > 0 ? name.slice(0, luecke) : '',
+        nachname: luecke > 0 ? name.slice(luecke+1) : name,
+        strasse:'', plz:'', ort:'', email:'', telefon:'', geburt:''
+      };
+      var zeilen = String(p.anschrift || '').split('\n');
+      neu.strasse = (zeilen[0] || '').trim();
+      var ort = (zeilen[1] || '').trim();
+      var m = /^(\d{4,5})\s+(.*)$/.exec(ort);
+      if (m){ neu.plz = m[1]; neu.ort = m[2]; } else { neu.ort = ort; }
+      return neu;
+    });
+
+    daten.posten = (daten.posten || []).map(function(p){
+      if (!p.einheit) p.einheit = 'Sitzung';
+      return p;
+    });
+  }
+
   function speichern(){
-    daten.absender = {
-      name: $('a_name').value, steuer: $('a_steuer').value,
-      anschrift: $('a_anschrift').value, kontakt: $('a_kontakt').value,
-      iban: $('a_iban').value, inhaber: $('a_inhaber').value,
-      status: $('a_status').value, fuss: $('r_fuss').value
-    };
+    var a = {};
+    ABSENDERFELDER.forEach(function(f){ a[f] = $('a_' + f).value; });
+    a.status = $('a_status').value;
+    a.fuss = $('r_fuss').value;
+    daten.absender = a;
+    daten.nummernkreis = $('r_kreis').value;
+    daten.qr = $('r_qr').checked;
     try { localStorage.setItem(KEY, JSON.stringify(daten)); } catch(e){}
   }
 
-  /* ---------- Steuerhinweis ---------- */
-  function steuerText(){
-    var s = $('a_status').value;
-    if (s === 'klein')  return 'Als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet.';
-    if (s === 'beides') return 'Steuerfreie Heilbehandlung gemäß § 4 Nr. 14 UStG. Zudem wird als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG keine Umsatzsteuer berechnet.';
-    return 'Steuerfreie Heilbehandlung gemäß § 4 Nr. 14 UStG, daher keine Umsatzsteuer ausgewiesen.';
+  /* ---------- Umsatzsteuer ---------- */
+  function art(){
+    var g = document.querySelector('input[name=art]:checked');
+    return g ? g.value : 'heil';
   }
-  function steuerVorschau(){
-    $('steuer_vorschau').textContent = 'Auf der Rechnung erscheint: „' + steuerText() + '"';
+  /* liefert 'frei' (§ 4 Nr. 14), 'klein' (§ 19) oder 'ust' */
+  function einordnung(){
+    var a = art();
+    if (a === 'heil') return 'frei';
+    if (a === 'selbst'){
+      var s = $('s_steuer').value;
+      return s === 'heil' ? 'frei' : (s === 'klein' ? 'klein' : 'ust');
+    }
+    return $('a_status').value === 'klein' ? 'klein' : 'ust';
+  }
+  function ustSatz(){
+    return einordnung() === 'ust' ? (parseFloat($('r_ustsatz').value) || 0) : 0;
+  }
+  function steuerText(){
+    var e = einordnung();
+    if (e === 'frei'){
+      return $('v_datum').value
+        ? 'Die Behandlung erfolgte aufgrund ärztlicher Verordnung und ist als Heilbehandlung nach § 4 Nr. 14 UStG umsatzsteuerfrei.'
+        : 'Die Leistung ist eine Heilbehandlung im Sinne des § 4 Nr. 14 UStG und damit umsatzsteuerfrei.';
+    }
+    if (e === 'klein'){
+      return 'Als Kleinunternehmer im Sinne des § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet.';
+    }
+    return 'Der Umsatzsteuerbetrag ist gesondert ausgewiesen.';
+  }
+  function steuerFelder(){
+    var a = art(), e = einordnung();
+    $('feld_selbst').hidden = a !== 'selbst';
+    $('feld_ust').hidden = e !== 'ust';
+    $('block_verordnung').style.display = a === 'training' ? 'none' : '';
+
+    $('steuer_vorschau').innerHTML = 'Auf der Rechnung steht: <b>' + esc(steuerText()) + '</b>';
+
+    var w = $('steuer_warnung');
+    if (a === 'selbst' && $('s_steuer').value === 'heil'){
+      w.hidden = false;
+      w.innerHTML = '<b>Ohne Verordnung wird es heikel.</b> Steuerfrei ist eine Behandlung nur, wenn sie ' +
+        'ein therapeutisches Ziel hat. Ohne ärztliche Verordnung musst du im Zweifel selbst belegen, ' +
+        'dass es um Beschwerden ging und nicht um Wellness oder Training. Halte das in deiner ' +
+        'Dokumentation fest und frag im Zweifel deine Steuerberatung.';
+    } else if (e === 'ust' && $('a_status').value === 'klein'){
+      w.hidden = false;
+      w.innerHTML = '<b>Achtung, das passt nicht zusammen.</b> Du hast oben Kleinunternehmer nach § 19 UStG ' +
+        'angegeben. Dann darfst du keine Umsatzsteuer ausweisen. Ausgewiesene Umsatzsteuer schuldest du ' +
+        'dem Finanzamt trotzdem (§ 14c UStG).';
+    } else {
+      w.hidden = true;
+      w.innerHTML = '';
+    }
+    summen();
   }
 
   /* ---------- Positionen ---------- */
   function postenZeichnen(){
     var box = $('posten');
     box.innerHTML = '';
-    if (!daten.posten.length) daten.posten.push({ text:'', menge:1, preis:0 });
+    if (!daten.posten.length) daten.posten.push({ text:'', menge:1, einheit:'Sitzung', preis:0 });
 
+    var netto = einordnung() === 'ust';
     daten.posten.forEach(function(p, i){
       var d = document.createElement('div');
       d.className = 'posten';
+      var optionen = EINHEITEN.map(function(e){
+        return '<option value="' + esc(e) + '"' + (p.einheit === e ? ' selected' : '') + '>' + esc(e) + '</option>';
+      }).join('');
       d.innerHTML =
         '<div class="posten-kopf">' +
           '<span class="posten-nr">Position ' + (i+1) + '</span>' +
-          '<button class="weg" type="button" data-weg="' + i + '" aria-label="Position entfernen">×</button>' +
+          '<button class="weg" type="button" data-weg="' + i + '" aria-label="Position entfernen">&times;</button>' +
         '</div>' +
-        '<div class="reihe drei">' +
-          '<div><label>Beschreibung</label>' +
+        '<div class="reihe posten-gitter">' +
+          '<div><label>Leistung</label>' +
             '<input data-i="' + i + '" data-f="text" value="' + esc(p.text) + '" placeholder="z. B. Krankengymnastik"></div>' +
-          '<div><label>Anzahl</label>' +
-            '<input type="number" min="0" step="1" data-i="' + i + '" data-f="menge" value="' + p.menge + '"></div>' +
-          '<div><label>Einzelpreis (€)</label>' +
-            '<input type="number" min="0" step="0.01" data-i="' + i + '" data-f="preis" value="' + p.preis + '"></div>' +
-        '</div>';
+          '<div><label>Menge</label>' +
+            '<input type="number" inputmode="decimal" min="0" step="1" data-i="' + i + '" data-f="menge" value="' + p.menge + '"></div>' +
+          '<div><label>Einheit</label><select data-i="' + i + '" data-f="einheit">' + optionen + '</select></div>' +
+          '<div><label>Einzelpreis' + (netto ? ' netto' : '') + ' (€)</label>' +
+            '<input type="number" inputmode="decimal" min="0" step="0.01" data-i="' + i + '" data-f="preis" value="' + p.preis + '"></div>' +
+        '</div>' +
+        '<div class="zeilensumme" data-summe="' + i + '"></div>';
       box.appendChild(d);
     });
-    summe();
+    summen();
   }
 
-  function esc(s){
-    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  function zeilenBetrag(p){
+    return (parseFloat(p.menge)||0) * (parseFloat(p.preis)||0);
   }
-  function eur(n){
-    return (isFinite(n) ? n : 0).toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €';
+  function nettoSumme(){
+    return daten.posten.reduce(function(s, p){ return s + zeilenBetrag(p); }, 0);
   }
-  function gesamtBetrag(){
-    return daten.posten.reduce(function(s, p){
-      return s + (parseFloat(p.menge)||0) * (parseFloat(p.preis)||0);
-    }, 0);
+  function endBetrag(){
+    var n = nettoSumme();
+    return n + n * ustSatz() / 100;
   }
-  function summe(){ $('gesamt').textContent = eur(gesamtBetrag()); }
+
+  function summen(){
+    daten.posten.forEach(function(p, i){
+      var z = document.querySelector('[data-summe="' + i + '"]');
+      if (z) z.textContent = zeilenBetrag(p) ? eur(zeilenBetrag(p)) : '';
+    });
+    var n = nettoSumme(), satz = ustSatz(), box = $('summen'), h = '';
+    if (satz){
+      h += '<div class="klein"><span>Zwischensumme netto</span><span>' + eur(n) + '</span></div>';
+      h += '<div class="klein"><span>zzgl. ' + satz + ' % Umsatzsteuer</span><span>' + eur(n * satz / 100) + '</span></div>';
+      h += '<div class="end"><span>Endbetrag</span><span>' + eur(n + n * satz / 100) + '</span></div>';
+    } else {
+      h += '<div class="end"><span>Endbetrag, umsatzsteuerfrei</span><span>' + eur(n) + '</span></div>';
+    }
+    box.innerHTML = h;
+    qrVorschau();
+  }
 
   $('posten').addEventListener('input', function(e){
     var i = e.target.getAttribute('data-i'), f = e.target.getAttribute('data-f');
     if (i === null || !f) return;
-    daten.posten[i][f] = f === 'text' ? e.target.value : (parseFloat(e.target.value) || 0);
-    summe();
+    daten.posten[i][f] = (f === 'text' || f === 'einheit') ? e.target.value : (parseFloat(e.target.value) || 0);
+    summen();
+    speichern();
+  });
+  $('posten').addEventListener('change', function(e){
+    var i = e.target.getAttribute('data-i'), f = e.target.getAttribute('data-f');
+    if (i === null || f !== 'einheit') return;
+    daten.posten[i].einheit = e.target.value;
     speichern();
   });
   $('posten').addEventListener('click', function(e){
     var w = e.target.getAttribute('data-weg');
     if (w === null) return;
     daten.posten.splice(w, 1);
-    if (!daten.posten.length) daten.posten.push({ text:'', menge:1, preis:0 });
+    if (!daten.posten.length) daten.posten.push({ text:'', menge:1, einheit:'Sitzung', preis:0 });
     postenZeichnen(); speichern();
   });
   $('p_neu').addEventListener('click', function(){
-    daten.posten.push({ text:'', menge:1, preis:0 });
+    daten.posten.push({ text:'', menge:1, einheit:'Sitzung', preis:0 });
     postenZeichnen(); speichern();
   });
 
-  /* Schnellwahl-Knöpfe */
   SCHNELL.forEach(function(s){
     var b = document.createElement('button');
     b.type = 'button';
@@ -391,135 +1100,436 @@
     b.addEventListener('click', function(){
       var leer = daten.posten.length === 1 && !daten.posten[0].text && !daten.posten[0].preis;
       if (leer) daten.posten = [];
-      daten.posten.push({ text:s[0], menge:1, preis:s[1] });
+      daten.posten.push({ text:s[0], menge:1, einheit:s[1], preis:s[2] });
       postenZeichnen(); speichern();
     });
     $('schnellwahl').appendChild(b);
   });
 
-  /* ---------- Patient:innen ---------- */
-  function patientenListe(){
-    var sel = $('e_gespeichert');
-    sel.innerHTML = '<option value="">Neu eingeben …</option>';
-    daten.patienten.forEach(function(p, i){
-      var o = document.createElement('option');
-      o.value = i; o.textContent = p.name;
-      sel.appendChild(o);
-    });
+  /* ---------- Behandlungstermine ---------- */
+  function termineZeichnen(){
+    var box = $('termine');
+    daten.termine.sort();
+    box.innerHTML = daten.termine.map(function(t, i){
+      return '<span class="marke">' + esc(deDatum(t)) +
+        '<button type="button" data-t="' + i + '" aria-label="Termin entfernen">&times;</button></span>';
+    }).join('');
+    $('termin_aktionen').hidden = !daten.termine.length;
   }
+  $('t_neu').addEventListener('click', function(){
+    var d = $('t_datum').value;
+    if (!d) { alert('Bitte zuerst ein Datum wählen.'); return; }
+    if (daten.termine.indexOf(d) < 0) daten.termine.push(d);
+    termineZeichnen(); speichern();
+  });
+  $('termine').addEventListener('click', function(e){
+    var i = e.target.getAttribute('data-t');
+    if (i === null) return;
+    daten.termine.splice(i, 1);
+    termineZeichnen(); speichern();
+  });
+  $('t_menge').addEventListener('click', function(){
+    if (!daten.posten.length) daten.posten.push({ text:'', menge:0, einheit:'Sitzung', preis:0 });
+    daten.posten[0].menge = daten.termine.length;
+    postenZeichnen(); speichern();
+  });
+  $('t_zeitraum').addEventListener('click', function(){
+    if (!daten.termine.length) return;
+    $('r_von').value = daten.termine[0];
+    $('r_bis').value = daten.termine[daten.termine.length - 1];
+    speichern();
+  });
+  $('t_leeren').addEventListener('click', function(){
+    daten.termine = [];
+    termineZeichnen(); speichern();
+  });
+
+  /* ---------- Patient:innen ---------- */
+  function patientName(p){
+    return ((p.vorname || '') + ' ' + (p.nachname || '')).trim() || 'ohne Namen';
+  }
+  function patientenListe(){
+    var sel = $('e_gespeichert'), suche = $('e_suche').value.trim().toLowerCase();
+    sel.innerHTML = '<option value="">Neu eingeben …</option>';
+    var gezeigt = 0;
+    daten.patienten.forEach(function(p, i){
+      var text = (patientName(p) + ' ' + (p.ort || '')).toLowerCase();
+      if (suche && text.indexOf(suche) < 0) return;
+      var o = document.createElement('option');
+      o.value = i;
+      o.textContent = patientName(p) + (p.ort ? ', ' + p.ort : '');
+      sel.appendChild(o);
+      gezeigt++;
+    });
+    $('e_zahl').textContent = daten.patienten.length
+      ? '(' + (suche ? gezeigt + ' von ' + daten.patienten.length : daten.patienten.length) + ')'
+      : '';
+  }
+  function patientLeeren(){
+    PATIENTFELDER.forEach(function(f){ $('e_' + f).value = ''; });
+  }
+  $('e_suche').addEventListener('input', patientenListe);
   $('e_gespeichert').addEventListener('change', function(){
     var p = daten.patienten[this.value];
-    if (!p) { $('e_name').value = ''; $('e_anschrift').value = ''; return; }
-    $('e_name').value = p.name;
-    $('e_anschrift').value = p.anschrift;
+    if (!p) { patientLeeren(); return; }
+    PATIENTFELDER.forEach(function(f){ $('e_' + f).value = p[f] || ''; });
   });
   $('e_merken').addEventListener('click', function(){
-    var name = $('e_name').value.trim();
-    if (!name) { alert('Bitte zuerst einen Namen eintragen.'); return; }
-    var vorhanden = daten.patienten.findIndex(function(p){ return p.name === name; });
-    var eintrag = { name:name, anschrift:$('e_anschrift').value };
-    if (vorhanden >= 0) daten.patienten[vorhanden] = eintrag;
-    else daten.patienten.push(eintrag);
+    var eintrag = {};
+    PATIENTFELDER.forEach(function(f){ eintrag[f] = $('e_' + f).value.trim(); });
+    if (!eintrag.nachname && !eintrag.vorname) { alert('Bitte zuerst einen Namen eintragen.'); return; }
+    var i = daten.patienten.findIndex(function(p){
+      return (p.vorname || '') === eintrag.vorname && (p.nachname || '') === eintrag.nachname;
+    });
+    if (i >= 0) daten.patienten[i] = eintrag; else daten.patienten.push(eintrag);
     patientenListe(); speichern();
-    this.textContent = 'Gemerkt';
     var b = this;
+    b.textContent = 'Gemerkt';
     setTimeout(function(){ b.textContent = 'Patient:in merken'; }, 1800);
   });
   $('e_loeschen').addEventListener('click', function(){
     var i = $('e_gespeichert').value;
-    if (i === '') return;
+    if (i === '') { alert('Bitte zuerst eine gespeicherte Person auswählen.'); return; }
+    if (!confirm('„' + patientName(daten.patienten[i]) + '" aus der Liste entfernen?')) return;
     daten.patienten.splice(i, 1);
-    patientenListe(); speichern();
-    $('e_name').value = ''; $('e_anschrift').value = '';
+    patientenListe(); speichern(); patientLeeren();
   });
+
+  /* CSV, weil Excel und jedes Tabellenprogramm das lesen und schreiben kann. */
+  function csvZeile(felder){
+    return felder.map(function(f){
+      var s = String(f == null ? '' : f);
+      return /[";\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+    }).join(';');
+  }
+  function csvLesen(text){
+    var zeilen = [], feld = '', zeile = [], inZitat = false;
+    text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    var trenner = (text.split('\n')[0] || '').split(';').length > 1 ? ';' : ',';
+    for (var i = 0; i < text.length; i++){
+      var c = text[i];
+      if (inZitat){
+        if (c === '"' && text[i+1] === '"'){ feld += '"'; i++; }
+        else if (c === '"') inZitat = false;
+        else feld += c;
+      } else if (c === '"') inZitat = true;
+      else if (c === trenner){ zeile.push(feld); feld = ''; }
+      else if (c === '\n'){ zeile.push(feld); zeilen.push(zeile); zeile = []; feld = ''; }
+      else feld += c;
+    }
+    if (feld || zeile.length){ zeile.push(feld); zeilen.push(zeile); }
+    return zeilen.filter(function(z){ return z.join('').trim() !== ''; });
+  }
+  $('e_export').addEventListener('click', function(){
+    if (!daten.patienten.length) { alert('Es ist noch niemand gespeichert.'); return; }
+    var kopf = ['Anrede','Vorname','Nachname','Strasse','PLZ','Ort','E-Mail','Telefon','Geburtsdatum'];
+    var text = '﻿' + csvZeile(kopf) + '\n' + daten.patienten.map(function(p){
+      return csvZeile(PATIENTFELDER.map(function(f){ return p[f] || ''; }));
+    }).join('\n');
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type:'text/csv;charset=utf-8' }));
+    a.download = 'Patientenliste.csv';
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+  });
+  $('e_import').addEventListener('click', function(){ $('e_datei').click(); });
+  $('e_datei').addEventListener('change', function(){
+    var datei = this.files && this.files[0];
+    if (!datei) return;
+    var leser = new FileReader();
+    leser.onload = function(){
+      var zeilen = csvLesen(String(leser.result).replace(/^﻿/, ''));
+      if (!zeilen.length) { melden('Die Datei enthält keine Zeilen.', true); return; }
+      var kopf = zeilen[0].map(function(s){ return s.trim().toLowerCase(); });
+      var hatKopf = kopf.join(' ').indexOf('name') >= 0;
+      var spalte = {};
+      if (hatKopf){
+        kopf.forEach(function(s, i){
+          if (s.indexOf('anrede') === 0) spalte.anrede = i;
+          else if (s.indexOf('vorname') === 0) spalte.vorname = i;
+          else if (s.indexOf('nachname') === 0 || s === 'name') spalte.nachname = i;
+          else if (s.indexOf('stra') === 0 || s.indexOf('adres') === 0) spalte.strasse = i;
+          else if (s.indexOf('plz') === 0) spalte.plz = i;
+          else if (s.indexOf('ort') === 0) spalte.ort = i;
+          else if (s.indexOf('mail') >= 0) spalte.email = i;
+          else if (s.indexOf('tel') === 0) spalte.telefon = i;
+          else if (s.indexOf('geb') === 0) spalte.geburt = i;
+        });
+      } else {
+        PATIENTFELDER.forEach(function(f, i){ spalte[f] = i; });
+      }
+      var neu = 0, aktualisiert = 0;
+      zeilen.slice(hatKopf ? 1 : 0).forEach(function(z){
+        var e = {};
+        PATIENTFELDER.forEach(function(f){
+          e[f] = spalte[f] === undefined ? '' : String(z[spalte[f]] || '').trim();
+        });
+        if (!e.vorname && !e.nachname) return;
+        var i = daten.patienten.findIndex(function(p){
+          return (p.vorname||'') === e.vorname && (p.nachname||'') === e.nachname;
+        });
+        if (i >= 0){ daten.patienten[i] = e; aktualisiert++; } else { daten.patienten.push(e); neu++; }
+      });
+      patientenListe(); speichern();
+      melden(neu + ' neu übernommen, ' + aktualisiert + ' aktualisiert. Insgesamt ' +
+             daten.patienten.length + ' gespeichert.', false);
+    };
+    leser.readAsText(datei, 'utf-8');
+    this.value = '';
+  });
+  function melden(text, fehler){
+    var k = $('import_hinweis');
+    k.hidden = false;
+    k.className = 'hinweis' + (fehler ? ' warn' : '');
+    k.textContent = text;
+  }
 
   /* ---------- Rechnungsnummer ---------- */
   function naechsteNummer(letzte){
-    var jahr = new Date().getFullYear();
-    var m = /^(\d{4})-(\d+)$/.exec(letzte || '');
+    var kreis = $('r_kreis').value, jahr = new Date().getFullYear(), m;
+    if (kreis === 'lfd'){
+      m = /^(\d+)$/.exec(String(letzte || '').trim());
+      var n = m ? parseInt(m[1], 10) + 1 : 1;
+      return String(n).padStart(m ? Math.max(6, m[1].length) : 6, '0');
+    }
+    m = /^(\d{4})-(\d+)$/.exec(String(letzte || '').trim());
     if (m && m[1] === String(jahr)) {
-      var n = parseInt(m[2], 10) + 1;
-      return jahr + '-' + String(n).padStart(m[2].length, '0');
+      return jahr + '-' + String(parseInt(m[2], 10) + 1).padStart(m[2].length, '0');
     }
     return jahr + '-001';
   }
+  $('r_kreis').addEventListener('change', function(){
+    $('r_nummer').value = naechsteNummer(daten.letzteNummer);
+    speichern();
+  });
 
-  function heute(){ return new Date().toISOString().slice(0,10); }
-  function deDatum(iso){
-    if (!iso) return '';
-    var t = iso.split('-');
-    return t[2] + '.' + t[1] + '.' + t[0];
+  /* ---------- IBAN ---------- */
+  function ibanRoh(){
+    return $('a_iban').value.replace(/\s+/g, '').toUpperCase();
   }
-  function plusTage(iso, tage){
-    if (!iso) return '';
-    var d = new Date(iso + 'T12:00:00');
-    d.setDate(d.getDate() + (parseInt(tage,10) || 0));
-    return deDatum(d.toISOString().slice(0,10));
+  function ibanGueltig(iban){
+    if (!/^[A-Z]{2}\d{2}[A-Z0-9]{10,30}$/.test(iban)) return false;
+    var um = iban.slice(4) + iban.slice(0, 4), zahl = '', i;
+    for (i = 0; i < um.length; i++){
+      var c = um.charCodeAt(i);
+      zahl += (c >= 65 && c <= 90) ? String(c - 55) : um[i];
+    }
+    var rest = 0;
+    for (i = 0; i < zahl.length; i++) rest = (rest * 10 + (zahl.charCodeAt(i) - 48)) % 97;
+    return rest === 1;
+  }
+  function ibanPruefen(){
+    var k = $('iban_pruefung'), iban = ibanRoh();
+    if (!iban){ k.hidden = true; return; }
+    k.hidden = false;
+    if (ibanGueltig(iban)){
+      k.className = 'hinweis';
+      k.textContent = 'IBAN-Prüfziffer stimmt.';
+    } else {
+      k.className = 'hinweis warn';
+      k.textContent = 'Diese IBAN stimmt rechnerisch nicht. Bitte noch einmal vergleichen, sonst geht die Überweisung ins Leere.';
+    }
+  }
+
+  /* ---------- Überweisungs-QR nach dem EPC-Standard ---------- */
+  function qrNutzlast(){
+    var iban = ibanRoh();
+    if (!ibanGueltig(iban)) return '';
+    var betrag = endBetrag();
+    if (!(betrag > 0) || betrag > 999999999.99) return '';
+    var empfaenger = ($('a_inhaber').value.trim() || $('a_name').value.trim()).slice(0, 70);
+    if (!empfaenger) return '';
+    var zweck = ('Rechnung ' + $('r_nummer').value.trim()).slice(0, 140);
+    return [
+      'BCD', '002', '1', 'SCT',
+      $('a_bic').value.replace(/\s+/g,'').toUpperCase(),
+      empfaenger, iban,
+      'EUR' + betrag.toFixed(2),
+      '', '', zweck
+    ].join('\n');
+  }
+  function qrVorschau(){
+    var box = $('qr_vorschau');
+    if (!box) return;
+    if (!$('r_qr').checked){ box.innerHTML = ''; return; }
+    var text = qrNutzlast();
+    if (!text){
+      box.innerHTML = '<p>Sobald eine gültige IBAN, ein Empfängername und ein Betrag über null eingetragen sind, erscheint hier der Code.</p>';
+      return;
+    }
+    box.innerHTML = QR.svg(text, 132) +
+      '<p>So sieht der Code auf der Rechnung aus. Er enthält Empfänger, IBAN, Betrag und die Rechnungsnummer als Verwendungszweck.</p>';
+  }
+
+  /* ---------- Anrede ---------- */
+  function anredeZeile(){
+    var an = $('e_anrede').value, nach = $('e_nachname').value.trim(), vor = $('e_vorname').value.trim();
+    if (an === 'Frau' && nach) return 'Sehr geehrte Frau ' + nach + ',';
+    if (an === 'Herr' && nach) return 'Sehr geehrter Herr ' + nach + ',';
+    var name = (vor + ' ' + nach).trim();
+    return name ? 'Guten Tag ' + name + ',' : 'Guten Tag,';
   }
 
   /* ---------- Druckausgabe ---------- */
   function druckAufbauen(){
-    var a = {
-      name: $('a_name').value, steuer: $('a_steuer').value,
-      anschrift: $('a_anschrift').value, kontakt: $('a_kontakt').value,
-      iban: $('a_iban').value, inhaber: $('a_inhaber').value
-    };
-    var zeilen = daten.posten.filter(function(p){ return p.text || p.preis; }).map(function(p){
-      var betrag = (parseFloat(p.menge)||0) * (parseFloat(p.preis)||0);
-      return '<tr><td>' + esc(p.text) + '</td>' +
-             '<td class="r">' + (parseFloat(p.menge)||0) + '</td>' +
-             '<td class="r">' + eur(parseFloat(p.preis)||0) + '</td>' +
-             '<td class="r">' + eur(betrag) + '</td></tr>';
+    var w = {};
+    ABSENDERFELDER.forEach(function(f){ w[f] = $('a_' + f).value.trim(); });
+
+    var satz = ustSatz(), netto = nettoSumme(), spalten = 6;
+    var zeilen = daten.posten.filter(function(p){ return p.text || p.preis; }).map(function(p, i){
+      return '<tr>' +
+        '<td class="m">' + (i+1) + '</td>' +
+        '<td>' + esc(p.text) + '</td>' +
+        '<td class="r">' + (parseFloat(p.menge)||0).toLocaleString('de-DE') + '</td>' +
+        '<td>' + esc(p.einheit || '') + '</td>' +
+        '<td class="r">' + eur(parseFloat(p.preis)||0) + '</td>' +
+        '<td class="r">' + eur(zeilenBetrag(p)) + '</td>' +
+      '</tr>';
     }).join('');
 
-    var zeitraum = '';
-    var von = $('r_leistung_von').value, bis = $('r_leistung_bis').value;
-    if (von && bis && von !== bis) zeitraum = 'Leistungszeitraum: ' + deDatum(von) + ' bis ' + deDatum(bis);
-    else if (von) zeitraum = 'Leistungsdatum: ' + deDatum(von);
+    var summenZeilen = '';
+    if (satz){
+      summenZeilen =
+        '<tr class="zwischen"><td colspan="' + (spalten-1) + '" class="r">Zwischensumme netto</td><td class="r">' + eur(netto) + '</td></tr>' +
+        '<tr class="zwischen"><td colspan="' + (spalten-1) + '" class="r">zzgl. ' + satz + ' % Umsatzsteuer</td><td class="r">' + eur(netto * satz / 100) + '</td></tr>' +
+        '<tr class="gesamt"><td colspan="' + (spalten-1) + '" class="r">Endbetrag</td><td class="r">' + eur(endBetrag()) + '</td></tr>';
+    } else {
+      summenZeilen =
+        '<tr class="gesamt"><td colspan="' + (spalten-1) + '" class="r">Endbetrag, umsatzsteuerfrei</td><td class="r">' + eur(netto) + '</td></tr>';
+    }
 
-    var absenderZeile = [a.name, a.anschrift, a.kontakt].filter(Boolean).join('\n');
-    var bank = [a.iban ? 'IBAN: ' + a.iban : '', a.inhaber ? 'Kontoinhaber:in: ' + a.inhaber : ''].filter(Boolean).join('\n');
+    /* Kopfdaten der Rechnung */
+    var meta = ['<span>Rechnungsdatum: ' + esc(deDatum($('r_datum').value)) + '</span>'];
+    var von = $('r_von').value, bis = $('r_bis').value;
+    if (von && bis && von !== bis) meta.push('<span>Leistungszeitraum: ' + esc(deDatum(von)) + ' bis ' + esc(deDatum(bis)) + '</span>');
+    else if (von) meta.push('<span>Leistungsdatum: ' + esc(deDatum(von)) + '</span>');
+    else if (bis) meta.push('<span>Leistungsdatum: ' + esc(deDatum(bis)) + '</span>');
+    if ($('e_geburt').value) meta.push('<span>geboren am ' + esc(deDatum($('e_geburt').value)) + '</span>');
+
+    /* Angaben zur Verordnung */
+    var zusatz = [];
+    if (art() !== 'training'){
+      var v = [];
+      if ($('v_datum').value) v.push('Verordnung vom ' + deDatum($('v_datum').value));
+      if ($('v_arzt').value.trim()) v.push('ausgestellt von ' + $('v_arzt').value.trim());
+      if (v.length) zusatz.push(v.join(', '));
+      if ($('v_diagnose').value.trim()) zusatz.push('Diagnose: ' + $('v_diagnose').value.trim());
+    }
+    if (daten.termine.length){
+      zusatz.push('Behandlungstermine: ' + daten.termine.map(deDatum).join(', '));
+    }
+
+    var empfaenger = [
+      [$('e_anrede').value, $('e_vorname').value.trim(), $('e_nachname').value.trim()].filter(Boolean).join(' '),
+      $('e_strasse').value.trim(),
+      [$('e_plz').value.trim(), $('e_ort').value.trim()].filter(Boolean).join(' ')
+    ].filter(Boolean).join('\n');
+
+    var absenderRechts = [
+      [w.name, w.zusatz].filter(Boolean).join('\n'),
+      [w.strasse, w.ort].filter(Boolean).join('\n'),
+      [w.telefon, w.email].filter(Boolean).join('\n')
+    ].filter(Boolean).join('\n\n');
+
+    var ruecklauf = [w.name, w.strasse, w.ort].filter(Boolean).join(' · ');
+
     var ziel = plusTage($('r_datum').value, $('r_ziel').value);
+    var zahltext = [];
+    if (ziel) zahltext.push('Bitte überweisen Sie den Betrag bis zum ' + ziel + ' ohne Abzug.');
+    if (w.iban) zahltext.push('IBAN ' + $('a_iban').value.trim() + (w.bic ? ' · BIC ' + w.bic : '') +
+                              (w.inhaber ? '\nKontoinhaber:in: ' + w.inhaber : ''));
+
+    var qr = '';
+    if ($('r_qr').checked){
+      var last = qrNutzlast();
+      if (last) qr = '<div class="qr">' + QR.svg(last, 100) + 'Mit der Banking-App scannen</div>';
+    }
+
+    var fussSpalten = [
+      [w.name, w.zusatz, w.strasse, w.ort].filter(Boolean).join('\n'),
+      [w.telefon ? 'Telefon ' + w.telefon : '', w.email, w.web].filter(Boolean).join('\n'),
+      [w.bank, w.iban ? 'IBAN ' + $('a_iban').value.trim() : '', w.bic ? 'BIC ' + w.bic : '',
+       w.steuer ? 'Steuernummer ' + w.steuer : '', w.ustid ? 'USt-IdNr. ' + w.ustid : ''].filter(Boolean).join('\n')
+    ];
 
     $('druck').innerHTML =
-      '<div class="kopfzeile">' +
-        '<div></div>' +
-        '<div class="absender">' + esc(absenderZeile) + (a.steuer ? '\nSteuernummer: ' + esc(a.steuer) : '') + '</div>' +
+      '<div class="kopf">' +
+        '<div class="marke">' + esc(w.name) + (w.zusatz ? '<small>' + esc(w.zusatz) + '</small>' : '') + '</div>' +
+        '<div class="absender">' + esc(absenderRechts) + '</div>' +
       '</div>' +
-      '<div class="an">' + esc($('e_name').value) + '\n' + esc($('e_anschrift').value) + '</div>' +
+      '<div class="fenster">' +
+        (ruecklauf ? '<div class="ruecklauf">' + esc(ruecklauf) + '</div>' : '') +
+        '<div class="an">' + esc(empfaenger) + '</div>' +
+      '</div>' +
       '<h1>Rechnung ' + esc($('r_nummer').value) + '</h1>' +
-      '<div class="meta">Rechnungsdatum: ' + deDatum($('r_datum').value) +
-        (zeitraum ? ' · ' + esc(zeitraum) : '') + '</div>' +
-      '<table>' +
-        '<thead><tr><th>Leistung</th><th class="r">Anzahl</th><th class="r">Einzelpreis</th><th class="r">Betrag</th></tr></thead>' +
-        '<tbody>' + zeilen +
-          '<tr class="gesamt"><td colspan="3">Rechnungsbetrag</td><td class="r">' + eur(gesamtBetrag()) + '</td></tr>' +
-        '</tbody>' +
+      '<div class="meta">' + meta.join('') + '</div>' +
+      '<p class="anrede">' + esc(anredeZeile()) + '<br>hiermit stelle ich Ihnen die folgenden Leistungen in Rechnung.</p>' +
+      '<table class="seitenumbruch">' +
+        '<thead><tr>' +
+          '<th class="m">Pos.</th><th>Leistung</th><th class="r">Menge</th>' +
+          '<th>Einheit</th><th class="r">Einzelpreis</th><th class="r">Gesamt</th>' +
+        '</tr></thead>' +
+        '<tbody>' + zeilen + summenZeilen + '</tbody>' +
       '</table>' +
-      '<div class="steuerhinweis">' + esc(steuerText()) + '</div>' +
-      '<div class="fuss">' +
-        (ziel ? 'Zahlbar bis ' + ziel + ' ohne Abzug.\n' : '') +
-        (bank ? bank + '\n' : '') +
-        '\n' + esc($('r_fuss').value) +
+      (zusatz.length ? '<div class="zusatz">' + zusatz.map(function(z){ return '<p>' + esc(z) + '</p>'; }).join('') + '</div>' : '') +
+      '<div class="zusatz"><p>' + esc(steuerText()) + '</p></div>' +
+      '<div class="zahlung seitenumbruch">' +
+        '<div class="text">' + esc(zahltext.join('\n')).replace(/\n/g, '<br>') + '</div>' + qr +
+      '</div>' +
+      '<div class="gruss">' + esc($('r_fuss').value) + '</div>' +
+      '<div class="fussleiste">' +
+        fussSpalten.map(function(s){ return '<div>' + esc(s) + '</div>'; }).join('') +
       '</div>';
   }
 
+  function pflichtfelderFehlen(){
+    if (!$('a_name').value.trim()) return 'Bitte trag zuerst deinen Namen unter Punkt 1 ein.';
+    if (!$('e_nachname').value.trim() && !$('e_vorname').value.trim()) return 'Bitte trag den Namen der Patientin oder des Patienten ein.';
+    if (!$('r_nummer').value.trim()) return 'Ohne Rechnungsnummer ist die Rechnung nicht vollständig (§ 14 UStG).';
+    if (!nettoSumme()) return 'Es ist noch keine Leistung mit einem Preis eingetragen.';
+    return '';
+  }
+
   $('drucken').addEventListener('click', function(){
-    if (!$('a_name').value.trim()) { alert('Bitte trag zuerst deinen Namen unter Punkt 1 ein.'); return; }
-    if (!$('e_name').value.trim()) { alert('Bitte trag den Namen der Empfängerin oder des Empfängers ein.'); return; }
+    var fehlt = pflichtfelderFehlen();
+    if (fehlt) { alert(fehlt); return; }
     daten.letzteNummer = $('r_nummer').value;
     speichern();
     druckAufbauen();
     window.print();
   });
 
+  $('mail').addEventListener('click', function(){
+    var fehlt = pflichtfelderFehlen();
+    if (fehlt) { alert(fehlt); return; }
+    var betreff = 'Rechnung ' + $('r_nummer').value.trim();
+    var text = anredeZeile() + '\n\n' +
+      'anbei erhalten Sie die Rechnung ' + $('r_nummer').value.trim() +
+      ' über ' + eur(endBetrag()) + '.\n\n' +
+      $('r_fuss').value + '\n\n' +
+      'Freundliche Grüße\n' + $('a_name').value.trim();
+    var ziel = $('e_email').value.trim();
+    location.href = 'mailto:' + encodeURIComponent(ziel) +
+      '?subject=' + encodeURIComponent(betreff) + '&body=' + encodeURIComponent(text);
+    setTimeout(function(){
+      melden('Das E-Mail-Programm ist geöffnet. Die PDF-Datei musst du dort noch selbst anhängen, ' +
+             'ein Browser darf das nicht automatisch tun.', false);
+    }, 400);
+  });
+
   $('naechste').addEventListener('click', function(){
-    $('r_nummer').value = naechsteNummer($('r_nummer').value);
+    daten.letzteNummer = $('r_nummer').value;
+    $('r_nummer').value = naechsteNummer(daten.letzteNummer);
     $('r_datum').value = heute();
-    $('e_name').value = ''; $('e_anschrift').value = '';
+    patientLeeren();
     $('e_gespeichert').value = '';
-    daten.posten = [{ text:'', menge:1, preis:0 }];
+    $('e_suche').value = '';
+    ['v_datum','v_diagnose','v_arzt','r_von','r_bis'].forEach(function(id){ $(id).value = ''; });
+    daten.termine = [];
+    daten.posten = [{ text:'', menge:1, einheit:'Sitzung', preis:0 }];
+    termineZeichnen();
     postenZeichnen();
+    patientenListe();
     daten.letzteNummer = $('r_nummer').value;
     speichern();
     window.scrollTo({ top:0, behavior:'smooth' });
@@ -534,25 +1544,36 @@
   /* ---------- Start ---------- */
   laden();
   var a = daten.absender || {};
-  $('a_name').value = a.name || '';
-  $('a_steuer').value = a.steuer || '';
-  $('a_anschrift').value = a.anschrift || '';
-  $('a_kontakt').value = a.kontakt || '';
-  $('a_iban').value = a.iban || '';
-  $('a_inhaber').value = a.inhaber || '';
-  $('a_status').value = a.status || 'heil';
+  ABSENDERFELDER.forEach(function(f){ $('a_' + f).value = a[f] || ''; });
+  $('a_status').value = a.status === 'regel' ? 'regel' : 'klein';
   $('r_fuss').value = a.fuss || STANDARD_FUSS;
+  $('r_kreis').value = daten.nummernkreis === 'lfd' ? 'lfd' : 'jahr';
+  $('r_qr').checked = daten.qr !== false;
 
   $('r_nummer').value = naechsteNummer(daten.letzteNummer);
   $('r_datum').value = heute();
-  $('r_leistung_von').value = heute();
 
-  ['a_name','a_steuer','a_anschrift','a_kontakt','a_iban','a_inhaber','r_fuss']
-    .forEach(function(id){ $(id).addEventListener('input', speichern); });
-  $('a_status').addEventListener('change', function(){ steuerVorschau(); speichern(); });
+  ABSENDERFELDER.forEach(function(f){
+    $('a_' + f).addEventListener('input', speichern);
+  });
+  $('a_iban').addEventListener('input', function(){ ibanPruefen(); qrVorschau(); });
+  $('r_fuss').addEventListener('input', speichern);
+  $('a_status').addEventListener('change', function(){ steuerFelder(); speichern(); });
+  $('s_steuer').addEventListener('change', function(){ steuerFelder(); postenZeichnen(); speichern(); });
+  $('r_ustsatz').addEventListener('change', function(){ summen(); speichern(); });
+  $('v_datum').addEventListener('change', steuerFelder);
+  ['a_name','a_inhaber','a_bic','r_nummer'].forEach(function(id){
+    $(id).addEventListener('input', qrVorschau);
+  });
+  $('r_qr').addEventListener('change', function(){ qrVorschau(); speichern(); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=art]'), function(r){
+    r.addEventListener('change', function(){ steuerFelder(); postenZeichnen(); speichern(); });
+  });
 
-  steuerVorschau();
+  ibanPruefen();
+  steuerFelder();
   patientenListe();
+  termineZeichnen();
   postenZeichnen();
 })();
 </script>

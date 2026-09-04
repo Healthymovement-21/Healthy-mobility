@@ -114,7 +114,7 @@ umgezogen:
 /v5frhmlitisu/
 ```
 
-Darin: die Startseite für Käufer:innen, beide Rechner, der komplette
+Darin: die Startseite für Käufer:innen, alle Rechner, der komplette
 Fahrplan, die Danke-Seite und alle elf Dateien zum Herunterladen.
 Jede Seite dort trägt `noindex`, keine öffentliche Seite verlinkt darauf,
 und der Pfad steht in keiner robots.txt. Über Google ist da nichts zu
@@ -260,6 +260,7 @@ v5frhmlitisu/
   terminbuchung.html            Zusatzkapitel zur Online-Terminvergabe
   monatsrechner.html            voller Rechner mit PDF-Export
   gehaltsrechner.html           Gehalt, Szenarien, Krankenkassen-Ampel
+  planungsrechner.html          Auslastung, Fahrtkosten, Rezeptlaufzeit
   werkzeuge.html                Preis-Kalkulation
   app.webmanifest               damit der Bereich als App startet
   dateien/                      die elf Dateien plus ZIP

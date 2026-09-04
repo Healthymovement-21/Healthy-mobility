@@ -35,6 +35,7 @@ v5frhmlitisu/
   fahrplan.html                alle zehn Kapitel plus To-do-Liste
   monatsrechner.html           Umsatz, Ausgaben, Steuerrücklage, PDF-Export
   gehaltsrechner.html          Hauptjob plus Nebenverdienst, Krankenkassen-Ampel
+  planungsrechner.html         Auslastung, Fahrtkosten, Rezeptlaufzeit, Geldeingang
   werkzeuge.html               Preis-Kalkulation
   terminbuchung.html           Zusatzkapitel zur Online-Terminvergabe
   dateien/                     die elf Dateien plus ZIP
@@ -58,7 +59,7 @@ Elf Dateien zum Herunterladen:
 | `Terminuebersicht.pdf` | Wochenplan zum Ausdrucken |
 | `Patientenliste.pdf` | Kürzel und Klardaten getrennt, mit Löschfristen |
 
-Dazu drei Rechner, die im Kundenbereich im Browser laufen.
+Dazu vier Rechner, die im Kundenbereich im Browser laufen.
 
 Die beiden HTML-Rechner sind bewusst eigenständige Dateien: speichern, doppelklicken,
 läuft. Kein Internet, keine Installation, alle Eingaben bleiben im Browser des Geräts.

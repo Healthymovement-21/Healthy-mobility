@@ -215,32 +215,57 @@ auch ohne Kauf des Pakets — das steht so auf der Seite und im FAQ.
 
 ---
 
-## Schritt 5 — Google-Drive-Ordner für die Dateien (optional)
+## Schritt 5 — Kundenbereich mit Google Drive verknüpfen (optional)
 
-Im Kundenbereich steht als erster Weg zu den Dateien ein Google-Drive-Ordner.
-Der ist bequemer als ein ZIP, weil man einzelne Dateien direkt ansehen und in
-den eigenen Drive kopieren kann — auf dem Handy ist das der einzige Weg, der
-ohne Umwege funktioniert.
+Der komplette Download-Bereich hängt an einer Datei: `drive.js`. Trägst du dort
+etwas ein, zeigen **alle** Herunterladen-Buttons auf Google Drive. Trägst du
+nichts ein, laden sie weiter aus `v5frhmlitisu/dateien/`. Kaputt geht dabei nie
+etwas.
 
-1. In Google Drive einen Ordner anlegen, die elf Dateien aus
-   `v5frhmlitisu/dateien/` hochladen.
+### Weg 1 — nur der Ordner (ein Link, fünf Minuten)
+
+1. In Google Drive einen Ordner anlegen und die zwölf Dateien aus
+   `v5frhmlitisu/dateien/` hochladen (die elf Dateien plus das ZIP).
 2. Ordner → **Freigeben** → unter „Allgemeiner Zugriff" auf
    **Jeder, der über den Link verfügt** stellen, Rolle **Betrachter**.
-3. **Link kopieren** und in `drive.js` eintragen — auch das ist die **einzige**
-   Stelle:
+3. **Link kopieren** und in `drive.js` eintragen:
 
 ```js
-const DRIVE_URL = 'https://drive.google.com/drive/folders/xxxxxxxxxxxx';
+const DRIVE_ORDNER = 'https://drive.google.com/drive/folders/xxxxxxxxxxxx';
 ```
 
-Solange das Feld leer bleibt, zeigt der Button einen Hinweis statt eines toten
-Links, und das ZIP daneben funktioniert weiter. Wichtig: Der Ordner ist über den
-Link öffentlich erreichbar, genau wie der Kundenbereich selbst. Wer den Link
-weitergibt, gibt das Paket weiter — das regelt § 5 der AGB, technisch verhindern
-lässt es sich bei einem 29-€-Produkt nicht sinnvoll.
+Danach führt jeder Button in den Drive-Ordner und heißt auch so:
+„Bei Google Drive öffnen". Der ZIP-Button daneben blendet sich aus, weil er
+dasselbe täte.
 
-Die Dateien in `v5frhmlitisu/dateien/` bleiben unabhängig davon bestehen. Drive
-ist der bequemere Weg, nicht der einzige.
+### Weg 2 — jede Datei einzeln (direkter Download)
+
+Wenn ein Button die passende Datei direkt herunterladen soll, brauchst du je
+Datei die Datei-ID: Datei in Drive → **Freigeben** → „Jeder, der über den Link
+verfügt" → **Link kopieren**. Aus
+
+```
+https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing
+```
+
+ist `1AbCdEfGhIjKlMnOpQrStUv` die ID. Die trägst du in `drive.js` hinter den
+passenden Dateinamen in `DRIVE_DATEIEN` ein. Wenn du versehentlich den ganzen
+Link einsetzt, wird die ID trotzdem erkannt.
+
+Du kannst das nach und nach machen: Dateien mit ID laden direkt, Dateien ohne ID
+gehen in den Ordner aus Weg 1, und ohne beides bleibt der lokale Link stehen.
+
+### Was dabei zu beachten ist
+
+- Alles, was du freigibst, ist über den Link öffentlich erreichbar — genau wie
+  der Kundenbereich selbst. Wer den Link weitergibt, gibt das Paket weiter. Das
+  regelt § 5 der AGB, technisch verhindern lässt es sich bei einem 29-€-Produkt
+  nicht sinnvoll.
+- Die beiden Rechner (Rechnungsgenerator, Einnahmen und Ausgaben) haben oben im
+  Kundenbereich zusätzlich einen **Öffnen**-Button. Der bleibt immer lokal, weil
+  Google Drive HTML-Dateien nicht ausführt, sondern nur anzeigt.
+- Die Dateien in `v5frhmlitisu/dateien/` bleiben liegen. Sie sind die Rückfall-
+  ebene, wenn mit Drive etwas nicht stimmt.
 
 ---
 

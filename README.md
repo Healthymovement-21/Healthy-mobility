@@ -20,7 +20,7 @@ index.html                     Verkaufsseite
 landing.css                    Design nur für die Verkaufsseite
 checkout.js                    ← hier den Bestell-Link eintragen
 community.js                   ← hier den WhatsApp-Einladungslink eintragen
-drive.js                       ← hier den Google-Drive-Ordner eintragen
+drive.js                       ← hier Google Drive verknüpfen (Ordner und/oder Datei-IDs)
 impressum, datenschutz,
 agb, widerruf                  ausgefüllt
 physio-nebenbei/

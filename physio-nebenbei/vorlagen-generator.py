@@ -14,13 +14,13 @@ L = 56.7                      # linker Rand
 R = W - 56.7                  # rechter Rand
 BREITE = R - L
 
-INK      = HexColor('#1B1F1D')
-GRAU     = HexColor('#5B655F')
-GRUEN    = HexColor('#146B5E')
-ROT      = HexColor('#A8391F')
-BOX_BG   = HexColor('#FBEAE4')
+INK      = HexColor('#17191B')
+GRAU     = HexColor('#55595D')
+GRUEN    = HexColor('#0F6B5C')   # einzige Akzentfarbe, identisch zur Website
+ROT      = HexColor('#17191B')   # Warnkasten-Rahmen: neutral statt zweiter Farbe
+BOX_BG   = HexColor('#F1F1EE')
 LINIE    = HexColor('#C9CFCB')
-WASSER   = HexColor('#246B5E')
+WASSER   = HexColor('#B9BEC0')   # Wasserzeichen neutral grau, nicht farbig
 
 FUSS = 'PhysioNebenbei — Muster-Vorlage, keine Rechtsberatung'
 
@@ -360,11 +360,115 @@ def dokumentation(pfad):
     return pfad
 
 
-if __name__ == '__main__':
-    import sys
-    ziel = sys.argv[1] if len(sys.argv) > 1 else '.'
-    print(datenschutz(f'{ziel}/Datenschutz-Patienten.pdf'))
-    print(dokumentation(f'{ziel}/Dokumentationsvorlage.pdf'))
+# ============================================================
+# 6 · Honorarvereinbarung
+# ============================================================
+def honorarvereinbarung(pfad):
+    b = Blatt(pfad, 'Honorarvereinbarung',
+              'Für physiotherapeutische Behandlung als Selbstzahler:in-Leistung — Muster '
+              'zum Ausfüllen und Anpassen.')
+
+    b.warnkasten(
+        'Diese Vorlage ist eine unverbindliche Orientierung, kein geprüftes Rechtsdokument. '
+        'Vor der ersten Verwendung von einer Rechtsanwältin/einem Rechtsanwalt oder dem '
+        'Rechtsservice deines Berufsverbands prüfen und an deinen Einzelfall anpassen lassen.')
+
+    b.abschnitt(1, 'Vertragsparteien')
+    b.feld('Behandler:in (Name, Praxis/Anschrift):', linien=1)
+    b.feld('Patient:in (Name, Anschrift, Geburtsdatum):', linien=1)
+
+    b.abschnitt(2, 'Gegenstand der Vereinbarung')
+    b.absatz(
+        'Die Behandlung erfolgt als Selbstzahlerleistung. Die Kosten werden nicht über die '
+        'gesetzliche Krankenversicherung abgerechnet und sind von der/dem Patient:in '
+        'unmittelbar zu tragen.')
+    b.feld('Art der Behandlung:', linien=1)
+
+    b.abschnitt(3, 'Honorar')
+    b.feld('Honorar pro Behandlungseinheit:', linien=1)
+    b.feld('Dauer einer Einheit (Minuten):', linien=1)
+    b.feld('Anzahl vereinbarter Einheiten (optional):', linien=1)
+    b.absatz(
+        'Physiotherapeutische Heilbehandlungen sind in der Regel nach § 4 Nr. 14 UStG von der '
+        'Umsatzsteuer befreit.')
+
+    b.abschnitt(4, 'Zahlung')
+    b.feld('Zahlungsziel nach Rechnungsstellung (Tage):', linien=1)
+    b.absatz('Die Rechnung wird nach § 14 UStG ordnungsgemäß ausgestellt.')
+
+    b.abschnitt(5, 'Terminabsage')
+    b.feld('Absagefrist vor dem Termin (Stunden):', linien=1)
+    b.feld('Ausfallhonorar bei verspäteter Absage:', linien=1)
+
+    b.abschnitt(6, 'Schlussbestimmungen', braucht=140)
+    b.absatz(
+        'Änderungen dieser Vereinbarung bedürfen der Schriftform. Sollte eine Bestimmung '
+        'unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.')
+    b.unterschrift('Ort, Datum', 'Ort, Datum')
+    b.unterschrift('Unterschrift Behandler:in', 'Unterschrift Patient:in')
+
+    b.speichern()
+    return pfad
+
+
+# ============================================================
+# 7 · Behandlungsvertrag
+# ============================================================
+def behandlungsvertrag(pfad):
+    b = Blatt(pfad, 'Behandlungsvertrag',
+              'Grundvertrag für die physiotherapeutische Behandlung als Selbstzahler:in — '
+              'Muster zum Ausfüllen und Anpassen.')
+
+    b.warnkasten(
+        'Diese Vorlage ist eine unverbindliche Orientierung, kein geprüftes Rechtsdokument. '
+        'Vor der ersten Verwendung von einer Rechtsanwältin/einem Rechtsanwalt oder dem '
+        'Rechtsservice deines Berufsverbands prüfen und an deinen Einzelfall anpassen lassen.')
+
+    b.abschnitt(1, 'Vertragsparteien')
+    b.feld('Behandler:in (Name, Praxis/Anschrift):', linien=1)
+    b.feld('Patient:in (Name, Anschrift, Geburtsdatum):', linien=1)
+
+    b.abschnitt(2, 'Vertragsgegenstand')
+    b.absatz(
+        'Gegenstand dieses Vertrags ist die physiotherapeutische Behandlung der/des '
+        'Patient:in auf Grundlage von Anamnese und Befund.')
+    b.feld('Behandlungsziel:', linien=1)
+
+    b.abschnitt(3, 'Aufklärung und Einwilligung')
+    b.absatz(
+        'Die/der Patient:in wurde über Ablauf, Umfang und mögliche Risiken der Behandlung '
+        'informiert und willigt in die Durchführung ein. Vorerkrankungen, Medikamente oder '
+        'Kontraindikationen wurden vollständig mitgeteilt.')
+
+    b.abschnitt(4, 'Mitwirkungspflichten')
+    b.absatz(
+        'Die/der Patient:in verpflichtet sich, pünktlich zu Terminen zu erscheinen, '
+        'gesundheitliche Veränderungen unverzüglich mitzuteilen und vereinbarte Übungen '
+        'nach bestem Wissen durchzuführen.')
+
+    b.abschnitt(5, 'Datenschutz')
+    b.absatz(
+        'Die Verarbeitung personenbezogener Daten und Gesundheitsdaten erfolgt gemäß der '
+        'gesonderten Datenschutzerklärung, die der/dem Patient:in vor Behandlungsbeginn '
+        'ausgehändigt wurde.')
+
+    b.abschnitt(6, 'Haftung')
+    b.absatz(
+        'Die/der Behandler:in haftet im Rahmen der gesetzlichen Bestimmungen für Schäden aus '
+        'der Behandlung. Es besteht eine Berufshaftpflichtversicherung.')
+
+    b.abschnitt(7, 'Honorar')
+    b.absatz('Das Honorar richtet sich nach der gesondert abgeschlossenen Honorarvereinbarung.')
+
+    b.abschnitt(8, 'Vertragsdauer und Kündigung', braucht=130)
+    b.absatz(
+        'Dieser Vertrag gilt bis auf Weiteres. Beide Seiten können ihn jederzeit mit '
+        'Wirkung für die Zukunft beenden.')
+    b.unterschrift('Ort, Datum', 'Ort, Datum')
+    b.unterschrift('Unterschrift Behandler:in', 'Unterschrift Patient:in')
+
+    b.speichern()
+    return pfad
 
 
 # ============================================================
@@ -537,3 +641,15 @@ def patientenliste(pfad):
 
     b.speichern()
     return pfad
+
+
+if __name__ == '__main__':
+    import sys
+    ziel = sys.argv[1] if len(sys.argv) > 1 else '.'
+    print(honorarvereinbarung(f'{ziel}/Honorarvereinbarung.pdf'))
+    print(behandlungsvertrag(f'{ziel}/Behandlungsvertrag.pdf'))
+    print(datenschutz(f'{ziel}/Datenschutz-Patienten.pdf'))
+    print(dokumentation(f'{ziel}/Dokumentationsvorlage.pdf'))
+    print(anamnese(f'{ziel}/Anamnesebogen.pdf'))
+    print(termine(f'{ziel}/Terminuebersicht.pdf'))
+    print(patientenliste(f'{ziel}/Patientenliste.pdf'))

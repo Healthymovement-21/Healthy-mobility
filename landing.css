@@ -1081,3 +1081,34 @@ html{ overflow-x:hidden; }
   .autor:has(.autor-bild){ grid-template-columns:1fr; }
   .autor-bild{ max-width:220px; }
 }
+
+/* Dateiliste im Inhalt-Abschnitt: elf Zeilen, deshalb auf breiten
+   Schirmen zweispaltig, damit daraus keine Textwand wird. */
+.dateiblock{ margin-top:clamp(44px,5vw,68px); }
+.dateiblock h3{
+  font-size:clamp(19px,2vw,23px);
+  font-weight:450;
+  letter-spacing:-.01em;
+  margin:0;
+}
+.nutzen.dateiliste b{
+  font-family:var(--font-mono);
+  font-size:13.5px;
+  overflow-wrap:anywhere;
+}
+.nutzen.dateiliste span{ max-width:46ch; }
+@media (min-width:820px){
+  .nutzen.dateiliste{ grid-template-columns:1fr 1fr; column-gap:clamp(28px,3vw,44px); }
+}
+.micro-note{
+  margin:20px 0 0;
+  font-size:14px;
+  color:var(--ink-faint);
+  max-width:60ch;
+}
+
+/* Sprungziele der Navigation: die feste Kopfzeile ist 61 bis 69 Pixel
+   hoch und wuerde sonst die erste Zeile des Abschnitts verdecken. */
+#fuer-wen, #kostenlos, #inhalt, #rechner, #faq, #kaufen{
+  scroll-margin-top:76px;
+}

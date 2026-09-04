@@ -16,14 +16,14 @@
 -->
 <style>
   :root{
-    color-scheme: dark;
+    color-scheme: light;
     --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --paper:#050B12; --ink:#E9F3F7; --muted:#93AAB9; --faint:#6A8494;
-    --accent:#35D6E8; --accent-ink:#03151B; --accent-soft:rgba(53,214,232,.12);
-    --mark:#FF7C96; --gruen:#34D399;
-    --edge:rgba(255,255,255,.10); --line:rgba(255,255,255,.075);
-    --field:rgba(255,255,255,.05);
+    --paper:#FFFFFF; --ink:#17191B; --muted:#55595D; --faint:#85898D;
+    --accent:#0F6B5C; --accent-dark:#0B5348; --accent-ink:#FFFFFF; --accent-soft:rgba(15,107,92,.08);
+    --mark:#A6362D; --gruen:#1B7A4A;
+    --edge:#E2E2DE; --line:#EBEBE7;
+    --field:#FAFAF8;
   }
   *{ box-sizing:border-box; }
   body{
@@ -42,7 +42,7 @@
 
   .karte{
     border:1px solid var(--edge); border-radius:16px;
-    background:rgba(10,24,36,.5); padding:16px 18px;
+    background:#FBFBF9; padding:16px 18px;
   }
 
   label{ display:block; font-size:12.5px; color:var(--faint); margin-bottom:5px; }
@@ -62,7 +62,7 @@
   /* Monatskarten statt breiter Tabelle: passt auf jede Bildschirmbreite */
   .monat{
     border:1px solid var(--edge); border-radius:14px;
-    background:rgba(10,24,36,.42); padding:12px 14px 14px; margin-bottom:9px;
+    background:#FBFBF9; padding:12px 14px 14px; margin-bottom:9px;
   }
   .monat-kopf{
     display:flex; align-items:baseline; justify-content:space-between; gap:10px;
@@ -77,9 +77,9 @@
   .zusammen{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:12px; margin-top:8px; }
   .kachel{
     border:1px solid var(--edge); border-radius:14px;
-    background:rgba(10,24,36,.45); padding:14px 16px;
+    background:#FBFBF9; padding:14px 16px;
   }
-  .kachel.haupt{ border-color:rgba(53,214,232,.25); background:linear-gradient(180deg, rgba(53,214,232,.08), rgba(255,255,255,.01)), rgba(8,22,33,.6); }
+  .kachel.haupt{ border-color:var(--accent-line, rgba(15,107,92,.3)); background:var(--accent-soft); }
   .kachel .k{ display:block; font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-bottom:6px; }
   .kachel .n{ font-size:23px; font-weight:400; font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
   .kachel.haupt .n{ color:var(--accent); font-size:28px; }

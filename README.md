@@ -19,6 +19,7 @@ verlinkt.
 index.html                     Verkaufsseite
 landing.css                    Design nur für die Verkaufsseite
 checkout.js                    ← hier den Bestell-Link eintragen
+community.js                   ← hier den WhatsApp-Einladungslink eintragen
 impressum, datenschutz,
 agb, widerruf                  ausgefüllt
 physio-nebenbei/
@@ -32,7 +33,7 @@ NUR MIT LINK
 v5frhmlitisu/
   index.html                   Startseite für Käufer:innen, als App speicherbar
   danke.html                   Ziel der Weiterleitung nach der Zahlung
-  fahrplan.html                alle zehn Kapitel plus To-do-Liste
+  fahrplan.html                alle zehn Kapitel, Kapitel-Tracker plus persoenliche To-do-Liste
   monatsrechner.html           Umsatz, Ausgaben, Steuerrücklage, PDF-Export
   gehaltsrechner.html          Hauptjob plus Nebenverdienst, Krankenkassen-Ampel
   planungsrechner.html         Auslastung, Fahrtkosten, Rezeptlaufzeit, Geldeingang

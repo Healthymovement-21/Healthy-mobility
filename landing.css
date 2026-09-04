@@ -1109,6 +1109,6 @@ html{ overflow-x:hidden; }
 
 /* Sprungziele der Navigation: die feste Kopfzeile ist 61 bis 69 Pixel
    hoch und wuerde sonst die erste Zeile des Abschnitts verdecken. */
-#fuer-wen, #kostenlos, #inhalt, #rechner, #faq, #kaufen{
+#fuer-wen, #kostenlos, #community, #inhalt, #rechner, #faq, #kaufen{
   scroll-margin-top:76px;
 }

@@ -200,7 +200,22 @@ Kurzfassung, falls du wechseln willst:
 
 ---
 
-## Schritt 4 — Reichweitenmessung aktivieren (optional)
+## Schritt 4 — WhatsApp-Community einrichten (optional)
+
+Sobald deine WhatsApp-Gruppe oder dein Community-Kanal steht, den Einladungslink
+in `community.js` eintragen — auch das ist die **einzige** Stelle:
+
+```js
+const WHATSAPP_URL = 'https://chat.whatsapp.com/xxxxxxxxxxxxxxxxxxxxxx';
+```
+
+Solange das Feld leer bleibt, zeigt der Beitreten-Button auf der Verkaufsseite
+einen Hinweis statt eines toten Links. Die Community ist bewusst für alle offen,
+auch ohne Kauf des Pakets — das steht so auf der Seite und im FAQ.
+
+---
+
+## Schritt 5 — Reichweitenmessung aktivieren (optional)
 
 In `index.html` steht im `<head>` ein auskommentierter Block:
 
@@ -217,16 +232,16 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 
 ---
 
-## Schritt 5 — Danach
+## Schritt 6 — Danach
 
 - Eigene Domain verbinden statt der GitHub-Adresse (wirkt bei einem Vertrauens­produkt
   mehr als jede Textänderung).
-- Ein echtes Foto von dir in „Ich hab denselben Weg gerade hinter mir".
-- Die Platzhalter-Stimmen in `index.html` (markiert mit `<!-- TODO: echtes Testimonial
-  einsetzen -->`) durch echte Rückmeldungen ersetzen, sobald die ersten Käufer:innen
-  berichtet haben. Bis dahin steht dort offen, dass es noch keine gibt — das ist
-  besser als erfundene Zitate.
-- Die zwei Vertragsvorlagen anwaltlich oder vom Rechtsservice deines Berufsverbands
+- Foto in „Ich hab denselben Weg gerade hinter mir" ist eingebunden
+  (`physio-nebenbei/img/nick.jpg`).
+- Repository auf **Private** stellen (GitHub Pro nötig für Pages aus einem privaten
+  Repo), sonst sind die Dateien im Ordner `v5frhmlitisu/` trotz Geheim-Link direkt
+  über die GitHub-Dateiliste erreichbar.
+- Die Vertragsvorlagen anwaltlich oder vom Rechtsservice deines Berufsverbands
   prüfen lassen, bevor echte Patient:innen sie unterschreiben.
 
 ---
@@ -237,6 +252,7 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 ÖFFENTLICH
 index.html                      Verkaufsseite
 checkout.js                     ← hier den Bestell-Link eintragen
+community.js                    ← hier den WhatsApp-Einladungslink eintragen
 impressum.html                  ausgefüllt
 datenschutz.html                ausgefüllt
 agb.html                        inkl. Weitergabeverbot (§ 5)
@@ -256,7 +272,7 @@ NUR MIT LINK (der verkaufte Teil)
 v5frhmlitisu/
   index.html                    Startseite für Käufer:innen, als App speicherbar
   danke.html                    Ziel der Weiterleitung nach der Zahlung
-  fahrplan.html                 alle zehn Kapitel plus To-do-Liste
+  fahrplan.html                 alle zehn Kapitel, Kapitel-Tracker plus persoenliche To-do-Liste
   terminbuchung.html            Zusatzkapitel zur Online-Terminvergabe
   monatsrechner.html            voller Rechner mit PDF-Export
   gehaltsrechner.html           Gehalt, Szenarien, Krankenkassen-Ampel

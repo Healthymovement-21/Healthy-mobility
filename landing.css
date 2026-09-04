@@ -1,7 +1,8 @@
 /* ============================================================
    Startseite. Ergaenzt base.css und gilt nur hier.
-   Wenige Abschnitte, aber die gross und deutlich:
-   Hero, Rechner, Inhalt, Kauf, Community, FAQ, Abschluss, Fuss.
+   Sieben Abschnitte in fester Reihenfolge: was es ist, Rechner zum
+   Ausprobieren, was drin ist, kaufen, Fragen, kostenlose Gruppe, wer.
+   Ein einziger Kauf-Button, alle Buttons sehen gleich aus.
    ============================================================ */
 
 .lp{ font-size:17px; }
@@ -50,7 +51,6 @@
   text-decoration:none;
 }
 .nav-links a:hover{ color:var(--ink); }
-.nav .btn{ padding:10px 20px; font-size:15px; }
 .nav-burger{
   display:none;
   margin-left:auto;
@@ -97,18 +97,17 @@
 }
 .nav-sheet a:last-child{ border-bottom:none; }
 
-/* ---------------- Hero ----------------
+/* ---------------- 1. Was ist das ----------------
    Der erste Bildschirm sagt in drei Zeilen, was das ist,
-   fuer wen und was es kostet. Sonst nichts. */
+   fuer wen und was es kostet. Kein Button, keine Kleinteile. */
 .hero{ padding:clamp(48px,8vh,80px) 0 clamp(40px,5vw,56px); }
-.lp .hero .eyebrow{ font-size:12.5px; color:var(--accent); margin-bottom:16px; }
 .hero h1{
   font-size:clamp(34px,6.4vw,54px);
   font-weight:650;
   line-height:1.08;
   letter-spacing:-.028em;
   margin:0;
-  max-width:16ch;
+  max-width:18ch;
 }
 .hero .sub{
   margin:22px 0 0;
@@ -138,13 +137,19 @@
 }
 .pz-text{ font-size:16px; color:var(--ink-muted); }
 
-.hero .cta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  margin-top:28px;
+.hinweis-frei{
+  margin:20px 0 0;
+  font-size:16px;
+  color:var(--ink-muted);
 }
-.btn.gross{ font-size:17.5px; padding:17px 30px; border-radius:11px; }
+
+/* Alle Buttons der Startseite sind gleich: gross, gruen, gefuellt.
+   Es gibt keine zweite Button-Form und keinen zweiten Kauf-Button. */
+.lp .btn{
+  font-size:17px;
+  padding:16px 28px;
+  border-radius:11px;
+}
 
 /* ---------------- Ueberschriften ---------------- */
 .lp h2{
@@ -166,11 +171,13 @@
 .lp .say b{ color:var(--ink); font-weight:600; }
 .lp .cta{ margin-top:22px; }
 
-/* ---------------- Rechner auf der Startseite ----------------
+/* ---------------- 2. Rechner ----------------
    Das staerkste Argument gehoert nach vorn und muss anfassbar
    sein, nicht hinter einem Link liegen. */
 .buehne{ background:var(--surface); }
-.buehne + .band{ border-top:none; }
+.buehne + .band,
+.band + .buehne,
+.buehne + .band-tight{ border-top:none; }
 
 .rechner-karte{
   margin-top:26px;
@@ -248,29 +255,7 @@
 }
 .r-neben .n{ font-size:26px; }
 
-.mehr-drin{
-  margin-top:clamp(28px,3.5vw,38px);
-  padding:22px 24px;
-  border:1px solid var(--glass-edge);
-  border-radius:14px;
-  background:var(--paper);
-}
-.mehr-drin h3{
-  margin:0 0 12px;
-  font-size:16.5px;
-  font-weight:600;
-  color:var(--ink);
-}
-.mehr-drin ul{
-  margin:0;
-  padding-left:20px;
-  display:grid;
-  gap:7px;
-  font-size:16px;
-  color:var(--ink-muted);
-}
-
-/* ---------------- Inhalt ---------------- */
+/* ---------------- 3. Das bekommst du ---------------- */
 .gruppen-titel{
   margin:clamp(34px,4vw,46px) 0 14px;
   font-size:13px;
@@ -316,32 +301,17 @@
   line-height:1.5;
   color:var(--ink-muted);
 }
-.rechner-liste{
+.einfach{
   list-style:none;
   margin:0;
   padding:0;
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
-  gap:14px;
-}
-.rechner-liste li{
-  padding:14px 16px;
-  border:1px solid var(--glass-edge);
-  border-radius:12px;
-  background:var(--surface);
-}
-.rechner-liste b{
-  display:block;
-  font-size:16px;
-  font-weight:600;
-  color:var(--ink);
-}
-.rechner-liste span{
-  display:block;
-  font-size:14.5px;
+  gap:11px;
+  font-size:16.5px;
+  line-height:1.5;
   color:var(--ink-muted);
-  margin-top:3px;
 }
+.einfach b{ color:var(--ink); font-weight:600; }
 
 .kapitel{
   list-style:decimal;
@@ -362,10 +332,13 @@
   max-width:64ch;
 }
 
-/* ---------------- Kauf ---------------- */
-#kaufen .price-box{ margin-top:26px; }
+/* ---------------- 4. Kaufen ---------------- */
+#kaufen .price-box{ margin-top:24px; background:var(--paper); }
+#kaufen .price-box .btn{ width:100%; }
+#kaufen .amount{ margin-bottom:20px; }
+#kaufen .amount small{ margin-left:10px; }
 
-/* ---------------- FAQ ----------------
+/* ---------------- 5. Fragen ----------------
    Bewusst leise: eine kurze Ueberschrift, schmale Zeilen,
    alles zugeklappt. Der Abschnitt soll niemanden aufhalten. */
 .faq-titel{ font-size:clamp(20px,2.4vw,23px); font-weight:600; letter-spacing:-.01em; }
@@ -406,10 +379,6 @@
   color:var(--ink-muted);
 }
 
-/* ---------------- Abschluss ---------------- */
-.schluss{ text-align:left; }
-.schluss h2{ max-width:20ch; }
-
 /* ---------------- Fuss ---------------- */
 .lpfoot{
   border-top:1px solid var(--glass-line);
@@ -441,15 +410,14 @@
 
 /* Sprungziele: die feste Kopfzeile ist 62px hoch und wuerde sonst
    die erste Zeile des Abschnitts verdecken. */
-#rechner, #inhalt, #community, #faq, #kaufen{
+#rechner, #inhalt, #kaufen, #fragen, #community{
   scroll-margin-top:74px;
 }
 
 @media (max-width:760px){
   .nav-links{ display:none; }
-  .nav .btn{ display:none; }
   .nav-burger{ display:flex; }
-  .hero .cta .btn{ width:100%; }
+  .lp .btn{ width:100%; }
   .r-eingabe{ padding:8px 18px 18px; }
   .r-ergebnis{ padding:22px 18px; }
   .r-zeile input[type=number]{ width:104px; }

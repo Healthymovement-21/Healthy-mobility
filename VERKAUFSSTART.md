@@ -215,7 +215,36 @@ auch ohne Kauf des Pakets — das steht so auf der Seite und im FAQ.
 
 ---
 
-## Schritt 5 — Reichweitenmessung aktivieren (optional)
+## Schritt 5 — Google-Drive-Ordner für die Dateien (optional)
+
+Im Kundenbereich steht als erster Weg zu den Dateien ein Google-Drive-Ordner.
+Der ist bequemer als ein ZIP, weil man einzelne Dateien direkt ansehen und in
+den eigenen Drive kopieren kann — auf dem Handy ist das der einzige Weg, der
+ohne Umwege funktioniert.
+
+1. In Google Drive einen Ordner anlegen, die elf Dateien aus
+   `v5frhmlitisu/dateien/` hochladen.
+2. Ordner → **Freigeben** → unter „Allgemeiner Zugriff" auf
+   **Jeder, der über den Link verfügt** stellen, Rolle **Betrachter**.
+3. **Link kopieren** und in `drive.js` eintragen — auch das ist die **einzige**
+   Stelle:
+
+```js
+const DRIVE_URL = 'https://drive.google.com/drive/folders/xxxxxxxxxxxx';
+```
+
+Solange das Feld leer bleibt, zeigt der Button einen Hinweis statt eines toten
+Links, und das ZIP daneben funktioniert weiter. Wichtig: Der Ordner ist über den
+Link öffentlich erreichbar, genau wie der Kundenbereich selbst. Wer den Link
+weitergibt, gibt das Paket weiter — das regelt § 5 der AGB, technisch verhindern
+lässt es sich bei einem 29-€-Produkt nicht sinnvoll.
+
+Die Dateien in `v5frhmlitisu/dateien/` bleiben unabhängig davon bestehen. Drive
+ist der bequemere Weg, nicht der einzige.
+
+---
+
+## Schritt 6 — Reichweitenmessung aktivieren (optional)
 
 In `index.html` steht im `<head>` ein auskommentierter Block:
 
@@ -232,12 +261,10 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 
 ---
 
-## Schritt 6 — Danach
+## Schritt 7 — Danach
 
 - Eigene Domain verbinden statt der GitHub-Adresse (wirkt bei einem Vertrauens­produkt
   mehr als jede Textänderung).
-- Foto in „Ich hab denselben Weg gerade hinter mir" ist eingebunden
-  (`physio-nebenbei/img/nick.jpg`).
 - Repository auf **Private** stellen (GitHub Pro nötig für Pages aus einem privaten
   Repo), sonst sind die Dateien im Ordner `v5frhmlitisu/` trotz Geheim-Link direkt
   über die GitHub-Dateiliste erreichbar.
@@ -253,6 +280,7 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 index.html                      Verkaufsseite
 checkout.js                     ← hier den Bestell-Link eintragen
 community.js                    ← hier den WhatsApp-Einladungslink eintragen
+drive.js                        ← hier den Google-Drive-Ordner eintragen
 impressum.html                  ausgefüllt
 datenschutz.html                ausgefüllt
 agb.html                        inkl. Weitergabeverbot (§ 5)

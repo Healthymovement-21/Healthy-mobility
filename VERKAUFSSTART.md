@@ -7,28 +7,12 @@ Reihenfolge einhalten — Schritt 3 setzt Schritt 2 voraus.
 
 ---
 
-## Schritt 1 — Rechtliches ausfüllen (Pflicht, zuerst)
+## Schritt 1 — Rechtliches (erledigt)
 
-In diesen vier Dateien stehen Platzhalter in der Form `[…]`. Jeder muss ersetzt werden:
-
-| Datei | Was fehlt |
-|---|---|
-| `impressum.html` | Name, Anschrift, Telefon, E-Mail, USt-IdNr. **oder** Kleinunternehmer-Hinweis, zuständige Aufsichtsbehörde |
-| `datenschutz.html` | Name, Anschrift, E-Mail, Hosting-Anbieter (bei GitHub Pages: „GitHub Inc."), Hinweis zum Auftragsverarbeitungsvertrag |
-| `widerruf.html` | Name, Anschrift, E-Mail — **zweimal**: Abschnitt 1 und Muster-Formular |
-| `agb.html` | Name, Anschrift, Datum „Stand" |
-
-Außerdem in `index.html`: `[VORNAME NACHNAME]`, `[JAHRESZAHL]` und `[ORT ODER REGION]`
-im Abschnitt „Ich hab denselben Weg gerade hinter mir".
-
-Suchen kannst du alle Stellen auf einmal:
-
-```
-grep -rn "\[" *.html | grep -v "href"
-```
-
-Ohne vollständiges Impressum und Datenschutzerklärung ist der Verkauf an Verbraucher in
-Deutschland abmahnfähig. Das ist der einzige Punkt auf der Liste, bei dem Sparen teuer wird.
+Impressum, Datenschutz, Widerruf und AGB sind vollständig ausgefüllt:
+Nick Grausam, Dornierstraße 5, 69181 Leimen, Telefon und E-Mail,
+Kleinunternehmer nach § 19 UStG, Aufsichtsbehörde LSJV Rheinland-Pfalz.
+Es sind keine Platzhalter mehr offen.
 
 ---
 
@@ -84,7 +68,8 @@ Danach am Produkt auf **Zahlungslink erstellen** klicken.
 
 1. Unter „Nach der Zahlung" → „Kund:innen auf deine Website weiterleiten" die URL
    deiner Danke-Seite eintragen, z. B.
-   `https://healthymovement-21.github.io/Healthy-mobility/danke.html`.
+   `https://healthymovement-21.github.io/Healthy-mobility/v5frhmlitisu/danke.html`
+   (siehe Schritt 2f).
 2. Rechnungsadresse abfragen aktivieren, das brauchst du für deine eigene
    Buchhaltung.
 3. Als Zahlungsart reicht Kreditkarte (Apple Pay/Google Pay laufen automatisch
@@ -112,30 +97,59 @@ künftigem Datum und beliebiger Prüfziffer bezahlen. Prüfen:
 - [ ] Checkout lädt, Preis 29 €
 - [ ] Widerrufs-Bestätigung auf der Verkaufsseite ist Pflicht, bevor der
       Kauf-Button überhaupt anklickbar wird
-- [ ] nach der Zahlung landest du auf `danke.html`
-- [ ] alle vier Dateien öffnen sich von dort
+- [ ] nach der Zahlung landest du auf der Danke-Seite im Kundenbereich
+- [ ] von dort kommst du in deinen Bereich und alle sechs Dateien öffnen sich
 
 Wenn alles passt: Konto vollständig verifizieren, in den **Live-Modus**
 wechseln und dort denselben Zahlungslink neu erstellen. Testmodus-Links
 funktionieren live nicht.
 
-### 2f — Der wichtige Unterschied zu Digistore24: Dateiauslieferung
+### 2f — Auslieferung: der Kundenbereich
 
-Stripe liefert selbst keine Dateien aus, das kann nur ein Reseller wie
-Digistore24. Nach der Zahlung landet die Kund:in auf `danke.html`, und diese Seite
-verlinkt die vier Dateien direkt aus dem Repository. Das bedeutet konkret:
+Die Dateien liegen **nicht mehr öffentlich** auf der Website. Alles, was
+verkauft wird, ist in einen Ordner mit einer nicht erratbaren Adresse
+umgezogen:
 
-- Die Dateien bleiben dauerhaft über ihre URL erreichbar, auch ohne Kauf. Anders
-  als beim Digistore24-Weg gibt es hier keinen späteren Schritt, sie „aus dem Repo
-  zu nehmen", weil niemand sonst sie ausliefert.
-- Kein automatisches Wasserzeichen pro Käufer:in mehr, das war eine
-  Digistore24-Funktion.
-- Für ein 29-€-Info-Produkt ist das ein vertretbares Risiko: `danke.html` ist
-  `noindex` und nirgends öffentlich verlinkt. Wer ohne Kauf drankommen will,
-  braucht die exakte URL, die nur nach der Zahlung erscheint.
+```
+/v5frhmlitisu/
+```
 
-Wenn dir das zu wenig Kontrolle ist, bleibt Digistore24 die Alternative mit
-echter Zugriffssperre, siehe unten.
+Darin: die Startseite für Käufer:innen, beide Rechner, der komplette
+Fahrplan, die Danke-Seite und alle sechs Dateien zum Herunterladen.
+Jede Seite dort trägt `noindex`, keine öffentliche Seite verlinkt darauf,
+und der Pfad steht in keiner robots.txt. Über Google ist da nichts zu
+finden.
+
+**Öffentlich bleibt nur die Leseprobe:**
+
+| Seite | Was sichtbar ist |
+|---|---|
+| `physio-nebenbei/fahrplan.html` | Kapitelübersicht plus Kapitel 1 komplett |
+| `physio-nebenbei/demo-rechner.html` | eine Behandlungsart, Umsatz und Stundensatz |
+
+**Was du beim Zahlungsanbieter eintragen musst:** als Weiterleitung nach
+erfolgreicher Zahlung diese Adresse:
+
+```
+https://healthymovement-21.github.io/Healthy-mobility/v5frhmlitisu/danke.html
+```
+
+Die Danke-Seite zeigt der Käuferin ihren persönlichen Link, bietet einen
+Kopieren-Knopf und erklärt, wie man sich den Bereich als App aufs Handy
+legt. Trag denselben Link zusätzlich in die Bestätigungsmail des
+Anbieters ein, damit er nicht verloren geht.
+
+**Was das leistet und was nicht.** Ohne Kauf kommt niemand an die Inhalte,
+weil niemand die Adresse kennt. Wer den Link aber weitergibt, gibt den
+Zugang weiter. Genau dasselbe gilt für Download-Links von Digistore24
+oder Gumroad. Rechtlich deckt das § 5 der AGB ab, der die Weitergabe
+verbietet. Willst du zusätzlich ein Wasserzeichen mit Name und E-Mail der
+Käuferin auf jeder PDF-Seite, geht das nur über einen Anbieter, der die
+Dateien selbst ausliefert, also Digistore24 statt Stripe.
+
+**Wenn ein Link doch einmal kursiert:** Ordner umbenennen, neuen Link in
+die Weiterleitung eintragen, fertig. Die alte Adresse läuft dann ins
+Leere.
 
 ---
 
@@ -220,36 +234,41 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 ## Struktur der Seite
 
 ```
-index.html            Verkaufsseite (Hero, Inhalt, Preis, FAQ)
-checkout.js           ← hier den Bestell-Link eintragen
-danke.html            Danke-/Download-Seite nach dem Kauf (noindex)
-impressum.html        Pflicht
-datenschutz.html      Pflicht
-agb.html              inkl. Weitergabeverbot für die Dateien (§ 5)
-widerruf.html         Pflicht, inkl. Muster-Widerrufsformular
-manifest.webmanifest  macht die Rechner als App installierbar
-sw.js                 Service Worker, damit die Rechner offline laufen
+ÖFFENTLICH
+index.html                      Verkaufsseite
+checkout.js                     ← hier den Bestell-Link eintragen
+impressum.html                  ausgefüllt
+datenschutz.html                ausgefüllt
+agb.html                        inkl. Weitergabeverbot (§ 5)
+widerruf.html                   ausgefüllt, inkl. Muster-Formular
+landing.css                     Design nur für die Verkaufsseite
+manifest.webmanifest, sw.js     App-Funktion und Offline-Betrieb
 
 physio-nebenbei/
-  fahrplan.html       kostenlos lesbar, mit To-do-Liste — der Verkaufsmotor
-  werkzeuge.html      Übersicht der Rechner
-  monatsrechner.html  Behandlungen → Monatsumsatz, mit Beispielzahlen beim Öffnen
-  gehaltsrechner.html Gehalt + Nebeneinkommen, inkl. Krankenkassen-Ampel
-  base.css            gemeinsames Design, Systemschriften (keine Google Fonts)
-  img/                Vorschaubilder für die Verkaufsseite + OG-Bild
-  *.docx *.xlsx *.pdf das verkaufte Paket
-  PhysioNebenbei-Paket.zip  alle vier Dateien gebündelt
+  base.css                      Design für die ganze Seite
+  zahlenfeld.js                 Ziffernraster statt Handytastatur
+  fahrplan.html                 LESEPROBE: Kapitelliste plus Kapitel 1
+  demo-rechner.html             KURZFASSUNG: eine Behandlungsart
+  img/, logo.svg, icon-*.png    Bilder und Symbole
+  vorlagen-generator.py         erzeugt die PDF-Vorlagen neu
+
+NUR MIT LINK (der verkaufte Teil)
+v5frhmlitisu/
+  index.html                    Startseite für Käufer:innen, als App speicherbar
+  danke.html                    Ziel der Weiterleitung nach der Zahlung
+  fahrplan.html                 alle zehn Kapitel plus To-do-Liste
+  monatsrechner.html            voller Rechner mit PDF-Export
+  gehaltsrechner.html           Gehalt, Szenarien, Krankenkassen-Ampel
+  werkzeuge.html                Preis-Kalkulation
+  app.webmanifest               damit der Bereich als App startet
+  dateien/                      die sechs Dateien plus ZIP
 ```
 
-### Warum die Produktdateien öffentlich im Repo liegen
+### Wenn du Inhalte änderst
 
-Weil `danke.html` sie direkt verlinkt und GitHub Pages keine Zugangsbeschränkung
-kennt. Wer die URL kennt, kommt ohne Kauf ran. Bei Stripe (Schritt 2) bleibt das
-so, siehe „2f — Der wichtige Unterschied zu Digistore24" oben, das ist der
-Kompromiss für die niedrigere Gebühr.
+Die Leseprobe zieht Kapitel 1 aus dem vollen Fahrplan. Änderst du dort etwas,
+muss es auch in `physio-nebenbei/fahrplan.html` nachgezogen werden, sonst laufen
+die beiden Fassungen auseinander.
 
-Nutzt du stattdessen Digistore24 (Alternative weiter oben) und lässt die
-Auslieferung dort laufen, kannst du die vier Dateien plus die ZIP aus
-`physio-nebenbei/` löschen und `danke.html` auf eine reine Danke-Seite ohne
-Download-Buttons zurückbauen, dann gibt es keine öffentlich erreichbaren Dateien
-mehr.
+Die PDF-Vorlagen lassen sich mit `python3 physio-nebenbei/vorlagen-generator.py
+v5frhmlitisu/dateien` neu erzeugen. Danach die ZIP neu packen.

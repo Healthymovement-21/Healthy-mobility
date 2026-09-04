@@ -1,90 +1,64 @@
-/* Systemschriften statt Google Fonts: keine Übertragung von Besucher-IPs an
-   Google-Server, damit kein DSGVO-Problem und nichts nachzuladen. */
+/* ============================================================
+   PhysioNebenbei — Design-System
+   Dunkle, atmosphaerische Grundstimmung: Navy-Basis, Cyan als
+   einziger echter Leuchtakzent, Violett und Magenta nur als Licht.
+
+   Schrift: Systemschriften. Kein Google Fonts, keine externen
+   Schriftdienste, damit keine Besucher-IPs an Dritte gehen.
+   Auf iPhone/Mac ist das SF Pro, auf Windows Segoe UI Variable.
+   ============================================================ */
 
 :root{
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
-  --paper:        #F2F5F4;
-  --ink:          #16201D;
-  --ink-muted:    #5D6B65;
-  --accent:       #0E6B5C;
-  --accent-ink:   #FFFFFF;
-  --accent-soft:  rgba(14,107,92,.10);
-  --mark:         #A8391F;
-  --mark-soft:    rgba(168,57,31,.09);
-  --focus:        #0E6B5C;
+  /* Basis */
+  --paper:        #050B12;
+  --surface:      #0A1824;
+  --surface-2:    #0D2635;
+
+  --ink:          #E9F3F7;
+  --ink-muted:    #93AAB9;
+  --ink-faint:    #6A8494;
+
+  /* Leuchtakzent */
+  --accent:       #35D6E8;
+  --accent-ink:   #03151B;
+  --accent-soft:  rgba(53,214,232,.12);
+  --accent-line:  rgba(53,214,232,.34);
+
+  /* Sekundaeres Licht, bewusst nie als Textfarbe */
+  --violet:       #7C6CFF;
+  --magenta:      #FF4FD8;
+
+  /* Warnung / Hinweis */
+  --mark:         #FF7C96;
+  --mark-soft:    rgba(255,124,150,.11);
+  --focus:        #35D6E8;
 
   /* Glas */
-  --glass:        rgba(255,255,255,.66);
-  --glass-strong: rgba(255,255,255,.78);
-  --glass-edge:   rgba(255,255,255,.9);
-  --glass-line:   rgba(22,32,29,.08);
-  --shadow:       0 1px 2px rgba(22,32,29,.04), 0 8px 24px -12px rgba(22,32,29,.14);
-  --shadow-lift:  0 1px 2px rgba(22,32,29,.05), 0 20px 48px -20px rgba(22,32,29,.22);
-  --input-bg:     rgba(255,255,255,.72);
+  --glass:        rgba(255,255,255,.045);
+  --glass-strong: rgba(11,26,38,.92);
+  --glass-edge:   rgba(255,255,255,.10);
+  --glass-line:   rgba(255,255,255,.075);
+  --input-bg:     rgba(255,255,255,.05);
 
-  /* Farbauren im Hintergrund, damit das Glas etwas zum Brechen hat */
-  --aura-1: rgba(14,107,92,.22);
-  --aura-2: rgba(94,164,214,.20);
-  --aura-3: rgba(168,57,31,.10);
+  --shadow:       0 2px 6px rgba(0,0,0,.36), 0 22px 54px -26px rgba(0,0,0,.85);
+  --shadow-lift:  0 2px 8px rgba(0,0,0,.42), 0 34px 76px -30px rgba(0,0,0,.95);
+  --glow-cyan:    0 0 0 1px rgba(53,214,232,.22), 0 18px 60px -22px rgba(53,214,232,.42);
 
-  /* Dateityp-Farben für die Paket-Übersicht */
-  --word:  #3B65A6;
-  --excel: #1F7A4D;
-}
+  /* Hintergrundlicht: liegt fest hinter allem, damit jede Glasflaeche
+     beim Scrollen einen anderen Untergrund bekommt. */
+  --aura-1: rgba(53,214,232,.13);
+  --aura-2: rgba(124,108,255,.12);
+  --aura-3: rgba(255,79,216,.05);
 
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:        #0C1110;
-    --ink:          #E9EFEC;
-    --ink-muted:    #94A49D;
-    --accent:       #5FDDC4;
-    --accent-ink:   #06211C;
-    --accent-soft:  rgba(95,221,196,.12);
-    --mark:         #FF9270;
-    --mark-soft:    rgba(255,146,112,.10);
-    --focus:        #5FDDC4;
-
-    --glass:        rgba(255,255,255,.055);
-    --glass-strong: rgba(255,255,255,.09);
-    --glass-edge:   rgba(255,255,255,.12);
-    --glass-line:   rgba(255,255,255,.08);
-    --shadow:       0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
-    --shadow-lift:  0 1px 2px rgba(0,0,0,.35), 0 20px 48px -20px rgba(0,0,0,.8);
-    --input-bg:     rgba(255,255,255,.07);
-
-    --aura-1: rgba(95,221,196,.14);
-    --aura-2: rgba(94,164,214,.12);
-    --aura-3: rgba(255,146,112,.07);
-
-    --word:  #8FBBEF;
-    --excel: #7BE0A8;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:        #0C1110;
-  --ink:          #E9EFEC;
-  --ink-muted:    #94A49D;
-  --accent:       #5FDDC4;
-  --accent-ink:   #06211C;
-  --accent-soft:  rgba(95,221,196,.12);
-  --mark:         #FF9270;
-  --mark-soft:    rgba(255,146,112,.10);
-  --focus:        #5FDDC4;
-  --glass:        rgba(255,255,255,.055);
-  --glass-strong: rgba(255,255,255,.09);
-  --glass-edge:   rgba(255,255,255,.12);
-  --glass-line:   rgba(255,255,255,.08);
-  --shadow:       0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
-  --shadow-lift:  0 1px 2px rgba(0,0,0,.35), 0 20px 48px -20px rgba(0,0,0,.8);
-  --input-bg:     rgba(255,255,255,.07);
-  --aura-1: rgba(95,221,196,.14);
-  --aura-2: rgba(94,164,214,.12);
-  --aura-3: rgba(255,146,112,.07);
-
-  --word:  #8FBBEF;
-  --excel: #7BE0A8;
+  /* Dateityp-Farben fuer die Paket-Uebersicht */
+  --word:  #6BA8F5;
+  --excel: #3FD69B;
 }
 
 *{ box-sizing:border-box; }
@@ -119,13 +93,14 @@ body::before{
 
 a{ color:var(--accent); }
 h1,h2,h3{
-  font-family:var(--font-sans);
-  font-weight:650;
-  letter-spacing:-.018em;
+  font-family:var(--font-display);
+  font-weight:400;
+  letter-spacing:-.024em;
   text-wrap:balance;
   margin:0;
   color:var(--ink);
 }
+strong{ font-weight:600; }
 
 .page{
   max-width:740px;
@@ -161,11 +136,11 @@ h1,h2,h3{
   flex:none;
 }
 .brand span{
-  font-size:18px;
-  font-weight:650;
-  letter-spacing:-.022em;
+  font-size:17px;
+  font-weight:500;
+  letter-spacing:-.01em;
 }
-.brand span b{ font-weight:650; color:var(--accent); }
+.brand span b{ font-weight:500; color:var(--accent); }
 
 /* ---------- Ausklappbare Details ----------
    Pflichthinweise bleiben verfügbar, ohne die Seite zuzutexten. */
@@ -215,20 +190,21 @@ details.mehr > div p:last-child{ margin-bottom:0; }
 .sheet.wide{ max-width:none; }
 
 .eyebrow{
-  font-size:13px;
+  font-size:11.5px;
   font-weight:600;
-  letter-spacing:.06em;
+  letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--accent);
-  margin:0 0 12px;
+  margin:0 0 14px;
 }
 
 .doc-tag{ display:none; }
 
 h1.title, .hero h1{
-  font-size:clamp(31px,5.2vw,44px);
-  line-height:1.13;
-  letter-spacing:-.028em;
+  font-size:clamp(32px,5.4vw,46px);
+  font-weight:300;
+  line-height:1.1;
+  letter-spacing:-.032em;
   margin:0;
 }
 p.lede{
@@ -238,8 +214,8 @@ p.lede{
   color:var(--ink-muted);
 }
 
-h2{ font-size:clamp(22px,3vw,27px); line-height:1.28; margin-bottom:14px; }
-h3{ font-size:17.5px; font-weight:600; margin:26px 0 8px; color:var(--ink); }
+h2{ font-size:clamp(22px,3vw,28px); font-weight:400; line-height:1.26; margin-bottom:14px; }
+h3{ font-size:17.5px; font-weight:550; margin:26px 0 8px; color:var(--ink); }
 
 p{ margin:0 0 16px; max-width:64ch; }
 p:last-child{ margin-bottom:0; }
@@ -253,12 +229,32 @@ p:last-child{ margin-bottom:0; }
 .exclusions,
 .split > div,
 .ampel{
-  background:var(--glass);
+  position:relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015)),
+    rgba(10,24,36,.55);
   border:1px solid var(--glass-edge);
-  border-radius:24px;
+  border-radius:22px;
   box-shadow:var(--shadow);
-  -webkit-backdrop-filter:blur(20px) saturate(150%);
-  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(140%);
+  backdrop-filter:blur(22px) saturate(140%);
+}
+
+/* Lichtkante oben: laesst die Glasflaeche wie eine echte Oberflaeche wirken */
+.glass::before,
+.calc-card::before,
+.price-box::before,
+.deliverables li::before,
+.exclusions::before,
+.split > div::before,
+.ampel::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:1px;
+  border-radius:22px 22px 0 0;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  pointer-events:none;
 }
 
 /* Ohne backdrop-filter würde Text auf halbtransparentem Grund schlecht
@@ -285,19 +281,28 @@ p:last-child{ margin-bottom:0; }
   padding:14px 26px;
   border-radius:999px;
   border:1px solid transparent;
-  box-shadow:var(--shadow);
+  box-shadow:var(--glow-cyan);
   cursor:pointer;
   transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
-.btn:hover{ transform:translateY(-1px); box-shadow:var(--shadow-lift); }
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 0 1px rgba(53,214,232,.3), 0 22px 70px -20px rgba(53,214,232,.6);
+}
 .btn:active{ transform:translateY(0); }
 .btn:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; }
 .btn.ghost{
   background:var(--glass);
-  color:var(--accent);
+  color:var(--ink);
   border-color:var(--glass-edge);
+  box-shadow:none;
   -webkit-backdrop-filter:blur(16px) saturate(140%);
   backdrop-filter:blur(16px) saturate(140%);
+}
+.btn.ghost:hover{
+  border-color:var(--accent-line);
+  color:var(--accent);
+  box-shadow:none;
 }
 
 .micro{ font-size:14px; color:var(--ink-muted); }
@@ -586,7 +591,7 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   border-radius:11px;
   display:flex; align-items:center; justify-content:center;
   font-size:15px; font-weight:700;
-  color:#fff;
+  color:#04121A;
   letter-spacing:-.01em;
 }
 .d-icon.word{ background:var(--word); }
@@ -677,7 +682,7 @@ img.vorschau:hover{
 
 /* ---------- Rechtsseiten ---------- */
 .legal-body h2{ font-size:20px; margin-top:30px; }
-.legal-body p, .legal-body li{ font-size:16px; }
+.legal-body p, .legal-body li{ font-size:16px; overflow-wrap:anywhere; }
 .legal-body .placeholder{
   background:var(--input-bg);
   border:1px solid var(--glass-edge);
@@ -794,4 +799,335 @@ footer.site a:hover{ text-decoration:underline; }
   }
   #druck tr{ page-break-inside:avoid; }
   #druck h2{ page-break-after:avoid; }
+}
+
+/* ============================================================
+   Zahlenfeld-Raster (siehe zahlenfeld.js)
+   Faehrt auf Touch-Geraeten unten hoch, statt die System-Tastatur
+   zu oeffnen. Grosse Flaechen, weil das mit dem Daumen bedient wird.
+   ============================================================ */
+body.zpad-offen{ overflow:hidden; }
+
+.zpad{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:flex;
+  align-items:flex-end;
+  background:rgba(3,8,13,.55);
+  -webkit-backdrop-filter:blur(3px);
+  backdrop-filter:blur(3px);
+  animation:zpadFade .18s ease both;
+}
+.zpad[hidden]{ display:none; }
+
+@keyframes zpadFade{ from{ opacity:0 } to{ opacity:1 } }
+@keyframes zpadUp{ from{ transform:translateY(14px) } to{ transform:none } }
+
+.zpad-sheet{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+  padding:16px 14px calc(16px + env(safe-area-inset-bottom));
+  border-radius:24px 24px 0 0;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), #0A1824;
+  border-top:1px solid var(--glass-edge);
+  box-shadow:0 -20px 60px -20px rgba(0,0,0,.9);
+  animation:zpadUp .22s cubic-bezier(.22,.8,.28,1) both;
+}
+
+.zpad-kopf{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:14px;
+  padding:2px 6px 14px;
+  border-bottom:1px solid var(--glass-line);
+  margin-bottom:12px;
+}
+.zpad-name{
+  font-size:14px;
+  color:var(--ink-muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.zpad-wert{
+  flex:none;
+  font-size:27px;
+  font-weight:400;
+  letter-spacing:-.02em;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+}
+.zpad-einheit{ font-size:16px; color:var(--ink-muted); }
+
+.zpad-schritt{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:8px;
+}
+.zpad-schritt button{
+  height:48px;
+  border-radius:14px;
+  border:1px solid var(--glass-edge);
+  background:var(--glass);
+  color:var(--ink);
+  font-size:22px;
+  cursor:pointer;
+}
+
+.zpad-raster{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:8px;
+}
+.zpad-raster button{
+  height:56px;
+  border-radius:14px;
+  border:1px solid var(--glass-edge);
+  background:var(--glass);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:22px;
+  font-weight:400;
+  font-variant-numeric:tabular-nums;
+  cursor:pointer;
+  transition:background .12s ease;
+}
+.zpad-raster button:active,
+.zpad-schritt button:active{ background:var(--accent-soft); }
+
+.zpad-fertig{
+  width:100%;
+  height:52px;
+  margin-top:10px;
+  border-radius:14px;
+  border:none;
+  background:var(--accent);
+  color:var(--accent-ink);
+  font-family:var(--font-sans);
+  font-size:17px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* Schreibgeschuetzte Felder sollen trotzdem antippbar wirken */
+input[type=number][readonly]{
+  cursor:pointer;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .zpad, .zpad-sheet{ animation:none; }
+}
+
+@media print{
+  .zpad{ display:none !important; }
+}
+
+/* ============================================================
+   Preisliste im Monats-Rechner
+   Auf breiten Schirmen drei Spalten wie eine Tabelle, auf dem
+   Handy bricht der Name in eine eigene Zeile um. Kein Wischen
+   nach rechts mehr.
+   ============================================================ */
+.preisliste{
+  margin:18px 0 6px;
+  border:1px solid var(--glass-edge);
+  border-radius:18px;
+  overflow:hidden;
+  background:rgba(10,24,36,.4);
+}
+.pl-kopf,
+.pl-zeile{
+  display:grid;
+  grid-template-columns:1fr 132px 132px;
+  gap:12px;
+  align-items:center;
+  padding:12px 16px;
+}
+.pl-kopf{
+  font-size:11.5px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  border-bottom:1px solid var(--glass-line);
+  padding-top:14px; padding-bottom:14px;
+}
+.pl-kopf span:not(:first-child){ text-align:center; }
+.pl-zeile + .pl-zeile{ border-top:1px solid var(--glass-line); }
+.pl-name{ font-size:15.5px; font-weight:500; }
+.pl-name em{
+  display:block;
+  font-style:normal;
+  font-size:13px;
+  color:var(--ink-faint);
+  margin-top:1px;
+}
+.pl-feld{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid var(--glass-edge);
+  border-radius:11px;
+  background:var(--input-bg);
+  padding:0 11px 0 0;
+  cursor:pointer;
+}
+.pl-feld input{
+  width:100%;
+  min-width:0;
+  border:none;
+  background:transparent;
+  color:var(--ink);
+  font-family:var(--font-mono);
+  font-size:15px;
+  text-align:right;
+  padding:11px 0 11px 11px;
+  -moz-appearance:textfield;
+}
+.pl-feld input::-webkit-outer-spin-button,
+.pl-feld input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.pl-feld input:focus{ outline:2px solid var(--focus); outline-offset:2px; border-radius:8px; }
+.pl-feld .unit{ font-size:14px; color:var(--ink-faint); }
+.pl-tag{ display:none; }
+
+@media (max-width:620px){
+  .pl-kopf{ display:none; }
+  .pl-zeile{
+    grid-template-columns:1fr 1fr;
+    row-gap:9px;
+    padding:14px 14px 16px;
+  }
+  .pl-name{ grid-column:1 / -1; }
+  .pl-feld{
+    flex-wrap:wrap;
+    padding:9px 11px 10px;
+    gap:0 7px;
+  }
+  .pl-tag{
+    display:block;
+    width:100%;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:2px;
+  }
+  .pl-feld input{
+    flex:1;
+    text-align:left;
+    padding:0;
+    font-size:16px;
+  }
+}
+
+/* ============================================================
+   Behandlungen im Monats-Rechner
+   Frueher eine Tabelle mit sieben Spalten, die auf dem Handy
+   nur per Wischen erreichbar war. Jetzt eine Karte pro Patient,
+   die auf jeder Breite komplett sichtbar bleibt.
+   ============================================================ */
+.behandlungen{ display:flex; flex-direction:column; gap:10px; margin:18px 0 6px; }
+
+.bh-karte{
+  border:1px solid var(--glass-edge);
+  border-radius:16px;
+  background:rgba(10,24,36,.42);
+  padding:13px 15px 15px;
+}
+.bh-kopf{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding-bottom:11px;
+  margin-bottom:12px;
+  border-bottom:1px solid var(--glass-line);
+}
+.bh-nr{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.bh-summe{
+  margin-left:auto;
+  font-size:16.5px;
+  font-weight:600;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+}
+.bh-weg{
+  flex:none;
+  width:28px; height:28px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:8px;
+  color:var(--ink-faint);
+  text-decoration:none;
+  font-size:19px;
+  line-height:1;
+}
+.bh-weg:hover{ color:var(--mark); background:var(--mark-soft); }
+
+.bh-felder{
+  display:grid;
+  grid-template-columns:1fr 104px;
+  gap:9px 10px;
+  align-items:end;
+}
+.bh-breit{ grid-column:1 / -1; }
+
+.bh-feld{ display:block; cursor:pointer; }
+.bh-tag{
+  display:block;
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:5px;
+}
+.bh-feld select,
+.bh-feld input{
+  width:100%;
+  border:1px solid var(--glass-edge);
+  border-radius:11px;
+  background:var(--input-bg);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:15.5px;
+  padding:11px 12px;
+}
+.bh-feld input{ font-family:var(--font-mono); text-align:center; -moz-appearance:textfield; }
+.bh-feld input::-webkit-outer-spin-button,
+.bh-feld input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.bh-feld select:focus,
+.bh-feld input:focus{ outline:2px solid var(--focus); outline-offset:2px; }
+
+.bh-haken{
+  grid-column:1 / -1;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding-top:3px;
+  font-size:15px;
+  color:var(--ink-muted);
+  cursor:pointer;
+}
+.bh-haken input{
+  width:21px; height:21px;
+  accent-color:var(--accent);
+  cursor:pointer;
+}
+
+@media (min-width:620px){
+  .bh-felder{ grid-template-columns:1fr 104px 1fr auto; align-items:end; }
+  .bh-breit{ grid-column:auto; }
+  .bh-haken{ grid-column:auto; padding-top:0; padding-bottom:11px; white-space:nowrap; }
 }

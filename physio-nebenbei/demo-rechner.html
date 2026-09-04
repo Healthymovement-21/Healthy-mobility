@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Demo-Rechner — PhysioNebenbei</title>
+<meta name="description" content="Kostenlose Kurzfassung des Privatpatienten-Rechners: eine Behandlungsart, Monatsumsatz und Stundensatz auf einen Blick.">
+<meta name="theme-color" content="#050B12">
+<link rel="stylesheet" href="base.css">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<style>
+  .demo-out{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+    gap:12px;
+    margin-top:8px;
+  }
+  .demo-kachel{
+    border:1px solid var(--glass-edge);
+    border-radius:16px;
+    background:rgba(10,24,36,.45);
+    padding:16px 18px;
+  }
+  .demo-kachel.haupt{
+    border-color:rgba(53,214,232,.24);
+    background:linear-gradient(180deg, rgba(53,214,232,.07), rgba(255,255,255,.012)), rgba(8,22,33,.6);
+  }
+  .demo-kachel .k{
+    display:block;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:7px;
+  }
+  .demo-kachel .n{
+    font-family:var(--font-display);
+    font-size:26px;
+    font-weight:300;
+    letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;
+  }
+  .demo-kachel.haupt .n{ color:var(--accent); font-size:32px; }
+
+  .gesperrt{
+    margin-top:22px;
+    border:1px dashed var(--glass-edge);
+    border-radius:16px;
+    padding:18px 20px;
+    color:var(--ink-faint);
+    font-size:14.5px;
+  }
+  .gesperrt ul{ margin:10px 0 0; padding-left:20px; }
+  .gesperrt li{ margin-bottom:5px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="../">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <p class="eyebrow">Kostenlose Kurzfassung</p>
+      <h1>Was bringt ein Abend pro Woche?</h1>
+      <p class="lede">Eine Behandlungsart, dein Preis, deine Termine. Rechne es kurz durch.</p>
+    </section>
+
+    <section class="sheet">
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="d_preis">Preis pro Behandlung</label>
+          <div class="field">
+            <input type="number" id="d_preis" value="45" min="0" max="500" step="1">
+            <span class="unit">€</span>
+          </div>
+        </div>
+        <div class="calc-row">
+          <label for="d_termine">Termine pro Monat</label>
+          <div class="field">
+            <input type="number" id="d_termine" value="20" min="0" max="99" step="1">
+            <span class="unit">Termine</span>
+          </div>
+        </div>
+        <div class="calc-row">
+          <label for="d_dauer">Dauer je Behandlung</label>
+          <div class="field">
+            <input type="number" id="d_dauer" value="30" min="5" max="180" step="5">
+            <span class="unit">Min.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-out">
+        <div class="demo-kachel haupt">
+          <span class="k">Umsatz im Monat</span>
+          <span class="n" id="d_umsatz">900 €</span>
+        </div>
+        <div class="demo-kachel">
+          <span class="k">Behandlungszeit</span>
+          <span class="n" id="d_zeit">10,0 h</span>
+        </div>
+        <div class="demo-kachel">
+          <span class="k">Umsatz / Stunde</span>
+          <span class="n" id="d_std">90 €</span>
+        </div>
+      </div>
+
+      <p class="micro" style="margin-top:18px">
+        Umsatz ist nicht Gewinn. Steuer, Versicherung, Material und Fahrtzeit gehen davon ab.
+        Preise sind frei wählbar, für private Physiotherapie gibt es keine verbindliche
+        Gebührenordnung.
+      </p>
+
+      <div class="gesperrt">
+        <strong style="color:var(--ink-muted)">Im vollen Rechner steckt zusätzlich:</strong>
+        <ul>
+          <li>neun Leistungen und Kombinationen statt einer, mit eigener Preisliste</li>
+          <li>getrennte Preise für Privat und Selbstzahler, plus Hausbesuchs-Zuschlag</li>
+          <li>Umsatzsteuer, Betriebsausgaben, Steuerrücklage und was am Ende bleibt</li>
+          <li>Gehalts-Rechner mit Szenarien und Krankenkassen-Ampel</li>
+          <li>Speichern auf dem Gerät und Export als PDF</li>
+        </ul>
+      </div>
+
+      <p class="hero-cta" style="margin-top:24px">
+        <a class="btn" href="../#kaufen">Vollen Rechner freischalten — 29 €</a>
+        <a class="btn ghost" href="../">Zurück zur Übersicht</a>
+      </p>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Keine Steuer-, Rechts- oder medizinische Beratung.<br>
+      Fragen? <a href="mailto:info@physiotherapie-grausam.com">info@physiotherapie-grausam.com</a></span>
+    <span>
+      <a href="../impressum.html">Impressum</a> ·
+      <a href="../datenschutz.html">Datenschutz</a> ·
+      <a href="../agb.html">AGB</a> ·
+      <a href="../widerruf.html">Widerruf</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el = id => document.getElementById(id);
+  const num = id => Math.max(0, parseFloat(el(id).value) || 0);
+
+  const eur = n => n.toLocaleString('de-DE', {maximumFractionDigits:0}) + ' €';
+  const std = n => n.toLocaleString('de-DE', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' h';
+
+  const stand = new WeakMap();
+  function setze(node, zu, fmt){
+    const von = stand.get(node);
+    stand.set(node, zu);
+    if (reduced || von === undefined || von === zu) { node.textContent = fmt(zu); return; }
+    const t0 = performance.now(), dauer = 380;
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    (function schritt(jetzt){
+      const t = Math.min(1, (jetzt - t0) / dauer);
+      node.textContent = fmt(von + (zu - von) * ease(t));
+      if (t < 1 && stand.get(node) === zu) requestAnimationFrame(schritt);
+    })(t0);
+  }
+
+  function rechne(){
+    const umsatz  = num('d_preis') * num('d_termine');
+    const stunden = num('d_termine') * num('d_dauer') / 60;
+    setze(el('d_umsatz'), umsatz, eur);
+    setze(el('d_zeit'), stunden, std);
+    setze(el('d_std'), stunden > 0 ? umsatz / stunden : 0, eur);
+  }
+
+  ['d_preis','d_termine','d_dauer'].forEach(id => {
+    el(id).addEventListener('input', rechne);
+  });
+  rechne();
+})();
+</script>
+<script src="zahlenfeld.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

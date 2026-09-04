@@ -3,15 +3,18 @@
    zum Home-Bildschirm hinzugefügt wurde. Kein Tracking, keine Netzwerkzugriffe
    nach außen — es wird nur gecacht, was von dieser Domain kommt. */
 
-const CACHE = 'physionebenbei-v2';
+const CACHE = 'physionebenbei-v3';
 
+/* Nur oeffentliche Dateien vorladen. Der Kundenbereich liegt unter einer
+   eigenen Adresse und wird beim ersten Besuch automatisch mitgecacht,
+   sobald jemand ihn oeffnet. */
 const DATEIEN = [
   './',
   './index.html',
+  './landing.css',
   './physio-nebenbei/base.css',
-  './physio-nebenbei/werkzeuge.html',
-  './physio-nebenbei/monatsrechner.html',
-  './physio-nebenbei/gehaltsrechner.html',
+  './physio-nebenbei/zahlenfeld.js',
+  './physio-nebenbei/demo-rechner.html',
   './physio-nebenbei/fahrplan.html',
   './physio-nebenbei/logo.svg',
   './physio-nebenbei/icon-192.png',

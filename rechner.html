@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Rechner — PhysioNebenbei</title>
+<meta name="description" content="Kostenloser Rechner: Preis, Termine und Dauer eintragen, Monatsumsatz und Stundensatz stehen sofort da.">
+<meta name="theme-color" content="#10201B">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PhysioNebenbei">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Rechner — PhysioNebenbei">
+<meta property="og:description" content="Kostenloser Rechner: Preis, Termine und Dauer eintragen, Monatsumsatz und Stundensatz stehen sofort da.">
+<!-- Beim Umzug auf eine eigene Domain nur diese absoluten Adressen anpassen.
+     Alle uebrigen Verweise im Projekt sind relativ. -->
+<meta property="og:url" content="https://healthymovement-21.github.io/Healthy-mobility/rechner.html">
+<meta property="og:image" content="https://healthymovement-21.github.io/Healthy-mobility/physio-nebenbei/img/og-vorschau.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PhysioNebenbei — Starterkit für nebenberuflich selbstständige Physiotherapeut:innen">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rechner — PhysioNebenbei">
+<meta name="twitter:description" content="Kostenloser Rechner: Preis, Termine und Dauer eintragen, Monatsumsatz und Stundensatz stehen sofort da.">
+<meta name="twitter:image" content="https://healthymovement-21.github.io/Healthy-mobility/physio-nebenbei/img/og-vorschau.png">
+
+<link rel="stylesheet" href="physio-nebenbei/base.css">
+<link rel="stylesheet" href="landing.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="physio-nebenbei/logo.svg" type="image/svg+xml">
+</head>
+<body class="lp">
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+      <span>Physio<b>Nebenbei</b></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Start</a></li>
+      <li><a href="inhalt.html">Inhalt</a></li>
+      <li><a href="rechner.html" aria-current="page">Rechner</a></li>
+      <li><a href="fragen.html">Fragen</a></li>
+    </ul>
+
+    <a class="btn gold nav-kauf" href="kaufen.html">Kaufen · 29 €</a>
+
+    <button class="nav-burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navsheet">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="nav-sheet" id="navsheet" hidden>
+  <a href="index.html">Start</a>
+  <a href="inhalt.html">Inhalt</a>
+  <a href="rechner.html" aria-current="page">Rechner</a>
+  <a href="fragen.html">Fragen</a>
+  <a href="kaufen.html">Kaufen · 29 €</a>
+  <a class="klein" href="impressum.html">Impressum</a>
+  <a class="klein" href="datenschutz.html">Datenschutz</a>
+</nav>
+
+<main>
+
+  <section class="band tief kopf">
+    <div class="wrap">
+      <p class="eyebrow">Kostenlos, ohne Anmeldung</p>
+      <h1>Rechne zuerst nach.</h1>
+      <p class="lede">Preis, Termine und Dauer eintragen. Umsatz und Stundensatz stehen sofort da.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap schmal">
+      <div class="rechner-karte">
+        <div class="r-eingabe">
+          <div class="r-zeile">
+            <label for="d_preis">Preis pro Behandlung</label>
+            <div class="field">
+              <input type="number" id="d_preis" value="45" min="0" max="500" step="1" inputmode="decimal">
+              <span class="unit">€</span>
+            </div>
+          </div>
+          <div class="r-zeile">
+            <label for="d_termine">Termine pro Monat</label>
+            <div class="field">
+              <input type="number" id="d_termine" value="20" min="0" max="99" step="1" inputmode="numeric">
+              <span class="unit">Termine</span>
+            </div>
+          </div>
+          <div class="r-zeile">
+            <label for="d_dauer">Dauer je Behandlung</label>
+            <div class="field">
+              <input type="number" id="d_dauer" value="30" min="5" max="180" step="5" inputmode="numeric">
+              <span class="unit">Min.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="r-ergebnis">
+          <div class="r-haupt">
+            <span class="k">Umsatz im Monat</span>
+            <span class="n" id="d_umsatz">900 €</span>
+          </div>
+          <div class="r-neben">
+            <div>
+              <span class="k">Behandlungszeit</span>
+              <span class="n" id="d_zeit">10,0 h</span>
+            </div>
+            <div>
+              <span class="k">Pro Stunde</span>
+              <span class="n" id="d_std">90 €</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="micro-note">
+        Das ist Umsatz, nicht Gewinn. Steuer, Versicherung, Material und Fahrtzeit gehen
+        noch ab. Deine Preise legst du selbst fest, eine feste Gebührenordnung gibt es
+        für private Physiotherapie nicht.
+      </p>
+    </div>
+  </section>
+
+  <section class="band sand">
+    <div class="wrap">
+      <p class="eyebrow gold">Im Paket</p>
+      <h2>Fünf weitere Rechner, die tiefer gehen.</h2>
+      <ul class="karten">
+        <li><b>Monats-Rechner</b><span>Neun Leistungen statt einer, mit eigener Preisliste. Umsatzsteuer, Betriebsausgaben und Steuerrücklage sind eingerechnet.</span></li>
+        <li><b>Gehalt &amp; Stunden</b><span>Hauptjob plus Nebenverdienst, Szenarien beim Reduzieren, Krankenkassen-Ampel.</span></li>
+        <li><b>Preis-Kalkulation</b><span>Rückwärts gerechnet: vom Wunscheinkommen zum Preis pro Behandlung.</span></li>
+        <li><b>Auslastung planen</b><span>Patient:innen, Fahrtkosten, Zeitaufwand und wann das Geld tatsächlich ankommt.</span></li>
+        <li><b>Rechnungsgenerator</b><span>Fertige Rechnung mit Nummernkreis, Steuerhinweis und QR-Code zum Überweisen.</span></li>
+      </ul>
+      <p class="cta"><a class="btn" href="kaufen.html">Alle sechs freischalten · 29 €</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="lpfoot">
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <a class="brand" href="index.html">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+      <span>Physio<b>Nebenbei</b></span>
+        </a>
+        <p class="foot-say">Ein Starterkit für Physiotherapeut:innen, die neben der Anstellung eigene Privatpatient:innen behandeln.</p>
+      </div>
+
+      <nav class="footnav" aria-label="Seiten">
+        <span class="foot-titel">Seiten</span>
+        <a href="index.html">Start</a>
+        <a href="inhalt.html">Inhalt</a>
+        <a href="rechner.html">Rechner</a>
+        <a href="fragen.html">Fragen</a>
+        <a href="kaufen.html">Kaufen</a>
+      </nav>
+
+      <nav class="footnav" aria-label="Rechtliches">
+        <span class="foot-titel">Rechtliches</span>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+        <a href="widerruf.html">Widerruf</a>
+      </nav>
+    </div>
+
+    <p class="fine">
+      Die Vertragsvorlagen sind Muster und vor dem Einsatz prüfen zu lassen. Keine Steuer-, Rechts- oder medizinische Beratung.<br>
+      Fragen? <a href="mailto:info@physiotherapie-grausam.com">info@physiotherapie-grausam.com</a>
+    </p>
+  </div>
+</footer>
+<script src="rechner.js"></script>
+
+<script src="nav.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

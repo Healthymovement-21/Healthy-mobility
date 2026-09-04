@@ -5,15 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PhysioNebenbei — Starterkit für Physiotherapie</title>
 <meta name="description" content="Für Physiotherapeut:innen, die angestellt arbeiten und nebenbei eigene Privatpatient:innen behandeln wollen. 11 Dateien, 6 Rechner, ein Fahrplan in 10 Schritten. Einmalig 29 €, kein Abo.">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#10201B">
 
-<!-- Vorschau beim Teilen in WhatsApp, LinkedIn, Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PhysioNebenbei">
 <meta property="og:locale" content="de_DE">
 <meta property="og:title" content="PhysioNebenbei — Starterkit für Physiotherapie">
-<meta property="og:description" content="11 Dateien, 6 Rechner und ein Fahrplan in 10 Schritten. Für den nebenberuflichen Start mit Privatpatient:innen. Einmalig 29 €, kein Abo.">
-<!-- Beim Umzug auf eine eigene Domain nur diese drei absoluten Adressen anpassen.
+<meta property="og:description" content="Für Physiotherapeut:innen, die angestellt arbeiten und nebenbei eigene Privatpatient:innen behandeln wollen. 11 Dateien, 6 Rechner, ein Fahrplan in 10 Schritten. Einmalig 29 €, kein Abo.">
+<!-- Beim Umzug auf eine eigene Domain nur diese absoluten Adressen anpassen.
      Alle uebrigen Verweise im Projekt sind relativ. -->
 <meta property="og:url" content="https://healthymovement-21.github.io/Healthy-mobility/">
 <meta property="og:image" content="https://healthymovement-21.github.io/Healthy-mobility/physio-nebenbei/img/og-vorschau.png">
@@ -22,7 +21,7 @@
 <meta property="og:image:alt" content="PhysioNebenbei — Starterkit für nebenberuflich selbstständige Physiotherapeut:innen">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PhysioNebenbei — Starterkit für Physiotherapie">
-<meta name="twitter:description" content="11 Dateien, 6 Rechner und ein Fahrplan in 10 Schritten. Einmalig 29 €, kein Abo.">
+<meta name="twitter:description" content="Für Physiotherapeut:innen, die angestellt arbeiten und nebenbei eigene Privatpatient:innen behandeln wollen. 11 Dateien, 6 Rechner, ein Fahrplan in 10 Schritten. Einmalig 29 €, kein Abo.">
 <meta name="twitter:image" content="https://healthymovement-21.github.io/Healthy-mobility/physio-nebenbei/img/og-vorschau.png">
 
 <link rel="stylesheet" href="physio-nebenbei/base.css">
@@ -31,23 +30,23 @@
 <link rel="apple-touch-icon" href="physio-nebenbei/apple-touch-icon.png">
 <link rel="icon" href="physio-nebenbei/logo.svg" type="image/svg+xml">
 </head>
-<body class="lp" id="top">
+<body class="lp">
 
-<!-- ============ NAVIGATION ============
-     Nur Textlinks. Der einzige Kauf-Button steht im Abschnitt „Kaufen". -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="./">
+    <a class="brand" href="index.html">
       <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
       <span>Physio<b>Nebenbei</b></span>
     </a>
 
     <ul class="nav-links">
-      <li><a href="#rechner">Rechner</a></li>
-      <li><a href="#inhalt">Inhalt</a></li>
-      <li><a href="#kaufen">Kaufen</a></li>
-      <li><a href="#fragen">Fragen</a></li>
+      <li><a href="index.html" aria-current="page">Start</a></li>
+      <li><a href="inhalt.html">Inhalt</a></li>
+      <li><a href="rechner.html">Rechner</a></li>
+      <li><a href="fragen.html">Fragen</a></li>
     </ul>
+
+    <a class="btn gold nav-kauf" href="kaufen.html">Kaufen · 29 €</a>
 
     <button class="nav-burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navsheet">
       <span></span><span></span>
@@ -56,232 +55,139 @@
 </header>
 
 <nav class="nav-sheet" id="navsheet" hidden>
-  <a href="#rechner">Rechner</a>
-  <a href="#inhalt">Inhalt</a>
-  <a href="#kaufen">Kaufen</a>
-  <a href="#fragen">Fragen</a>
-  <a href="impressum.html">Impressum</a>
-  <a href="datenschutz.html">Datenschutz</a>
+  <a href="index.html" aria-current="page">Start</a>
+  <a href="inhalt.html">Inhalt</a>
+  <a href="rechner.html">Rechner</a>
+  <a href="fragen.html">Fragen</a>
+  <a href="kaufen.html">Kaufen · 29 €</a>
+  <a class="klein" href="impressum.html">Impressum</a>
+  <a class="klein" href="datenschutz.html">Datenschutz</a>
 </nav>
 
 <main>
 
-  <!-- ============ 1. WAS IST DAS ============ -->
-  <section class="hero">
+  <!-- ---------- Auftakt ---------- -->
+  <section class="band tief hero">
     <div class="wrap">
-      <h1>Nebenbei eigene Privatpatient:innen behandeln.</h1>
-      <p class="sub">
-        Du arbeitest angestellt und möchtest nebenher selbst behandeln und abrechnen?
-        Hier liegt alles dafür an einem Ort: <b>11 fertige Dateien</b>,
-        <b>6 Rechner</b> und ein <b>Fahrplan in 10 Schritten</b>.
+      <p class="eyebrow">Starterkit für Physiotherapie</p>
+      <h1>Nebenbei eigene<br>Privatpatient:innen<br>behandeln.</h1>
+      <p class="lede">
+        Du arbeitest angestellt und möchtest nebenher selbst behandeln und abrechnen.
+        Alles, was du dafür brauchst, liegt hier vorbereitet: Unterlagen, Rechner
+        und ein Fahrplan, der dich der Reihe nach durchführt.
       </p>
-
-      <div class="preiszeile">
-        <span class="pz-zahl">29 €</span>
-        <span class="pz-text">einmal zahlen. Kein Abo. Sofort da.</span>
-      </div>
-
-      <p class="hinweis-frei">Der Rechner unten und Kapitel 1 sind kostenlos.</p>
-    </div>
-  </section>
-
-  <!-- ============ 2. RECHNER, KOSTENLOS UND DIREKT AUF DER SEITE ============ -->
-  <section class="band buehne" id="rechner">
-    <div class="wrap">
-      <h2>Rechne zuerst nach.</h2>
-      <p class="say">Kostenlos, ohne Anmeldung. Zahlen eintippen, es rechnet sofort mit.</p>
-
-      <div class="rechner-karte">
-        <div class="r-eingabe">
-          <div class="r-zeile">
-            <label for="d_preis">Preis pro Behandlung</label>
-            <div class="field">
-              <input type="number" id="d_preis" value="45" min="0" max="500" step="1" inputmode="decimal">
-              <span class="unit">€</span>
-            </div>
-          </div>
-          <div class="r-zeile">
-            <label for="d_termine">Termine pro Monat</label>
-            <div class="field">
-              <input type="number" id="d_termine" value="20" min="0" max="99" step="1" inputmode="numeric">
-              <span class="unit">Termine</span>
-            </div>
-          </div>
-          <div class="r-zeile">
-            <label for="d_dauer">Dauer je Behandlung</label>
-            <div class="field">
-              <input type="number" id="d_dauer" value="30" min="5" max="180" step="5" inputmode="numeric">
-              <span class="unit">Min.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="r-ergebnis">
-          <div class="r-haupt">
-            <span class="k">Umsatz im Monat</span>
-            <span class="n" id="d_umsatz">900 €</span>
-          </div>
-          <div class="r-neben">
-            <div>
-              <span class="k">Behandlungszeit</span>
-              <span class="n" id="d_zeit">10,0 h</span>
-            </div>
-            <div>
-              <span class="k">Pro Stunde</span>
-              <span class="n" id="d_std">90 €</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <p class="micro-note">
-        Das ist Umsatz, nicht Gewinn. Steuer, Versicherung, Material und Fahrtzeit gehen
-        noch ab. Genau dafür sind die Rechner im Paket da. Deine Preise legst du selbst
-        fest, eine feste Gebührenordnung gibt es für private Physiotherapie nicht.
+      <p class="cta">
+        <a class="btn gold" href="inhalt.html">Was ist drin?</a>
+        <a class="btn hell" href="rechner.html">Rechner kostenlos testen</a>
       </p>
     </div>
   </section>
 
-  <!-- ============ 3. WAS DU BEKOMMST ============ -->
-  <section class="band" id="inhalt">
+  <!-- ---------- Die drei Bausteine ---------- -->
+  <section class="band">
     <div class="wrap">
-      <h2>Das bekommst du.</h2>
-      <p class="say">Alles einzeln zum Herunterladen oder auf einmal als ein Ordner.</p>
+      <p class="eyebrow gold">Drei Bausteine</p>
+      <h2>Unterlagen, Rechner, Fahrplan.</h2>
 
-      <h3 class="gruppen-titel">11 Dateien</h3>
-      <ol class="dateien">
-        <li><span class="d-nr">1</span><span class="d-txt"><b>Fahrplan</b><span>Word-Datei mit allen 10 Kapiteln. Kannst du dir anpassen.</span></span></li>
-        <li><span class="d-nr">2</span><span class="d-txt"><b>Excel-Mappe</b><span>Preise kalkulieren, Monat überblicken, Steuer zurücklegen.</span></span></li>
-        <li><span class="d-nr">3</span><span class="d-txt"><b>Rechnungsgenerator</b><span>Rechnung ausfüllen, als PDF sichern. Nummer läuft automatisch weiter, QR-Code zum Überweisen ist drauf.</span></span></li>
-        <li><span class="d-nr">4</span><span class="d-txt"><b>Einnahmen und Ausgaben</b><span>Was reinkommt, was rausgeht, was für die Steuer übrig bleibt.</span></span></li>
-        <li><span class="d-nr">5</span><span class="d-txt"><b>Honorarvereinbarung</b><span>Preis, Zahlungsziel und Ausfallhonorar schriftlich.</span></span></li>
-        <li><span class="d-nr">6</span><span class="d-txt"><b>Behandlungsvertrag</b><span>Aufklärung, Mitwirkung, Haftung.</span></span></li>
-        <li><span class="d-nr">7</span><span class="d-txt"><b>Datenschutz für Patient:innen</b><span>Die Information, die du nach Art. 13 DSGVO aushändigen musst.</span></span></li>
-        <li><span class="d-nr">8</span><span class="d-txt"><b>Anamnesebogen</b><span>Beschwerden, Vorgeschichte, Ziele.</span></span></li>
-        <li><span class="d-nr">9</span><span class="d-txt"><b>Dokumentationsbogen</b><span>Befund und Verlauf je Behandlung.</span></span></li>
-        <li><span class="d-nr">10</span><span class="d-txt"><b>Terminübersicht</b><span>Wochenplan zum Ausdrucken.</span></span></li>
-        <li><span class="d-nr">11</span><span class="d-txt"><b>Patientenliste</b><span>Mit den Fristen, wie lange du was aufheben musst.</span></span></li>
-      </ol>
+      <div class="drei">
+        <a class="baustein" href="inhalt.html">
+          <span class="zahl">11</span>
+          <span class="wort">Dateien</span>
+          <span class="text">Verträge, Anamnese, Dokumentation, Datenschutz — fertig zum Ausfüllen und Ausdrucken.</span>
+          <span class="pfeil">Ansehen</span>
+        </a>
+        <a class="baustein" href="rechner.html">
+          <span class="zahl">6</span>
+          <span class="wort">Rechner</span>
+          <span class="text">Preise, Monatsumsatz, Steuerrücklage, Auslastung — und ein Rechnungsgenerator mit QR-Code.</span>
+          <span class="pfeil">Ausprobieren</span>
+        </a>
+        <a class="baustein" href="inhalt.html#kapitel">
+          <span class="zahl">10</span>
+          <span class="wort">Kapitel</span>
+          <span class="text">Von der Anmeldung beim Finanzamt bis zu den Fehlern, die am meisten Geld kosten.</span>
+          <span class="pfeil">Übersicht</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-      <h3 class="gruppen-titel">6 Rechner</h3>
-      <ul class="einfach">
-        <li><b>Monat</b> — Umsatz, Ausgaben, Steuerrücklage</li>
-        <li><b>Gehalt &amp; Stunden</b> — Hauptjob plus Nebenverdienst, mit Krankenkassen-Ampel</li>
-        <li><b>Preis</b> — was du pro Behandlung verlangen musst</li>
-        <li><b>Auslastung</b> — wie viele Patient:innen, wie viel Zeit, wann das Geld kommt</li>
-        <li><b>Rechnungsgenerator</b> — Datei 3, läuft auch ohne Internet</li>
-        <li><b>Einnahmen und Ausgaben</b> — Datei 4, läuft auch ohne Internet</li>
+  <!-- ---------- Kostenlos ---------- -->
+  <section class="band sand">
+    <div class="wrap">
+      <p class="eyebrow gold">Ohne einen Cent</p>
+      <h2>Erst ausprobieren, dann entscheiden.</h2>
+      <p class="say">Drei Dinge sind dauerhaft kostenlos und brauchen weder Konto noch Anmeldung.</p>
+
+      <ul class="frei">
+        <li>
+          <b>Der Rechner</b>
+          <span>Preis, Termine, Dauer eintragen — Umsatz und Stundensatz stehen sofort da.</span>
+          <a class="link" href="rechner.html">Zum Rechner</a>
+        </li>
+        <li>
+          <b>Kapitel 1 des Fahrplans</b>
+          <span>Der Realitäts-Check: Lohnt sich das für dich überhaupt?</span>
+          <a class="link" href="physio-nebenbei/fahrplan.html">Kapitel lesen</a>
+        </li>
+        <li>
+          <b>Die WhatsApp-Gruppe</b>
+          <span>Austausch über Preise, Hausbesuche und den eigenen Start. Offen für alle.</span>
+          <a class="link" href="#" data-whatsapp>Beitreten</a>
+          <span class="micro warnung" id="community-hinweis" hidden></span>
+        </li>
       </ul>
-
-      <h3 class="gruppen-titel">10 Kapitel</h3>
-      <ol class="kapitel">
-        <li>Bist du bereit?</li>
-        <li>Anmeldung &amp; Formalitäten</li>
-        <li>Versicherungen</li>
-        <li>Preise &amp; Kalkulation</li>
-        <li>Rechnung</li>
-        <li>Dokumentation</li>
-        <li>Datenschutz</li>
-        <li>Erste Patient:innen gewinnen</li>
-        <li>Die ersten 30 Tage</li>
-        <li>Typische Anfänger-Fehler</li>
-      </ol>
-      <p class="say">Kapitel 1 kannst du vorher komplett lesen: <a href="physio-nebenbei/fahrplan.html">Fahrplan, Kapitel 1</a>.</p>
     </div>
   </section>
 
-  <!-- ============ 4. KAUFEN — DER EINZIGE KAUF-BUTTON DER SEITE ============ -->
-  <section class="band buehne" id="kaufen">
+  <!-- ---------- Preis ---------- -->
+  <section class="band tief mitte">
     <div class="wrap">
-      <h2>Kaufen.</h2>
-
-      <div class="price-box">
-        <div class="amount">29 €<small>einmalig</small></div>
-
-        <ul class="trust">
-          <li>11 Dateien, 6 Rechner, 10 Kapitel</li>
-          <li>Kein Abo. Nichts, was du kündigen musst.</li>
-          <li>Direkt nach der Zahlung bekommst du deinen Link. Ohne Konto.</li>
-        </ul>
-
-        <!-- Widerrufs-Zustimmung nach § 356 Abs. 5 BGB: ohne Häkchen
-             ist der Kauf-Button gesperrt (siehe checkout.js). -->
-        <label class="gate">
-          <input type="checkbox" id="widerruf-ok">
-          <span>Ich stimme zu, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen wird, und mir ist bekannt, dass ich dadurch mein <a href="widerruf.html">Widerrufsrecht</a> verliere.</span>
-        </label>
-
-        <a class="btn" href="#" data-checkout>Für 29 € kaufen</a>
-        <p class="micro warnung" id="checkout-hinweis" hidden></p>
-
-        <p class="micro">Die Vorlagen sind Muster. Sie ersetzen keine Beratung durch Anwalt, Steuerbüro oder Berufsverband.</p>
-      </div>
+      <p class="eyebrow">Ein Preis, keine Fortsetzung</p>
+      <p class="gross-preis">29 €</p>
+      <p class="lede zentriert">Einmal zahlen. Kein Abo, keine Folgekosten, nichts zu kündigen. Der Zugang kommt sofort nach der Zahlung und läuft nicht ab.</p>
+      <p class="cta zentriert"><a class="btn gold" href="kaufen.html">Zur Kaufseite</a></p>
     </div>
   </section>
 
-  <!-- ============ 5. FRAGEN ============ -->
-  <section class="band-tight" id="fragen">
-    <div class="wrap">
-      <h2 class="faq-titel">Fragen</h2>
-
-      <div class="acc">
-        <details>
-          <summary>Für wen ist das?</summary>
-          <p class="ans">Für Physiotherapeut:innen in Deutschland, die angestellt arbeiten und nebenbei eigene Privatpatient:innen oder Selbstzahler:innen behandeln wollen. Nicht für eine Kassenpraxis und nicht für eine Praxis mit Personal.</p>
-        </details>
-        <details>
-          <summary>Was ist kostenlos?</summary>
-          <p class="ans">Der Rechner oben, Kapitel 1 des Fahrplans und die WhatsApp-Gruppe. Dauerhaft, auch ohne Kauf.</p>
-        </details>
-        <details>
-          <summary>Wie bekomme ich die Dateien?</summary>
-          <p class="ans">Nach der Zahlung landest du direkt auf einer Seite mit deinem persönlichen Link, außerdem kommt er per E-Mail. Kein Konto, keine Anmeldung. Der Link läuft nicht ab.</p>
-        </details>
-        <details>
-          <summary>Auf welchem Gerät läuft das?</summary>
-          <p class="ans">Handy, Mac und Windows. Die Rechner laufen im Browser, die Vorlagen sind PDF. Für den Fahrplan brauchst du Word, für die Excel-Mappe Excel.</p>
-        </details>
-        <details>
-          <summary>Brauche ich eine ärztliche Verordnung?</summary>
-          <p class="ans">In aller Regel ja, auch ohne Kassenzulassung. Ohne Verordnung eigenständig zu behandeln kann als Ausübung von Heilkunde gelten. Ausnahme ist die sektorale Heilpraktikererlaubnis für Physiotherapie — was dafür gilt, ist je Bundesland verschieden. Frag bei deinem Gesundheitsamt oder Berufsverband nach.</p>
-        </details>
-        <details>
-          <summary>Ist das eine Rechts- oder Steuerberatung? Kann ich widerrufen?</summary>
-          <p class="ans">Nein. Die Vorlagen sind Muster, die Texte geben Orientierung: Verträge vor dem ersten Einsatz prüfen lassen, Steuerfragen mit deinem Steuerbüro klären. Bei digitalen Inhalten erlischt das Widerrufsrecht, sobald du der sofortigen Ausführung zustimmst und freigeschaltet wirst — Details in der <a href="widerruf.html">Widerrufsbelehrung</a>.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 6. KOSTENLOSE GRUPPE ============ -->
-  <section class="band-tight" id="community">
-    <div class="wrap">
-      <h2 class="faq-titel">WhatsApp-Gruppe, kostenlos</h2>
-      <p class="say">Austausch mit anderen Physiotherapeut:innen über Preise, Hausbesuche, Rechnungen und den eigenen Start. Offen für alle, auch ohne Kauf.</p>
-      <p class="cta"><a class="btn" href="#" data-whatsapp>Gruppe beitreten</a></p>
-      <p class="micro warnung" id="community-hinweis" hidden></p>
-    </div>
-  </section>
-
-  <!-- ============ 7. WER ============ -->
-  <section class="band-tight">
-    <div class="wrap">
-      <p class="say">Ich bin Physiotherapeut aus dem Raum Heidelberg. Diese Unterlagen und Rechner habe ich mir ursprünglich für meine eigene Arbeit gebaut. Daraus ist PhysioNebenbei geworden.</p>
+  <!-- ---------- Wer ---------- -->
+  <section class="band">
+    <div class="wrap schmal">
+      <p class="eyebrow gold">Wer dahintersteckt</p>
+      <h2>Von einem Physiotherapeuten für Physiotherapeut:innen.</h2>
+      <p class="say">
+        Ich bin Physiotherapeut aus dem Raum Heidelberg. Diese Unterlagen und Rechner
+        habe ich mir ursprünglich für meine eigene Arbeit gebaut, weil ich sie nirgends
+        an einer Stelle gefunden habe. Daraus ist PhysioNebenbei geworden.
+      </p>
+      <p class="say"><a class="link" href="fragen.html">Offene Fragen? Hier stehen die Antworten.</a></p>
     </div>
   </section>
 
 </main>
 
-<!-- ============ FUSS ============ -->
 <footer class="lpfoot">
   <div class="wrap">
     <div class="footgrid">
-      <a class="brand" href="./">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
-        <span>Physio<b>Nebenbei</b></span>
-      </a>
+      <div>
+        <a class="brand" href="index.html">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+      <span>Physio<b>Nebenbei</b></span>
+        </a>
+        <p class="foot-say">Ein Starterkit für Physiotherapeut:innen, die neben der Anstellung eigene Privatpatient:innen behandeln.</p>
+      </div>
 
-      <nav aria-label="Rechtliches">
+      <nav class="footnav" aria-label="Seiten">
+        <span class="foot-titel">Seiten</span>
+        <a href="index.html">Start</a>
+        <a href="inhalt.html">Inhalt</a>
+        <a href="rechner.html">Rechner</a>
+        <a href="fragen.html">Fragen</a>
+        <a href="kaufen.html">Kaufen</a>
+      </nav>
+
+      <nav class="footnav" aria-label="Rechtliches">
+        <span class="foot-titel">Rechtliches</span>
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
         <a href="agb.html">AGB</a>
@@ -295,50 +201,9 @@
     </p>
   </div>
 </footer>
-
-<script src="checkout.js"></script>
 <script src="community.js"></script>
-<script>
-(function(){
-  'use strict';
 
-  /* ---------- Navigation ---------- */
-  const nav = document.getElementById('nav');
-  const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 12);
-  onScroll();
-  window.addEventListener('scroll', onScroll, {passive:true});
-
-  const burger = document.getElementById('burger');
-  const sheet  = document.getElementById('navsheet');
-  const setMenu = open => {
-    sheet.hidden = !open;
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
-    document.body.style.overflow = open ? 'hidden' : '';
-  };
-  burger.addEventListener('click', () => setMenu(sheet.hidden));
-  sheet.addEventListener('click', e => { if (e.target.tagName === 'A') setMenu(false); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !sheet.hidden) setMenu(false); });
-
-  /* ---------- Rechner auf der Startseite ----------
-     Kostenlose Kurzfassung: eine Behandlungsart, Umsatz und Stundensatz.
-     Steht direkt auf der Seite statt hinter einem Link. */
-  const el  = id => document.getElementById(id);
-  const num = id => Math.max(0, parseFloat(el(id).value) || 0);
-  const eur = n => n.toLocaleString('de-DE', {maximumFractionDigits:0}) + ' €';
-  const std = n => n.toLocaleString('de-DE', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' h';
-
-  function rechne(){
-    const umsatz  = num('d_preis') * num('d_termine');
-    const stunden = num('d_termine') * num('d_dauer') / 60;
-    el('d_umsatz').textContent = eur(umsatz);
-    el('d_zeit').textContent   = std(stunden);
-    el('d_std').textContent    = eur(stunden > 0 ? umsatz / stunden : 0);
-  }
-  ['d_preis','d_termine','d_dauer'].forEach(id => el(id).addEventListener('input', rechne));
-  rechne();
-})();
-</script>
+<script src="nav.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));

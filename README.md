@@ -3,7 +3,8 @@
 Verkaufsseite und Kundenbereich für ein digitales Starter-Paket für Physiotherapeut:innen
 in Deutschland, die angestellt arbeiten und nebenbei Privatpatient:innen oder
 Selbstzahler:innen behandeln möchten. Statische Seite ohne Build-Schritt und ohne
-Abhängigkeiten, `index.html` ist der Einstiegspunkt.
+Abhängigkeiten, `index.html` ist der Einstiegspunkt. Die Verkaufsseite ist auf fünf
+Seiten aufgeteilt: Start, Inhalt, Rechner, Kaufen, Fragen.
 
 **Vor dem ersten echten Verkauf:** [`VERKAUFSSTART.md`](VERKAUFSSTART.md) durchgehen.
 Dort steht die Einrichtung des Zahlungsanbieters und wo der Bestell-Link eingetragen wird.
@@ -16,8 +17,14 @@ verlinkt.
 
 ```
 ÖFFENTLICH
-index.html                     Verkaufsseite
-landing.css                    Design nur für die Verkaufsseite
+index.html                     Start
+inhalt.html                    was im Paket steckt
+rechner.html                   kostenloser Rechner
+kaufen.html                    Preis und Kauf-Button
+fragen.html                    häufige Fragen
+landing.css                    Design nur für diese fünf Seiten
+nav.js                         Kopfzeile und Menü, auf allen fünf Seiten gleich
+rechner.js                     der kostenlose Rechner
 checkout.js                    ← hier den Bestell-Link eintragen
 community.js                   ← hier den WhatsApp-Einladungslink eintragen
 drive.js                       ← hier Google Drive verknüpfen (Ordner und/oder Datei-IDs)

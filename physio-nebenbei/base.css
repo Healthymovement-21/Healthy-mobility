@@ -1,51 +1,69 @@
 /* ============================================================
    PhysioNebenbei — Design-System
-   Helles, ruhiges Grundgeruest: weißer Grund, dunkelgraue Schrift,
-   eine gedeckte Akzentfarbe (Tanne), sonst nichts. Kein Verlauf,
-   kein Glow, kein Glassmorphism, keine 3D-Effekte.
+
+   Gedeckt, warm, hochwertig: Papier statt Reinweiß, tiefes Tannengrün
+   als Grundfarbe, Messing als zweite Farbe fuer Auszeichnungen. Dunkle
+   Baender setzen Akzente, dazwischen bleibt viel Luft. Ueberschriften
+   in einer Serifenschrift, Fliesstext serifenlos.
 
    Schrift: Systemschriften. Kein Google Fonts, keine externen
-   Schriftdienste, damit keine Besucher-IPs an Dritte gehen.
-   Auf iPhone/Mac ist das SF Pro, auf Windows Segoe UI Variable.
+   Schriftdienste, damit keine Besucher-IPs an Dritte gehen. Die
+   Serifenschrift ist auf jedem System vorhanden (Georgia bzw. Iowan
+   Old Style auf Apple-Geraeten).
+
+   Alle Farben sind auf Kontrast geprueft: Fliesstext liegt ueberall
+   ueber 4,5:1, die meisten Paarungen deutlich darueber.
    ============================================================ */
 
 :root{
   color-scheme: light;
 
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Basis */
-  --paper:        #FFFFFF;
-  --surface:      #F7F7F5;
-  --surface-2:    #F1F1EE;
+  /* Basis: warmes Papier statt Reinweiß */
+  --paper:        #FBFAF7;
+  --surface:      #F4F1EA;
+  --surface-2:    #EDE8DE;
 
-  --ink:          #17191B;
-  --ink-muted:    #55595D;
-  --ink-faint:    #85898D;
+  --ink:          #14201C;
+  --ink-muted:    #4E5A55;
+  --ink-faint:    #6E7A75;
 
-  /* Einzige Akzentfarbe: gedecktes Tannengrün, sparsam eingesetzt */
-  --accent:       #0F6B5C;
-  --accent-dark:  #0B5348;
+  /* Erste Farbe: tiefes Tannengrün */
+  --accent:       #0E5C4F;
+  --accent-dark:  #0A4238;
   --accent-ink:   #FFFFFF;
-  --accent-soft:  rgba(15,107,92,.08);
-  --accent-line:  rgba(15,107,92,.35);
+  --accent-soft:  rgba(14,92,79,.07);
+  --accent-line:  rgba(14,92,79,.32);
+
+  /* Dunkles Band: traegt Hero, Kauf und Zitate */
+  --tief:         #10201B;
+  --tief-2:       #16302A;
+  --auf-tief:     #EDEAE3;
+  --auf-tief-leise: #B9C6C0;
+
+  /* Zweite Farbe: Messing. Hell auf dunklem Grund, dunkler auf Papier. */
+  --gold:         #8A6A1F;
+  --gold-hell:    #C9A961;
+  --gold-line:    rgba(201,169,97,.42);
+  --gold-soft:    rgba(138,106,31,.09);
 
   /* Warnung / Hinweis, gedeckt statt grell */
-  --mark:         #A6362D;
-  --mark-soft:    rgba(166,54,45,.06);
-  --focus:        #0F6B5C;
+  --mark:         #9E3227;
+  --mark-soft:    rgba(158,50,39,.06);
+  --focus:        #0E5C4F;
 
-  /* Karten und Trennlinien: reine Randfarben, kein Glas, kein Blur */
+  /* Karten und Trennlinien */
   --glass:        var(--surface);
   --glass-strong: var(--surface);
-  --glass-edge:   #E2E2DE;
-  --glass-line:   #EBEBE7;
-  --input-bg:     #FAFAF8;
+  --glass-edge:   #DFD9CC;
+  --glass-line:   #EAE5DA;
+  --input-bg:     #FFFFFF;
 
-  --shadow:       0 1px 2px rgba(20,20,18,.05);
-  --shadow-lift:  0 4px 16px rgba(20,20,18,.08);
+  --shadow:       0 1px 2px rgba(20,26,22,.05);
+  --shadow-lift:  0 6px 22px rgba(20,26,22,.09);
   --glow-cyan:    none;
 
   --aura-1: transparent;
@@ -76,8 +94,8 @@ body{
 a{ color:var(--accent); }
 h1,h2,h3{
   font-family:var(--font-display);
-  font-weight:500;
-  letter-spacing:-.018em;
+  font-weight:600;
+  letter-spacing:-.012em;
   text-wrap:balance;
   margin:0;
   color:var(--ink);
@@ -248,6 +266,14 @@ p:last-child{ margin-bottom:0; }
   border-color:var(--accent);
   color:var(--accent);
 }
+/* Messing: der eine Weg nach vorn. Sparsam einsetzen, sonst verliert
+   die Farbe genau die Wirkung, wegen der sie hier steht. */
+.btn.gold{
+  background:var(--gold-hell);
+  border-color:var(--gold-hell);
+  color:var(--tief);
+}
+.btn.gold:hover{ background:#D8BC7C; border-color:#D8BC7C; }
 
 .micro{ font-size:14px; color:var(--ink-muted); }
 

@@ -34,7 +34,7 @@
       <ul class="deliverables">
         <li>
           <div class="d-head">
-            <span class="d-icon excel" aria-hidden="true">M</span>
+            <span class="d-icon" aria-hidden="true">M</span>
             <div><span class="d-name">Monats-Rechner</span><span class="d-type">IM BROWSER</span></div>
           </div>
           <div class="d-desc">Behandlungen eintragen, Umsatz, Steuerrücklage und was übrig bleibt. Mit PDF-Export.</div>
@@ -42,7 +42,7 @@
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon word" aria-hidden="true">G</span>
+            <span class="d-icon" aria-hidden="true">G</span>
             <div><span class="d-name">Gehalt &amp; Stunden</span><span class="d-type">IM BROWSER</span></div>
           </div>
           <div class="d-desc">Hauptjob plus Nebenverdienst, Szenarien beim Reduzieren, Krankenkassen-Ampel.</div>
@@ -50,7 +50,7 @@
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon excel" aria-hidden="true">A</span>
+            <span class="d-icon" aria-hidden="true">A</span>
             <div><span class="d-name">Auslastung planen</span><span class="d-type">IM BROWSER</span></div>
           </div>
           <div class="d-desc">Wie viele Patient:innen du brauchst, was die Fahrt kostet, wie viel Zeit draufgeht und wann das Geld ankommt.</div>
@@ -58,35 +58,39 @@
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon excel" aria-hidden="true">P</span>
+            <span class="d-icon" aria-hidden="true">P</span>
             <div><span class="d-name">Preis-Kalkulation</span><span class="d-type">IM BROWSER</span></div>
           </div>
           <div class="d-desc">Was du verlangen musst, damit am Ende dein Wunscheinkommen steht.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="werkzeuge.html">Öffnen</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="werkzeuge.html">Öffnen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon word" aria-hidden="true">R</span>
+            <span class="d-icon" aria-hidden="true">R</span>
             <div><span class="d-name">Rechnungsgenerator</span><span class="d-type">AUCH OFFLINE</span></div>
           </div>
           <div class="d-desc">Deine Daten einmal eintragen, danach jede Rechnung in zwei Minuten. Nummer läuft automatisch weiter, Steuerhinweis wird gesetzt, Ausgabe als PDF.</div>
           <p class="hero-cta" style="margin-top:14px">
             <a class="btn" href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a>
-            <a class="btn ghost" href="dateien/PhysioNebenbei-Rechnungsgenerator.html" download="PhysioNebenbei-Rechnungsgenerator.html">Herunterladen</a>
           </p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon excel" aria-hidden="true">E</span>
+            <span class="d-icon" aria-hidden="true">E</span>
             <div><span class="d-name">Einnahmen und Ausgaben</span><span class="d-type">AUCH OFFLINE</span></div>
           </div>
           <div class="d-desc">Monat für Monat eintragen, Jahressumme, Gewinn und empfohlene Steuerrücklage rechnen automatisch. Das ist deine EÜR.</div>
           <p class="hero-cta" style="margin-top:14px">
             <a class="btn" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a>
-            <a class="btn ghost" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html" download="PhysioNebenbei-Einnahmen-Ausgaben.html">Herunterladen</a>
           </p>
         </li>
       </ul>
+      <p class="micro" style="margin-top:16px">
+        Auf dem iPhone und iPad ist „Öffnen“ der richtige Weg: die beiden Rechner
+        funktionieren dort auch ohne Internet, sobald du sie einmal geöffnet hast.
+        Gespeicherte HTML-Dateien lassen sich unter iOS nicht zuverlässig wieder
+        starten. „Für den Computer speichern“ ist für Mac und Windows gedacht.
+      </p>
     </section>
 
     <!-- ============ LESEN ============ -->
@@ -96,112 +100,114 @@
       <p>Der komplette Fahrplan mit allen zehn Kapiteln und der To-do-Liste zum Abhaken. Dazu ein Zusatzkapitel, wie du Patient:innen online Termine buchen lässt, während du im Hauptjob bist.</p>
       <p class="hero-cta">
         <a class="btn" href="fahrplan.html">Fahrplan öffnen</a>
-        <a class="btn ghost" href="terminbuchung.html">Online-Terminbuchung</a>
+        <a class="btn" href="terminbuchung.html">Online-Terminbuchung</a>
       </p>
     </section>
 
     <!-- ============ DATEIEN ============ -->
-    <section class="sheet">
+    <section class="sheet" id="dateien">
       <p class="eyebrow">Download</p>
       <h2>Deine Dateien</h2>
       <p class="hero-cta">
-        <a class="btn" href="dateien/PhysioNebenbei-Paket.zip" download="PhysioNebenbei-Paket.zip">Alle elf Dateien (ZIP)</a>
+        <a class="btn" href="#" data-drive>Alle Dateien bei Google Drive</a>
+        <a class="btn" data-drive-datei="PhysioNebenbei-Paket.zip" data-drive-beschriftung="nein" href="dateien/PhysioNebenbei-Paket.zip" download="PhysioNebenbei-Paket.zip">Alle Dateien als ZIP</a>
       </p>
+      <p class="micro warnung" id="drive-hinweis" hidden></p>
       <p class="micro" style="margin-top:10px">
-        Öffnet sich die Datei im Browser statt gespeichert zu werden, vor allem auf dem
-        iPhone: Link antippen und halten, dann „Link herunterladen" wählen. Die Datei
-        landet danach in der App „Dateien".
+        Bei Google Drive kannst du dir einzelne Dateien ansehen und in deinen eigenen
+        Ordner kopieren — das ist auf dem Handy der bequemste Weg. Wer lieber alles auf
+        einmal auf dem Computer hat, nimmt das ZIP.
       </p>
 
       <h3 style="margin-top:34px">Oder einzeln</h3>
       <ul class="deliverables">
         <li>
           <div class="d-head">
-            <span class="d-icon word" aria-hidden="true">W</span>
+            <span class="d-icon" aria-hidden="true">1</span>
             <div><span class="d-name">Fahrplan</span><span class="d-type">WORD-DATEI</span></div>
           </div>
           <div class="d-desc">Alle zehn Kapitel zum Anpassen, plus Rechnungs- und Dokumentationsvorlage.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Laden (.docx)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Herunterladen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon excel" aria-hidden="true">X</span>
-            <div><span class="d-name">Rechner</span><span class="d-type">EXCEL-DATEI</span></div>
+            <span class="d-icon" aria-hidden="true">2</span>
+            <div><span class="d-name">Excel-Mappe</span><span class="d-type">EXCEL-DATEI</span></div>
           </div>
           <div class="d-desc">Preis-Kalkulation, Steuer-Rücklage, EÜR fürs Jahr, Dokumentations-Log.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Laden (.xlsx)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Herunterladen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
+            <span class="d-icon" aria-hidden="true">3</span>
+            <div><span class="d-name">Rechnungsgenerator</span><span class="d-type">RECHNER</span></div>
+          </div>
+          <div class="d-desc">Für Mac und Windows: speichern und doppelklicken, läuft dann ohne Internet. Auf dem iPhone stattdessen oben über „Öffnen“ benutzen.</div>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Rechnungsgenerator.html" href="dateien/PhysioNebenbei-Rechnungsgenerator.html" download="PhysioNebenbei-Rechnungsgenerator.html">Herunterladen</a></p>
+        </li>
+        <li>
+          <div class="d-head">
+            <span class="d-icon" aria-hidden="true">4</span>
+            <div><span class="d-name">Einnahmen und Ausgaben</span><span class="d-type">RECHNER</span></div>
+          </div>
+          <div class="d-desc">Für Mac und Windows: speichern und doppelklicken, läuft dann ohne Internet. Auf dem iPhone stattdessen oben über „Öffnen“ benutzen.</div>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Einnahmen-Ausgaben.html" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html" download="PhysioNebenbei-Einnahmen-Ausgaben.html">Herunterladen</a></p>
+        </li>
+        <li>
+          <div class="d-head">
+            <span class="d-icon" aria-hidden="true">5</span>
             <div><span class="d-name">Honorarvereinbarung</span><span class="d-type">PDF-DATEI</span></div>
           </div>
           <div class="d-desc">Muster zum Ausfüllen und unterschreiben lassen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Laden (.pdf)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Honorarvereinbarung.pdf" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Herunterladen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
+            <span class="d-icon" aria-hidden="true">6</span>
             <div><span class="d-name">Behandlungsvertrag</span><span class="d-type">PDF-DATEI</span></div>
           </div>
           <div class="d-desc">Muster zum Ausfüllen und unterschreiben lassen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Laden (.pdf)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Behandlungsvertrag.pdf" href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Herunterladen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
+            <span class="d-icon" aria-hidden="true">7</span>
             <div><span class="d-name">Datenschutz-Information</span><span class="d-type">PDF-DATEI</span></div>
           </div>
           <div class="d-desc">Nach Art. 13 DSGVO, zum Aushändigen beim ersten Termin.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/Datenschutz-Patienten.pdf" download="Datenschutz-Patienten.pdf">Laden (.pdf)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Datenschutz-Patienten.pdf" href="dateien/Datenschutz-Patienten.pdf" download="Datenschutz-Patienten.pdf">Herunterladen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
-            <div><span class="d-name">Dokumentationsbogen</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Zum Ausdrucken und handschriftlich Ausfüllen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Laden (.pdf)</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
+            <span class="d-icon" aria-hidden="true">8</span>
             <div><span class="d-name">Anamnesebogen</span><span class="d-type">PDF-DATEI</span></div>
           </div>
           <div class="d-desc">Beschwerden, Vorgeschichte, Kontraindikationen und Ziele, für den ersten Termin.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/Anamnesebogen.pdf" download="Anamnesebogen.pdf">Laden (.pdf)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Anamnesebogen.pdf" href="dateien/Anamnesebogen.pdf" download="Anamnesebogen.pdf">Herunterladen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
+            <span class="d-icon" aria-hidden="true">9</span>
+            <div><span class="d-name">Dokumentationsbogen</span><span class="d-type">PDF-DATEI</span></div>
+          </div>
+          <div class="d-desc">Zum Ausdrucken und handschriftlich Ausfüllen.</div>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Dokumentationsvorlage.pdf" href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Herunterladen</a></p>
+        </li>
+        <li>
+          <div class="d-head">
+            <span class="d-icon" aria-hidden="true">10</span>
             <div><span class="d-name">Terminübersicht</span><span class="d-type">PDF-DATEI</span></div>
           </div>
           <div class="d-desc">Wochenplan zum Ausdrucken, ein Blatt pro Woche.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/Terminuebersicht.pdf" download="Terminuebersicht.pdf">Laden (.pdf)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Terminuebersicht.pdf" href="dateien/Terminuebersicht.pdf" download="Terminuebersicht.pdf">Herunterladen</a></p>
         </li>
         <li>
           <div class="d-head">
-            <span class="d-icon pdf" aria-hidden="true">P</span>
+            <span class="d-icon" aria-hidden="true">11</span>
             <div><span class="d-name">Patientenliste</span><span class="d-type">PDF-DATEI</span></div>
           </div>
           <div class="d-desc">Kürzel und Klarnamen getrennt führen, mit Aufbewahrungs- und Löschfristen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/Patientenliste.pdf" download="Patientenliste.pdf">Laden (.pdf)</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon word" aria-hidden="true">R</span>
-            <div><span class="d-name">Rechnungsgenerator</span><span class="d-type">HTML-DATEI</span></div>
-          </div>
-          <div class="d-desc">Speichern und doppelklicken. Läuft ohne Internet auf jedem Gerät.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/PhysioNebenbei-Rechnungsgenerator.html" download="PhysioNebenbei-Rechnungsgenerator.html">Laden (.html)</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon excel" aria-hidden="true">E</span>
-            <div><span class="d-name">Einnahmen und Ausgaben</span><span class="d-type">HTML-DATEI</span></div>
-          </div>
-          <div class="d-desc">Speichern und doppelklicken. Läuft ohne Internet auf jedem Gerät.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn ghost" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html" download="PhysioNebenbei-Einnahmen-Ausgaben.html">Laden (.html)</a></p>
+          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Patientenliste.pdf" href="dateien/Patientenliste.pdf" download="Patientenliste.pdf">Herunterladen</a></p>
         </li>
       </ul>
     </section>
@@ -243,7 +249,7 @@
       <p class="eyebrow">Support</p>
       <h2>Etwas fehlt oder lässt sich nicht öffnen?</h2>
       <p>Schreib mir kurz, ich antworte selbst.</p>
-      <p class="hero-cta"><a class="btn ghost" href="mailto:info@physiotherapie-grausam.com?subject=PhysioNebenbei%20%E2%80%94%20Frage%20zum%20Paket">info@physiotherapie-grausam.com</a></p>
+      <p class="hero-cta"><a class="btn" href="mailto:info@physiotherapie-grausam.com?subject=PhysioNebenbei%20%E2%80%94%20Frage%20zum%20Paket">info@physiotherapie-grausam.com</a></p>
     </section>
 
   </div>
@@ -265,5 +271,6 @@
     window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
   }
 </script>
+<script src="../drive.js"></script>
 </body>
 </html>

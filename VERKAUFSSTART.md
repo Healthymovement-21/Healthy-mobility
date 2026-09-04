@@ -125,7 +125,7 @@ finden.
 | Seite | Was sichtbar ist |
 |---|---|
 | `physio-nebenbei/fahrplan.html` | Kapitelübersicht plus Kapitel 1 komplett |
-| `physio-nebenbei/demo-rechner.html` | eine Behandlungsart, Umsatz und Stundensatz |
+| Startseite, Abschnitt „Rechner" | eine Behandlungsart, Umsatz und Stundensatz |
 
 **Was du beim Zahlungsanbieter eintragen musst:** als Weiterleitung nach
 erfolgreicher Zahlung diese Adresse:
@@ -215,7 +215,61 @@ auch ohne Kauf des Pakets — das steht so auf der Seite und im FAQ.
 
 ---
 
-## Schritt 5 — Reichweitenmessung aktivieren (optional)
+## Schritt 5 — Kundenbereich mit Google Drive verknüpfen (optional)
+
+Der komplette Download-Bereich hängt an einer Datei: `drive.js`. Trägst du dort
+etwas ein, zeigen **alle** Herunterladen-Buttons auf Google Drive. Trägst du
+nichts ein, laden sie weiter aus `v5frhmlitisu/dateien/`. Kaputt geht dabei nie
+etwas.
+
+### Weg 1 — nur der Ordner (ein Link, fünf Minuten)
+
+1. In Google Drive einen Ordner anlegen und die zwölf Dateien aus
+   `v5frhmlitisu/dateien/` hochladen (die elf Dateien plus das ZIP).
+2. Ordner → **Freigeben** → unter „Allgemeiner Zugriff" auf
+   **Jeder, der über den Link verfügt** stellen, Rolle **Betrachter**.
+3. **Link kopieren** und in `drive.js` eintragen:
+
+```js
+const DRIVE_ORDNER = 'https://drive.google.com/drive/folders/xxxxxxxxxxxx';
+```
+
+Danach führt jeder Button in den Drive-Ordner und heißt auch so:
+„Bei Google Drive öffnen". Der ZIP-Button daneben blendet sich aus, weil er
+dasselbe täte.
+
+### Weg 2 — jede Datei einzeln (direkter Download)
+
+Wenn ein Button die passende Datei direkt herunterladen soll, brauchst du je
+Datei die Datei-ID: Datei in Drive → **Freigeben** → „Jeder, der über den Link
+verfügt" → **Link kopieren**. Aus
+
+```
+https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing
+```
+
+ist `1AbCdEfGhIjKlMnOpQrStUv` die ID. Die trägst du in `drive.js` hinter den
+passenden Dateinamen in `DRIVE_DATEIEN` ein. Wenn du versehentlich den ganzen
+Link einsetzt, wird die ID trotzdem erkannt.
+
+Du kannst das nach und nach machen: Dateien mit ID laden direkt, Dateien ohne ID
+gehen in den Ordner aus Weg 1, und ohne beides bleibt der lokale Link stehen.
+
+### Was dabei zu beachten ist
+
+- Alles, was du freigibst, ist über den Link öffentlich erreichbar — genau wie
+  der Kundenbereich selbst. Wer den Link weitergibt, gibt das Paket weiter. Das
+  regelt § 5 der AGB, technisch verhindern lässt es sich bei einem 29-€-Produkt
+  nicht sinnvoll.
+- Die beiden Rechner (Rechnungsgenerator, Einnahmen und Ausgaben) haben oben im
+  Kundenbereich zusätzlich einen **Öffnen**-Button. Der bleibt immer lokal, weil
+  Google Drive HTML-Dateien nicht ausführt, sondern nur anzeigt.
+- Die Dateien in `v5frhmlitisu/dateien/` bleiben liegen. Sie sind die Rückfall-
+  ebene, wenn mit Drive etwas nicht stimmt.
+
+---
+
+## Schritt 6 — Reichweitenmessung aktivieren (optional)
 
 In `index.html` steht im `<head>` ein auskommentierter Block:
 
@@ -232,12 +286,10 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 
 ---
 
-## Schritt 6 — Danach
+## Schritt 7 — Danach
 
 - Eigene Domain verbinden statt der GitHub-Adresse (wirkt bei einem Vertrauens­produkt
   mehr als jede Textänderung).
-- Foto in „Ich hab denselben Weg gerade hinter mir" ist eingebunden
-  (`physio-nebenbei/img/nick.jpg`).
 - Repository auf **Private** stellen (GitHub Pro nötig für Pages aus einem privaten
   Repo), sonst sind die Dateien im Ordner `v5frhmlitisu/` trotz Geheim-Link direkt
   über die GitHub-Dateiliste erreichbar.
@@ -253,6 +305,7 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 index.html                      Verkaufsseite
 checkout.js                     ← hier den Bestell-Link eintragen
 community.js                    ← hier den WhatsApp-Einladungslink eintragen
+drive.js                        ← hier den Google-Drive-Ordner eintragen
 impressum.html                  ausgefüllt
 datenschutz.html                ausgefüllt
 agb.html                        inkl. Weitergabeverbot (§ 5)
@@ -264,7 +317,6 @@ physio-nebenbei/
   base.css                      Design für die ganze Seite
   zahlenfeld.js                 Ziffernraster statt Handytastatur
   fahrplan.html                 LESEPROBE: Kapitelliste plus Kapitel 1
-  demo-rechner.html             KURZFASSUNG: eine Behandlungsart
   img/, logo.svg, icon-*.png    Bilder und Symbole
   vorlagen-generator.py         erzeugt die PDF-Vorlagen neu
 

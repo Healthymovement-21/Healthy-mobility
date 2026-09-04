@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Rechnungsgenerator — PhysioNebenbei</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  Eigenständige Datei. Speichern, doppelklicken, fertig.
+  Braucht kein Internet, keine Installation und kein Konto.
+  Alle Eingaben bleiben im Browser dieses Geräts (localStorage)
+  und werden nirgendwohin gesendet.
+-->
+<style>
+  :root{
+    color-scheme: dark;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --paper:#050B12; --ink:#E9F3F7; --muted:#93AAB9; --faint:#6A8494;
+    --accent:#35D6E8; --accent-ink:#03151B; --accent-soft:rgba(53,214,232,.12);
+    --mark:#FF7C96;
+    --edge:rgba(255,255,255,.10); --line:rgba(255,255,255,.075);
+    --field:rgba(255,255,255,.05);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:840px; margin:0 auto; padding:26px 18px 90px; }
+
+  h1{ font-size:26px; font-weight:300; letter-spacing:-.02em; margin:0 0 6px; }
+  h2{
+    font-size:11.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--accent); margin:34px 0 12px;
+  }
+  .lede{ color:var(--muted); margin:0 0 8px; font-size:15px; }
+
+  .karte{
+    border:1px solid var(--edge); border-radius:16px;
+    background:rgba(10,24,36,.5); padding:16px 18px;
+  }
+  .reihe{ display:grid; gap:12px; }
+  @media (min-width:620px){ .zwei{ grid-template-columns:1fr 1fr; } .drei{ grid-template-columns:2fr 1fr 1fr; } }
+
+  label{ display:block; font-size:12.5px; color:var(--faint); margin-bottom:5px; }
+  input, textarea, select{
+    width:100%; border:1px solid var(--edge); border-radius:10px;
+    background:var(--field); color:var(--ink);
+    font-family:var(--font); font-size:15.5px; padding:10px 12px;
+  }
+  input[type=number]{ font-family:var(--mono); text-align:right; }
+  textarea{ resize:vertical; min-height:70px; }
+  input:focus, textarea:focus, select:focus{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border:1px solid transparent; border-radius:999px;
+    background:var(--accent); color:var(--accent-ink);
+    font-family:var(--font); font-size:15.5px; font-weight:600;
+    padding:12px 22px; cursor:pointer;
+  }
+  .btn.ghost{ background:transparent; color:var(--ink); border-color:var(--edge); }
+  .btn.ghost:hover{ border-color:var(--accent); color:var(--accent); }
+  .btn.klein{ padding:8px 14px; font-size:14px; }
+
+  .posten{ border-top:1px solid var(--line); padding-top:12px; margin-top:12px; }
+  .posten:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
+  .posten-kopf{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
+  .posten-nr{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
+  .weg{ background:none; border:none; color:var(--faint); font-size:19px; cursor:pointer; padding:2px 6px; }
+  .weg:hover{ color:var(--mark); }
+
+  .schnell{ display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; }
+  .schnell button{
+    border:1px solid var(--edge); background:transparent; color:var(--muted);
+    border-radius:999px; padding:7px 14px; font-family:var(--font); font-size:13.5px; cursor:pointer;
+  }
+  .schnell button:hover{ color:var(--accent); border-color:var(--accent); }
+
+  .summe{
+    display:flex; align-items:baseline; justify-content:space-between;
+    border-top:1px solid var(--line); margin-top:16px; padding-top:14px;
+  }
+  .summe .z{ font-size:26px; font-weight:400; color:var(--accent); font-variant-numeric:tabular-nums; }
+
+  .hinweis{
+    border-left:3px solid var(--accent); background:var(--accent-soft);
+    border-radius:0 10px 10px 0; padding:12px 14px; margin-top:14px;
+    font-size:13.5px; color:var(--muted);
+  }
+  .warn{ border-left-color:var(--mark); background:rgba(255,124,150,.09); }
+
+  .aktionen{
+    position:sticky; bottom:0; margin-top:26px; padding:14px 0;
+    background:linear-gradient(to top, var(--paper) 62%, transparent);
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+
+  /* ---------- Druckansicht ---------- */
+  #druck{ display:none; }
+  @media print{
+    @page{ margin:20mm 18mm; }
+    body{ background:#fff; color:#000; font-size:10.5pt; line-height:1.45; }
+    .wrap{ display:none !important; }
+    #druck{ display:block; }
+    #druck .kopfzeile{ display:flex; justify-content:space-between; align-items:flex-start; gap:30px; }
+    #druck .absender{ font-size:9pt; color:#444; white-space:pre-line; text-align:right; }
+    #druck h1{ font-size:17pt; margin:26pt 0 2pt; font-weight:bold; }
+    #druck .meta{ font-size:9.5pt; color:#444; margin-bottom:22pt; }
+    #druck .an{ white-space:pre-line; margin-bottom:8pt; }
+    #druck table{ width:100%; border-collapse:collapse; margin:14pt 0 0; font-size:10pt; }
+    #druck th{
+      text-align:left; font-size:8.5pt; letter-spacing:.04em; text-transform:uppercase;
+      color:#555; border-bottom:1px solid #999; padding:5pt 6pt;
+    }
+    #druck td{ padding:6pt 6pt; border-bottom:1px solid #e2e2e2; vertical-align:top; }
+    #druck td.r, #druck th.r{ text-align:right; }
+    #druck tr.gesamt td{ font-weight:bold; border-top:1.4px solid #000; border-bottom:none; font-size:11.5pt; }
+    #druck .fuss{ margin-top:22pt; padding-top:9pt; border-top:1px solid #ccc; font-size:9pt; color:#333; white-space:pre-line; }
+    #druck .steuerhinweis{ margin-top:14pt; font-size:9.5pt; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Rechnungsgenerator</h1>
+  <p class="lede">Deine Daten trägst du einmal ein, danach ist jede Rechnung eine Sache von zwei Minuten. Alles bleibt auf diesem Gerät.</p>
+
+  <!-- ============ ABSENDER ============ -->
+  <h2>1 · Deine Daten</h2>
+  <div class="karte">
+    <div class="reihe zwei">
+      <div>
+        <label for="a_name">Name</label>
+        <input id="a_name" placeholder="Vor- und Nachname">
+      </div>
+      <div>
+        <label for="a_steuer">Steuernummer</label>
+        <input id="a_steuer" placeholder="z. B. 12/345/67890">
+      </div>
+    </div>
+    <div class="reihe" style="margin-top:12px">
+      <div>
+        <label for="a_anschrift">Anschrift</label>
+        <textarea id="a_anschrift" placeholder="Straße und Hausnummer&#10;PLZ Ort"></textarea>
+      </div>
+    </div>
+    <div class="reihe zwei" style="margin-top:12px">
+      <div>
+        <label for="a_kontakt">Telefon und E-Mail</label>
+        <input id="a_kontakt" placeholder="0170 1234567 · name@beispiel.de">
+      </div>
+      <div>
+        <label for="a_iban">IBAN</label>
+        <input id="a_iban" placeholder="DE00 0000 0000 0000 0000 00">
+      </div>
+    </div>
+    <div class="reihe zwei" style="margin-top:12px">
+      <div>
+        <label for="a_inhaber">Kontoinhaber:in</label>
+        <input id="a_inhaber" placeholder="falls abweichend vom Namen">
+      </div>
+      <div>
+        <label for="a_status">Umsatzsteuer</label>
+        <select id="a_status">
+          <option value="heil">Heilbehandlung, steuerfrei nach § 4 Nr. 14 UStG</option>
+          <option value="klein">Kleinunternehmer nach § 19 UStG</option>
+          <option value="beides">Beides zutreffend</option>
+        </select>
+      </div>
+    </div>
+    <div class="hinweis" id="steuer_vorschau"></div>
+  </div>
+
+  <!-- ============ EMPFÄNGER ============ -->
+  <h2>2 · Empfänger:in</h2>
+  <div class="karte">
+    <div class="reihe zwei">
+      <div>
+        <label for="e_gespeichert">Gespeicherte Patient:innen</label>
+        <select id="e_gespeichert"><option value="">Neu eingeben …</option></select>
+      </div>
+      <div>
+        <label for="e_name">Name</label>
+        <input id="e_name" placeholder="Vor- und Nachname">
+      </div>
+    </div>
+    <div class="reihe" style="margin-top:12px">
+      <div>
+        <label for="e_anschrift">Anschrift</label>
+        <textarea id="e_anschrift" placeholder="Straße und Hausnummer&#10;PLZ Ort"></textarea>
+      </div>
+    </div>
+    <p style="margin:12px 0 0">
+      <button class="btn ghost klein" id="e_merken" type="button">Patient:in merken</button>
+      <button class="btn ghost klein" id="e_loeschen" type="button">Aus Liste entfernen</button>
+    </p>
+  </div>
+
+  <!-- ============ RECHNUNGSDATEN ============ -->
+  <h2>3 · Rechnung</h2>
+  <div class="karte">
+    <div class="reihe drei">
+      <div>
+        <label for="r_nummer">Rechnungsnummer</label>
+        <input id="r_nummer" placeholder="2026-001">
+      </div>
+      <div>
+        <label for="r_datum">Rechnungsdatum</label>
+        <input id="r_datum" type="date">
+      </div>
+      <div>
+        <label for="r_ziel">Zahlungsziel in Tagen</label>
+        <input id="r_ziel" type="number" value="14" min="0" max="90" step="1">
+      </div>
+    </div>
+    <div class="reihe zwei" style="margin-top:12px">
+      <div>
+        <label for="r_leistung_von">Leistungszeitraum von</label>
+        <input id="r_leistung_von" type="date">
+      </div>
+      <div>
+        <label for="r_leistung_bis">bis</label>
+        <input id="r_leistung_bis" type="date">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ POSITIONEN ============ -->
+  <h2>4 · Leistungen</h2>
+  <div class="karte">
+    <div id="posten"></div>
+    <p style="margin:16px 0 0">
+      <button class="btn ghost klein" id="p_neu" type="button">Position hinzufügen</button>
+    </p>
+    <div class="schnell" id="schnellwahl">
+      <span style="font-size:13px;color:var(--faint);align-self:center;margin-right:2px">Schnellwahl</span>
+    </div>
+    <div class="summe">
+      <span style="color:var(--muted);font-size:14.5px">Rechnungsbetrag</span>
+      <span class="z" id="gesamt">0,00 €</span>
+    </div>
+  </div>
+
+  <!-- ============ FUSSTEXT ============ -->
+  <h2>5 · Schlusstext</h2>
+  <div class="karte">
+    <label for="r_fuss">Wird unter die Rechnung gedruckt</label>
+    <textarea id="r_fuss"></textarea>
+    <div class="hinweis warn">
+      Bewahre eine Kopie jeder Rechnung zehn Jahre lang auf (§ 147 AO). Am einfachsten:
+      beim Speichern als PDF gleich in einen Ordner pro Jahr legen.
+    </div>
+  </div>
+
+  <div class="aktionen">
+    <button class="btn" id="drucken" type="button">Rechnung als PDF speichern</button>
+    <button class="btn ghost" id="naechste" type="button">Nächste Rechnung</button>
+    <button class="btn ghost" id="alles_weg" type="button">Alle Daten löschen</button>
+  </div>
+
+  <p style="color:var(--faint);font-size:12.5px;margin-top:22px">
+    Diese Datei ersetzt keine Steuerberatung. Sie füllt die Pflichtangaben nach § 14 UStG
+    aus, prüft aber nicht, ob dein Einzelfall Besonderheiten hat.
+  </p>
+</div>
+
+<!-- Druckausgabe wird per JS befüllt -->
+<div id="druck"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var KEY = 'physionebenbei-rechnungen';
+  var $ = function(id){ return document.getElementById(id); };
+
+  var STANDARD_FUSS =
+    'Vielen Dank für Ihr Vertrauen.\n' +
+    'Bitte überweisen Sie den Betrag unter Angabe der Rechnungsnummer.';
+
+  /* Schnellwahl entspricht den Startwerten aus dem Monats-Rechner.
+     Preise sind frei anpassbar, es gibt keine verbindliche
+     Gebührenordnung für private Physiotherapie. */
+  var SCHNELL = [
+    ['Krankengymnastik', 45],
+    ['Manuelle Therapie', 50],
+    ['Manuelle Lymphdrainage 30 Min.', 42],
+    ['Manuelle Lymphdrainage 45 Min.', 58],
+    ['Wärmetherapie / Fango', 12],
+    ['Hausbesuch (Zuschlag)', 18]
+  ];
+
+  var daten = { absender:{}, patienten:[], letzteNummer:'', posten:[] };
+
+  /* ---------- Speichern ---------- */
+  function laden(){
+    try {
+      var roh = localStorage.getItem(KEY);
+      if (roh) daten = Object.assign(daten, JSON.parse(roh));
+    } catch(e){ /* privater Modus o. ä. — dann eben ohne Speichern */ }
+  }
+  function speichern(){
+    daten.absender = {
+      name: $('a_name').value, steuer: $('a_steuer').value,
+      anschrift: $('a_anschrift').value, kontakt: $('a_kontakt').value,
+      iban: $('a_iban').value, inhaber: $('a_inhaber').value,
+      status: $('a_status').value, fuss: $('r_fuss').value
+    };
+    try { localStorage.setItem(KEY, JSON.stringify(daten)); } catch(e){}
+  }
+
+  /* ---------- Steuerhinweis ---------- */
+  function steuerText(){
+    var s = $('a_status').value;
+    if (s === 'klein')  return 'Als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet.';
+    if (s === 'beides') return 'Steuerfreie Heilbehandlung gemäß § 4 Nr. 14 UStG. Zudem wird als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG keine Umsatzsteuer berechnet.';
+    return 'Steuerfreie Heilbehandlung gemäß § 4 Nr. 14 UStG, daher keine Umsatzsteuer ausgewiesen.';
+  }
+  function steuerVorschau(){
+    $('steuer_vorschau').textContent = 'Auf der Rechnung erscheint: „' + steuerText() + '"';
+  }
+
+  /* ---------- Positionen ---------- */
+  function postenZeichnen(){
+    var box = $('posten');
+    box.innerHTML = '';
+    if (!daten.posten.length) daten.posten.push({ text:'', menge:1, preis:0 });
+
+    daten.posten.forEach(function(p, i){
+      var d = document.createElement('div');
+      d.className = 'posten';
+      d.innerHTML =
+        '<div class="posten-kopf">' +
+          '<span class="posten-nr">Position ' + (i+1) + '</span>' +
+          '<button class="weg" type="button" data-weg="' + i + '" aria-label="Position entfernen">×</button>' +
+        '</div>' +
+        '<div class="reihe drei">' +
+          '<div><label>Beschreibung</label>' +
+            '<input data-i="' + i + '" data-f="text" value="' + esc(p.text) + '" placeholder="z. B. Krankengymnastik"></div>' +
+          '<div><label>Anzahl</label>' +
+            '<input type="number" min="0" step="1" data-i="' + i + '" data-f="menge" value="' + p.menge + '"></div>' +
+          '<div><label>Einzelpreis (€)</label>' +
+            '<input type="number" min="0" step="0.01" data-i="' + i + '" data-f="preis" value="' + p.preis + '"></div>' +
+        '</div>';
+      box.appendChild(d);
+    });
+    summe();
+  }
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  }
+  function eur(n){
+    return (isFinite(n) ? n : 0).toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €';
+  }
+  function gesamtBetrag(){
+    return daten.posten.reduce(function(s, p){
+      return s + (parseFloat(p.menge)||0) * (parseFloat(p.preis)||0);
+    }, 0);
+  }
+  function summe(){ $('gesamt').textContent = eur(gesamtBetrag()); }
+
+  $('posten').addEventListener('input', function(e){
+    var i = e.target.getAttribute('data-i'), f = e.target.getAttribute('data-f');
+    if (i === null || !f) return;
+    daten.posten[i][f] = f === 'text' ? e.target.value : (parseFloat(e.target.value) || 0);
+    summe();
+    speichern();
+  });
+  $('posten').addEventListener('click', function(e){
+    var w = e.target.getAttribute('data-weg');
+    if (w === null) return;
+    daten.posten.splice(w, 1);
+    if (!daten.posten.length) daten.posten.push({ text:'', menge:1, preis:0 });
+    postenZeichnen(); speichern();
+  });
+  $('p_neu').addEventListener('click', function(){
+    daten.posten.push({ text:'', menge:1, preis:0 });
+    postenZeichnen(); speichern();
+  });
+
+  /* Schnellwahl-Knöpfe */
+  SCHNELL.forEach(function(s){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = s[0];
+    b.addEventListener('click', function(){
+      var leer = daten.posten.length === 1 && !daten.posten[0].text && !daten.posten[0].preis;
+      if (leer) daten.posten = [];
+      daten.posten.push({ text:s[0], menge:1, preis:s[1] });
+      postenZeichnen(); speichern();
+    });
+    $('schnellwahl').appendChild(b);
+  });
+
+  /* ---------- Patient:innen ---------- */
+  function patientenListe(){
+    var sel = $('e_gespeichert');
+    sel.innerHTML = '<option value="">Neu eingeben …</option>';
+    daten.patienten.forEach(function(p, i){
+      var o = document.createElement('option');
+      o.value = i; o.textContent = p.name;
+      sel.appendChild(o);
+    });
+  }
+  $('e_gespeichert').addEventListener('change', function(){
+    var p = daten.patienten[this.value];
+    if (!p) { $('e_name').value = ''; $('e_anschrift').value = ''; return; }
+    $('e_name').value = p.name;
+    $('e_anschrift').value = p.anschrift;
+  });
+  $('e_merken').addEventListener('click', function(){
+    var name = $('e_name').value.trim();
+    if (!name) { alert('Bitte zuerst einen Namen eintragen.'); return; }
+    var vorhanden = daten.patienten.findIndex(function(p){ return p.name === name; });
+    var eintrag = { name:name, anschrift:$('e_anschrift').value };
+    if (vorhanden >= 0) daten.patienten[vorhanden] = eintrag;
+    else daten.patienten.push(eintrag);
+    patientenListe(); speichern();
+    this.textContent = 'Gemerkt';
+    var b = this;
+    setTimeout(function(){ b.textContent = 'Patient:in merken'; }, 1800);
+  });
+  $('e_loeschen').addEventListener('click', function(){
+    var i = $('e_gespeichert').value;
+    if (i === '') return;
+    daten.patienten.splice(i, 1);
+    patientenListe(); speichern();
+    $('e_name').value = ''; $('e_anschrift').value = '';
+  });
+
+  /* ---------- Rechnungsnummer ---------- */
+  function naechsteNummer(letzte){
+    var jahr = new Date().getFullYear();
+    var m = /^(\d{4})-(\d+)$/.exec(letzte || '');
+    if (m && m[1] === String(jahr)) {
+      var n = parseInt(m[2], 10) + 1;
+      return jahr + '-' + String(n).padStart(m[2].length, '0');
+    }
+    return jahr + '-001';
+  }
+
+  function heute(){ return new Date().toISOString().slice(0,10); }
+  function deDatum(iso){
+    if (!iso) return '';
+    var t = iso.split('-');
+    return t[2] + '.' + t[1] + '.' + t[0];
+  }
+  function plusTage(iso, tage){
+    if (!iso) return '';
+    var d = new Date(iso + 'T12:00:00');
+    d.setDate(d.getDate() + (parseInt(tage,10) || 0));
+    return deDatum(d.toISOString().slice(0,10));
+  }
+
+  /* ---------- Druckausgabe ---------- */
+  function druckAufbauen(){
+    var a = {
+      name: $('a_name').value, steuer: $('a_steuer').value,
+      anschrift: $('a_anschrift').value, kontakt: $('a_kontakt').value,
+      iban: $('a_iban').value, inhaber: $('a_inhaber').value
+    };
+    var zeilen = daten.posten.filter(function(p){ return p.text || p.preis; }).map(function(p){
+      var betrag = (parseFloat(p.menge)||0) * (parseFloat(p.preis)||0);
+      return '<tr><td>' + esc(p.text) + '</td>' +
+             '<td class="r">' + (parseFloat(p.menge)||0) + '</td>' +
+             '<td class="r">' + eur(parseFloat(p.preis)||0) + '</td>' +
+             '<td class="r">' + eur(betrag) + '</td></tr>';
+    }).join('');
+
+    var zeitraum = '';
+    var von = $('r_leistung_von').value, bis = $('r_leistung_bis').value;
+    if (von && bis && von !== bis) zeitraum = 'Leistungszeitraum: ' + deDatum(von) + ' bis ' + deDatum(bis);
+    else if (von) zeitraum = 'Leistungsdatum: ' + deDatum(von);
+
+    var absenderZeile = [a.name, a.anschrift, a.kontakt].filter(Boolean).join('\n');
+    var bank = [a.iban ? 'IBAN: ' + a.iban : '', a.inhaber ? 'Kontoinhaber:in: ' + a.inhaber : ''].filter(Boolean).join('\n');
+    var ziel = plusTage($('r_datum').value, $('r_ziel').value);
+
+    $('druck').innerHTML =
+      '<div class="kopfzeile">' +
+        '<div></div>' +
+        '<div class="absender">' + esc(absenderZeile) + (a.steuer ? '\nSteuernummer: ' + esc(a.steuer) : '') + '</div>' +
+      '</div>' +
+      '<div class="an">' + esc($('e_name').value) + '\n' + esc($('e_anschrift').value) + '</div>' +
+      '<h1>Rechnung ' + esc($('r_nummer').value) + '</h1>' +
+      '<div class="meta">Rechnungsdatum: ' + deDatum($('r_datum').value) +
+        (zeitraum ? ' · ' + esc(zeitraum) : '') + '</div>' +
+      '<table>' +
+        '<thead><tr><th>Leistung</th><th class="r">Anzahl</th><th class="r">Einzelpreis</th><th class="r">Betrag</th></tr></thead>' +
+        '<tbody>' + zeilen +
+          '<tr class="gesamt"><td colspan="3">Rechnungsbetrag</td><td class="r">' + eur(gesamtBetrag()) + '</td></tr>' +
+        '</tbody>' +
+      '</table>' +
+      '<div class="steuerhinweis">' + esc(steuerText()) + '</div>' +
+      '<div class="fuss">' +
+        (ziel ? 'Zahlbar bis ' + ziel + ' ohne Abzug.\n' : '') +
+        (bank ? bank + '\n' : '') +
+        '\n' + esc($('r_fuss').value) +
+      '</div>';
+  }
+
+  $('drucken').addEventListener('click', function(){
+    if (!$('a_name').value.trim()) { alert('Bitte trag zuerst deinen Namen unter Punkt 1 ein.'); return; }
+    if (!$('e_name').value.trim()) { alert('Bitte trag den Namen der Empfängerin oder des Empfängers ein.'); return; }
+    daten.letzteNummer = $('r_nummer').value;
+    speichern();
+    druckAufbauen();
+    window.print();
+  });
+
+  $('naechste').addEventListener('click', function(){
+    $('r_nummer').value = naechsteNummer($('r_nummer').value);
+    $('r_datum').value = heute();
+    $('e_name').value = ''; $('e_anschrift').value = '';
+    $('e_gespeichert').value = '';
+    daten.posten = [{ text:'', menge:1, preis:0 }];
+    postenZeichnen();
+    daten.letzteNummer = $('r_nummer').value;
+    speichern();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  $('alles_weg').addEventListener('click', function(){
+    if (!confirm('Wirklich alle gespeicherten Daten auf diesem Gerät löschen? Das lässt sich nicht rückgängig machen.')) return;
+    try { localStorage.removeItem(KEY); } catch(e){}
+    location.reload();
+  });
+
+  /* ---------- Start ---------- */
+  laden();
+  var a = daten.absender || {};
+  $('a_name').value = a.name || '';
+  $('a_steuer').value = a.steuer || '';
+  $('a_anschrift').value = a.anschrift || '';
+  $('a_kontakt').value = a.kontakt || '';
+  $('a_iban').value = a.iban || '';
+  $('a_inhaber').value = a.inhaber || '';
+  $('a_status').value = a.status || 'heil';
+  $('r_fuss').value = a.fuss || STANDARD_FUSS;
+
+  $('r_nummer').value = naechsteNummer(daten.letzteNummer);
+  $('r_datum').value = heute();
+  $('r_leistung_von').value = heute();
+
+  ['a_name','a_steuer','a_anschrift','a_kontakt','a_iban','a_inhaber','r_fuss']
+    .forEach(function(id){ $(id).addEventListener('input', speichern); });
+  $('a_status').addEventListener('change', function(){ steuerVorschau(); speichern(); });
+
+  steuerVorschau();
+  patientenListe();
+  postenZeichnen();
+})();
+</script>
+</body>
+</html>

@@ -167,7 +167,7 @@ html{ overflow-x:hidden; }
 
 .hero h1{
   font-family:var(--font-display);
-  font-size:clamp(40px,6.6vw,80px);
+  font-size:clamp(36px,5.4vw,64px);
   font-weight:300;
   line-height:1.03;
   letter-spacing:-.04em;
@@ -356,8 +356,8 @@ html{ overflow-x:hidden; }
   animation:drift 9s ease-in-out infinite;
 }
 .chip-b{
-  bottom:-11%;
-  right:6%;
+  bottom:-19%;
+  right:-3%;
   animation:drift 11s ease-in-out infinite reverse;
 }
 @keyframes drift{
@@ -985,4 +985,99 @@ html{ overflow-x:hidden; }
   .nav, .nav-sheet, .hero-light, .hero-arcs, .chip, .finale::before{ display:none !important; }
   .lp{ overflow:visible; }
   .reveal{ opacity:1; transform:none; }
+}
+
+/* Fakten-Zeile im Hero: Preis, kein Abo, Zugang */
+.fakten{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  list-style:none;
+  margin:26px 0 0;
+  padding:0;
+  font-size:15px;
+  color:var(--ink-muted);
+}
+.fakten li{ display:flex; align-items:center; gap:9px; }
+.fakten li::before{
+  content:"";
+  width:5px; height:5px;
+  border-radius:50%;
+  background:var(--accent);
+}
+.fakten b{ color:var(--ink); font-weight:600; }
+
+/* Kapitelliste im Produktabschnitt */
+.kapitel{
+  counter-reset:none;
+  list-style:none;
+  margin:22px 0 0;
+  padding:0;
+  display:grid;
+  gap:1px;
+}
+.kapitel li{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:14px;
+  align-items:baseline;
+  padding:10px 0;
+  border-top:1px solid var(--glass-line);
+  font-size:15.5px;
+  color:var(--ink-muted);
+}
+.kapitel li:last-child{ border-bottom:1px solid var(--glass-line); }
+.kapitel i{
+  font-style:normal;
+  font-family:var(--font-mono);
+  font-size:11.5px;
+  color:var(--accent);
+  opacity:.75;
+}
+
+/* Nutzen-Listen: was ein Werkzeug beantwortet, nicht welches Dateiformat */
+.nutzen{
+  list-style:none;
+  margin:22px 0 0;
+  padding:0;
+  display:grid;
+  gap:16px;
+}
+.nutzen li{
+  padding-left:16px;
+  border-left:2px solid var(--glass-line);
+}
+.nutzen b{
+  display:block;
+  font-size:15.5px;
+  font-weight:550;
+  color:var(--ink);
+  margin-bottom:3px;
+}
+.nutzen span{
+  display:block;
+  font-size:15px;
+  color:var(--ink-muted);
+  max-width:52ch;
+}
+
+/* Autor-Abschnitt: Platz fuer ein echtes Foto, solange ohne Bild einspaltig */
+.autor{
+  display:grid;
+  gap:clamp(24px,4vw,52px);
+  align-items:start;
+}
+.autor:has(.autor-bild){ grid-template-columns:minmax(0,260px) minmax(0,1fr); }
+.autor-bild{
+  width:100%;
+  height:auto;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:20px;
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--shadow);
+}
+@media (max-width:760px){
+  .autor:has(.autor-bild){ grid-template-columns:1fr; }
+  .autor-bild{ max-width:220px; }
 }

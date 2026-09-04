@@ -98,7 +98,7 @@ künftigem Datum und beliebiger Prüfziffer bezahlen. Prüfen:
 - [ ] Widerrufs-Bestätigung auf der Verkaufsseite ist Pflicht, bevor der
       Kauf-Button überhaupt anklickbar wird
 - [ ] nach der Zahlung landest du auf der Danke-Seite im Kundenbereich
-- [ ] von dort kommst du in deinen Bereich und alle sechs Dateien öffnen sich
+- [ ] von dort kommst du in deinen Bereich und alle Dateien öffnen sich
 
 Wenn alles passt: Konto vollständig verifizieren, in den **Live-Modus**
 wechseln und dort denselben Zahlungslink neu erstellen. Testmodus-Links
@@ -115,7 +115,7 @@ umgezogen:
 ```
 
 Darin: die Startseite für Käufer:innen, beide Rechner, der komplette
-Fahrplan, die Danke-Seite und alle sechs Dateien zum Herunterladen.
+Fahrplan, die Danke-Seite und alle elf Dateien zum Herunterladen.
 Jede Seite dort trägt `noindex`, keine öffentliche Seite verlinkt darauf,
 und der Pfad steht in keiner robots.txt. Über Google ist da nichts zu
 finden.
@@ -257,11 +257,12 @@ v5frhmlitisu/
   index.html                    Startseite für Käufer:innen, als App speicherbar
   danke.html                    Ziel der Weiterleitung nach der Zahlung
   fahrplan.html                 alle zehn Kapitel plus To-do-Liste
+  terminbuchung.html            Zusatzkapitel zur Online-Terminvergabe
   monatsrechner.html            voller Rechner mit PDF-Export
   gehaltsrechner.html           Gehalt, Szenarien, Krankenkassen-Ampel
   werkzeuge.html                Preis-Kalkulation
   app.webmanifest               damit der Bereich als App startet
-  dateien/                      die sechs Dateien plus ZIP
+  dateien/                      die elf Dateien plus ZIP
 ```
 
 ### Wenn du Inhalte änderst

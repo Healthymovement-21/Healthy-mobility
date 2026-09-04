@@ -109,8 +109,10 @@ class Blatt:
             y -= 12
         self.y = unten - 20
 
-    def abschnitt(self, nummer, titel):
-        self.platz(46)
+    def abschnitt(self, nummer, titel, braucht=46):
+        """braucht: Platz, den der folgende Block noch benoetigt. Verhindert,
+        dass eine Ueberschrift allein am Seitenende stehen bleibt."""
+        self.platz(braucht)
         self.y -= 6
         self.c.setFont('Helvetica-Bold', 12.5)
         self.c.setFillColor(GRUEN)
@@ -341,7 +343,7 @@ def dokumentation(pfad):
     b.leerlinien(3)
 
     b.neue_seite()
-    b.abschnitt(4, 'Verlauf')
+    b.abschnitt(4, 'Verlauf', braucht=16 * 34 + 90)
     b.absatz('Je Termin eine Zeile. Bei Bedarf weitere Blätter dieser Seite ausdrucken.',
              groesse=9)
     b.tabelle(
@@ -363,3 +365,175 @@ if __name__ == '__main__':
     ziel = sys.argv[1] if len(sys.argv) > 1 else '.'
     print(datenschutz(f'{ziel}/Datenschutz-Patienten.pdf'))
     print(dokumentation(f'{ziel}/Dokumentationsvorlage.pdf'))
+
+
+# ============================================================
+# 3 · Anamnesebogen
+# ============================================================
+def anamnese(pfad):
+    b = Blatt(pfad, 'Anamnesebogen',
+              'Zum Ausfüllen beim ersten Termin, gemeinsam mit der Patientin '
+              'oder dem Patienten.')
+
+    b.warnkasten(
+        'Diese Vorlage ist eine unverbindliche Orientierung und kein geprüftes Formular. '
+        'Prüfe vor dem Einsatz, ob die Fragen zu deinem Behandlungsspektrum passen, und '
+        'ergänze sie bei Bedarf. Die fachliche Verantwortung für Anamnese und Befund '
+        'bleibt bei dir.')
+
+    b.abschnitt(1, 'Patientendaten')
+    b.feld('Name, Vorname:', linien=1)
+    b.feld('Geburtsdatum:', linien=1, breite=BREITE * 0.45)
+    b.feld('Telefon / E-Mail:', linien=1)
+    b.feld('Hausärztin / Hausarzt (Name, Ort):', linien=1)
+    b.feld('Ärztliche Verordnung liegt vor (Datum, ausstellende Praxis, Diagnose):', linien=2)
+
+    b.abschnitt(2, 'Aktuelle Beschwerden')
+    b.feld('Was führt Sie zu mir? Wo genau sind die Beschwerden?', linien=3)
+    b.feld('Seit wann bestehen die Beschwerden?', linien=1)
+    b.feld('Wie sind sie entstanden (Unfall, allmählich, nach Belastung)?', linien=2)
+    b.absatz('Schmerzstärke aktuell (0 = kein Schmerz, 10 = stärkster vorstellbarer Schmerz):',
+             groesse=9.5)
+    b.absatz('0   1   2   3   4   5   6   7   8   9   10', groesse=11)
+    b.feld('Was verschlimmert die Beschwerden, was lindert sie?', linien=2)
+    b.feld('Tageszeitlicher Verlauf (morgens, abends, nachts):', linien=1)
+
+    b.abschnitt(3, 'Vorgeschichte')
+    b.feld('Frühere Operationen (mit Jahr):', linien=2)
+    b.feld('Unfälle oder Verletzungen:', linien=2)
+    b.feld('Bestehende Erkrankungen (z. B. Herz-Kreislauf, Diabetes, Rheuma, Osteoporose):', linien=2)
+    b.feld('Regelmäßige Medikamente:', linien=2)
+    b.feld('Allergien und Unverträglichkeiten:', linien=1)
+
+    b.neue_seite()
+
+    b.abschnitt(4, 'Wichtige Hinweise vor der Behandlung')
+    b.absatz('Bitte ankreuzen, falls zutreffend. Diese Punkte können die Auswahl der '
+             'Behandlungstechniken beeinflussen.', groesse=9.5)
+    b.punkte([
+        'Herzschrittmacher oder anderes Implantat',
+        'Schwangerschaft',
+        'Bekannte Thrombose oder Gerinnungsstörung',
+        'Blutverdünnende Medikamente',
+        'Bösartige Erkrankung, aktuell oder in der Vorgeschichte',
+        'Akute Entzündung, Fieber oder Infektion',
+        'Hauterkrankungen oder offene Wunden im Behandlungsgebiet',
+        'Metallimplantate, Endoprothesen',
+    ], groesse=9.5)
+    b.feld('Sonstiges, das ich wissen sollte:', linien=2)
+
+    b.abschnitt(5, 'Alltag und Ziele')
+    b.feld('Beruf und körperliche Belastung im Alltag:', linien=2)
+    b.feld('Sport und Hobbys:', linien=1)
+    b.feld('Was möchten Sie mit der Behandlung erreichen?', linien=3)
+
+    b.abschnitt(6, 'Befund')
+    b.absatz('Wird von der Behandlerin oder dem Behandler ausgefüllt.', groesse=9.5)
+    b.leerlinien(8)
+
+    b.abschnitt(7, 'Bestätigung')
+    b.absatz(
+        'Ich habe die Fragen nach bestem Wissen beantwortet. Änderungen meines '
+        'Gesundheitszustands teile ich unaufgefordert mit.')
+    b.unterschrift('Ort, Datum', 'Unterschrift Patient:in bzw. gesetzliche Vertretung')
+
+    b.speichern()
+    return pfad
+
+
+# ============================================================
+# 4 · Terminuebersicht
+# ============================================================
+def termine(pfad):
+    b = Blatt(pfad, 'Terminübersicht',
+              'Wochenplan zum Ausdrucken. Ein Blatt pro Woche, für den Überblick '
+              'neben dem Hauptjob.')
+
+    b.warnkasten(
+        'Enthält Patientendaten, sobald du sie einträgst. Trag deshalb nur Kürzel ein und '
+        'führe die vollen Namen getrennt in der Patientenliste. Bewahre ausgefüllte Blätter '
+        'verschlossen auf und entsorge sie im Aktenvernichter, nicht im Papierkorb.')
+
+    b.abschnitt(1, 'Woche')
+    b.feld('Kalenderwoche und Zeitraum:', linien=1, breite=BREITE * 0.6)
+
+    tage = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag',
+            'Freitag', 'Samstag', 'Sonntag']
+    for i, tag in enumerate(tage):
+        b.platz(120)
+        b.c.setFont('Helvetica-Bold', 11)
+        b.c.setFillColor(GRUEN)
+        b.c.drawString(L, b.y, tag)
+        b.y -= 6
+        b.tabelle(
+            [('Uhrzeit', 1.0), ('Patient:in (Kürzel)', 1.6),
+             ('Ort / Adresse', 2.2), ('Leistung', 1.5), ('Erledigt', 0.8)],
+            zeilen_anzahl=3, zeilenhoehe=26)
+
+    b.abschnitt(2, 'Notizen für die Woche')
+    b.leerlinien(4)
+
+    b.speichern()
+    return pfad
+
+
+# ============================================================
+# 5 · Patientenliste
+# ============================================================
+def patientenliste(pfad):
+    b = Blatt(pfad, 'Patientenliste',
+              'Die Zuordnung von Kürzel zu echtem Namen. Getrennt von der '
+              'Behandlungsdokumentation aufbewahren.')
+
+    b.warnkasten(
+        'Dieses Blatt enthält personenbezogene Daten und teilweise Gesundheitsdaten nach '
+        'Art. 9 DSGVO. Bewahre es verschlossen auf, getrennt von der Dokumentation, und '
+        'gib es niemals aus der Hand. Bei Verlust kann eine Meldepflicht nach Art. 33 DSGVO '
+        'bestehen. Diese Vorlage ist eine Orientierung und ersetzt keine Rechtsberatung.')
+
+    b.abschnitt(1, 'Warum diese Liste getrennt liegt')
+    b.absatz(
+        'In der Behandlungsdokumentation und im Terminplan stehen nur Kürzel. Wer die '
+        'Unterlagen findet, kann damit allein niemanden identifizieren. Erst diese Liste '
+        'stellt die Verbindung zum echten Namen her. Genau deshalb gehört sie an einen '
+        'anderen Ort, idealerweise in einen abschließbaren Schrank oder eine '
+        'verschlüsselte Datei.')
+
+    b.abschnitt(2, 'Zuordnung', braucht=14 * 30 + 60)
+    b.tabelle(
+        [('Kürzel', 0.8), ('Name, Vorname', 2.2), ('Geburtsdatum', 1.2),
+         ('Telefon', 1.4), ('Erstkontakt', 1.0)],
+        zeilen_anzahl=14, zeilenhoehe=30)
+
+    b.neue_seite()
+
+    b.abschnitt(3, 'Aufbewahrung und Löschung', braucht=12 * 30 + 110)
+    b.absatz(
+        'Trag hier ein, wann eine Behandlung abgeschlossen wurde. Daraus ergibt sich, wann '
+        'die Unterlagen frühestens vernichtet werden dürfen.')
+    b.tabelle(
+        [('Kürzel', 0.9), ('Behandlung abgeschlossen am', 1.8),
+         ('Aufbewahrung bis mindestens', 1.8), ('Vernichtet am', 1.5)],
+        zeilen_anzahl=12, zeilenhoehe=30)
+
+    b.absatz(
+        'Die Aufbewahrungsfrist für die Behandlungsdokumentation beträgt nach § 630f Abs. 3 '
+        'BGB mindestens zehn Jahre nach Abschluss der Behandlung. Bei minderjährigen '
+        'Patient:innen beginnt sie entsprechend später. Für Rechnungsunterlagen gelten die '
+        'steuerlichen Fristen von bis zu zehn Jahren nach § 147 AO. Erst danach vernichten, '
+        'und dann im Aktenvernichter, nicht im Papierkorb.', groesse=9.5)
+
+    b.abschnitt(4, 'Auskunft und Löschung auf Anfrage', braucht=8 * 30 + 130)
+    b.absatz(
+        'Patient:innen dürfen nach Art. 15 DSGVO wissen, welche Daten du über sie '
+        'gespeichert hast, und nach Art. 17 DSGVO deren Löschung verlangen. Solange eine '
+        'gesetzliche Aufbewahrungspflicht besteht, geht Löschung nicht, dann wird die '
+        'Verarbeitung stattdessen eingeschränkt. Notiere Anfragen hier, damit du '
+        'nachweisen kannst, dass du reagiert hast.', groesse=9.5)
+    b.tabelle(
+        [('Datum', 1.0), ('Kürzel', 0.8), ('Art der Anfrage', 2.0),
+         ('Erledigt am', 1.2), ('Bemerkung', 2.0)],
+        zeilen_anzahl=8, zeilenhoehe=30)
+
+    b.speichern()
+    return pfad

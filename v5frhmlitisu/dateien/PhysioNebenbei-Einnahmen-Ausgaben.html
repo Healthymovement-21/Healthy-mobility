@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Einnahmen und Ausgaben — PhysioNebenbei</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  Eigenständige Datei. Speichern, doppelklicken, fertig.
+  Braucht kein Internet, keine Installation und kein Konto.
+  Alle Zahlen bleiben im Browser dieses Geräts (localStorage).
+
+  Entspricht der Einnahmen-Überschuss-Rechnung nach § 4 Abs. 3 EStG,
+  der vereinfachten Gewinnermittlung, die Freiberufler:innen wie
+  Physiotherapeut:innen nutzen dürfen.
+-->
+<style>
+  :root{
+    color-scheme: dark;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --paper:#050B12; --ink:#E9F3F7; --muted:#93AAB9; --faint:#6A8494;
+    --accent:#35D6E8; --accent-ink:#03151B; --accent-soft:rgba(53,214,232,.12);
+    --mark:#FF7C96; --gruen:#34D399;
+    --edge:rgba(255,255,255,.10); --line:rgba(255,255,255,.075);
+    --field:rgba(255,255,255,.05);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:900px; margin:0 auto; padding:26px 18px 90px; }
+
+  h1{ font-size:26px; font-weight:300; letter-spacing:-.02em; margin:0 0 6px; }
+  h2{
+    font-size:11.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--accent); margin:34px 0 12px;
+  }
+  .lede{ color:var(--muted); margin:0 0 8px; font-size:15px; }
+
+  .karte{
+    border:1px solid var(--edge); border-radius:16px;
+    background:rgba(10,24,36,.5); padding:16px 18px;
+  }
+
+  label{ display:block; font-size:12.5px; color:var(--faint); margin-bottom:5px; }
+  input, select{
+    width:100%; border:1px solid var(--edge); border-radius:10px;
+    background:var(--field); color:var(--ink);
+    font-family:var(--font); font-size:15.5px; padding:10px 12px;
+  }
+  input[type=number]{ font-family:var(--mono); text-align:right; -moz-appearance:textfield; }
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  input:focus, select:focus{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .kopfreihe{ display:flex; flex-wrap:wrap; gap:12px; align-items:end; }
+  .kopfreihe > div{ flex:1 1 150px; }
+
+  /* Monatskarten statt breiter Tabelle: passt auf jede Bildschirmbreite */
+  .monat{
+    border:1px solid var(--edge); border-radius:14px;
+    background:rgba(10,24,36,.42); padding:12px 14px 14px; margin-bottom:9px;
+  }
+  .monat-kopf{
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    padding-bottom:9px; margin-bottom:11px; border-bottom:1px solid var(--line);
+  }
+  .monat-name{ font-size:12px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--faint); }
+  .monat-gewinn{ font-size:16.5px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .monat-gewinn.plus{ color:var(--gruen); }
+  .monat-gewinn.minus{ color:var(--mark); }
+  .felder{ display:grid; grid-template-columns:repeat(auto-fit, minmax(118px,1fr)); gap:9px 10px; }
+
+  .zusammen{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:12px; margin-top:8px; }
+  .kachel{
+    border:1px solid var(--edge); border-radius:14px;
+    background:rgba(10,24,36,.45); padding:14px 16px;
+  }
+  .kachel.haupt{ border-color:rgba(53,214,232,.25); background:linear-gradient(180deg, rgba(53,214,232,.08), rgba(255,255,255,.01)), rgba(8,22,33,.6); }
+  .kachel .k{ display:block; font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-bottom:6px; }
+  .kachel .n{ font-size:23px; font-weight:400; font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+  .kachel.haupt .n{ color:var(--accent); font-size:28px; }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border:1px solid transparent; border-radius:999px;
+    background:var(--accent); color:var(--accent-ink);
+    font-family:var(--font); font-size:15.5px; font-weight:600;
+    padding:12px 22px; cursor:pointer;
+  }
+  .btn.ghost{ background:transparent; color:var(--ink); border-color:var(--edge); }
+  .btn.ghost:hover{ border-color:var(--accent); color:var(--accent); }
+
+  .hinweis{
+    border-left:3px solid var(--accent); background:var(--accent-soft);
+    border-radius:0 10px 10px 0; padding:12px 14px; margin-top:14px;
+    font-size:13.5px; color:var(--muted);
+  }
+
+  .aktionen{
+    position:sticky; bottom:0; margin-top:26px; padding:14px 0;
+    background:linear-gradient(to top, var(--paper) 62%, transparent);
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+
+  /* ---------- Druckansicht ---------- */
+  #druck{ display:none; }
+  @media print{
+    @page{ margin:16mm 14mm; size:A4 landscape; }
+    body{ background:#fff; color:#000; font-size:9.5pt; }
+    .wrap{ display:none !important; }
+    #druck{ display:block; }
+    #druck h1{ font-size:16pt; margin:0 0 2pt; }
+    #druck .sub{ font-size:9pt; color:#555; margin-bottom:14pt; padding-bottom:8pt; border-bottom:2px solid #000; }
+    #druck table{ width:100%; border-collapse:collapse; font-size:9pt; }
+    #druck th{
+      text-align:right; font-size:8pt; letter-spacing:.04em; text-transform:uppercase;
+      color:#555; border-bottom:1px solid #999; padding:4pt 5pt;
+    }
+    #druck th:first-child, #druck td:first-child{ text-align:left; }
+    #druck td{ text-align:right; padding:4pt 5pt; border-bottom:1px solid #e4e4e4; }
+    #druck tr.jahr td{ font-weight:bold; border-top:1.4px solid #000; border-bottom:none; }
+    #druck .box{ margin-top:14pt; font-size:9.5pt; }
+    #druck .box b{ display:inline-block; min-width:190pt; }
+    #druck .fuss{ margin-top:16pt; padding-top:7pt; border-top:1px solid #ccc; font-size:8pt; color:#555; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Einnahmen und Ausgaben</h1>
+  <p class="lede">Monat für Monat eintragen, der Rest rechnet sich selbst. Am Jahresende hast du die Zahlen, die deine Steuererklärung braucht.</p>
+
+  <div class="karte">
+    <div class="kopfreihe">
+      <div>
+        <label for="jahr">Jahr</label>
+        <select id="jahr"></select>
+      </div>
+      <div>
+        <label for="satz">Geschätzter Steuersatz</label>
+        <input type="number" id="satz" value="35" min="0" max="60" step="1">
+      </div>
+      <div>
+        <label for="puffer">Sicherheitspuffer</label>
+        <input type="number" id="puffer" value="5" min="0" max="30" step="1">
+      </div>
+    </div>
+    <div class="hinweis">
+      Der Steuersatz ist eine Schätzung. Trag den Wert ein, der auf deinem letzten
+      Steuerbescheid steht. Dein Nebeneinkommen kommt oben auf dein Gehalt drauf,
+      deshalb liegt der Satz bei vielen zwischen 30 und 42 Prozent.
+    </div>
+  </div>
+
+  <h2>Monate</h2>
+  <div id="monate"></div>
+
+  <h2>Jahresübersicht</h2>
+  <div class="zusammen">
+    <div class="kachel">
+      <span class="k">Einnahmen</span>
+      <span class="n" id="j_ein">0 €</span>
+    </div>
+    <div class="kachel">
+      <span class="k">Ausgaben</span>
+      <span class="n" id="j_aus">0 €</span>
+    </div>
+    <div class="kachel haupt">
+      <span class="k">Gewinn vor Steuer</span>
+      <span class="n" id="j_gewinn">0 €</span>
+    </div>
+  </div>
+  <div class="zusammen" style="margin-top:10px">
+    <div class="kachel">
+      <span class="k">Empfohlene Rücklage</span>
+      <span class="n" id="j_ruecklage">0 €</span>
+    </div>
+    <div class="kachel">
+      <span class="k">Bleibt voraussichtlich</span>
+      <span class="n" id="j_bleibt">0 €</span>
+    </div>
+    <div class="kachel">
+      <span class="k">Bester Monat</span>
+      <span class="n" id="j_best">–</span>
+    </div>
+  </div>
+
+  <div class="hinweis">
+    Das hier ist die Einnahmen-Überschuss-Rechnung nach § 4 Abs. 3 EStG, also die
+    vereinfachte Gewinnermittlung, die du als Freiberufler:in nutzen darfst.
+    Physiotherapeutische Heilbehandlungen sind in der Regel nach § 4 Nr. 14 UStG
+    umsatzsteuerfrei, deshalb taucht hier keine Umsatzsteuer auf. Kirchensteuer und
+    Solidaritätszuschlag sind nicht eingerechnet. Das ersetzt keine Steuerberatung.
+  </div>
+
+  <div class="aktionen">
+    <button class="btn" id="drucken" type="button">Jahresübersicht als PDF</button>
+    <button class="btn ghost" id="export" type="button">Zahlen sichern (Datei)</button>
+    <button class="btn ghost" id="import" type="button">Zahlen laden</button>
+    <button class="btn ghost" id="leeren" type="button">Jahr leeren</button>
+  </div>
+  <input type="file" id="datei" accept="application/json" hidden>
+</div>
+
+<div id="druck"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var KEY = 'physionebenbei-euer';
+  var $ = function(id){ return document.getElementById(id); };
+
+  var MONATE = ['Januar','Februar','März','April','Mai','Juni',
+                'Juli','August','September','Oktober','November','Dezember'];
+  /* Kategorien wie in der Excel-Mappe, damit beides zusammenpasst */
+  var KATEGORIEN = [
+    ['ein',        'Einnahmen'],
+    ['versicherung','Versicherung'],
+    ['fahrt',      'Fahrtkosten'],
+    ['material',   'Material'],
+    ['fortbildung','Fortbildung'],
+    ['sonstiges',  'Sonstiges']
+  ];
+  var AUSGABEN = KATEGORIEN.slice(1);
+
+  var alles = {};      /* { "2026": { satz, puffer, monate:[{...}] } }  */
+  var jahr;
+
+  function leeresJahr(){
+    return {
+      satz: 35, puffer: 5,
+      monate: MONATE.map(function(){
+        var m = {};
+        KATEGORIEN.forEach(function(k){ m[k[0]] = 0; });
+        return m;
+      })
+    };
+  }
+
+  function laden(){
+    try {
+      var roh = localStorage.getItem(KEY);
+      if (roh) alles = JSON.parse(roh);
+    } catch(e){}
+  }
+  function speichern(){
+    try { localStorage.setItem(KEY, JSON.stringify(alles)); } catch(e){}
+  }
+
+  function eur(n){
+    return (isFinite(n) ? Math.round(n) : 0).toLocaleString('de-DE') + ' €';
+  }
+  function ausgabenSumme(m){
+    return AUSGABEN.reduce(function(s,k){ return s + (parseFloat(m[k[0]])||0); }, 0);
+  }
+  function gewinnMonat(m){ return (parseFloat(m.ein)||0) - ausgabenSumme(m); }
+
+  /* ---------- Monatskarten ---------- */
+  function zeichnen(){
+    var d = alles[jahr];
+    var box = $('monate');
+    box.innerHTML = '';
+
+    d.monate.forEach(function(m, i){
+      var g = gewinnMonat(m);
+      var karte = document.createElement('div');
+      karte.className = 'monat';
+
+      var felder = KATEGORIEN.map(function(k){
+        return '<div><label for="f_' + i + '_' + k[0] + '">' + k[1] + '</label>' +
+               '<input type="number" step="1" min="0" id="f_' + i + '_' + k[0] + '" ' +
+               'data-i="' + i + '" data-k="' + k[0] + '" value="' + (m[k[0]] || 0) + '" ' +
+               'aria-label="' + k[1] + ' im ' + MONATE[i] + '"></div>';
+      }).join('');
+
+      karte.innerHTML =
+        '<div class="monat-kopf">' +
+          '<span class="monat-name">' + MONATE[i] + '</span>' +
+          '<span class="monat-gewinn ' + (g > 0 ? 'plus' : g < 0 ? 'minus' : '') + '" data-g="' + i + '">' + eur(g) + '</span>' +
+        '</div>' +
+        '<div class="felder">' + felder + '</div>';
+      box.appendChild(karte);
+    });
+
+    rechnen();
+  }
+
+  function rechnen(){
+    var d = alles[jahr];
+    var ein = 0, aus = 0, best = -Infinity, bestName = '–';
+
+    d.monate.forEach(function(m, i){
+      var e = parseFloat(m.ein) || 0;
+      var a = ausgabenSumme(m);
+      ein += e; aus += a;
+      var g = e - a;
+      if (e > best) { best = e; bestName = e > 0 ? MONATE[i] : '–'; }
+      var el = document.querySelector('[data-g="' + i + '"]');
+      if (el) {
+        el.textContent = eur(g);
+        el.className = 'monat-gewinn ' + (g > 0 ? 'plus' : g < 0 ? 'minus' : '');
+      }
+    });
+
+    var gewinn = ein - aus;
+    var satz = (parseFloat($('satz').value) || 0) / 100;
+    var puffer = (parseFloat($('puffer').value) || 0) / 100;
+    var ruecklage = Math.max(0, gewinn * (satz + puffer));
+
+    $('j_ein').textContent = eur(ein);
+    $('j_aus').textContent = eur(aus);
+    $('j_gewinn').textContent = eur(gewinn);
+    $('j_ruecklage').textContent = eur(ruecklage);
+    $('j_bleibt').textContent = eur(gewinn - ruecklage);
+    $('j_best').textContent = bestName;
+
+    return { ein:ein, aus:aus, gewinn:gewinn, ruecklage:ruecklage, bleibt:gewinn - ruecklage };
+  }
+
+  $('monate').addEventListener('input', function(e){
+    var i = e.target.getAttribute('data-i'), k = e.target.getAttribute('data-k');
+    if (i === null || !k) return;
+    alles[jahr].monate[i][k] = parseFloat(e.target.value) || 0;
+    rechnen();
+    speichern();
+  });
+
+  ['satz','puffer'].forEach(function(id){
+    $(id).addEventListener('input', function(){
+      alles[jahr][id] = parseFloat(this.value) || 0;
+      rechnen(); speichern();
+    });
+  });
+
+  /* ---------- Jahreswahl ---------- */
+  function jahreFuellen(){
+    var jetzt = new Date().getFullYear();
+    var sel = $('jahr');
+    sel.innerHTML = '';
+    var liste = {};
+    Object.keys(alles).forEach(function(j){ liste[j] = true; });
+    for (var j = jetzt - 2; j <= jetzt + 1; j++) liste[j] = true;
+    Object.keys(liste).sort().forEach(function(j){
+      var o = document.createElement('option');
+      o.value = j; o.textContent = j;
+      sel.appendChild(o);
+    });
+    sel.value = jahr;
+  }
+
+  function jahrWechseln(neu){
+    jahr = String(neu);
+    if (!alles[jahr]) alles[jahr] = leeresJahr();
+    $('satz').value = alles[jahr].satz;
+    $('puffer').value = alles[jahr].puffer;
+    zeichnen();
+    speichern();
+  }
+
+  $('jahr').addEventListener('change', function(){ jahrWechseln(this.value); });
+
+  /* ---------- Sichern und Laden ---------- */
+  $('export').addEventListener('click', function(){
+    var blob = new Blob([JSON.stringify(alles, null, 2)], { type:'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'PhysioNebenbei-Zahlen.json';
+    a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  });
+  $('import').addEventListener('click', function(){ $('datei').click(); });
+  $('datei').addEventListener('change', function(){
+    var f = this.files[0];
+    if (!f) return;
+    var leser = new FileReader();
+    leser.onload = function(){
+      try {
+        alles = JSON.parse(leser.result);
+        speichern();
+        jahreFuellen();
+        jahrWechseln(jahr);
+        alert('Zahlen geladen.');
+      } catch(e){ alert('Die Datei konnte nicht gelesen werden.'); }
+    };
+    leser.readAsText(f);
+  });
+
+  $('leeren').addEventListener('click', function(){
+    if (!confirm('Alle Zahlen für ' + jahr + ' löschen?')) return;
+    alles[jahr] = leeresJahr();
+    $('satz').value = 35; $('puffer').value = 5;
+    zeichnen(); speichern();
+  });
+
+  /* ---------- Druck ---------- */
+  $('drucken').addEventListener('click', function(){
+    var s = rechnen();
+    var d = alles[jahr];
+
+    var kopf = '<tr><th>Monat</th><th>Einnahmen</th>' +
+      AUSGABEN.map(function(k){ return '<th>' + k[1] + '</th>'; }).join('') +
+      '<th>Ausgaben</th><th>Gewinn</th></tr>';
+
+    var zeilen = d.monate.map(function(m, i){
+      return '<tr><td>' + MONATE[i] + '</td>' +
+        '<td>' + eur(parseFloat(m.ein)||0) + '</td>' +
+        AUSGABEN.map(function(k){ return '<td>' + eur(parseFloat(m[k[0]])||0) + '</td>'; }).join('') +
+        '<td>' + eur(ausgabenSumme(m)) + '</td>' +
+        '<td>' + eur(gewinnMonat(m)) + '</td></tr>';
+    }).join('');
+
+    var summenZeile = '<tr class="jahr"><td>Jahressumme</td>' +
+      '<td>' + eur(s.ein) + '</td>' +
+      AUSGABEN.map(function(k){
+        var sum = d.monate.reduce(function(x,m){ return x + (parseFloat(m[k[0]])||0); }, 0);
+        return '<td>' + eur(sum) + '</td>';
+      }).join('') +
+      '<td>' + eur(s.aus) + '</td><td>' + eur(s.gewinn) + '</td></tr>';
+
+    $('druck').innerHTML =
+      '<h1>Einnahmen-Überschuss-Rechnung ' + jahr + '</h1>' +
+      '<div class="sub">Vereinfachte Gewinnermittlung nach § 4 Abs. 3 EStG · erstellt am ' +
+        new Date().toLocaleDateString('de-DE') + '</div>' +
+      '<table><thead>' + kopf + '</thead><tbody>' + zeilen + summenZeile + '</tbody></table>' +
+      '<div class="box">' +
+        '<div><b>Gewinn vor Steuer</b>' + eur(s.gewinn) + '</div>' +
+        '<div><b>Angenommener Steuersatz</b>' + $('satz').value + ' % zuzüglich ' + $('puffer').value + ' % Puffer</div>' +
+        '<div><b>Empfohlene Rücklage</b>' + eur(s.ruecklage) + '</div>' +
+        '<div><b>Bleibt voraussichtlich</b>' + eur(s.bleibt) + '</div>' +
+      '</div>' +
+      '<div class="fuss">Physiotherapeutische Heilbehandlungen sind in der Regel nach § 4 Nr. 14 UStG ' +
+      'umsatzsteuerfrei, daher ohne Umsatzsteuer gerechnet. Kirchensteuer und Solidaritätszuschlag sind ' +
+      'nicht enthalten. Diese Übersicht ersetzt keine Steuerberatung.</div>';
+
+    window.print();
+  });
+
+  /* ---------- Start ---------- */
+  laden();
+  jahr = String(new Date().getFullYear());
+  if (!alles[jahr]) alles[jahr] = leeresJahr();
+  jahreFuellen();
+  jahrWechseln(jahr);
+})();
+</script>
+</body>
+</html>

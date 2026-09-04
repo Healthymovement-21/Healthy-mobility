@@ -1,10 +1,11 @@
 /* ============================================================
    PhysioNebenbei — Design-System
 
-   Gedeckt, warm, hochwertig: Papier statt Reinweiß, tiefes Tannengrün
-   als Grundfarbe, Messing als zweite Farbe fuer Auszeichnungen. Dunkle
-   Baender setzen Akzente, dazwischen bleibt viel Luft. Ueberschriften
-   in einer Serifenschrift, Fliesstext serifenlos.
+   Weiß und Blau. Weißer Grund, dunkelblaue Baender fuer Auftakt,
+   Preis und Fuss, dazwischen ein sehr helles Blaugrau als zweite
+   Flaeche. Blau ist die einzige Farbe: kraeftiges Blau auf Weiß,
+   helles Blau auf Dunkelblau. Ueberschriften in einer Serifenschrift,
+   Fliesstext serifenlos.
 
    Schrift: Systemschriften. Kein Google Fonts, keine externen
    Schriftdienste, damit keine Besucher-IPs an Dritte gehen. Die
@@ -22,48 +23,49 @@
   --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Basis: warmes Papier statt Reinweiß */
-  --paper:        #FBFAF7;
-  --surface:      #F4F1EA;
-  --surface-2:    #EDE8DE;
+  /* Basis: Weiß, dazu ein sehr helles Blaugrau als zweite Flaeche */
+  --paper:        #FFFFFF;
+  --surface:      #F4F7FB;
+  --surface-2:    #E8EEF6;
 
-  --ink:          #14201C;
-  --ink-muted:    #4E5A55;
-  --ink-faint:    #6E7A75;
+  --ink:          #14181D;
+  --ink-muted:    #4C5560;
+  --ink-faint:    #69737F;
 
-  /* Erste Farbe: tiefes Tannengrün */
-  --accent:       #0E5C4F;
-  --accent-dark:  #0A4238;
+  /* Die Farbe: kraeftiges Blau */
+  --accent:       #14509B;
+  --accent-dark:  #0F3D77;
   --accent-ink:   #FFFFFF;
-  --accent-soft:  rgba(14,92,79,.07);
-  --accent-line:  rgba(14,92,79,.32);
+  --accent-soft:  rgba(20,80,155,.07);
+  --accent-line:  rgba(20,80,155,.32);
 
-  /* Dunkles Band: traegt Hero, Kauf und Zitate */
-  --tief:         #10201B;
-  --tief-2:       #16302A;
-  --auf-tief:     #EDEAE3;
-  --auf-tief-leise: #B9C6C0;
+  /* Dunkelblaues Band: traegt Auftakt, Preis und Fuss */
+  --tief:         #0E2340;
+  --tief-2:       #143254;
+  --auf-tief:     #EDF2F8;
+  --auf-tief-leise: #A9BDD4;
 
-  /* Zweite Farbe: Messing. Hell auf dunklem Grund, dunkler auf Papier. */
-  --gold:         #8A6A1F;
-  --gold-hell:    #C9A961;
-  --gold-line:    rgba(201,169,97,.42);
-  --gold-soft:    rgba(138,106,31,.09);
+  /* Dieselbe Farbe in zwei Helligkeiten: hell auf Dunkelblau,
+     kraeftig auf Weiß. */
+  --blau-tief:    #14509B;
+  --blau-hell:    #9CC3F2;
+  --blau-linie:   rgba(20,80,155,.34);
+  --blau-soft:    rgba(20,80,155,.10);
 
   /* Warnung / Hinweis, gedeckt statt grell */
-  --mark:         #9E3227;
-  --mark-soft:    rgba(158,50,39,.06);
-  --focus:        #0E5C4F;
+  --mark:         #B0281C;
+  --mark-soft:    rgba(176,40,28,.06);
+  --focus:        #14509B;
 
   /* Karten und Trennlinien */
   --glass:        var(--surface);
   --glass-strong: var(--surface);
-  --glass-edge:   #DFD9CC;
-  --glass-line:   #EAE5DA;
+  --glass-edge:   #D9E1EC;
+  --glass-line:   #E6ECF4;
   --input-bg:     #FFFFFF;
 
-  --shadow:       0 1px 2px rgba(20,26,22,.05);
-  --shadow-lift:  0 6px 22px rgba(20,26,22,.09);
+  --shadow:       0 1px 2px rgba(14,35,64,.06);
+  --shadow-lift:  0 6px 22px rgba(14,35,64,.10);
   --glow-cyan:    none;
 
   --aura-1: transparent;
@@ -266,14 +268,14 @@ p:last-child{ margin-bottom:0; }
   border-color:var(--accent);
   color:var(--accent);
 }
-/* Messing: der eine Weg nach vorn. Sparsam einsetzen, sonst verliert
-   die Farbe genau die Wirkung, wegen der sie hier steht. */
-.btn.gold{
-  background:var(--gold-hell);
-  border-color:var(--gold-hell);
+/* Der eine Weg nach vorn. Auf dunklem Grund helles Blau mit dunkler
+   Schrift, sonst wuerde ein blauer Button im blauen Band verschwinden. */
+.btn.stark{
+  background:var(--blau-hell);
+  border-color:var(--blau-hell);
   color:var(--tief);
 }
-.btn.gold:hover{ background:#D8BC7C; border-color:#D8BC7C; }
+.btn.stark:hover{ background:#A9C6EE; border-color:#A9C6EE; }
 
 .micro{ font-size:14px; color:var(--ink-muted); }
 

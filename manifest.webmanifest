@@ -2,7 +2,7 @@
   "name": "PhysioNebenbei",
   "short_name": "PhysioNebenbei",
   "description": "Rechner und Fahrplan für Physiotherapeut:innen, die nebenberuflich Privatpatient:innen behandeln.",
-  "start_url": "./physio-nebenbei/werkzeuge.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",

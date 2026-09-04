@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Danke — PhysioNebenbei</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050B12">
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  .linkbox{
+    margin:22px 0 6px;
+    border:1px solid rgba(53,214,232,.24);
+    border-radius:18px;
+    background:linear-gradient(180deg, rgba(53,214,232,.07), rgba(255,255,255,.012)), rgba(8,22,33,.6);
+    padding:22px 24px;
+  }
+  .linkbox .k{
+    display:block;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:10px;
+  }
+  .linkbox code{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:14px;
+    line-height:1.5;
+    color:var(--accent);
+    overflow-wrap:anywhere;
+    margin-bottom:16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="../">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <p class="eyebrow">Zahlung eingegangen</p>
+      <h1>Danke. Hier geht es weiter.</h1>
+      <p class="lede">Dein Bereich ist freigeschaltet: beide Rechner, der komplette Fahrplan und alle sechs Dateien zum Herunterladen.</p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Dein Zugang</p>
+      <h2>Diesen Link brauchst du</h2>
+
+      <div class="linkbox">
+        <span class="k">Dein persönlicher Bereich</span>
+        <code id="zugang">…</code>
+        <p class="hero-cta" style="margin:0">
+          <a class="btn" href="./">Bereich öffnen</a>
+          <a class="btn ghost" href="#" id="kopieren">Link kopieren</a>
+        </p>
+      </div>
+
+      <p class="micro">
+        Der Link läuft nicht ab und funktioniert ohne Konto und ohne Anmeldung.
+        Du bekommst ihn zusätzlich per E-Mail, zusammen mit deinem Beleg.
+        Speicher ihn dir am besten gleich als Lesezeichen.
+      </p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Tipp</p>
+      <h2>Leg dir die Rechner aufs Handy.</h2>
+      <p>Bereich auf dem Handy öffnen, dann in Safari über das Teilen-Symbol <em>Zum Home-Bildschirm</em>, in Chrome über das Menü <em>App installieren</em>. Danach hast du die Rechner mit einem Tipp offen, auch ohne Internet.</p>
+    </section>
+
+    <section class="sheet">
+      <div class="annotation">
+        <strong>Bitte für dich behalten.</strong> Der Link ist persönlich. Nach § 5 der <a href="../agb.html">AGB</a> dürfen die Inhalte und Dateien nicht weitergegeben oder weiterverkauft werden.
+      </div>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Support</p>
+      <h2>Etwas fehlt oder lässt sich nicht öffnen?</h2>
+      <p>Schreib mir kurz, ich antworte selbst.</p>
+      <p class="hero-cta"><a class="btn ghost" href="mailto:info@physiotherapie-grausam.com?subject=PhysioNebenbei%20%E2%80%94%20Frage%20zum%20Paket">info@physiotherapie-grausam.com</a></p>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Vorlagen sind Muster, vor Einsatz prüfen lassen. Keine Steuer-, Rechts- oder medizinische Beratung.<br>
+      Fragen? <a href="mailto:info@physiotherapie-grausam.com">info@physiotherapie-grausam.com</a></span>
+    <span>
+      <a href="../impressum.html">Impressum</a> ·
+      <a href="../datenschutz.html">Datenschutz</a> ·
+      <a href="../agb.html">AGB</a> ·
+      <a href="../widerruf.html">Widerruf</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const url = new URL('./', location.href).href;
+  document.getElementById('zugang').textContent = url;
+
+  document.getElementById('kopieren').addEventListener('click', async e => {
+    e.preventDefault();
+    const btn = e.currentTarget;
+    try {
+      await navigator.clipboard.writeText(url);
+      btn.textContent = 'Kopiert';
+    } catch (_) {
+      btn.textContent = 'Bitte von Hand kopieren';
+    }
+    setTimeout(() => { btn.textContent = 'Link kopieren'; }, 2500);
+  });
+})();
+</script>
+</body>
+</html>

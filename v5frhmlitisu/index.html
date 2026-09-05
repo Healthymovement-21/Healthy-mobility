@@ -66,6 +66,9 @@
   /* Aktionen eines Blocks */
   .tun{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
   .tun .btn{ padding:11px 20px; font-size:15px; }
+  /* Der weiterfuehrende Link steht buendig zum Text darueber, nicht
+     eingerueckt wie ein Knopf. */
+  .tun .btn.leise{ padding-left:0; padding-right:0; }
 
   /* ---------- Hauptrechner, direkt im Bereich ---------- */
   .haupt-titel{
@@ -94,16 +97,14 @@
   .mfeld input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
   .mfeld .eur{ font-size:17px; color:var(--ink-muted); }
 
-  .ergebnis{ background:var(--ink); border-radius:12px; padding:26px 24px; margin-top:22px; }
-  .rechnung{ margin:0; font-size:17px; line-height:2.1; color:var(--auf-tief-leise); }
-  .rechnung b{ color:var(--auf-tief); font-weight:600; }
-  .rechnung .op{ display:inline-block; width:1.4em; }
+  .ergebnis{ background:var(--ink); border-radius:12px; padding:32px 24px 28px; margin-top:26px; }
   .m-gross{
-    font-family:var(--font-display); font-weight:600; letter-spacing:-.035em;
-    font-size:clamp(40px,11vw,56px); line-height:1.05; color:var(--mint);
-    font-variant-numeric:tabular-nums; margin:20px 0 0;
+    font-family:var(--font-display); font-weight:600; letter-spacing:-.04em;
+    font-size:clamp(44px,12vw,62px); line-height:1; color:var(--mint);
+    font-variant-numeric:tabular-nums; margin:0;
   }
-  .m-gross-u{ font-size:14.5px; color:var(--auf-tief-leise); margin:8px 0 0; }
+  .m-was{ font-size:17.5px; color:var(--auf-tief); margin:12px 0 0; }
+  .m-wie{ font-size:14px; color:var(--auf-tief-leise); margin:6px 0 0; line-height:1.5; }
 
   /* Speicherzeile */
   .stand{ font-size:14.5px; color:var(--ink-muted); margin:0; line-height:1.55; }
@@ -141,20 +142,15 @@
       </div>
 
       <div class="ergebnis">
-        <p class="rechnung">
-          <b id="m_b">8</b> Behandlungen pro Woche<br>
-          <span class="op">×</span><b id="m_p">70 €</b><br>
-          <span class="op">=</span><b id="m_w">560 €</b> pro Woche
-        </p>
         <p class="m-gross" id="m_monat">2.425 €</p>
-        <p class="m-gross-u">Umsatz im Monat, gerechnet mit 4,33 Wochen</p>
+        <p class="m-was">Umsatz im Monat</p>
+        <p class="m-wie" id="m_wie">bei durchschnittlich 8 Behandlungen pro Woche zu 70 €</p>
       </div>
 
       <p class="tun">
         <a class="btn" href="verdienst.html">Kosten und Rücklage dazunehmen</a>
-        <a class="btn ghost" href="werkzeuge.html">Preis berechnen</a>
+        <a class="btn leise" href="werkzeuge.html">Preis berechnen</a>
       </p>
-      <p class="micro" style="margin-top:12px">Deine Eingaben hier landen im großen Rechner und in allen anderen. Ändern kannst du sie überall.</p>
     </section>
 
     <section class="sheet">
@@ -192,7 +188,7 @@
         <p class="darunter" id="t_wer">–</p>
         <p class="tun">
           <a class="btn ghost" href="termine.html#neu">Termin hinzufügen</a>
-          <a class="btn ghost" href="termine.html">Alle Termine</a>
+          <a class="btn leise" href="termine.html">Alle Termine</a>
         </p>
       </div>
 
@@ -205,14 +201,14 @@
           <li><a href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Honorarvereinbarung</a><span>Preis, Zahlungsziel und Absagefrist schriftlich</span></li>
           <li><a href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Dokumentation</a><span>Befund und Verlauf je Behandlung</span></li>
         </ul>
-        <p class="tun"><a class="btn ghost" href="dateien.html">Alle Dateien anzeigen</a></p>
+        <p class="tun"><a class="btn leise" href="dateien.html">Alle Dateien anzeigen</a></p>
       </div>
 
       <!-- ============ 5 · SPEICHERUNG ============ -->
       <div class="block">
         <h2>Speicherung</h2>
         <p class="stand" id="s_text">–</p>
-        <p class="tun"><a class="btn ghost" href="einstellungen.html">Angaben und Sicherung</a></p>
+        <p class="tun"><a class="btn leise" href="einstellungen.html">Angaben und Sicherung</a></p>
       </div>
 
     </section>
@@ -275,10 +271,10 @@
     const beh   = feldwert('m_beh');
     const preis = feldwert('m_preis');
     const woche = beh * preis;
-    el('m_b').textContent     = beh.toLocaleString('de-DE');
-    el('m_p').textContent     = eur(preis);
-    el('m_w').textContent     = eur(woche);
     el('m_monat').textContent = eur(woche * WOCHEN);
+    el('m_wie').textContent =
+      'bei durchschnittlich ' + beh.toLocaleString('de-DE') + ' Behandlungen pro Woche zu ' + eur(preis)
+      + ' — das sind ' + eur(woche) + ' pro Woche';
   }
 
   if (window.Daten){

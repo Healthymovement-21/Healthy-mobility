@@ -279,17 +279,38 @@ Dafür brauchst du eine OAuth-Client-ID:
 
 1. `console.cloud.google.com` öffnen, Projekt anlegen
 2. APIs & Dienste → Bibliothek → **Google Drive API** aktivieren
-3. OAuth-Zustimmungsbildschirm ausfüllen
-4. Anmeldedaten → OAuth-Client-ID, Typ **Webanwendung**
-5. Als autorisierte JavaScript-Quelle die Adresse deines Kundenbereichs
-   eintragen, etwa `https://healthymovement-21.github.io`
-6. Client-ID oben in `v5frhmlitisu/drive-sync.js` einsetzen
+3. APIs & Dienste → OAuth-Zustimmungsbildschirm ausfüllen
+   - Nutzertyp **Extern**
+   - unter **Testnutzer** deine eigene Google-Adresse eintragen, solange
+     die App noch nicht veröffentlicht ist. Ohne diesen Eintrag lehnt
+     Google die Anmeldung ab.
+   - als Bereich (Scope) `https://www.googleapis.com/auth/drive.file`
+     hinzufügen — mehr braucht die Anwendung nicht
+4. Anmeldedaten → Anmeldedaten erstellen → **OAuth-Client-ID**,
+   Anwendungstyp **Webanwendung**
+5. Unter **Autorisierte JavaScript-Quellen** genau diese eine Zeile
+   eintragen — nur Schema und Host, ohne Pfad und ohne Schrägstrich
+   am Ende:
+
+   ```
+   https://healthymovement-21.github.io
+   ```
+
+   Eine **Weiterleitungs-URI wird nicht gebraucht**. Die Anwendung nutzt
+   Google Identity Services im Token-Modell, das ohne Redirect arbeitet.
+   Trag dort also nichts ein.
+6. Client-ID oben in `v5frhmlitisu/drive-sync.js` einsetzen — Zeile 37,
+   die einzige Stelle im ganzen Produkt, die du dafür anfassen musst:
 
 ```js
-const DRIVE_CLIENT_ID = '1234567890-abcdef.apps.googleusercontent.com';
+const DRIVE_CLIENT_ID = 'DEINE-ID.apps.googleusercontent.com';
 ```
 
-Solange das Feld leer ist, zeigt der Bereich einen Hinweis und alles andere
+Die Änderung wirkt, sobald sie auf `main` liegt und GitHub Pages sie
+ausgeliefert hat.
+
+Solange das Feld leer ist, steht im Bereich „Google Drive ist noch nicht
+verbunden“ samt aufklappbarer Anleitung — kein toter grauer Knopf. Alles andere
 funktioniert unverändert. Die Speicherung bleibt in jedem Fall lokal — Drive
 ist ein Zusatz, kein Ersatz.
 

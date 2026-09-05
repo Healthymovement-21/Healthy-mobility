@@ -112,6 +112,20 @@
       </p>
       <p class="meldung" id="drive_meldung" hidden></p>
 
+      <details class="mehr" id="drive_einrichten" hidden>
+        <summary>Wie richte ich die Verbindung ein?</summary>
+        <div>
+          <p>Die Verbindung läuft über ein eigenes Google-Cloud-Projekt. Das ist einmal Arbeit und danach nie wieder:</p>
+          <ol class="steps">
+            <li><strong>Projekt anlegen.</strong> In der <a href="https://console.cloud.google.com" target="_blank" rel="noopener">Google Cloud Console</a> ein neues Projekt erstellen.</li>
+            <li><strong>Drive-API einschalten.</strong> Unter „APIs &amp; Dienste → Bibliothek“ die <em>Google Drive API</em> aktivieren.</li>
+            <li><strong>Zustimmungsbildschirm ausfüllen.</strong> Nutzertyp „Extern“, die eigene Google-Adresse als Testnutzer eintragen und den Bereich <code>drive.file</code> hinzufügen.</li>
+            <li><strong>Client-ID erstellen.</strong> Unter „Anmeldedaten“ eine OAuth-Client-ID vom Typ „Webanwendung“ anlegen und als autorisierte JavaScript-Quelle <code id="drive_origin">–</code> eintragen. Eine Weiterleitungs-URI wird nicht gebraucht.</li>
+            <li><strong>Eintragen.</strong> Die Client-ID in der Datei <code>drive-sync.js</code> ganz oben zwischen die Anführungszeichen setzen.</li>
+          </ol>
+        </div>
+      </details>
+
       <p class="micro" style="margin-top:20px">Freiwillig und jederzeit trennbar. Ohne Verbindung funktioniert alles genauso — Drive ist eine zweite Kopie, kein Ersatz für die Speicherung auf deinem Gerät.</p>
 
       <h3 style="margin-top:32px">Was übertragen wird</h3>
@@ -241,12 +255,29 @@
     if (e.driveTermine && anDrive) el('o_termine_drive').className = 'ort warn';
 
     const status = el('drive_status');
+
+    /* Kein toter grauer Knopf: wenn die Verbindung noch nicht
+       eingerichtet ist, verschwindet er und an seiner Stelle steht,
+       was zu tun ist. */
     if (!DriveSync.eingerichtet()){
-      status.textContent = 'Deine Daten liegen auf diesem Gerät. Die Drive-Verbindung ist noch nicht eingerichtet — über Sichern und Umziehen kommst du trotzdem auf ein anderes Gerät.';
-      el('drive_verbinden').classList.add('is-disabled');
-      el('drive_verbinden').setAttribute('aria-disabled','true');
+      status.textContent = 'Google Drive ist noch nicht verbunden. Die Verbindung muss einmal eingerichtet werden — bis dahin liegen deine Daten wie gewohnt auf diesem Gerät, und über Sichern und Umziehen kommst du trotzdem auf ein anderes.';
+      el('drive_verbinden').hidden = true;
+      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = true);
+      el('drive_einrichten').hidden = false;
+      el('drive_origin').textContent = DriveSync.herkunft();
       return;
     }
+    el('drive_einrichten').hidden = true;
+
+    /* Aus einer lokal geoeffneten Datei heraus laesst Google OAuth
+       grundsaetzlich nicht zu. Das sagen wir vorher statt hinterher. */
+    if (!DriveSync.herkunftTaugt()){
+      status.textContent = 'Google Drive lässt sich nur über eine echte Web-Adresse verbinden, nicht aus einer lokal gespeicherten Datei heraus. Öffne den Bereich über deinen Link, dann geht es.';
+      el('drive_verbinden').hidden = true;
+      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = true);
+      return;
+    }
+
     if (anDrive){
       const z = zeitText(DriveSync.zuletzt());
       status.textContent = '✓ Google Drive verbunden' + (z ? ' · zuletzt synchronisiert: ' + z : ' · noch nichts übertragen');
@@ -268,14 +299,31 @@
     e.preventDefault();
     if (!DriveSync.eingerichtet()) return;
     driveMeldung('Anmeldefenster wird geöffnet …', false);
-    try { await DriveSync.verbinden(); driveMeldung('Verbunden.', false); }
-    catch(err){ driveMeldung('Verbindung nicht zustande gekommen: ' + err.message, true); }
+    try {
+      await DriveSync.verbinden();
+      driveMeldung('Verbunden. Jetzt kannst du deine Zahlen hochladen.', false);
+    } catch(err){
+      const m = err && err.message;
+      if (m === 'herkunft')
+        driveMeldung('Von hier aus geht es nicht — Google erlaubt die Anmeldung nur über eine echte Web-Adresse.', true);
+      else if (m === 'nicht-eingerichtet')
+        driveMeldung('Die Verbindung ist noch nicht eingerichtet.', true);
+      else
+        driveMeldung(m || 'Die Verbindung kam nicht zustande.', true);
+    }
     driveZeichnen(); standZeichnen();
   });
+  /* Eine abgelaufene Anmeldung ist kein Fehlschlag, sondern ein
+     Zwischenstand — die Meldung soll das nicht doppelt betonen. */
+  function fehlerText(einleitung, err){
+    const m = (err && err.message) || 'Unbekannter Fehler.';
+    return /abgelaufen|unerwartet/.test(m) ? m : einleitung + ' ' + m;
+  }
+
   el('drive_hoch').addEventListener('click', async e => {
     e.preventDefault(); driveMeldung('Wird übertragen …', false);
     try { await DriveSync.hochladen(); driveMeldung('In deinem Drive gespeichert als ' + DriveSync.dateiname + '.', false); }
-    catch(err){ driveMeldung('Hochladen fehlgeschlagen: ' + err.message, true); }
+    catch(err){ driveMeldung(fehlerText('Hochladen hat nicht geklappt:', err), true); }
     driveZeichnen(); standZeichnen();
   });
   el('drive_runter').addEventListener('click', async e => {
@@ -284,7 +332,7 @@
       const r = await DriveSync.herunterladen();
       driveMeldung(r.ok ? 'Daten aus Drive übernommen.' : r.grund, !r.ok);
       if (r.ok) haken();
-    } catch(err){ driveMeldung('Laden fehlgeschlagen: ' + err.message, true); }
+    } catch(err){ driveMeldung(fehlerText('Laden hat nicht geklappt:', err), true); }
     driveZeichnen(); standZeichnen();
   });
   el('drive_trennen').addEventListener('click', e => {

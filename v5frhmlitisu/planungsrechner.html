@@ -343,7 +343,19 @@
   var eur0 = function(n){
     return isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
   };
-  var val = function(id){ return parseFloat($(id).value) || 0; };
+  /* Haelt jede Eingabe in dem Bereich, den das Feld erlaubt. parseFloat
+     allein wuerde getippte oder eingefuegte Minuswerte durchlassen — die
+     min- und max-Angaben am Feld gelten sonst nur fuer die Pfeiltasten. */
+  function klemme(el){
+    var v = parseFloat(String(el.value).replace(',', '.'));
+    if (!isFinite(v)) v = 0;
+    var min = el.min === '' ? -Infinity : parseFloat(el.min);
+    var max = el.max === '' ?  Infinity : parseFloat(el.max);
+    if (isFinite(min) && v < min) v = min;
+    if (isFinite(max) && v > max) v = max;
+    return v;
+  }
+  var val = function(id){ var e = $(id); return e ? klemme(e) : 0; };
   var FELDER = ['preis','wegegeld','dauer','fahrzeit','km','kmsatz','doku','fix','satz'];
 
   var stand = { frequenz:4, patienten:3, rezept:6 };

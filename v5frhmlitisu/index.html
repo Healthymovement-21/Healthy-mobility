@@ -4,12 +4,86 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Dein Bereich — PhysioNebenbei</title>
+<title>Dein Fahrplan — PhysioNebenbei</title>
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <link rel="manifest" href="app.webmanifest">
 <link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
 <link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  /* ---------- Nächster Schritt ----------
+     Der dunkle Block ganz oben beantwortet die einzige Frage, die man
+     beim Wiederkommen hat: was mache ich als Nächstes? */
+  .naechster{
+    background:var(--ink);
+    color:var(--auf-tief);
+    border-radius:8px;
+    padding:1.6rem;
+    margin:26px 0 0;
+  }
+  .naechster .n-k{ display:block; font-size:12px; color:var(--auf-tief-leise); margin-bottom:10px; }
+  .naechster h2{
+    color:var(--auf-tief);
+    font-size:clamp(24px,5.5vw,30px);
+    margin:0 0 10px;
+  }
+  .naechster p{ color:var(--auf-tief-leise); font-size:16px; line-height:1.55; margin:0; max-width:48ch; }
+  .naechster .n-cta{ display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 0; }
+  .naechster .btn.ghost{ border-color:rgba(255,255,255,.22); color:var(--auf-tief); background:transparent; }
+  .naechster .btn.ghost:hover{ border-color:var(--auf-tief); color:var(--auf-tief); background:rgba(255,255,255,.06); }
+  .naechster.fertig .n-k{ color:var(--mint); }
+
+  /* ---------- Fortschritt ---------- */
+  .fortschritt{ margin:22px 0 0; }
+  .fortschritt .f-zeile{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:14px; font-size:14px; color:var(--ink-muted); margin-bottom:8px;
+  }
+  .fortschritt .f-zeile b{ color:var(--ink); font-weight:600; }
+  .f-balken{ height:6px; border-radius:999px; background:var(--glass-line); overflow:hidden; }
+  .f-balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .3s ease; }
+
+  /* ---------- Die zehn Schritte ---------- */
+  .schritte-liste{ list-style:none; margin:22px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
+  .schritte-liste > li{ border-bottom:1px solid var(--glass-edge); padding:20px 0; }
+  .s-kopf{ display:grid; grid-template-columns:26px 1fr; gap:14px; align-items:start; }
+  .s-kopf input[type=checkbox]{ width:22px; height:22px; margin:2px 0 0; accent-color:var(--accent); cursor:pointer; }
+  .s-nr{
+    font-size:12px; font-weight:600; color:var(--ink-faint);
+    font-variant-numeric:tabular-nums; display:block; margin-bottom:2px;
+  }
+  .s-titel{
+    font-family:var(--font-display); font-size:19px; font-weight:600;
+    letter-spacing:-.02em; color:var(--ink); display:block; cursor:pointer;
+  }
+  .s-zweck{ font-size:15.5px; line-height:1.55; color:var(--ink-muted); margin:7px 0 0; max-width:58ch; }
+  .s-aktionen{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 0; }
+  .s-aktionen a{
+    display:inline-flex; align-items:center; gap:7px;
+    border:1px solid var(--glass-edge); border-radius:8px;
+    padding:9px 14px; font-size:14.5px; font-weight:500;
+    color:var(--ink); text-decoration:none; background:var(--pure);
+  }
+  .s-aktionen a:hover{ border-color:var(--accent); color:var(--accent); text-decoration:none; }
+  .s-aktionen a.haupt{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); font-weight:600; }
+  .s-aktionen a.haupt:hover{ background:var(--accent-dark); border-color:var(--accent-dark); color:var(--accent-ink); }
+  .s-aktionen a .art{ font-size:11px; color:var(--ink-faint); font-weight:400; }
+  .s-aktionen a.haupt .art{ color:rgba(255,255,255,.7); }
+  .schritte-liste > li.erledigt .s-titel{ color:var(--ink-muted); }
+  .schritte-liste > li.erledigt .s-zweck{ opacity:.75; }
+  .s-body{ margin-left:40px; }
+  @media (max-width:520px){ .s-body{ margin-left:0; } }
+
+  /* ---------- Kompakte Dateiliste ---------- */
+  .dateiliste{ list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--glass-line); }
+  .dateiliste li{
+    display:grid; grid-template-columns:1fr auto; gap:4px 16px;
+    align-items:baseline; padding:13px 0; border-bottom:1px solid var(--glass-line);
+  }
+  .dateiliste b{ font-size:16px; font-weight:600; color:var(--ink); }
+  .dateiliste span{ grid-column:1; font-size:14px; color:var(--ink-muted); }
+  .dateiliste a{ grid-column:2; grid-row:1 / span 2; font-size:14.5px; white-space:nowrap; }
+</style>
 </head>
 <body>
 
@@ -23,200 +97,87 @@
 
     <section class="sheet hero">
       <p class="eyebrow">Dein Bereich</p>
-      <h1>Alles da. Leg direkt los.</h1>
-      <p class="lede">Diese Seite ist deine Startseite. Speicher dir den Link, dann kommst du jederzeit wieder her, ohne Konto und ohne Anmeldung.</p>
+      <h1 class="title">Dein Fahrplan</h1>
+      <p class="lede">Zehn Schritte von der Frage „lohnt sich das überhaupt?“ bis zur ersten geschriebenen Rechnung. Du musst sie nicht am Stück durcharbeiten — hak ab, was erledigt ist, dann weißt du beim nächsten Mal sofort, wo du stehst.</p>
+
+      <div class="fortschritt">
+        <div class="f-zeile"><span id="f-label">–</span><b id="f-prozent">0 %</b></div>
+        <div class="f-balken"><div id="f-balken" style="width:0"></div></div>
+      </div>
+
+      <div class="naechster" id="naechster">
+        <span class="n-k" id="n-kicker">Dein nächster Schritt</span>
+        <h2 id="n-titel">–</h2>
+        <p id="n-zweck">–</p>
+        <div class="n-cta" id="n-cta"></div>
+      </div>
+
+      <p class="micro" style="margin-top:14px">Der Stand wird nur auf diesem Gerät gespeichert, ohne Konto und ohne Anmeldung. Speicher dir den Link, dann kommst du jederzeit wieder her.</p>
     </section>
 
-    <!-- ============ WERKZEUGE ============ -->
+    <!-- ============ DIE ZEHN SCHRITTE ============ -->
     <section class="sheet">
-      <p class="eyebrow">Rechner</p>
-      <h2>Rechnen</h2>
-      <ul class="deliverables">
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">M</span>
-            <div><span class="d-name">Monats-Rechner</span><span class="d-type">IM BROWSER</span></div>
-          </div>
-          <div class="d-desc">Behandlungen eintragen, Umsatz, Steuerrücklage und was übrig bleibt. Mit PDF-Export.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="monatsrechner.html">Öffnen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">G</span>
-            <div><span class="d-name">Gehalt &amp; Stunden</span><span class="d-type">IM BROWSER</span></div>
-          </div>
-          <div class="d-desc">Hauptjob plus Nebenverdienst, Szenarien beim Reduzieren, Krankenkassen-Ampel.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="gehaltsrechner.html">Öffnen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">A</span>
-            <div><span class="d-name">Auslastung planen</span><span class="d-type">IM BROWSER</span></div>
-          </div>
-          <div class="d-desc">Wie viele Patient:innen du brauchst, was die Fahrt kostet, wie viel Zeit draufgeht und wann das Geld ankommt.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="planungsrechner.html">Öffnen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">P</span>
-            <div><span class="d-name">Preis-Kalkulation</span><span class="d-type">IM BROWSER</span></div>
-          </div>
-          <div class="d-desc">Was du verlangen musst, damit am Ende dein Wunscheinkommen steht.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="werkzeuge.html">Öffnen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">R</span>
-            <div><span class="d-name">Rechnungsgenerator</span><span class="d-type">AUCH OFFLINE</span></div>
-          </div>
-          <div class="d-desc">Deine Daten einmal eintragen, danach jede Rechnung in zwei Minuten. Nummer läuft automatisch weiter, Steuerhinweis wird gesetzt, Ausgabe als PDF.</div>
-          <p class="hero-cta" style="margin-top:14px">
-            <a class="btn" href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a>
-          </p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">E</span>
-            <div><span class="d-name">Einnahmen und Ausgaben</span><span class="d-type">AUCH OFFLINE</span></div>
-          </div>
-          <div class="d-desc">Monat für Monat eintragen, Jahressumme, Gewinn und empfohlene Steuerrücklage rechnen automatisch. Das ist deine EÜR.</div>
-          <p class="hero-cta" style="margin-top:14px">
-            <a class="btn" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a>
-          </p>
-        </li>
+      <p class="eyebrow">Der Weg</p>
+      <h2>Die zehn Schritte</h2>
+      <ol class="schritte-liste" id="schritte"></ol>
+      <p class="hero-cta" style="margin-top:20px">
+        <a class="btn ghost" href="#" id="zuruecksetzen">Fortschritt zurücksetzen</a>
+      </p>
+    </section>
+
+    <!-- ============ ALLE WERKZEUGE ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Direktzugriff</p>
+      <h2>Alle Rechner</h2>
+      <p>Wenn du weißt, was du suchst, geht es hier direkt hin.</p>
+      <ul class="dateiliste">
+        <li><b>Wie viele Patient:innen?</b><span>Vom Wunschbetrag zur Zahl der Termine</span><a href="ziel-rechner.html">Öffnen</a></li>
+        <li><b>Preis-Kalkulation</b><span>Vom Wunscheinkommen rückwärts zum Preis</span><a href="werkzeuge.html">Öffnen</a></li>
+        <li><b>Monats-Rechner</b><span>Behandlungen eintragen, Ergebnis mit PDF-Export</span><a href="monatsrechner.html">Öffnen</a></li>
+        <li><b>Auslastung planen</b><span>Termine, Fahrt, Zeit und wann das Geld ankommt</span><a href="planungsrechner.html">Öffnen</a></li>
+        <li><b>Gehalt und Stunden</b><span>Hauptjob plus Nebenverdienst, Krankenkassen-Ampel</span><a href="gehaltsrechner.html">Öffnen</a></li>
+        <li><b>Rechnungsgenerator</b><span>Rechnung als PDF, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a></li>
+        <li><b>Einnahmen und Ausgaben</b><span>Deine EÜR fürs Jahr, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a></li>
       </ul>
-      <p class="micro" style="margin-top:16px">
-        Auf dem iPhone und iPad ist „Öffnen“ der richtige Weg: die beiden Rechner
-        funktionieren dort auch ohne Internet, sobald du sie einmal geöffnet hast.
-        Gespeicherte HTML-Dateien lassen sich unter iOS nicht zuverlässig wieder
-        starten. „Für den Computer speichern“ ist für Mac und Windows gedacht.
-      </p>
     </section>
 
-    <!-- ============ LESEN ============ -->
-    <section class="sheet">
-      <p class="eyebrow">Anleitung</p>
-      <h2>Lesen</h2>
-      <p>Der komplette Fahrplan mit allen zehn Kapiteln und der To-do-Liste zum Abhaken. Dazu ein Zusatzkapitel, wie du Patient:innen online Termine buchen lässt, während du im Hauptjob bist.</p>
-      <p class="hero-cta">
-        <a class="btn" href="fahrplan.html">Fahrplan öffnen</a>
-        <a class="btn" href="terminbuchung.html">Online-Terminbuchung</a>
-      </p>
-    </section>
-
-    <!-- ============ DATEIEN ============ -->
+    <!-- ============ ALLE DATEIEN ============ -->
     <section class="sheet" id="dateien">
       <p class="eyebrow">Download</p>
       <h2>Deine Dateien</h2>
+      <p>Alle elf Dateien auf einmal, oder einzeln weiter unten. Bei welchem Schritt du welche brauchst, steht oben im Fahrplan.</p>
       <p class="hero-cta">
         <a class="btn" href="#" data-drive>Alle Dateien bei Google Drive</a>
-        <a class="btn" data-drive-datei="PhysioNebenbei-Paket.zip" data-drive-beschriftung="nein" href="dateien/PhysioNebenbei-Paket.zip" download="PhysioNebenbei-Paket.zip">Alle Dateien als ZIP</a>
+        <a class="btn ghost" data-drive-datei="PhysioNebenbei-Paket.zip" data-drive-beschriftung="nein" href="dateien/PhysioNebenbei-Paket.zip" download="PhysioNebenbei-Paket.zip">Alle Dateien als ZIP</a>
       </p>
       <p class="micro warnung" id="drive-hinweis" hidden></p>
-      <p class="micro" style="margin-top:10px">
-        Bei Google Drive kannst du dir einzelne Dateien ansehen und in deinen eigenen
-        Ordner kopieren — das ist auf dem Handy der bequemste Weg. Wer lieber alles auf
-        einmal auf dem Computer hat, nimmt das ZIP.
-      </p>
 
-      <h3 style="margin-top:34px">Oder einzeln</h3>
-      <ul class="deliverables">
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">1</span>
-            <div><span class="d-name">Fahrplan</span><span class="d-type">WORD-DATEI</span></div>
-          </div>
-          <div class="d-desc">Alle zehn Kapitel zum Anpassen, plus Rechnungs- und Dokumentationsvorlage.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">2</span>
-            <div><span class="d-name">Excel-Mappe</span><span class="d-type">EXCEL-DATEI</span></div>
-          </div>
-          <div class="d-desc">Preis-Kalkulation, Steuer-Rücklage, EÜR fürs Jahr, Dokumentations-Log.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">3</span>
-            <div><span class="d-name">Rechnungsgenerator</span><span class="d-type">RECHNER</span></div>
-          </div>
-          <div class="d-desc">Für Mac und Windows: speichern und doppelklicken, läuft dann ohne Internet. Auf dem iPhone stattdessen oben über „Öffnen“ benutzen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Rechnungsgenerator.html" href="dateien/PhysioNebenbei-Rechnungsgenerator.html" download="PhysioNebenbei-Rechnungsgenerator.html">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">4</span>
-            <div><span class="d-name">Einnahmen und Ausgaben</span><span class="d-type">RECHNER</span></div>
-          </div>
-          <div class="d-desc">Für Mac und Windows: speichern und doppelklicken, läuft dann ohne Internet. Auf dem iPhone stattdessen oben über „Öffnen“ benutzen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="PhysioNebenbei-Einnahmen-Ausgaben.html" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html" download="PhysioNebenbei-Einnahmen-Ausgaben.html">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">5</span>
-            <div><span class="d-name">Honorarvereinbarung</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Muster zum Ausfüllen und unterschreiben lassen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Honorarvereinbarung.pdf" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">6</span>
-            <div><span class="d-name">Behandlungsvertrag</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Muster zum Ausfüllen und unterschreiben lassen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Behandlungsvertrag.pdf" href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">7</span>
-            <div><span class="d-name">Datenschutz-Information</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Nach Art. 13 DSGVO, zum Aushändigen beim ersten Termin.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Datenschutz-Patienten.pdf" href="dateien/Datenschutz-Patienten.pdf" download="Datenschutz-Patienten.pdf">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">8</span>
-            <div><span class="d-name">Anamnesebogen</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Beschwerden, Vorgeschichte, Kontraindikationen und Ziele, für den ersten Termin.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Anamnesebogen.pdf" href="dateien/Anamnesebogen.pdf" download="Anamnesebogen.pdf">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">9</span>
-            <div><span class="d-name">Dokumentationsbogen</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Zum Ausdrucken und handschriftlich Ausfüllen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Dokumentationsvorlage.pdf" href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">10</span>
-            <div><span class="d-name">Terminübersicht</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Wochenplan zum Ausdrucken, ein Blatt pro Woche.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Terminuebersicht.pdf" href="dateien/Terminuebersicht.pdf" download="Terminuebersicht.pdf">Herunterladen</a></p>
-        </li>
-        <li>
-          <div class="d-head">
-            <span class="d-icon" aria-hidden="true">11</span>
-            <div><span class="d-name">Patientenliste</span><span class="d-type">PDF-DATEI</span></div>
-          </div>
-          <div class="d-desc">Kürzel und Klarnamen getrennt führen, mit Aufbewahrungs- und Löschfristen.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" data-drive-datei="Patientenliste.pdf" href="dateien/Patientenliste.pdf" download="Patientenliste.pdf">Herunterladen</a></p>
-        </li>
+      <ul class="dateiliste">
+        <li><b>Fahrplan</b><span>Word-Datei mit allen zehn Kapiteln zum Anpassen</span><a data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Laden</a></li>
+        <li><b>Excel-Mappe</b><span>Preis-Kalkulation, Steuer-Rücklage, EÜR, Behandlungs-Log</span><a data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Laden</a></li>
+        <li><b>Rechnungsgenerator</b><span>Für Mac und Windows speichern, läuft dann offline</span><a data-drive-datei="PhysioNebenbei-Rechnungsgenerator.html" href="dateien/PhysioNebenbei-Rechnungsgenerator.html" download="PhysioNebenbei-Rechnungsgenerator.html">Laden</a></li>
+        <li><b>Einnahmen und Ausgaben</b><span>Für Mac und Windows speichern, läuft dann offline</span><a data-drive-datei="PhysioNebenbei-Einnahmen-Ausgaben.html" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html" download="PhysioNebenbei-Einnahmen-Ausgaben.html">Laden</a></li>
+        <li><b>Honorarvereinbarung</b><span>Preis, Zahlungsziel, Absagefrist und Ausfallhonorar</span><a data-drive-datei="Honorarvereinbarung.pdf" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Laden</a></li>
+        <li><b>Behandlungsvertrag</b><span>Aufklärung, Mitwirkung, Haftung</span><a data-drive-datei="Behandlungsvertrag.pdf" href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Laden</a></li>
+        <li><b>Datenschutz-Information</b><span>Nach Art. 13 DSGVO, zum Aushändigen beim ersten Termin</span><a data-drive-datei="Datenschutz-Patienten.pdf" href="dateien/Datenschutz-Patienten.pdf" download="Datenschutz-Patienten.pdf">Laden</a></li>
+        <li><b>Anamnesebogen</b><span>Beschwerden, Vorgeschichte, Kontraindikationen, Ziele</span><a data-drive-datei="Anamnesebogen.pdf" href="dateien/Anamnesebogen.pdf" download="Anamnesebogen.pdf">Laden</a></li>
+        <li><b>Dokumentationsbogen</b><span>Befund und Verlauf je Behandlung</span><a data-drive-datei="Dokumentationsvorlage.pdf" href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Laden</a></li>
+        <li><b>Terminübersicht</b><span>Wochenplan zum Ausdrucken</span><a data-drive-datei="Terminuebersicht.pdf" href="dateien/Terminuebersicht.pdf" download="Terminuebersicht.pdf">Laden</a></li>
+        <li><b>Patientenliste</b><span>Mit Aufbewahrungs- und Löschfristen</span><a data-drive-datei="Patientenliste.pdf" href="dateien/Patientenliste.pdf" download="Patientenliste.pdf">Laden</a></li>
       </ul>
+
+      <p class="micro" style="margin-top:14px">
+        Auf iPhone und iPad ist bei den beiden Rechnern „Öffnen“ der richtige Weg. Eine
+        gespeicherte HTML-Datei lässt sich unter iOS nicht zuverlässig wieder starten,
+        das Herunterladen ist für Mac und Windows gedacht.
+      </p>
     </section>
 
     <!-- ============ ALS APP ============ -->
     <section class="sheet">
       <p class="eyebrow">Aufs Handy</p>
       <h2>Als App speichern</h2>
-      <p>Dann hast du die Rechner mit einem Tipp offen, auch ohne Internet.</p>
+      <p>Dann hast du den Fahrplan und die Rechner mit einem Tipp offen, auch ohne Internet.</p>
       <details class="mehr">
         <summary>So geht's</summary>
         <div>
@@ -225,18 +186,6 @@
           <p><strong>Laptop</strong> — Seite als Lesezeichen speichern. In Chrome und Edge geht auch das Installieren-Symbol rechts in der Adresszeile.</p>
         </div>
       </details>
-    </section>
-
-    <!-- ============ ERSTE SCHRITTE ============ -->
-    <section class="sheet">
-      <p class="eyebrow">Und jetzt?</p>
-      <h2>So fängst du an.</h2>
-      <ol class="steps">
-        <li>Lies im Fahrplan nur <strong>Kapitel 01</strong>, den Realitäts-Check. Fünf Minuten.</li>
-        <li>Arbeite <strong>Kapitel 02</strong> ab: Finanzamt, BGW, Berufshaftpflicht. Das ist der Teil, der wirklich erledigt sein muss.</li>
-        <li>Trag deine Preise in den Monats-Rechner ein und schau, was hängen bleibt.</li>
-        <li>Füll die Vorlagen mit deinen Daten aus <em>und lass sie prüfen</em>, bevor die erste Patientin unterschreibt.</li>
-      </ol>
     </section>
 
     <section class="sheet">
@@ -266,6 +215,207 @@
   </footer>
 </div>
 
+<script>
+(function(){
+  'use strict';
+
+  /* ============================================================
+     Die zehn Schritte. Jeder Schritt hat einen Zweck in einem Satz
+     und fuehrt direkt zu dem Werkzeug oder der Vorlage, um die es
+     geht — damit niemand raten muss, wofuer eine Datei gut ist.
+     ============================================================ */
+  const SCHRITTE = [
+    {
+      id: 's1',
+      titel: 'Lohnt sich das überhaupt?',
+      zweck: 'Bevor du irgendetwas anmeldest: rechne einmal durch, was neben dem Hauptjob realistisch übrig bleibt und wie viele Abende dich das kostet.',
+      links: [
+        {text:'Durchrechnen', art:'Rechner', href:'ziel-rechner.html', haupt:true},
+        {text:'Kapitel 1 lesen', art:'5 Minuten', href:'fahrplan.html'}
+      ]
+    },
+    {
+      id: 's2',
+      titel: 'Anmeldung und Absicherung',
+      zweck: 'Der Teil, der wirklich erledigt sein muss, bevor die erste Patientin auf der Bank liegt: Finanzamt, BGW, Berufshaftpflicht.',
+      links: [
+        {text:'Checkliste abarbeiten', art:'18 Punkte', href:'fahrplan.html#checkliste', haupt:true},
+        {text:'Kapitel 2 und 3', art:'Anmeldung, Versicherung', href:'fahrplan.html'}
+      ]
+    },
+    {
+      id: 's3',
+      titel: 'Deinen Preis festlegen',
+      zweck: 'Vom Wunscheinkommen rückwärts zum Preis pro Behandlung, mit Fahrtzeit und Steuerrücklage statt Bauchgefühl.',
+      links: [
+        {text:'Preis kalkulieren', art:'Rechner', href:'werkzeuge.html', haupt:true},
+        {text:'Kapitel 4', art:'Preise und Kalkulation', href:'fahrplan.html'}
+      ]
+    },
+    {
+      id: 's4',
+      titel: 'Wie viele Patient:innen du brauchst',
+      zweck: 'Du sagst, was am Monatsende übrig bleiben soll. Der Rechner sagt dir, wie viele Termine das bei welchem Preis bedeutet.',
+      links: [
+        {text:'Ziel eingeben', art:'Rechner', href:'ziel-rechner.html', haupt:true}
+      ]
+    },
+    {
+      id: 's5',
+      titel: 'Was am Monatsende übrig bleibt',
+      zweck: 'Trag deine echten Behandlungen ein und sieh, was nach Ausgaben und Rücklage tatsächlich bleibt. Mit PDF-Export fürs eigene Archiv.',
+      links: [
+        {text:'Monat berechnen', art:'Rechner', href:'monatsrechner.html', haupt:true},
+        {text:'Auslastung planen', art:'Rechner', href:'planungsrechner.html'}
+      ]
+    },
+    {
+      id: 's6',
+      titel: 'Deine Unterlagen vorbereiten',
+      zweck: 'Honorarvereinbarung, Behandlungsvertrag und Datenschutz-Information ausfüllen — und prüfen lassen, bevor jemand unterschreibt.',
+      links: [
+        {text:'Honorarvereinbarung', art:'PDF', href:'dateien/Honorarvereinbarung.pdf', haupt:true},
+        {text:'Behandlungsvertrag', art:'PDF', href:'dateien/Behandlungsvertrag.pdf'},
+        {text:'Datenschutz-Information', art:'PDF', href:'dateien/Datenschutz-Patienten.pdf'}
+      ]
+    },
+    {
+      id: 's7',
+      titel: 'Patient:innen und Termine organisieren',
+      zweck: 'Wer kommt wann, und wo steht das? Eine Liste und ein Wochenplan reichen für den Anfang völlig — Hauptsache, es steht nicht nur im Kopf.',
+      links: [
+        {text:'Patientenliste', art:'PDF', href:'dateien/Patientenliste.pdf', haupt:true},
+        {text:'Terminübersicht', art:'PDF', href:'dateien/Terminuebersicht.pdf'},
+        {text:'Online-Terminbuchung', art:'Zusatzkapitel', href:'terminbuchung.html'}
+      ]
+    },
+    {
+      id: 's8',
+      titel: 'Behandlungen dokumentieren',
+      zweck: 'Anamnese beim ersten Termin, danach jede Behandlung in zwei Sätzen festhalten. Das ist Pflicht und schützt am Ende dich.',
+      links: [
+        {text:'Anamnesebogen', art:'PDF', href:'dateien/Anamnesebogen.pdf', haupt:true},
+        {text:'Dokumentationsbogen', art:'PDF', href:'dateien/Dokumentationsvorlage.pdf'},
+        {text:'Kapitel 6', art:'Dokumentation', href:'fahrplan.html'}
+      ]
+    },
+    {
+      id: 's9',
+      titel: 'Deine erste Rechnung schreiben',
+      zweck: 'Deine Daten trägst du einmal ein, danach dauert jede Rechnung zwei Minuten. Die Nummer läuft automatisch weiter, der QR-Code zum Überweisen ist drauf.',
+      links: [
+        {text:'Rechnung erstellen', art:'Rechner', href:'dateien/PhysioNebenbei-Rechnungsgenerator.html', haupt:true},
+        {text:'Kapitel 5', art:'Pflichtangaben', href:'fahrplan.html'}
+      ]
+    },
+    {
+      id: 's10',
+      titel: 'Dranbleiben und nachsteuern',
+      zweck: 'Nach ein paar Monaten weißt du, was wirklich läuft. Dann lohnt der Blick auf Einnahmen, Auslastung und das, was der Nebenjob mit deiner Woche macht.',
+      links: [
+        {text:'Einnahmen und Ausgaben', art:'Rechner', href:'dateien/PhysioNebenbei-Einnahmen-Ausgaben.html', haupt:true},
+        {text:'Gehalt und Stunden', art:'Rechner', href:'gehaltsrechner.html'},
+        {text:'Häufige Fehler', art:'10 Punkte', href:'fehler.html'}
+      ]
+    }
+  ];
+
+  const KEY = 'physionebenbei-schritte';
+  let stand = {};
+  try { stand = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ stand = {}; }
+
+  function speichern(){
+    try { localStorage.setItem(KEY, JSON.stringify(stand)); } catch(e){}
+  }
+
+  function linkHtml(l){
+    return '<a href="' + l.href + '"' + (l.haupt ? ' class="haupt"' : '') + '>' +
+           l.text + ' <span class="art">' + l.art + '</span></a>';
+  }
+
+  function aufbauen(){
+    document.getElementById('schritte').innerHTML = SCHRITTE.map((s, i) =>
+      '<li data-id="' + s.id + '">' +
+        '<div class="s-kopf">' +
+          '<input type="checkbox" id="chk-' + s.id + '" aria-label="Schritt ' + (i+1) + ' erledigt">' +
+          '<div>' +
+            '<span class="s-nr">Schritt ' + (i+1) + '</span>' +
+            '<label class="s-titel" for="chk-' + s.id + '">' + s.titel + '</label>' +
+          '</div>' +
+        '</div>' +
+        '<div class="s-body">' +
+          '<p class="s-zweck">' + s.zweck + '</p>' +
+          '<div class="s-aktionen">' + s.links.map(linkHtml).join('') + '</div>' +
+        '</div>' +
+      '</li>'
+    ).join('');
+  }
+
+  function zeichnen(){
+    let erledigt = 0;
+    let naechster = null;
+
+    SCHRITTE.forEach(s => {
+      const li  = document.querySelector('[data-id="' + s.id + '"]');
+      const box = document.getElementById('chk-' + s.id);
+      const ist = !!stand[s.id];
+      box.checked = ist;
+      li.classList.toggle('erledigt', ist);
+      if (ist) erledigt++;
+      else if (!naechster) naechster = s;
+    });
+
+    const anteil = Math.round(erledigt / SCHRITTE.length * 100);
+    document.getElementById('f-balken').style.width = anteil + '%';
+    document.getElementById('f-prozent').textContent = anteil + ' %';
+    document.getElementById('f-label').textContent =
+      erledigt + ' von ' + SCHRITTE.length + ' Schritten erledigt';
+
+    const block  = document.getElementById('naechster');
+    const kicker = document.getElementById('n-kicker');
+    const titel  = document.getElementById('n-titel');
+    const zweck  = document.getElementById('n-zweck');
+    const cta    = document.getElementById('n-cta');
+
+    if (naechster){
+      block.classList.remove('fertig');
+      kicker.textContent = 'Dein nächster Schritt';
+      titel.textContent  = naechster.titel;
+      zweck.textContent  = naechster.zweck;
+      cta.innerHTML = naechster.links.slice(0, 2).map((l, i) =>
+        '<a class="btn' + (i === 0 ? '' : ' ghost') + '" href="' + l.href + '">' + l.text + '</a>'
+      ).join('');
+    } else {
+      block.classList.add('fertig');
+      kicker.textContent = 'Alle zehn Schritte erledigt';
+      titel.textContent  = 'Du bist startklar.';
+      zweck.textContent  = 'Ab jetzt geht es ums Dranbleiben: einmal im Monat die Einnahmen eintragen, und nach dem ersten Quartal noch einmal auf Preis und Auslastung schauen.';
+      cta.innerHTML =
+        '<a class="btn" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen eintragen</a>' +
+        '<a class="btn ghost" href="planungsrechner.html">Auslastung prüfen</a>';
+    }
+  }
+
+  aufbauen();
+
+  document.getElementById('schritte').addEventListener('change', e => {
+    if (e.target.type !== 'checkbox') return;
+    const id = e.target.closest('li').dataset.id;
+    stand[id] = e.target.checked;
+    speichern();
+    zeichnen();
+  });
+
+  document.getElementById('zuruecksetzen').addEventListener('click', e => {
+    e.preventDefault();
+    stand = {};
+    speichern();
+    zeichnen();
+  });
+
+  zeichnen();
+})();
+</script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));

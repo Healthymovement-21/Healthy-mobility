@@ -3,7 +3,6 @@
 Kostenlose Web-Version (der Verkaufsmotor):
 
 - `fahrplan.html` — die 10 Kapitel zum Lesen, mit interaktiver To-do-Liste
-- `werkzeuge.html` — die vier Rechner live im Browser
 - `base.css` — gemeinsames Design aller Seiten, Systemschriften (bewusst keine Google Fonts,
   damit keine Besucher-IPs an Google gehen)
 

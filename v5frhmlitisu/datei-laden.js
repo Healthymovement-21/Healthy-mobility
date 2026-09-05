@@ -7,14 +7,20 @@
    bietet statt eines Downloads "In App öffnen" an — dort landet
    dann irgendeine installierte App, die Office-Dateien beansprucht.
 
-   Die Lösung: die Datei per fetch holen und als neutraler Blob
-   (application/octet-stream) an einen Download-Link geben. Damit
-   kann der Browser sie keiner App mehr zuordnen und speichert sie.
+   Zwei Wege, in dieser Reihenfolge:
 
-   Die Dateien selbst bleiben unverändert und weiterhin unter ihren
-   bisherigen Pfaden erreichbar. Klappt der Weg nicht — kein Netz,
-   fremde Herkunft, alter Browser —, geht der Klick ganz normal
-   weiter wie vorher.
+   1. Das Teilen-Blatt von iOS. Das ist auf dem iPhone der
+      verlässliche Weg: der Nutzer wählt "In Dateien sichern" und
+      landet genau dort, wo er die Datei wiederfindet. Derselbe Weg
+      löst schon den Datenexport in daten.js.
+
+   2. Ein neutraler Blob (application/octet-stream). Damit kann der
+      Browser die Datei keiner App mehr zuordnen und speichert sie.
+      Auf Mac, Windows und Android ist das der normale Weg.
+
+   Klappt beides nicht — kein Netz, alter Browser, abgebrochen —,
+   geht der Klick ganz normal weiter wie vorher. Die Dateien selbst
+   bleiben unverändert und weiterhin unter ihren bisherigen Pfaden.
    ============================================================ */
 (function () {
   'use strict';
@@ -24,51 +30,87 @@
      lässt sich sauber sichern. */
   const FORMATE = /\.(docx|xlsx|zip|pptx|doc|xls)$/i;
 
+  const TYPEN = {
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    zip:  'application/zip'
+  };
+
   function istEigeneDatei(a){
-    try {
-      const u = new URL(a.getAttribute('href'), location.href);
-      return u.origin === location.origin;
-    } catch(e){ return false; }
+    try { return new URL(a.getAttribute('href'), location.href).origin === location.origin; }
+    catch(e){ return false; }
   }
 
-  function beschriftungSetzen(a, text){
-    if (!a.dataset.urText) a.dataset.urText = a.textContent;
+  /* Kann dieses Gerät Dateien über das Teilen-Blatt weitergeben?
+     Muss vor dem Klick feststehen, damit die Entscheidung nicht erst
+     nach dem Laden fällt. */
+  let teilenMoeglich = false;
+  try {
+    if (navigator.canShare && window.File){
+      teilenMoeglich = navigator.canShare({
+        files: [new File(['x'], 'probe.docx', {type: TYPEN.docx})]
+      });
+    }
+  } catch(e){ teilenMoeglich = false; }
+
+  function beschriftung(a, text){
+    if (a.dataset.urText === undefined) a.dataset.urText = a.textContent;
     a.textContent = text;
   }
+  function zurueck(a){
+    if (a.dataset.urText !== undefined) a.textContent = a.dataset.urText;
+  }
 
-  async function holen(a, ereignis){
+  function blobLaden(blob, name){
+    const ziel = URL.createObjectURL(blob);
+    const hilfslink = document.createElement('a');
+    hilfslink.href = ziel;
+    hilfslink.download = name;
+    hilfslink.rel = 'noopener';
+    document.body.appendChild(hilfslink);
+    hilfslink.click();
+    hilfslink.remove();
+    setTimeout(() => URL.revokeObjectURL(ziel), 60000);
+  }
+
+  async function holen(a){
     const url  = a.getAttribute('href');
     const name = a.getAttribute('download') || url.split('/').pop();
+    const endung = (name.split('.').pop() || '').toLowerCase();
 
-    ereignis.preventDefault();
-    beschriftungSetzen(a, 'Wird geladen …');
-
+    beschriftung(a, 'Wird geladen …');
     try {
       const antwort = await fetch(url, {cache: 'no-store'});
       if (!antwort.ok) throw new Error(antwort.status);
+      const roh = await antwort.blob();
 
-      /* Der neutrale Typ ist der Kern: damit ordnet iOS die Datei
-         keiner App mehr zu und legt sie in "Dateien" ab. */
-      const roh  = await antwort.blob();
-      const blob = new Blob([roh], {type: 'application/octet-stream'});
-      const ziel = URL.createObjectURL(blob);
+      /* Weg 1: das Teilen-Blatt. Dort wählt der Nutzer selbst
+         "In Dateien sichern". Die Datei behält ihren echten Typ,
+         damit sie nachher als Word-Dokument erkannt wird. */
+      if (teilenMoeglich){
+        try {
+          const datei = new File([roh], name, {type: TYPEN[endung] || roh.type});
+          if (navigator.canShare({files: [datei]})){
+            await navigator.share({files: [datei], title: name});
+            zurueck(a);
+            return;
+          }
+        } catch(fehler){
+          /* Abgebrochen ist kein Fehler — dann ist der Nutzer fertig. */
+          if (fehler && fehler.name === 'AbortError'){ zurueck(a); return; }
+          /* Sonst weiter mit Weg 2. */
+        }
+      }
 
-      const hilfslink = document.createElement('a');
-      hilfslink.href = ziel;
-      hilfslink.download = name;
-      hilfslink.rel = 'noopener';
-      document.body.appendChild(hilfslink);
-      hilfslink.click();
-      hilfslink.remove();
+      /* Weg 2: neutraler Typ, damit keine App sich zuständig fühlt. */
+      blobLaden(new Blob([roh], {type: 'application/octet-stream'}), name);
+      zurueck(a);
 
-      /* Safari braucht den Objekt-URL noch einen Moment. */
-      setTimeout(() => URL.revokeObjectURL(ziel), 60000);
-
-      beschriftungSetzen(a, a.dataset.urText);
     } catch (fehler) {
       /* Notausgang: der gewohnte Weg, damit niemand ohne Datei
          dasteht, wenn hier etwas schiefgeht. */
-      beschriftungSetzen(a, a.dataset.urText);
+      zurueck(a);
       window.location.href = url;
     }
   }
@@ -76,6 +118,7 @@
   document.addEventListener('click', function (e) {
     const a = e.target.closest && e.target.closest('a[download]');
     if (!a) return;
+
     const url = a.getAttribute('href');
     if (!url || !FORMATE.test(url)) return;
 
@@ -86,6 +129,7 @@
     /* Ohne diese Bausteine bleibt alles beim Alten. */
     if (!window.fetch || !window.URL || !URL.createObjectURL) return;
 
-    holen(a, e);
+    e.preventDefault();
+    holen(a);
   });
 })();

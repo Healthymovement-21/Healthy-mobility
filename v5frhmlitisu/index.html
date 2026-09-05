@@ -12,135 +12,33 @@
 <link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
 <style>
   /* ---------------------------------------------------------------
-     Mein Bereich: fuenf Bloecke, sonst nichts. Getrennt durch Linien
-     statt durch Karten, damit die Seite ruhig bleibt.
+     Mein Bereich zeigt genau eine Sache: wo der Nutzer in der Roadmap
+     steht und wie es weitergeht. Alles andere ist eine ruhige, textuelle
+     Zugangszeile darunter, kein zweiter Auftritt der Rechner und Dateien.
   --------------------------------------------------------------- */
-  .block{ padding:30px 0; border-top:1px solid var(--glass-edge); }
-  .block:first-of-type{ border-top:none; padding-top:6px; }
-  .block > h2{
+  .haupt-titel{
     font-family:var(--font-display); font-size:15px; font-weight:600;
-    letter-spacing:0; color:var(--ink-muted); margin:0 0 16px;
+    letter-spacing:0; color:var(--ink-muted); margin:0;
   }
-
-  /* Der grosse Wert eines Blocks */
-  .gross{
-    font-family:var(--font-display); font-weight:600; letter-spacing:-.035em;
-    font-size:clamp(34px,9vw,46px); line-height:1.05; color:var(--ink);
-    font-variant-numeric:tabular-nums; margin:0;
-  }
-  .gross .klein{ font-size:.42em; font-weight:500; color:var(--ink-muted); letter-spacing:-.01em; }
-  .gross.leer{ font-size:22px; font-weight:500; color:var(--ink-muted); letter-spacing:-.01em; }
-  .darunter{ font-size:15px; color:var(--ink-muted); margin:8px 0 0; line-height:1.5; }
-
-  /* Zahlenraster */
-  .raster{
-    display:grid; grid-template-columns:1fr 1fr; gap:18px 20px;
-    margin-top:26px; padding-top:22px; border-top:1px solid var(--glass-edge);
-  }
-  @media (min-width:560px){ .raster{ grid-template-columns:repeat(4,1fr); } }
-  .raster .t{ font-size:13px; color:var(--ink-muted); }
-  .raster .w{
-    font-family:var(--font-display); font-size:21px; font-weight:600;
-    letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:2px;
-  }
-  .raster .w.mint{ color:var(--accent); }
-
-  /* Naechster Schritt: die einzige Stelle, die zum Weitermachen auffordert */
+  .wo{ font-size:13px; color:var(--ink-muted); margin:16px 0 0; }
   .naechster-name{
-    font-family:var(--font-display); font-size:clamp(24px,6vw,30px); font-weight:600;
-    letter-spacing:-.03em; color:var(--ink); margin:14px 0 0; line-height:1.2;
+    font-family:var(--font-display); font-size:clamp(26px,7vw,34px); font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); margin:6px 0 0; line-height:1.2;
   }
-  /* Wo im Weg man steht: Schritt 3 von 10 · Kalkulieren */
-  .wo{ font-size:13px; color:var(--ink-muted); margin:0; }
-  .naechster-zweck{ margin:10px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); max-width:52ch; }
-
-  /* Vier wichtige Vorlagen, ohne die ganze Liste */
-  .kurzliste{ list-style:none; margin:2px 0 0; padding:0; }
-  .kurzliste li{ padding:12px 0; border-bottom:1px solid var(--glass-edge); }
-  .kurzliste li:first-child{ border-top:1px solid var(--glass-edge); }
-  .kurzliste a{ font-size:16.5px; font-weight:600; }
-  .kurzliste span{ display:block; font-size:14px; color:var(--ink-muted); margin-top:2px; }
-
-  /* Fortschritt */
-  .balken{ height:4px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:16px 0 0; }
+  .balken{ height:4px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:22px 0 0; }
   .balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .35s ease; }
+  .naechster-zweck{ margin:18px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); max-width:52ch; }
 
-  /* Aktionen eines Blocks */
-  .tun{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+  .tun{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
   .tun .btn{ padding:11px 20px; font-size:15px; }
-  /* Der weiterfuehrende Link steht buendig zum Text darueber, nicht
-     eingerueckt wie ein Knopf. */
   .tun .btn.leise{ padding-left:0; padding-right:0; }
 
-  /* ---------- Hauptrechner, direkt im Bereich ---------- */
-  .haupt-titel{
-    font-family:var(--font-display); font-size:clamp(24px,5.5vw,30px); font-weight:600;
-    letter-spacing:-.03em; color:var(--ink); margin:0; line-height:1.15;
+  /* Die Zugangszeile: Text statt Karten, damit sie sich nicht wie eine
+     zweite Startseite anfuehlt. */
+  .zugang{
+    font-size:15px; color:var(--ink-muted); line-height:2.2;
   }
-  .haupt-lede{ margin:12px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); }
-
-  /* Zweite Ebene: sichtbar kleiner als Fahrplan, Kalkulation und
-     Dokumente, damit die Rangfolge auf einen Blick stimmt. */
-  .neben-titel{
-    font-family:var(--font-display); font-size:19px; font-weight:600;
-    letter-spacing:-.02em; color:var(--ink); margin:0 0 4px;
-  }
-  .neben-zeile{ font-size:17px; color:var(--ink); margin:14px 0 0; line-height:1.4; }
-  .neben-zeile.klein-normal{ font-size:15px; color:var(--ink-muted); }
-  .neben-unter{ font-size:14.5px; color:var(--ink-muted); margin:5px 0 0; line-height:1.5; }
-
-  /* Was in der Kalkulation noch steckt */
-  .mit-drin{ margin:20px 0 0; font-size:14.5px; color:var(--ink-muted); line-height:1.6; }
-
-  /* Die vollstaendige Werkzeugliste bleibt zu, bis sie gebraucht wird */
-  .werkzeuge-mehr{ margin-top:24px; border-top:1px solid var(--glass-edge); }
-  .werkzeuge-mehr > summary{
-    display:flex; align-items:center; min-height:48px;
-    font-size:15.5px; font-weight:600; color:var(--accent);
-    cursor:pointer; list-style:none;
-  }
-  .werkzeuge-mehr > summary::-webkit-details-marker{ display:none; }
-  .werkzeuge-mehr > summary::after{ content:" ↓"; margin-left:6px; font-weight:400; }
-  .werkzeuge-mehr[open] > summary::after{ content:" ↑"; }
-
-  /* Die Werkzeuge stehen nach der Frage sortiert, die sie beantworten.
-     Die Gruppentitel sind nur Zwischenzeilen, keine eigenen Kaesten. */
-  .gruppe{ font-size:13px; font-weight:600; color:var(--ink-muted); margin:22px 0 0; }
-  .gruppe:first-of-type{ margin-top:8px; }
-  .werkzeugliste + .gruppe{ margin-top:26px; }
-
-  .minifelder{ display:grid; gap:14px; margin-top:24px; }
-  @media (min-width:520px){ .minifelder{ grid-template-columns:1fr 1fr; } }
-  .minifelder label{ display:block; font-size:14px; color:var(--ink-muted); margin-bottom:6px; }
-  .mfeld{
-    display:flex; align-items:center; gap:8px; min-height:56px;
-    background:var(--input-bg); border:1px solid var(--glass-edge);
-    border-radius:10px; padding:0 16px 0 0;
-  }
-  .mfeld:focus-within{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
-  .mfeld input{
-    width:100%; min-width:0; border:none; background:transparent;
-    padding:10px 0 10px 16px;
-    font-family:var(--font-display); font-size:26px; font-weight:600; letter-spacing:-.02em;
-    color:var(--ink); font-variant-numeric:tabular-nums; -moz-appearance:textfield;
-  }
-  .mfeld input:focus{ outline:none; }
-  .mfeld input::-webkit-outer-spin-button,
-  .mfeld input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
-  .mfeld .eur{ font-size:17px; color:var(--ink-muted); }
-
-  .ergebnis{ background:var(--ink); border-radius:12px; padding:32px 24px 28px; margin-top:26px; }
-  .m-gross{
-    font-family:var(--font-display); font-weight:600; letter-spacing:-.04em;
-    font-size:clamp(44px,12vw,62px); line-height:1; color:var(--mint);
-    font-variant-numeric:tabular-nums; margin:0;
-  }
-  .m-was{ font-size:17.5px; color:var(--auf-tief); margin:12px 0 0; }
-  .m-wie{ font-size:14px; color:var(--auf-tief-leise); margin:6px 0 0; line-height:1.5; }
-
-  /* Speicherzeile */
-  .stand{ font-size:14.5px; color:var(--ink-muted); margin:0; line-height:1.55; }
-
+  .zugang a{ color:var(--ink); font-weight:600; }
 </style>
 </head>
 <body>
@@ -155,119 +53,33 @@
 
     <section class="sheet hero">
       <h1 class="title">Mein Bereich</h1>
-      <p class="lede">Dein nächster Schritt, deine Zahlen und alle Werkzeuge an einem Ort.</p>
+      <p class="lede">Dein nächstes Kapitel und der Zugang zu allem anderen.</p>
     </section>
 
-    <!-- ============ 1 · MEIN FAHRPLAN ============ -->
+    <!-- ============ DEINE ROADMAP ============ -->
     <section class="sheet">
-      <h2 class="haupt-titel">Dein nächster Schritt</h2>
+      <h2 class="haupt-titel">Deine Roadmap</h2>
 
       <p class="wo" id="f_wo">–</p>
-      <p class="naechster-name" id="f_naechster">–</p>
-      <p class="naechster-zweck" id="f_zweck">–</p>
+      <p class="naechster-name" id="f_titel">–</p>
 
       <div class="balken"><div id="f_balken" style="width:0%"></div></div>
 
+      <p class="naechster-zweck" id="f_zweck">–</p>
+
       <p class="tun">
-        <a class="btn" href="schritte.html" id="f_weiter">Weiter</a>
-        <a class="btn leise" href="schritte.html">Mein Fahrplan</a>
+        <a class="btn" href="#" id="f_weiter">–</a>
+        <a class="btn leise" href="schritte.html">Roadmap ansehen</a>
       </p>
     </section>
 
-    <!-- ============ 2 · KALKULATION ============ -->
+    <!-- ============ ZUGANG ZU ALLEM ANDEREN ============ -->
     <section class="sheet">
-      <h2 class="haupt-titel">Kalkulation</h2>
-      <p class="haupt-lede">Finde heraus, was dir von deiner Nebentätigkeit tatsächlich bleibt.</p>
-
-      <div class="minifelder">
-        <div>
-          <label for="m_beh">Behandlungen pro Woche</label>
-          <div class="mfeld"><input type="number" id="m_beh" value="8" min="0" max="60" step="1" inputmode="numeric"></div>
-        </div>
-        <div>
-          <label for="m_preis">Preis je Behandlung</label>
-          <div class="mfeld"><input type="number" id="m_preis" value="70" min="0" max="500" step="1" inputmode="decimal"><span class="eur">€</span></div>
-        </div>
-      </div>
-
-      <div class="ergebnis">
-        <p class="m-gross" id="m_monat">2.425 €</p>
-        <p class="m-was">Umsatz im Monat</p>
-        <p class="m-wie" id="m_wie">bei durchschnittlich 8 Behandlungen pro Woche zu 70 €</p>
-      </div>
-
-      <p class="tun">
-        <a class="btn" href="verdienst.html">Verdienst berechnen</a>
-        <a class="btn leise" href="werkzeuge.html">Preis berechnen</a>
-      </p>
-
-      <p class="mit-drin">Dort rechnest du weiter: Ausgaben, Steuer-Rücklage und was am Ende netto übrig bleibt. Kosten und Rücklage sind dabei freiwillig — ohne sie funktioniert der Rechner genauso. Für deinen Preis, einen ganzen Monat, deine Auslastung und die Kombination mit dem Gehalt aus dem Hauptjob gibt es je einen eigenen Rechner — alle unter „Weitere Werkzeuge“.</p>
-    </section>
-
-    <!-- ============ 3 · DOKUMENTE ============ -->
-    <section class="sheet">
-      <h2 class="haupt-titel">Dokumente</h2>
-      <p class="haupt-lede">Erstelle, speichere und verwalte deine wichtigsten Unterlagen.</p>
-
-      <ul class="kurzliste">
-        <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung erstellen</a><span>Deine Rechnungen schnell und einheitlich, auch ohne Internet</span></li>
-        <li><a href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Behandlungsvertrag</a><span>Vorlage für die Vereinbarung mit deinen Patient:innen</span></li>
-        <li><a href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Honorarvereinbarung</a><span>Preis, Zahlungsziel und Absagefrist schriftlich</span></li>
-        <li><a href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Dokumentationsbogen</a><span>Befund und Verlauf je Behandlung</span></li>
-      </ul>
-      <p class="tun"><a class="btn ghost" href="dateien.html">Meine Dateien</a></p>
-    </section>
-
-    <!-- ============ 4 · WEITERE WERKZEUGE ============ -->
-    <section class="sheet">
-      <h2 class="neben-titel">Weitere Werkzeuge</h2>
-
-      <div class="block">
-        <p class="neben-zeile" id="t_wann">–</p>
-        <p class="neben-unter" id="t_wer">–</p>
-        <p class="tun">
-          <a class="btn ghost" href="termine.html#neu">Termin hinzufügen</a>
-          <a class="btn leise" href="termine.html">Kalender</a>
-        </p>
-      </div>
-
-      <details class="werkzeuge-mehr">
-        <summary>Alle Werkzeuge anzeigen</summary>
-        <p class="gruppe">Planen</p>
-        <ul class="werkzeugliste">
-          <li><a href="werkzeuge.html">Preis berechnen</a><span>Welcher Preis macht für deine Behandlung und deinen Aufwand Sinn?</span></li>
-          <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du neben deinem Hauptjob realistisch unter?</span></li>
-          <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Du hast ein konkretes Einkommensziel? Dann rechne von diesem Ziel zurück.</span></li>
-        </ul>
-
-        <p class="gruppe">Genau kalkulieren</p>
-        <ul class="werkzeugliste">
-          <li><a href="monatsrechner.html">Monat kalkulieren</a><span>Was bleibt von einem echten Monat mit deinen Behandlungen und Kosten übrig?</span></li>
-          <li><a href="gehaltsrechner.html">Gehalt und Stunden</a><span>Was verändert sich, wenn du deine Arbeitszeit im Hauptjob veränderst?</span></li>
-        </ul>
-
-        <p class="gruppe">Organisieren</p>
-        <ul class="werkzeugliste">
-          <li><a href="termine.html">Kalender</a><span>Deine Termine im Überblick</span></li>
-          <li><a href="dateien.html">Meine Dateien</a><span>Alle elf Dateien zum Herunterladen</span></li>
-        </ul>
-
-        <p class="gruppe">Arbeiten</p>
-        <ul class="werkzeugliste">
-          <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung erstellen</a><span>Deine Rechnungen schnell und einheitlich, auch ohne Internet</span></li>
-          <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
-        </ul>
-      </details>
-    </section>
-
-    <!-- ============ 5 · DATEN UND SICHERUNG ============ -->
-    <section class="sheet">
-      <h2 class="neben-titel">Daten und Sicherung</h2>
-      <p class="neben-zeile klein-normal" id="s_text">–</p>
-      <p class="neben-unter" id="s_drive">–</p>
-      <p class="tun">
-        <a class="btn ghost" href="einstellungen.html">Angaben und Sicherung</a>
-        <a class="btn leise" href="dateien.html#speicher" id="s_drive_link">Google Drive</a>
+      <p class="zugang">
+        <a href="werkzeuge-uebersicht.html">Werkzeuge</a> ·
+        <a href="dateien.html">Meine Dateien</a> ·
+        <a href="termine.html">Kalender</a> ·
+        <a href="einstellungen.html">Einstellungen</a>
       </p>
     </section>
 
@@ -287,134 +99,34 @@
 </div>
 
 <script src="fahrplan-schritte.js"></script>
-<script src="daten.js"></script>
-<script src="drive-sync.js"></script>
 <script>
 (function(){
   'use strict';
-  const el  = id => document.getElementById(id);
-  const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
+  const el = id => document.getElementById(id);
 
-  /* ---------- Daten und Sicherung ----------
-     Der lokale Stand und Google Drive stehen getrennt, damit Drive
-     erkennbar ein Zusatz ist und keine eigene Hauptfunktion. */
-  function standZeichnen(){
-    const iso = Daten.gespeichertAm();
-    let text = 'Noch nichts gespeichert';
-    if (iso){
-      const d = new Date(iso);
-      const uhr = d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
-      text = '✓ Lokal gespeichert: ' +
-             (d.toDateString() === new Date().toDateString() ? 'heute, ' : d.toLocaleDateString('de-DE') + ', ') +
-             uhr + ' Uhr';
-    }
-    el('s_text').textContent = text;
+  /* Titel, Zweck und Abschnitt kommen aus fahrplan-schritte.js, damit
+     hier nichts anders heisst als in der Roadmap selbst. */
+  const stand  = Fahrplan.stand();
+  const fertig = Fahrplan.erledigt(stand);
+  const offen  = Fahrplan.naechster(stand);
 
-    if (DriveSync.verbunden()){
-      el('s_drive').textContent = 'Google Drive verbunden';
-      el('s_drive_link').textContent = 'Google Drive';
-    } else if (DriveSync.eingerichtet()){
-      el('s_drive').textContent = 'Google Drive nicht verbunden';
-      el('s_drive_link').textContent = 'Mit Google Drive verbinden';
-    } else {
-      el('s_drive').textContent = 'Google Drive ist noch nicht eingerichtet — deine Daten liegen auf diesem Gerät.';
-      el('s_drive_link').textContent = 'Google Drive einrichten';
-    }
+  el('f_balken').style.width = Math.round(fertig / Fahrplan.anzahl * 100) + '%';
+
+  if (!offen){
+    el('f_wo').textContent     = 'Alle ' + Fahrplan.anzahl + ' Kapitel erledigt';
+    el('f_titel').textContent  = 'Du bist durch.';
+    el('f_zweck').textContent  = 'Ab jetzt geht es ums Dranbleiben: einmal im Monat die Einnahmen eintragen und nach dem ersten Quartal noch einmal auf Preis und Auslastung schauen.';
+    el('f_weiter').textContent = 'Roadmap ansehen';
+    el('f_weiter').href        = 'schritte.html';
+  } else {
+    el('f_wo').textContent     = 'Kapitel ' + offen.nr + ' von ' + Fahrplan.anzahl + ' · ' + offen.schritt.abschnitt;
+    el('f_titel').textContent  = offen.schritt.titel;
+    el('f_zweck').textContent  = fertig === 0
+      ? 'Dein nächstes Kapitel ist Kapitel 1. Arbeite dich einfach von Kapitel zu Kapitel durch — alles andere findest du, wenn du es brauchst.'
+      : offen.schritt.zweck;
+    el('f_weiter').textContent = fertig === 0 ? 'Kapitel 1 öffnen' : 'Weiter mit Kapitel ' + offen.nr;
+    el('f_weiter').href        = 'fahrplan.html?kapitel=' + offen.nr;
   }
-
-  /* ---------- Der Hauptrechner, direkt hier ----------
-     Zwei Angaben genuegen fuer ein Ergebnis. Kosten und Ruecklage stehen
-     im grossen Rechner, damit der Einstieg hier kurz bleibt. */
-  const WOCHEN = 4.33;
-
-  function feldwert(id){
-    const e = el(id);
-    let v = parseFloat(String(e.value).replace(',', '.'));
-    if (!isFinite(v)) v = 0;
-    const min = parseFloat(e.min), max = parseFloat(e.max);
-    if (isFinite(min) && v < min) v = min;
-    if (isFinite(max) && v > max) v = max;
-    return v;
-  }
-
-  function rechnen(){
-    const beh   = feldwert('m_beh');
-    const preis = feldwert('m_preis');
-    const woche = beh * preis;
-    el('m_monat').textContent = eur(woche * WOCHEN);
-    el('m_wie').textContent =
-      'bei durchschnittlich ' + beh.toLocaleString('de-DE') + ' Behandlungen pro Woche zu ' + eur(preis)
-      + ' — das sind ' + eur(woche) + ' pro Woche';
-  }
-
-  if (window.Daten){
-    Daten.koppeln('zahlen', {proWoche:'#m_beh', preis:'#m_preis'}, rechnen);
-  }
-  ['m_beh','m_preis'].forEach(id => {
-    el(id).addEventListener('input', rechnen);
-    /* Hier gibt es bewusst keinen Speichern-Knopf: der Rechner soll sich
-       wie ein Blick auf die eigenen Zahlen anfuehlen, nicht wie ein
-       Formular. Sobald ein Feld verlassen wird, steht der Wert fest und
-       gilt auch in den anderen Rechnern. */
-    el(id).addEventListener('change', () => {
-      rechnen();
-      if (window.Daten) { Daten.speichern(); standZeichnen(); }
-    });
-  });
-
-  /* ---------- Dein naechster Schritt ----------
-     Titel, Zweck und Abschnitt kommen aus fahrplan-schritte.js, damit
-     hier nichts anders heisst als im Fahrplan selbst. */
-  function fortschrittZeichnen(){
-    const stand  = Fahrplan.stand();
-    const fertig = Fahrplan.erledigt(stand);
-    const offen  = Fahrplan.naechster(stand);
-
-    el('f_balken').style.width = Math.round(fertig / Fahrplan.anzahl * 100) + '%';
-
-    if (!offen){
-      el('f_wo').textContent        = 'Alle ' + Fahrplan.anzahl + ' Schritte erledigt';
-      el('f_naechster').textContent = 'Du bist durch.';
-      el('f_zweck').textContent     = 'Ab jetzt geht es ums Dranbleiben: einmal im Monat die Einnahmen eintragen und nach dem ersten Quartal noch einmal auf Preis und Auslastung schauen.';
-      el('f_weiter').textContent    = 'Fahrplan ansehen';
-      el('f_weiter').href           = 'schritte.html';
-      return;
-    }
-
-    el('f_wo').textContent        = 'Schritt ' + offen.nr + ' von ' + Fahrplan.anzahl + ' · ' + offen.schritt.abschnitt;
-    el('f_naechster').textContent = offen.schritt.titel;
-    el('f_zweck').textContent     = offen.schritt.zweck;
-    el('f_weiter').href           = 'schritte.html#schritt' + offen.nr;
-  }
-
-  /* ---------- Meine Termine ---------- */
-  function termineZeichnen(){
-    const jetzt = new Date();
-    const iso = new Date(jetzt.getTime() - jetzt.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-    const uhr = jetzt.toTimeString().slice(0, 5);
-    const kommend = Daten.termine()
-      .filter(t => t.datum > iso || (t.datum === iso && t.zeit >= uhr))
-      .sort((a, b) => (a.datum + a.zeit).localeCompare(b.datum + b.zeit));
-
-    if (!kommend.length){
-      el('t_wann').textContent = 'Noch keine Termine eingetragen';
-      el('t_wer').textContent  = 'Sobald du einen einträgst, steht der nächste hier.';
-      return;
-    }
-    const t = kommend[0];
-    const d = new Date(t.datum + 'T00:00:00');
-    const wann = t.datum === iso
-      ? 'Heute'
-      : d.toLocaleDateString('de-DE', {weekday:'long', day:'numeric', month:'long'});
-    el('t_wann').textContent = wann + ' · ' + t.zeit + ' Uhr';
-    el('t_wer').textContent  = t.patient + ' · ' + t.dauer + ' Minuten' +
-      (kommend.length > 1 ? ' · danach noch ' + (kommend.length - 1) : '');
-  }
-
-  rechnen();
-  fortschrittZeichnen();
-  termineZeichnen();
-  standZeichnen();
 })();
 </script>
 <script>

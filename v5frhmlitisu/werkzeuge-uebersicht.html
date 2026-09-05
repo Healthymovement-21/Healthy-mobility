@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Werkzeuge — PhysioNebenbei</title>
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  .gruppe{
+    font-family:var(--font-display); font-size:14px; font-weight:600;
+    letter-spacing:0; color:var(--ink-muted); margin:30px 0 0;
+  }
+  .gruppe:first-of-type{ margin-top:6px; }
+  .werkzeugliste{ list-style:none; margin:12px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
+  .werkzeugliste li{ border-bottom:1px solid var(--glass-edge); padding:14px 0; }
+  .werkzeugliste a{ font-size:16.5px; font-weight:600; }
+  .werkzeugliste span{ display:block; font-size:14px; color:var(--ink-muted); margin-top:2px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="./">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Werkzeuge</span></nav>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <h1 class="title">Werkzeuge</h1>
+      <p class="lede">Alle Rechner und Werkzeuge zum selbst Ausprobieren, sortiert nach der Frage, die sie beantworten. Die Roadmap verweist an der passenden Stelle direkt dorthin — hier findest du sie alle auf einen Blick.</p>
+    </section>
+
+    <section class="sheet">
+      <p class="gruppe">Kalkulation</p>
+      <ul class="werkzeugliste">
+        <li><a href="verdienst.html">Verdienst berechnen</a><span>Was kann ich mit meiner verfügbaren Zeit ungefähr nebenbei verdienen?</span></li>
+        <li><a href="werkzeuge.html">Preis berechnen</a><span>Welcher Preis macht für deine Behandlung und deinen Aufwand Sinn?</span></li>
+        <li><a href="monatsrechner.html">Monat kalkulieren</a><span>Was bleibt von einem echten Monat mit deinen Behandlungen und Kosten übrig?</span></li>
+        <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Du hast ein konkretes Einkommensziel? Dann rechne von diesem Ziel zurück.</span></li>
+      </ul>
+
+      <p class="gruppe">Zeit &amp; Arbeit</p>
+      <ul class="werkzeugliste">
+        <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du neben deinem Hauptjob realistisch unter?</span></li>
+        <li><a href="gehaltsrechner.html">Gehalt und Stunden</a><span>Was verändert sich, wenn du deine Arbeitszeit im Hauptjob veränderst?</span></li>
+      </ul>
+
+      <p class="gruppe">Verwaltung</p>
+      <ul class="werkzeugliste">
+        <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung erstellen</a><span>Deine Rechnungen schnell und einheitlich, auch ohne Internet</span></li>
+        <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
+      </ul>
+
+      <p class="gruppe">Organisieren</p>
+      <ul class="werkzeugliste">
+        <li><a href="termine.html">Kalender</a><span>Deine Termine im Überblick</span></li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Keine Steuer-, Rechts- oder medizinische Beratung.</span>
+    <span><a href="./">Mein Bereich</a> · <a href="dateien.html">Meine Dateien</a> · <a href="schritte.html">Roadmap</a></span>
+  </footer>
+</div>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

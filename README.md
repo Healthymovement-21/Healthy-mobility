@@ -38,8 +38,11 @@ physio-nebenbei/
 
 NUR MIT LINK
 v5frhmlitisu/
-  index.html                   der Fahrplan: zehn Schritte mit Fortschritt, jeder mit
-                               dem passenden Werkzeug verknüpft. Einstieg für Käufer:innen
+  index.html                   Mein Bereich: das Dashboard mit sechs Bereichen —
+                               Zahlen, Rechner, Termine, Dateien, Fahrplan, Einstellungen
+  schritte.html                der interaktive Fahrplan: zehn Schritte mit Fortschritt,
+                               jeder mit dem passenden Werkzeug verknüpft
+  einstellungen.html           Google Drive, Speicherorte, eigene Angaben, Export/Import
   ziel-rechner.html            Wunschbetrag rein, Zahl der Termine raus — für mehrere
                                Preisstufen nebeneinander, plus Zeitaufwand und Stundenlohn
   werkzeuge.html               Preis-Kalkulation rückwärts, dazu Steuer-Rücklage, EÜR, Log
@@ -48,7 +51,7 @@ v5frhmlitisu/
   gehaltsrechner.html          Hauptjob plus Nebenverdienst, Krankenkassen-Ampel
   fahrplan.html                alle zehn Kapitel, Kapitel-Tracker plus persönliche To-do-Liste
   fehler.html                  die zehn Fehler, die am meisten kosten, je mit Gegenmittel
-  mein-bereich.html            Zahlen, Ziel, Termine, Aufgaben, Speicherorte, Einstellungen
+  mein-bereich.html            leitet nur noch auf index.html weiter (alte Lesezeichen)
   termine.html                 kompakte Terminübersicht, sechs Felder je Termin
   terminbuchung.html           Kurzkapitel zur Online-Terminvergabe durch Patient:innen
   danke.html                   Ziel der Weiterleitung nach der Zahlung
@@ -61,6 +64,7 @@ v5frhmlitisu/
 |---|---|
 | `physionebenbei-daten` | Zahlen, Profil, Termine, Sync-Einstellungen (siehe `daten.js`) |
 | `physionebenbei-schritte` | Fortschritt im zehnstufigen Fahrplan |
+| `physionebenbei-todo` | abgehakte Kapitel im Fahrplan-Handbuch |
 | `physionebenbei-todo-eigene` | die persönliche Checkliste |
 | `physionebenbei-drive` | wann zuletzt zu Drive übertragen wurde (kein Token) |
 

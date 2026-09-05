@@ -285,10 +285,18 @@
   /* ---------- Google Drive ---------- */
   function driveZeichnen(){
     const e = Daten.einstellung();
-    el('o_zahlen_drive').textContent = e.driveZahlen ? 'Drive synchronisiert' : 'Drive aus';
-    el('o_zahlen_drive').className = 'ort' + (e.driveZahlen ? '' : ' nein');
-    el('o_termine_drive').textContent = e.driveTermine ? 'Drive synchronisiert' : 'nicht synchronisiert';
-    el('o_termine_drive').className = 'ort' + (e.driveTermine ? ' warn' : ' nein');
+    /* Angehakt heisst nur: waere dabei. Uebertragen wird erst, wenn Drive
+       auch wirklich verbunden ist — das muss die Anzeige unterscheiden. */
+    const anDrive = DriveSync.verbunden();
+    function ortSetzen(id, gewaehlt, ausText){
+      const n = el(id);
+      if (!gewaehlt){ n.textContent = ausText; n.className = 'ort nein'; return; }
+      n.textContent = anDrive ? 'auch in deinem Google Drive' : 'für Drive vorgemerkt, noch nicht verbunden';
+      n.className = 'ort' + (anDrive ? '' : ' nein');
+    }
+    ortSetzen('o_zahlen_drive', e.driveZahlen, 'nicht bei Drive');
+    ortSetzen('o_termine_drive', e.driveTermine, 'nicht synchronisiert');
+    if (e.driveTermine && anDrive) el('o_termine_drive').className = 'ort warn';
 
     const status = el('drive_status');
     if (!DriveSync.eingerichtet()){

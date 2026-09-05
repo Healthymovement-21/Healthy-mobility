@@ -1148,3 +1148,26 @@ input[type=number][readonly]{
   background:var(--accent-soft); font-size:14px; color:var(--ink);
 }
 .vorschlag .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
+
+/* ---------- Codebeispiel ----------
+   Lange Zeilen scrollen im Kasten, damit die Seite selbst nicht wandert. */
+.code{
+  margin:14px 0 0; padding:14px 16px;
+  border:1px solid var(--glass-edge); border-radius:8px;
+  background:var(--pure); overflow-x:auto;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size:13.5px; line-height:1.6; color:var(--ink);
+}
+
+/* ---------- Aufzaehlung ohne Kaestchen ----------
+   Fuer Listen, die man nicht abhaken soll. */
+.punkte{ list-style:none; margin:16px 0 0; padding:0; }
+.punkte li{
+  position:relative; padding-left:18px; margin-bottom:11px;
+  font-size:16.5px; line-height:1.55; color:var(--ink);
+}
+.punkte li::before{
+  content:""; position:absolute; left:0; top:.62em;
+  width:6px; height:6px; border-radius:50%; background:var(--accent);
+}
+.punkte li:last-child{ margin-bottom:0; }

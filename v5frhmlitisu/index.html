@@ -11,240 +11,155 @@
 <link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
 <link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
 <style>
-  /* ---------- Speicherzeile ---------- */
-  .stand{
-    display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px;
-    padding:11px 14px; margin:0 0 22px;
-    border:1px solid var(--glass-edge); border-radius:8px;
-    background:var(--pure); font-size:14px; color:var(--ink-muted);
+  /* ---------------------------------------------------------------
+     Mein Bereich: fuenf Bloecke, sonst nichts. Getrennt durch Linien
+     statt durch Karten, damit die Seite ruhig bleibt.
+  --------------------------------------------------------------- */
+  .block{ padding:30px 0; border-top:1px solid var(--glass-edge); }
+  .block:first-of-type{ border-top:none; padding-top:6px; }
+  .block > h2{
+    font-family:var(--font-display); font-size:15px; font-weight:600;
+    letter-spacing:0; color:var(--ink-muted); margin:0 0 16px;
   }
-  .stand .punkt{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
-  .stand a{ margin-left:auto; font-size:14px; }
 
-  /* ---------- Die sechs Bereiche ---------- */
-  .bereiche{ display:grid; gap:12px; margin-top:22px; }
-  @media (min-width:620px){ .bereiche{ grid-template-columns:1fr 1fr; } }
-  .bereich{
-    display:block; padding:20px 22px;
-    border:1px solid var(--glass-edge); border-radius:8px;
-    background:var(--pure); text-decoration:none; color:var(--ink);
+  /* Der grosse Wert eines Blocks */
+  .gross{
+    font-family:var(--font-display); font-weight:600; letter-spacing:-.035em;
+    font-size:clamp(34px,9vw,46px); line-height:1.05; color:var(--ink);
+    font-variant-numeric:tabular-nums; margin:0;
   }
-  .bereich:hover{ border-color:var(--accent); text-decoration:none; }
-  .b-titel{
-    font-family:var(--font-display); font-size:18px; font-weight:600;
-    letter-spacing:-.02em; color:var(--ink); display:block;
-  }
-  .b-wert{
-    font-family:var(--font-display); font-size:26px; font-weight:600;
-    letter-spacing:-.03em; color:var(--accent); display:block; margin-top:8px;
-    font-variant-numeric:tabular-nums;
-  }
-  .b-unter{ display:block; font-size:14.5px; color:var(--ink-muted); margin-top:5px; line-height:1.5; }
-  .b-pfeil{ display:inline-block; margin-top:14px; font-size:14px; font-weight:600; color:var(--accent); }
-  .b-pfeil::after{ content:" →"; }
+  .gross .klein{ font-size:.42em; font-weight:500; color:var(--ink-muted); letter-spacing:-.01em; }
+  .gross.leer{ font-size:22px; font-weight:500; color:var(--ink-muted); letter-spacing:-.01em; }
+  .darunter{ font-size:15px; color:var(--ink-muted); margin:8px 0 0; line-height:1.5; }
 
-  /* Zahlen-Bereich etwas breiter und dunkel */
-  .bereich.zahlen{ background:var(--ink); border-color:var(--ink); }
-  @media (min-width:620px){ .bereich.zahlen{ grid-column:1 / -1; } }
-  .bereich.zahlen .b-titel{ color:var(--auf-tief); }
-  .bereich.zahlen .b-pfeil{ color:var(--mint); }
-  .zahlenreihe{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
-  @media (min-width:520px){ .zahlenreihe{ grid-template-columns:repeat(4,1fr); } }
-  .zahlenreihe .zt{ font-size:12px; color:var(--auf-tief-leise); }
-  .zahlenreihe .zw{
-    font-family:var(--font-display); font-size:22px; font-weight:600;
-    letter-spacing:-.03em; color:var(--auf-tief); margin-top:3px;
-    font-variant-numeric:tabular-nums;
+  /* Zahlenraster */
+  .raster{
+    display:grid; grid-template-columns:1fr 1fr; gap:18px 20px;
+    margin-top:26px; padding-top:22px; border-top:1px solid var(--glass-edge);
   }
-  .zahlenreihe .zw.gut{ color:var(--mint); }
-  .bereich.zahlen .b-unter{ color:var(--auf-tief-leise); }
+  @media (min-width:560px){ .raster{ grid-template-columns:repeat(4,1fr); } }
+  .raster .t{ font-size:13px; color:var(--ink-muted); }
+  .raster .w{
+    font-family:var(--font-display); font-size:21px; font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:2px;
+  }
+  .raster .w.mint{ color:var(--accent); }
 
-  /* ---------- Nächster Schritt ---------- */
-  .tipp{
-    margin-top:22px; padding:16px 18px;
-    border-left:2px solid var(--accent); background:var(--accent-soft);
-    border-radius:0 8px 8px 0;
-  }
-  .tipp b{ display:block; font-size:15px; color:var(--ink); }
-  .tipp span{ display:block; font-size:14.5px; color:var(--ink-muted); margin-top:4px; line-height:1.5; }
-  .tipp a{ display:inline-block; margin-top:10px; font-size:14.5px; font-weight:600; }
+  /* Fortschritt */
+  .balken{ height:4px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:16px 0 0; }
+  .balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .35s ease; }
 
-  /* ---------- Kompakte Listen ---------- */
-  .dateiliste{ list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--glass-line); }
-  .dateiliste li{
-    display:grid; grid-template-columns:1fr auto; gap:4px 16px;
-    align-items:baseline; padding:13px 0; border-bottom:1px solid var(--glass-line);
-  }
-  .dateiliste b{ font-size:16px; font-weight:600; color:var(--ink); }
-  .dateiliste span{ grid-column:1; font-size:14px; color:var(--ink-muted); }
-  .dateiliste a{ grid-column:2; grid-row:1 / span 2; font-size:14.5px; white-space:nowrap; }
+  /* Aktionen eines Blocks */
+  .tun{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+  .tun .btn{ padding:11px 20px; font-size:15px; }
+
+  /* Speicherzeile */
+  .stand{ font-size:14.5px; color:var(--ink-muted); margin:0; line-height:1.55; }
+
+  /* Rechner als ruhige Textzeile, keine Kacheln */
+  .rechnerzeile{ display:flex; flex-wrap:wrap; gap:6px 18px; margin:0; }
+  .rechnerzeile a{ font-size:15px; }
 </style>
 </head>
 <body>
 
 <div class="page">
-  <a class="brand" href="./">
+  <a class="brand" href="../">
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
     <span>Physio<b>Nebenbei</b></span>
   </a>
-
-  <div class="stand" id="stand">
-    <span class="punkt"></span>
-    <span id="stand_text">–</span>
-    <a href="einstellungen.html">Speicher &amp; Einstellungen</a>
-  </div>
 
   <div class="doc">
 
     <section class="sheet hero">
       <h1 class="title">Mein Bereich</h1>
-      <p class="lede">Hier findest du deine wichtigsten Zahlen, Termine, Dateien und den nächsten Schritt.</p>
-
-      <div class="tipp" id="tipp">
-        <b id="tipp_titel">–</b>
-        <span id="tipp_text">–</span>
-        <a class="link" href="schritte.html" id="tipp_link">Weiter im Fahrplan</a>
-      </div>
-
-      <div class="bereiche">
-
-        <a class="bereich zahlen" href="monatsrechner.html">
-          <span class="b-titel">Meine Zahlen</span>
-          <div class="zahlenreihe">
-            <div><div class="zt">Umsatz</div><div class="zw" id="k_umsatz">–</div></div>
-            <div><div class="zt">Ausgaben</div><div class="zw" id="k_ausgaben">–</div></div>
-            <div><div class="zt">Rücklage</div><div class="zw" id="k_ruecklage">–</div></div>
-            <div><div class="zt">Verfügbar</div><div class="zw gut" id="k_verfuegbar">–</div></div>
-          </div>
-          <span class="b-unter" id="k_zahlen_u">–</span>
-          <span class="b-pfeil">Finanzen öffnen</span>
-        </a>
-
-        <a class="bereich" href="werkzeuge.html">
-          <span class="b-titel">Meine Rechner</span>
-          <span class="b-wert" id="k_preis">–</span>
-          <span class="b-unter" id="k_preis_u">dein gespeicherter Behandlungspreis</span>
-          <span class="b-pfeil">Rechner öffnen</span>
-        </a>
-
-        <a class="bereich" href="termine.html">
-          <span class="b-titel">Meine Termine</span>
-          <span class="b-wert" id="k_termin">–</span>
-          <span class="b-unter" id="k_termin_u">–</span>
-          <span class="b-pfeil">Termine öffnen</span>
-        </a>
-
-        <a class="bereich" href="#dateien">
-          <span class="b-titel">Meine Dateien</span>
-          <span class="b-wert">11</span>
-          <span class="b-unter" id="k_dateien_u">Vorlagen und Rechner zum Herunterladen</span>
-          <span class="b-pfeil">Dateien öffnen</span>
-        </a>
-
-        <a class="bereich" href="schritte.html">
-          <span class="b-titel">Mein Fahrplan</span>
-          <span class="b-wert" id="k_schritte">–</span>
-          <span class="b-unter" id="k_schritte_u">Schritten erledigt</span>
-          <span class="b-pfeil">Weiter</span>
-        </a>
-
-        <a class="bereich" href="einstellungen.html">
-          <span class="b-titel">Meine Einstellungen</span>
-          <span class="b-wert" id="k_speicher">lokal</span>
-          <span class="b-unter" id="k_speicher_u">Persönliche Daten, Speicher, Google Drive</span>
-          <span class="b-pfeil">Öffnen</span>
-        </a>
-
-      </div>
+      <p class="lede">Was du gespeichert hast, auf einen Blick.</p>
     </section>
 
-    <!-- ============ ALLE RECHNER ============ -->
     <section class="sheet">
-      <p class="eyebrow">Direktzugriff</p>
-      <h2>Alle Rechner</h2>
-      <ul class="dateiliste">
-        <li><b>Wie viele Patient:innen?</b><span>Vom Wunschbetrag zur Zahl der Termine</span><a href="ziel-rechner.html">Öffnen</a></li>
-        <li><b>Preis-Kalkulation</b><span>Vom Wunscheinkommen rückwärts zum Preis</span><a href="werkzeuge.html">Öffnen</a></li>
-        <li><b>Monats-Rechner</b><span>Behandlungen eintragen, Ergebnis mit PDF-Export</span><a href="monatsrechner.html">Öffnen</a></li>
-        <li><b>Auslastung planen</b><span>Termine, Fahrt, Zeit und wann das Geld ankommt</span><a href="planungsrechner.html">Öffnen</a></li>
-        <li><b>Gehalt und Stunden</b><span>Hauptjob plus Nebenverdienst, Krankenkassen-Ampel</span><a href="gehaltsrechner.html">Öffnen</a></li>
-        <li><b>Rechnungsgenerator</b><span>Rechnung als PDF, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a></li>
-        <li><b>Einnahmen und Ausgaben</b><span>Deine EÜR fürs Jahr, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a></li>
-      </ul>
-      <p class="micro" style="margin-top:14px">Was du in einem Rechner einträgst und speicherst, schlagen die anderen dir als Ausgangswert vor. Ändern kannst du es dort jederzeit.</p>
-    </section>
 
-    <!-- ============ ALLE DATEIEN ============ -->
-    <section class="sheet" id="dateien">
-      <p class="eyebrow">Download</p>
-      <h2>Deine Dateien</h2>
-      <p>Alle elf Dateien auf einmal, oder einzeln weiter unten. Bei welchem Schritt du welche brauchst, steht oben im Fahrplan.</p>
-      <p class="hero-cta">
-        <a class="btn" href="#" data-drive>Alle Dateien bei Google Drive</a>
-        <a class="btn ghost" data-drive-datei="PhysioNebenbei-Paket.zip" data-drive-beschriftung="nein" href="dateien/PhysioNebenbei-Paket.zip" download="PhysioNebenbei-Paket.zip">Alle Dateien als ZIP</a>
-      </p>
-      <p class="micro warnung" id="drive-hinweis" hidden></p>
+      <!-- ============ 1 · MEINE ZAHLEN ============ -->
+      <div class="block">
+        <h2>Meine Zahlen</h2>
+        <p class="gross"><span id="z_preis">–</span> <span class="klein">je Behandlung</span></p>
+        <p class="darunter" id="z_unter">–</p>
 
-      <ul class="dateiliste">
-        <li><b>Fahrplan</b><span>Word-Datei mit allen zehn Kapiteln zum Anpassen</span><a data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Laden</a></li>
-        <li><b>Excel-Mappe</b><span>Preis-Kalkulation, Steuer-Rücklage, EÜR, Behandlungs-Log</span><a data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Laden</a></li>
-        <li><b>Rechnungsgenerator</b><span>Für Mac und Windows speichern, läuft dann offline</span><a data-drive-datei="PhysioNebenbei-Rechnungsgenerator.html" href="dateien/PhysioNebenbei-Rechnungsgenerator.html" download="PhysioNebenbei-Rechnungsgenerator.html">Laden</a></li>
-        <li><b>Einnahmen und Ausgaben</b><span>Für Mac und Windows speichern, läuft dann offline</span><a data-drive-datei="PhysioNebenbei-Einnahmen-Ausgaben.html" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html" download="PhysioNebenbei-Einnahmen-Ausgaben.html">Laden</a></li>
-        <li><b>Honorarvereinbarung</b><span>Preis, Zahlungsziel, Absagefrist und Ausfallhonorar</span><a data-drive-datei="Honorarvereinbarung.pdf" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Laden</a></li>
-        <li><b>Behandlungsvertrag</b><span>Aufklärung, Mitwirkung, Haftung</span><a data-drive-datei="Behandlungsvertrag.pdf" href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Laden</a></li>
-        <li><b>Datenschutz-Information</b><span>Nach Art. 13 DSGVO, zum Aushändigen beim ersten Termin</span><a data-drive-datei="Datenschutz-Patienten.pdf" href="dateien/Datenschutz-Patienten.pdf" download="Datenschutz-Patienten.pdf">Laden</a></li>
-        <li><b>Anamnesebogen</b><span>Beschwerden, Vorgeschichte, Kontraindikationen, Ziele</span><a data-drive-datei="Anamnesebogen.pdf" href="dateien/Anamnesebogen.pdf" download="Anamnesebogen.pdf">Laden</a></li>
-        <li><b>Dokumentationsbogen</b><span>Befund und Verlauf je Behandlung</span><a data-drive-datei="Dokumentationsvorlage.pdf" href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Laden</a></li>
-        <li><b>Terminübersicht</b><span>Wochenplan zum Ausdrucken</span><a data-drive-datei="Terminuebersicht.pdf" href="dateien/Terminuebersicht.pdf" download="Terminuebersicht.pdf">Laden</a></li>
-        <li><b>Patientenliste</b><span>Mit Aufbewahrungs- und Löschfristen</span><a data-drive-datei="Patientenliste.pdf" href="dateien/Patientenliste.pdf" download="Patientenliste.pdf">Laden</a></li>
-      </ul>
-
-      <p class="micro" style="margin-top:14px">
-        Auf iPhone und iPad ist bei den beiden Rechnern „Öffnen“ der richtige Weg. Eine
-        gespeicherte HTML-Datei lässt sich unter iOS nicht zuverlässig wieder starten,
-        das Herunterladen ist für Mac und Windows gedacht.
-      </p>
-    </section>
-
-
-    <!-- ============ ALS APP ============ -->
-    <section class="sheet">
-      <p class="eyebrow">Aufs Handy</p>
-      <h2>Als App speichern</h2>
-      <p>Dann hast du den Fahrplan und die Rechner mit einem Tipp offen, auch ohne Internet.</p>
-      <details class="mehr">
-        <summary>So geht's</summary>
-        <div>
-          <p><strong>iPhone und iPad</strong> — diese Seite in Safari öffnen, unten auf das Teilen-Symbol tippen, dann <em>Zum Home-Bildschirm</em>.</p>
-          <p><strong>Android</strong> — diese Seite in Chrome öffnen, Menü mit den drei Punkten, dann <em>App installieren</em> oder <em>Zum Startbildschirm zufügen</em>.</p>
-          <p><strong>Laptop</strong> — Seite als Lesezeichen speichern. In Chrome und Edge geht auch das Installieren-Symbol rechts in der Adresszeile.</p>
+        <div class="raster">
+          <div><div class="t">Umsatz</div><div class="w" id="z_umsatz">–</div></div>
+          <div><div class="t">Ausgaben</div><div class="w" id="z_ausgaben">–</div></div>
+          <div><div class="t">Rücklage <span id="z_satz"></span></div><div class="w" id="z_ruecklage">–</div></div>
+          <div><div class="t">Verfügbar</div><div class="w mint" id="z_verfuegbar">–</div></div>
         </div>
-      </details>
-    </section>
 
-    <section class="sheet">
-      <div class="annotation">
-        <strong>Zu den Vorlagen:</strong> Honorarvereinbarung, Behandlungsvertrag und Datenschutz-Information sind Muster, keine geprüften Rechtsdokumente. Lass sie vor dem ersten Einsatz von einer Anwältin, einem Anwalt oder dem Rechtsservice deines Berufsverbands prüfen und an deinen Fall anpassen.
+        <p class="micro" style="margin-top:16px">Kalkulationswerte aus deinen eigenen Eingaben. Die Rücklage ist der Prozentsatz, den du selbst gewählt hast — deine tatsächliche Steuerlast berechnet diese Anwendung nicht.</p>
+
+        <p class="tun"><a class="btn ghost" href="werkzeuge.html">Zahlen ändern</a></p>
       </div>
+
+      <!-- ============ 2 · MEIN FORTSCHRITT ============ -->
+      <div class="block">
+        <h2>Mein Fortschritt</h2>
+        <p class="gross"><span id="f_zahl">0</span> <span class="klein">von 10 Schritten</span></p>
+        <div class="balken"><div id="f_balken" style="width:0%"></div></div>
+        <p class="darunter" id="f_naechster">–</p>
+        <p class="tun"><a class="btn ghost" href="schritte.html">Fahrplan öffnen</a></p>
+      </div>
+
+      <!-- ============ 3 · MEINE TERMINE ============ -->
+      <div class="block">
+        <h2>Meine Termine</h2>
+        <p class="gross" id="t_wann">–</p>
+        <p class="darunter" id="t_wer">–</p>
+        <p class="tun">
+          <a class="btn ghost" href="termine.html#neu">Termin hinzufügen</a>
+          <a class="btn ghost" href="termine.html">Kalender</a>
+        </p>
+      </div>
+
+      <!-- ============ 4 · MEINE DATEIEN ============ -->
+      <div class="block">
+        <h2>Meine Dateien</h2>
+        <p class="gross">11 <span class="klein">Vorlagen und Rechner</span></p>
+        <p class="darunter">Verträge, Bögen und Arbeitsblätter zum Herunterladen. Rechnungen erstellst du im Rechnungsgenerator.</p>
+        <p class="tun">
+          <a class="btn ghost" href="dateien.html">Dateien öffnen</a>
+          <a class="btn ghost" href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung schreiben</a>
+        </p>
+      </div>
+
+      <!-- ============ 5 · SPEICHERUNG ============ -->
+      <div class="block">
+        <h2>Speicherung</h2>
+        <p class="stand" id="s_text">–</p>
+        <p class="tun"><a class="btn ghost" href="einstellungen.html">Angaben und Sicherung</a></p>
+      </div>
+
     </section>
 
     <section class="sheet">
-      <p class="eyebrow">Support</p>
-      <h2>Etwas fehlt oder lässt sich nicht öffnen?</h2>
-      <p>Schreib mir kurz, ich antworte selbst.</p>
-      <p class="hero-cta"><a class="btn" href="mailto:info@physiotherapie-grausam.com?subject=PhysioNebenbei%20%E2%80%94%20Frage%20zum%20Paket">info@physiotherapie-grausam.com</a></p>
+      <p class="eyebrow">Rechner</p>
+      <p class="rechnerzeile">
+        <a href="werkzeuge.html">Preis-Kalkulation</a>
+        <a href="ziel-rechner.html">Wie viele Patient:innen?</a>
+        <a href="monatsrechner.html">Monat berechnen</a>
+        <a href="planungsrechner.html">Auslastung</a>
+        <a href="gehaltsrechner.html">Gehalt und Stunden</a>
+        <a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a>
+      </p>
+      <p class="micro" style="margin-top:14px">Was du in einem Rechner speicherst, schlagen dir die anderen als Ausgangswert vor. Ändern kannst du es dort jederzeit.</p>
     </section>
 
   </div>
 
   <footer class="site">
     <span>Vorlagen sind Muster, vor Einsatz prüfen lassen. Keine Steuer-, Rechts- oder medizinische Beratung.<br>
-      Dieser Link ist für dich persönlich. Weitergabe ist nach § 5 der AGB nicht gestattet.</span>
+      Etwas fehlt? <a href="mailto:info@physiotherapie-grausam.com?subject=PhysioNebenbei">info@physiotherapie-grausam.com</a></span>
     <span>
+      <a href="fahrplan.html">Handbuch</a> ·
+      <a href="fehler.html">Häufige Fehler</a> ·
       <a href="../impressum.html">Impressum</a> ·
       <a href="../datenschutz.html">Datenschutz</a> ·
-      <a href="../agb.html">AGB</a> ·
-      <a href="../widerruf.html">Widerruf</a>
+      <a href="../agb.html">AGB</a>
     </span>
   </footer>
 </div>
@@ -257,11 +172,28 @@
   const el  = id => document.getElementById(id);
   const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
 
-  /* ---------- Zahlen aus den gespeicherten Werten ----------
-     Dieselbe Rechnung wie im Ziel-Rechner, damit ueberall dieselben
-     Zahlen stehen: aus Ziel, Preis, Kosten und Ruecklage ergibt sich
-     die noetige Zahl an Behandlungen und daraus der Rest. */
-  function zahlen(){
+  /* ---------- Meine Zahlen ----------
+     Zwei Quellen, in dieser Reihenfolge:
+     1. ein im Monats-Rechner erfasster Monat — das sind echte Zahlen,
+     2. sonst die Kalkulation aus Ziel, Preis und Kosten.
+     Welche der beiden gilt, steht im Text darunter. */
+  function ausMonat(){
+    const f = Daten.finanzen();
+    if (!f || !f.monat || !(f.umsatz > 0)) return null;
+    const satz = (Daten.zahlen().satz || 0) / 100;
+    const gewinn = f.umsatz - (f.ausgaben || 0);
+    const ruecklage = Math.max(gewinn, 0) * satz;
+    const [j, m] = String(f.monat).split('-');
+    const name = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                  'August','September','Oktober','November','Dezember'][Number(m) - 1];
+    return {
+      umsatz: f.umsatz, ausgaben: f.ausgaben || 0, ruecklage,
+      verfuegbar: gewinn - ruecklage, satz,
+      text: name ? 'Dein erfasster Monat ' + name + ' ' + j + '.' : 'Dein zuletzt erfasster Monat.'
+    };
+  }
+
+  function ausKalkulation(){
     const z = Daten.zahlen();
     const fahrtkosten = (z.km || 0) * (z.kmsatz || 0);
     const deckung = (z.preis || 0) - fahrtkosten;
@@ -275,101 +207,105 @@
     const ausgaben  = beh * fahrtkosten + (z.fix || 0);
     const gewinn    = umsatz - ausgaben;
     const ruecklage = Math.max(gewinn, 0) * satz;
-    return {beh, umsatz, ausgaben, ruecklage, verfuegbar: gewinn - ruecklage, preis: z.preis || 0};
+    return {
+      umsatz, ausgaben, ruecklage, verfuegbar: gewinn - ruecklage, satz,
+      text: 'Geplant mit ' + beh + ' Behandlungen im Monat.'
+    };
   }
 
-  function zeichnen(){
-    const w = zahlen();
+  function zahlenZeichnen(){
     const eigene = !!Daten.gespeichertAm();
-    if (w){
-      el('k_umsatz').textContent     = eur(w.umsatz);
-      el('k_ausgaben').textContent   = eur(w.ausgaben);
-      el('k_ruecklage').textContent  = eur(w.ruecklage);
-      el('k_verfuegbar').textContent = eur(w.verfuegbar);
-      el('k_preis').textContent      = eur(w.preis);
-      el('k_zahlen_u').textContent   = eigene
-        ? 'Gerechnet mit deinen Werten: ' + w.beh + ' Behandlungen zu ' + eur(w.preis) + ' im Monat.'
-        : 'Beispielrechnung mit Startwerten. Sobald du eigene Zahlen speicherst, steht hier deine echte Rechnung.';
-      el('k_preis_u').textContent    = eigene
-        ? 'dein Preis je Behandlung · ' + w.beh + ' Termine im Monat geplant'
-        : 'Startwert, noch nicht von dir gespeichert';
-    } else {
-      ['k_umsatz','k_ausgaben','k_ruecklage','k_verfuegbar','k_preis'].forEach(i => el(i).textContent = '–');
-      el('k_zahlen_u').textContent = 'Deine Zahlen gehen nicht auf — der Preis deckt die Fahrtkosten noch nicht.';
-      el('k_preis_u').textContent = 'Noch keine Zahlen gespeichert — fang mit der Preis-Kalkulation an.';
-    }
+    const w = ausMonat() || ausKalkulation();
+    el('z_preis').textContent = eur(Daten.zahlen().preis || 0);
 
-    /* ---------- Fahrplan ---------- */
-    let erledigt = 0;
+    if (!w){
+      ['z_umsatz','z_ausgaben','z_ruecklage','z_verfuegbar'].forEach(i => el(i).textContent = '–');
+      el('z_unter').textContent = 'Deine Zahlen gehen so nicht auf — der Preis deckt die Fahrtkosten noch nicht.';
+      return;
+    }
+    el('z_umsatz').textContent     = eur(w.umsatz);
+    el('z_ausgaben').textContent   = eur(w.ausgaben);
+    el('z_ruecklage').textContent  = eur(w.ruecklage);
+    el('z_verfuegbar').textContent = eur(w.verfuegbar);
+    el('z_satz').textContent       = Math.round(w.satz * 100) + ' %';
+    el('z_unter').textContent = eigene
+      ? w.text
+      : 'Beispielrechnung mit den Startwerten. Sobald du eigene Zahlen speicherst, steht hier deine eigene Rechnung.';
+  }
+
+  /* ---------- Mein Fortschritt ---------- */
+  const NAECHSTE = [
+    'Als Nächstes: durchrechnen, ob sich das für dich lohnt.',
+    'Als Nächstes: Finanzamt, BGW und Berufshaftpflicht klären.',
+    'Als Nächstes: deinen Behandlungspreis festlegen.',
+    'Als Nächstes: ausrechnen, wie viele Patient:innen du brauchst.',
+    'Als Nächstes: einen echten Monat durchrechnen.',
+    'Als Nächstes: Honorarvereinbarung und Verträge vorbereiten.',
+    'Als Nächstes: deine ersten Termine eintragen.',
+    'Als Nächstes: Anamnese- und Dokumentationsbogen ausdrucken.',
+    'Als Nächstes: deine erste Rechnung schreiben.',
+    'Als Nächstes: Einnahmen und Ausgaben laufend eintragen.'
+  ];
+
+  function fortschrittZeichnen(){
+    let fertig = 0;
     try {
       const s = JSON.parse(localStorage.getItem('physionebenbei-schritte') || '{}');
-      erledigt = Object.keys(s).filter(k => s[k]).length;
+      fertig = Object.keys(s).filter(k => s[k]).length;
     } catch(e){}
-    el('k_schritte').textContent   = erledigt + ' von 10';
-    el('k_schritte_u').textContent = erledigt === 10
-      ? 'Alle Schritte erledigt'
-      : 'Schritten erledigt · als Nächstes: Schritt ' + (erledigt + 1);
+    fertig = Math.min(fertig, 10);
+    el('f_zahl').textContent = fertig;
+    el('f_balken').style.width = (fertig * 10) + '%';
+    el('f_naechster').textContent = fertig >= 10
+      ? 'Alle zehn Schritte erledigt. Ab jetzt geht es ums Dranbleiben.'
+      : NAECHSTE[fertig];
+  }
 
-    /* ---------- Termine ---------- */
-    const heute = new Date();
-    const iso = new Date(heute.getTime() - heute.getTimezoneOffset()*60000).toISOString().slice(0,10);
-    const jetzt = heute.toTimeString().slice(0,5);
+  /* ---------- Meine Termine ---------- */
+  function termineZeichnen(){
+    const jetzt = new Date();
+    const iso = new Date(jetzt.getTime() - jetzt.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    const uhr = jetzt.toTimeString().slice(0, 5);
     const kommend = Daten.termine()
-      .filter(t => t.datum > iso || (t.datum === iso && t.zeit >= jetzt))
-      .sort((a,b) => (a.datum + a.zeit).localeCompare(b.datum + b.zeit));
+      .filter(t => t.datum > iso || (t.datum === iso && t.zeit >= uhr))
+      .sort((a, b) => (a.datum + a.zeit).localeCompare(b.datum + b.zeit));
 
-    if (kommend.length){
-      const t = kommend[0];
-      const d = new Date(t.datum + 'T00:00:00');
-      const wann = t.datum === iso ? 'Heute'
-        : d.toLocaleDateString('de-DE', {weekday:'short', day:'numeric', month:'short'});
-      el('k_termin').textContent   = wann + ' · ' + t.zeit;
-      el('k_termin_u').textContent = t.patient + ' · ' + t.dauer + ' Min.' +
-        (kommend.length > 1 ? ' · danach noch ' + (kommend.length - 1) : '');
-    } else {
-      el('k_termin').textContent   = '—';
-      el('k_termin_u').textContent = 'Kein Termin eingetragen';
+    if (!kommend.length){
+      el('t_wann').textContent = 'Kein Termin eingetragen';
+      el('t_wann').classList.add('leer');
+      el('t_wer').textContent  = 'Sobald du einen einträgst, steht er hier.';
+      return;
     }
+    const t = kommend[0];
+    const d = new Date(t.datum + 'T00:00:00');
+    const wann = t.datum === iso
+      ? 'Heute'
+      : d.toLocaleDateString('de-DE', {weekday:'long', day:'numeric', month:'long'});
+    el('t_wann').textContent = wann + ' · ' + t.zeit + ' Uhr';
+    el('t_wer').textContent  = t.patient + ' · ' + t.dauer + ' Minuten' +
+      (kommend.length > 1 ? ' · danach noch ' + (kommend.length - 1) : '');
+  }
 
-    /* ---------- Speicherzeile ---------- */
-    const iso2 = Daten.gespeichertAm();
+  /* ---------- Speicherung ---------- */
+  function standZeichnen(){
+    const iso = Daten.gespeichertAm();
     let text = 'Noch nichts gespeichert';
-    if (iso2){
-      const d = new Date(iso2);
+    if (iso){
+      const d = new Date(iso);
       const uhr = d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
       text = '✓ Lokal gespeichert: ' +
              (d.toDateString() === new Date().toDateString() ? 'heute, ' : d.toLocaleDateString('de-DE') + ', ') +
              uhr + ' Uhr';
     }
-    const drive = DriveSync.verbunden() ? ' · ✓ Google Drive verbunden'
-                : (DriveSync.eingerichtet() ? ' · Google Drive nicht verbunden' : '');
-    el('stand_text').textContent = text + drive;
-    el('k_speicher').textContent = DriveSync.verbunden() ? 'lokal + Drive' : 'lokal';
-
-    /* ---------- Nächster Schritt als Tipp ---------- */
-    const tipps = [
-      ['Fang mit dem Realitäts-Check an', 'Rechne durch, was neben dem Hauptjob übrig bleibt und wie viele Abende das kostet.', 'ziel-rechner.html', 'Durchrechnen'],
-      ['Anmeldung und Absicherung', 'Finanzamt, BGW, Berufshaftpflicht — die Checkliste führt dich durch.', 'fahrplan.html#checkliste', 'Zur Checkliste'],
-      ['Leg deinen Preis fest', 'Rückwärts gerechnet vom Betrag, der übrig bleiben soll.', 'werkzeuge.html', 'Preis kalkulieren'],
-      ['Wie viele Patient:innen brauchst du?', 'Dein Ziel eingeben, die Zahl der Termine kommt heraus.', 'ziel-rechner.html', 'Ziel eingeben'],
-      ['Erfass deinen ersten Monat', 'Trag die echten Behandlungen ein und sieh, was bleibt.', 'monatsrechner.html', 'Monat berechnen'],
-      ['Unterlagen vorbereiten', 'Honorarvereinbarung, Behandlungsvertrag, Datenschutz-Information.', '#dateien', 'Zu den Dateien'],
-      ['Termine organisieren', 'Trag deine ersten Termine ein, damit sie nicht nur im Kopf stehen.', 'termine.html', 'Termine öffnen'],
-      ['Dokumentation vorbereiten', 'Anamnesebogen und Dokumentationsbogen ausdrucken.', '#dateien', 'Zu den Dateien'],
-      ['Deine erste Rechnung', 'Daten einmal eintragen, danach dauert jede Rechnung zwei Minuten.', 'dateien/PhysioNebenbei-Rechnungsgenerator.html', 'Rechnung erstellen'],
-      ['Dranbleiben', 'Einmal im Monat die Einnahmen eintragen, dann bleibt die Steuer entspannt.', 'dateien/PhysioNebenbei-Einnahmen-Ausgaben.html', 'Einnahmen eintragen']
-    ];
-    const i = Math.min(erledigt, tipps.length - 1);
-    const fertig = erledigt >= 10;
-    el('tipp_titel').textContent = fertig ? 'Du bist startklar.' : tipps[i][0];
-    el('tipp_text').textContent  = fertig
-      ? 'Alle zehn Schritte erledigt. Ab jetzt geht es ums Dranbleiben.'
-      : tipps[i][1];
-    el('tipp_link').textContent  = fertig ? 'Fahrplan ansehen' : tipps[i][3];
-    el('tipp_link').href         = fertig ? 'schritte.html' : tipps[i][2];
+    el('s_text').textContent = text + (DriveSync.verbunden()
+      ? ' · ✓ Mit Google Drive synchronisiert'
+      : ' · Google Drive nicht verbunden');
   }
 
-  zeichnen();
+  zahlenZeichnen();
+  fortschrittZeichnen();
+  termineZeichnen();
+  standZeichnen();
 })();
 </script>
 <script>
@@ -377,6 +313,5 @@
     window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
   }
 </script>
-<script src="../drive.js"></script>
 </body>
 </html>

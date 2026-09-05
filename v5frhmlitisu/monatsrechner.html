@@ -410,11 +410,24 @@ function rechne(){
   set('o_ruecklage', a.ruecklage);
   set('o_netto', a.bleibt);
 
+  /* Das Ergebnis wandert in die gemeinsamen Finanzwerte, damit Mein Bereich
+     den gerechneten Monat zeigen kann statt nur die Vorausplanung. Der
+     Monats-Rechner speichert ohnehin laufend, deshalb wird hier gleich
+     mitgespeichert und nichts bleibt als offene Aenderung stehen. */
+  const monat = document.getElementById('monat').value;
   try {
     localStorage.setItem('physionebenbei-monat-ergebnis', JSON.stringify({
-      gewinn: a.gewinn, bleibt: a.bleibt, monat: document.getElementById('monat').value
+      gewinn: a.gewinn, bleibt: a.bleibt, monat: monat
     }));
   } catch(e){}
+
+  if (window.Daten && (!beispiel || beruehrt)){
+    const f = Daten.finanzen();
+    if (f.umsatz !== a.gesamt || f.ausgaben !== a.ausgaben || f.monat !== monat){
+      Daten.setzeBereich('finanzen', {umsatz: a.gesamt, ausgaben: a.ausgaben, monat: monat});
+      Daten.speichern();
+    }
+  }
 }
 
 /* ---------- Druckansicht ---------- */
@@ -511,6 +524,12 @@ function laden(){
   return false;
 }
 
+/* Solange nur die Beispielzeilen dastehen, sind das keine Zahlen des
+   Nutzers und haben in den gemeinsamen Finanzwerten nichts verloren.
+   Sobald er selbst etwas eintraegt, schon. */
+var beruehrt = false;
+function angefasst(){ beruehrt = true; }
+
 /* ---------- Events ---------- */
 document.getElementById('rows').addEventListener('input', e => {
   const i = e.target.dataset.i, f = e.target.dataset.f;
@@ -519,6 +538,7 @@ document.getElementById('rows').addEventListener('input', e => {
   zeilen[i][f] = e.target.type === 'checkbox' ? e.target.checked
                : istZahl ? (parseFloat(e.target.value) || 0)
                : e.target.value;
+  angefasst();
   if (istZahl) summenAuffrischen(); else render();
 });
 
@@ -528,11 +548,11 @@ document.getElementById('rows').addEventListener('click', e => {
   e.preventDefault();
   zeilen.splice(del, 1);
   if (!zeilen.length) zeilen.push(neueZeile());
-  render();
+  angefasst(); render();
 });
 
 document.getElementById('add').addEventListener('click', e => {
-  e.preventDefault(); zeilen.push(neueZeile()); render();
+  e.preventDefault(); zeilen.push(neueZeile()); angefasst(); render();
 });
 
 function leeren(){
@@ -546,7 +566,7 @@ document.getElementById('reset').addEventListener('click', e => { e.preventDefau
 document.getElementById('leeren').addEventListener('click', e => { e.preventDefault(); leeren(); });
 
 document.querySelectorAll('[data-price], #ausgaben, #satz, #monat')
-  .forEach(el => el.addEventListener('input', render));
+  .forEach(el => el.addEventListener('input', () => { angefasst(); render(); }));
 
 document.getElementById('monat').value = new Date().toISOString().slice(0, 7);
 /* Beispieldaten beim ersten Öffnen: sonst sieht man nicht, was das Tool tut.
@@ -589,7 +609,7 @@ if (window.Daten && Daten.gespeichertAm()) {
       if (preisAnders) feldPreis.value = gPreis;
       if (satzAnders)  feldSatz.value  = gSatz;
       document.getElementById('vorschlag').hidden = true;
-      render();
+      angefasst(); render();
     });
   }
 }

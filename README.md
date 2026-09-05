@@ -48,12 +48,37 @@ v5frhmlitisu/
   gehaltsrechner.html          Hauptjob plus Nebenverdienst, Krankenkassen-Ampel
   fahrplan.html                alle zehn Kapitel, Kapitel-Tracker plus persönliche To-do-Liste
   fehler.html                  die zehn Fehler, die am meisten kosten, je mit Gegenmittel
-  terminbuchung.html           Zusatzkapitel zur Online-Terminvergabe
+  mein-bereich.html            Zahlen, Ziel, Termine, Aufgaben, Speicherorte, Einstellungen
+  termine.html                 kompakte Terminübersicht, sechs Felder je Termin
+  terminbuchung.html           Kurzkapitel zur Online-Terminvergabe durch Patient:innen
   danke.html                   Ziel der Weiterleitung nach der Zahlung
+  daten.js                     gemeinsame Datenschicht aller Rechner (localStorage)
+  drive-sync.js                ← hier die Google-OAuth-Client-ID eintragen
 
-Der Fortschritt im Fahrplan liegt unter dem localStorage-Schlüssel
-`physionebenbei-schritte`, die Checkliste unter `physionebenbei-todo-eigene`.
-Beides bleibt auf dem Gerät, es gibt kein Konto und keinen Server.
+### Wo welche Daten liegen
+
+| Schlüssel im localStorage | Inhalt |
+|---|---|
+| `physionebenbei-daten` | Zahlen, Profil, Termine, Sync-Einstellungen (siehe `daten.js`) |
+| `physionebenbei-schritte` | Fortschritt im zehnstufigen Fahrplan |
+| `physionebenbei-todo-eigene` | die persönliche Checkliste |
+| `physionebenbei-drive` | wann zuletzt zu Drive übertragen wurde (kein Token) |
+
+Alles bleibt auf dem Gerät, es gibt kein Konto und keinen Server. Der
+Rechnungsgenerator speichert seine Patientenliste bewusst in seinem eigenen
+Speicher und wird von der Synchronisation nie erfasst.
+
+### Google Drive
+
+`drive-sync.js` enthält die Anleitung, wie du eine OAuth-Client-ID anlegst,
+und ganz oben das Feld dafür. Ohne Client-ID zeigt der Bereich einen Hinweis,
+alles andere funktioniert unverändert weiter.
+
+Zwei Dinge sind Absicht: die Berechtigung ist `drive.file`, die Anwendung sieht
+also nur die eine Datei, die sie selbst anlegt. Und Googles Skript wird erst
+geladen, wenn jemand auf „Verbinden" tippt — wer Drive nie benutzt, baut auch
+nie eine Verbindung dorthin auf. Termine sind standardmäßig von der
+Synchronisation ausgenommen, weil sie Patientennamen enthalten.
   dateien/                     die elf Dateien plus ZIP
 ```
 

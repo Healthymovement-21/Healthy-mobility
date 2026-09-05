@@ -97,6 +97,11 @@
 }
 
 *{ box-sizing:border-box; }
+
+/* hidden muss staerker sein als die display-Angaben der Bausteine.
+   Ohne diese Zeile bleibt ein <button class="btn" hidden> sichtbar,
+   weil .btn ein eigenes display:inline-flex setzt. */
+[hidden]{ display:none !important; }
 ::selection{ background:var(--accent-soft); color:var(--ink); }
 
 html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }

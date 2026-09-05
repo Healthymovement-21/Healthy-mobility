@@ -34,6 +34,17 @@
     letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:3px;
   }
   .kachel .k-unter{ font-size:12.5px; color:var(--ink-muted); margin-top:3px; }
+
+  .speicherleiste{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
+    padding:12px 14px; margin:0 0 22px;
+    border:1px solid var(--glass-edge); border-radius:8px;
+    background:var(--pure); font-size:14px; color:var(--ink-muted);
+  }
+  .speicherleiste.offen{ border-color:var(--accent); background:var(--accent-soft); }
+  .speicherleiste .punkt{ width:8px; height:8px; border-radius:50%; background:var(--ink-faint); flex:none; }
+  .speicherleiste.offen .punkt{ background:var(--accent); }
+  .speicherleiste .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
 </style>
 </head>
 <body>
@@ -45,8 +56,14 @@
   </a>
 
   <nav class="crumb">
-    <a href="./">Übersicht</a> · <span>Preis-Kalkulation</span>
+    <a href="./">Übersicht</a> · <a href="mein-bereich.html">Mein Bereich</a> · <span>Preis-Kalkulation</span>
   </nav>
+
+  <div class="speicherleiste" id="speicherleiste">
+    <span class="punkt"></span>
+    <span id="speicher_text">–</span>
+    <button class="btn" type="button" id="speicher_knopf" hidden>Meine Zahlen speichern</button>
+  </div>
 
   <div class="doc">
 
@@ -295,6 +312,7 @@
   </footer>
 </div>
 
+<script src="daten.js"></script>
 <script>
   const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
   const zahl0 = n => isFinite(n) ? n.toLocaleString('de-DE', {maximumFractionDigits:0}) : '–';
@@ -484,11 +502,46 @@
     calcSteuer();
   }
 
+  /* An die gemeinsame Datenschicht koppeln: Ziel, Ruecklage, Kosten und
+     Zeiten sind dieselben Werte wie im Ziel-Rechner und im Mein-Bereich. */
+  if (window.Daten){
+    Daten.koppeln('zahlen', {
+      ziel:'#pk_ziel', satz:'#pk_satz', fix:'#pk_fix', stunden:'#pk_std',
+      dauer:'#pk_dauer', fahrzeit:'#pk_fahrzeit', km:'#pk_km',
+      kmsatz:'#pk_kmsatz', auslastung:'#pk_ausl', preis:'#pk2_preis'
+    }, recalcAll);
+  }
+
   const preisFelder = '#pk_ziel,#pk_satz,#pk_fix,#pk_std,#pk_dauer,#pk_fahrzeit,#pk_km,#pk_kmsatz,#pk_ausl,#pk2_preis,#pk2_anzahl';
   document.querySelectorAll(preisFelder).forEach(el => {
     el.addEventListener('input', recalcAll);
     el.addEventListener('change', recalcAll);
   });
+
+  /* Speicherleiste */
+  if (window.Daten){
+    const leiste = document.getElementById('speicherleiste');
+    const text   = document.getElementById('speicher_text');
+    const knopf  = document.getElementById('speicher_knopf');
+    function standZeichnen(){
+      const offen = Daten.schmutzig();
+      leiste.classList.toggle('offen', offen);
+      knopf.hidden = !offen;
+      if (offen){ text.textContent = 'Ungespeicherte Änderungen'; return; }
+      const iso = Daten.gespeichertAm();
+      if (!iso){ text.textContent = 'Deine Zahlen sind noch nicht gespeichert'; return; }
+      const d = new Date(iso);
+      const heute = d.toDateString() === new Date().toDateString();
+      text.textContent = 'Zuletzt gespeichert: ' + (heute ? 'heute, ' : d.toLocaleDateString('de-DE') + ', ') +
+        d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}) + ' Uhr';
+    }
+    knopf.addEventListener('click', () => {
+      if (!Daten.speichern()) text.textContent = 'Speichern nicht möglich — im privaten Fenster geht das nicht.';
+      standZeichnen();
+    });
+    Daten.beiAenderung(standZeichnen);
+    standZeichnen();
+  }
   document.querySelectorAll('#sr_haft,#sr_fahrt,#sr_material,#sr_fortbildung,#sr_sonstiges,#sr_einnahmen,#sr_satz,#sr_puffer').forEach(el => el.addEventListener('input', calcSteuer));
 
   buildEuer();

@@ -9,6 +9,32 @@
 <link rel="manifest" href="app.webmanifest">
 <link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
 <link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  /* Ergebnisblock und Kacheln, gleiche Sprache wie im Ziel-Rechner */
+  .preis-ergebnis{
+    background:var(--ink); color:var(--auf-tief);
+    border-radius:8px; padding:1.5rem; margin:22px 0 0;
+  }
+  .preis-ergebnis .pe-k{ display:block; font-size:12px; color:var(--auf-tief-leise); margin-bottom:8px; }
+  .preis-ergebnis .pe-n{
+    display:block; font-family:var(--font-display);
+    font-size:clamp(40px,8vw,54px); font-weight:600; letter-spacing:-.035em;
+    line-height:1; color:var(--mint); font-variant-numeric:tabular-nums;
+  }
+  .preis-ergebnis .pe-satz{
+    margin:14px 0 0; font-size:16px; line-height:1.5;
+    color:var(--auf-tief); max-width:46ch;
+  }
+  .kacheln{ display:grid; gap:10px; margin-top:14px; }
+  @media (min-width:560px){ .kacheln.zwei{ grid-template-columns:1fr 1fr; } }
+  .kachel{ border:1px solid var(--glass-edge); border-radius:8px; padding:14px 16px; }
+  .kachel .k-titel{ font-size:12px; color:var(--ink-faint); }
+  .kachel .k-wert{
+    font-family:var(--font-display); font-size:23px; font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:3px;
+  }
+  .kachel .k-unter{ font-size:12.5px; color:var(--ink-muted); margin-top:3px; }
+</style>
 </head>
 <body>
 
@@ -18,97 +44,164 @@
     <span>Physio<b>Nebenbei</b></span>
   </a>
 
+  <nav class="crumb">
+    <a href="./">Übersicht</a> · <span>Preis-Kalkulation</span>
+  </nav>
+
   <div class="doc">
 
     <section class="sheet hero">
-      <h1>Rechner</h1>
-      <p class="lede">Alles rechnet sofort mit. Nichts verlässt dein Gerät.</p>
-    </section>
-
-    <section class="sheet wide">
-      <ul class="deliverables">
-        <li>
-          <div><span class="d-name">Monats-Rechner</span></div>
-          <div class="d-desc">Behandlungen eintragen, sehen was bleibt. Mit PDF.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="monatsrechner.html">Öffnen</a></p>
-        </li>
-        <li>
-          <div><span class="d-name">Gehalt &amp; Stunden</span></div>
-          <div class="d-desc">Gehalt plus Nebenverdienst, mit Krankenkassen-Check.</div>
-          <p class="hero-cta" style="margin-top:14px"><a class="btn" href="gehaltsrechner.html">Öffnen</a></p>
-        </li>
-      </ul>
-      <details class="mehr">
-        <summary>Hinweis zu den Steuerzahlen</summary>
-        <div>
-          <p>Der Grenzsteuersatz ist überall eine Eingabe, keine eingebaute Tabelle. Kirchensteuer und Soli sind nicht eingerechnet.</p>
-          <p>Heilbehandlungen sind nach § 4 Nr. 14 UStG umsatzsteuerbefreit. Ersetzt keine Steuerberatung.</p>
-        </div>
-      </details>
+      <p class="eyebrow">Schritt 3</p>
+      <h1 class="title">Was muss ich verlangen?</h1>
+      <p class="lede">Der Preis ist die eine Zahl, die du am Anfang festlegen musst und danach nur schwer wieder änderst. Hier rechnest du ihn rückwärts aus: vom Betrag, der übrig bleiben soll, zurück zum Preis pro Behandlung.</p>
     </section>
 
     <!-- ============ PREIS-KALKULATION ============ -->
     <section class="sheet wide">
-      <p class="eyebrow">Preis-Kalkulation</p>
-      <h2>Was muss ich verlangen?</h2>
+      <p class="eyebrow">1 · Dein Ziel</p>
+      <h2>Was soll übrig bleiben?</h2>
+      <p>Gemeint ist der Betrag, der dir am Monatsende wirklich zur Verfügung steht, nachdem du deine Ausgaben bezahlt und die Steuerrücklage zur Seite gelegt hast.</p>
       <div class="calc-card">
         <div class="calc-row">
-          <label for="pk_ziel">Gewünschtes Nebeneinkommen pro Monat (netto)</label>
-          <input type="number" id="pk_ziel" value="500" step="10">
+          <label for="pk_ziel">Das möchte ich im Monat übrig haben</label>
+          <div class="field"><input type="number" id="pk_ziel" value="500" step="50" min="0" max="20000"><span class="unit">€</span></div>
         </div>
         <div class="calc-row">
-          <label for="pk_satz">Geschätzter Grenzsteuersatz</label>
-          <span class="field"><input type="number" id="pk_satz" value="35" step="1" min="0" max="60"><span class="unit">%</span></span>
+          <label for="pk_satz">Rücklage für Steuer <span class="micro">Erfahrungswert 25 bis 30 Prozent</span></label>
+          <div class="field"><input type="number" id="pk_satz" value="30" step="1" min="0" max="60"><span class="unit">%</span></div>
         </div>
         <div class="calc-row">
-          <label for="pk_fix">Jährliche Fixkosten (Haftpflicht, Fortbildung, Material)</label>
-          <input type="number" id="pk_fix" value="250" step="10">
+          <label for="pk_fix">Feste Ausgaben im Monat <span class="micro">Haftpflicht, Fortbildung, Material</span></label>
+          <div class="field"><input type="number" id="pk_fix" value="60" step="10" min="0" max="10000"><span class="unit">€</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet wide">
+      <p class="eyebrow">2 · Deine Zeit</p>
+      <h2>Wie viel Zeit hast du wirklich?</h2>
+      <p>Die Fahrt gehört zur Arbeitszeit, auch wenn sie niemand bezahlt. Und niemand füllt jede geplante Stunde: zwischen Absagen, Lücken im Kalender und Terminen, die nicht zusammenpassen, sind achtzig Prozent Auslastung schon ein guter Wert.</p>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="pk_std">Zeit, die du in der Woche einplanst</label>
+          <div class="field"><input type="number" id="pk_std" value="4" step="0.5" min="0" max="60"><span class="unit">Std.</span></div>
         </div>
         <div class="calc-row">
-          <label for="pk_dauer">Behandlungsdauer inkl. Fahrtzeit</label>
-          <span class="field"><input type="number" id="pk_dauer" value="60" step="5"><span class="unit">Min.</span></span>
+          <label for="pk_dauer">Reine Behandlungsdauer</label>
+          <div class="field"><input type="number" id="pk_dauer" value="45" step="5" min="5" max="300"><span class="unit">Min.</span></div>
         </div>
         <div class="calc-row">
-          <label for="pk_std">Verfügbare Stunden pro Woche</label>
-          <input type="number" id="pk_std" value="4" step="0.5">
+          <label for="pk_fahrzeit">Fahrt hin und zurück je Termin</label>
+          <div class="field"><input type="number" id="pk_fahrzeit" value="20" step="5" min="0" max="300"><span class="unit">Min.</span></div>
         </div>
         <div class="calc-row">
-          <label>Fixkosten pro Monat</label>
+          <label for="pk_km">Gefahrene Kilometer je Termin</label>
+          <div class="field"><input type="number" id="pk_km" value="12" step="1" min="0" max="500"><span class="unit">km</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="pk_kmsatz">Kosten je Kilometer <span class="micro">0,30 € ist der übliche Ansatz</span></label>
+          <div class="field"><input type="number" id="pk_kmsatz" value="0.30" step="0.05" min="0" max="5"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="pk_ausl">Realistische Auslastung <span class="micro">wie viel deiner geplanten Zeit wirklich belegt ist</span></label>
+          <div class="field"><input type="number" id="pk_ausl" value="80" step="5" min="10" max="100"><span class="unit">%</span></div>
+        </div>
+        <div class="calc-row">
+          <label>Ein Termin belegt</label>
+          <span class="out" id="pk_out_termin">–</span>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Behandlungen im Monat</label>
+          <span class="out" id="pk_out_beh">–</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet wide">
+      <p class="eyebrow">3 · Das Ergebnis</p>
+      <h2>Das musst du verlangen</h2>
+
+      <div class="preis-ergebnis">
+        <span class="pe-k">Nötiger Preis pro Behandlung</span>
+        <span class="pe-n" id="pk_out_preis">–</span>
+        <p class="pe-satz" id="pk_out_satz">–</p>
+      </div>
+
+      <h3 style="margin-top:30px">So kommt der Preis zustande</h3>
+      <div class="calc-card">
+        <div class="calc-row">
+          <label>Einnahmen im Monat</label>
+          <span class="out" id="pk_out_umsatz">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Fahrtkosten</label>
+          <span class="out" id="pk_out_fahrt">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Feste Ausgaben</label>
           <span class="out" id="pk_out_fixmonat">–</span>
         </div>
         <div class="calc-row">
-          <label>Mögliche Behandlungen pro Monat</label>
-          <span class="out" id="pk_out_beh">–</span>
+          <label>Ergebnis vor Rücklage</label>
+          <span class="out" id="pk_out_vorruecklage">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Rücklage für Steuer</label>
+          <span class="out" id="pk_out_ruecklage">–</span>
         </div>
         <div class="calc-row result">
-          <label class="result-label">Nötiger Preis pro Behandlung</label>
-          <span class="out" id="pk_out_preis">–</span>
+          <label class="result-label">Bleibt dir</label>
+          <span class="out" id="pk_out_bleibt">–</span>
         </div>
       </div>
 
-      <h2>Gegenprobe</h2>
+      <div class="kacheln zwei">
+        <div class="kachel">
+          <div class="k-titel">Zeitaufwand im Monat</div>
+          <div class="k-wert" id="pk_out_zeit">–</div>
+          <div class="k-unter">Behandlung und Fahrt zusammen</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Das verdienst du je Stunde</div>
+          <div class="k-wert" id="pk_out_stunde">–</div>
+          <div class="k-unter">nach Ausgaben und Rücklage</div>
+        </div>
+      </div>
+
+      <p class="micro" style="margin-top:14px">Die Rücklage ist eine Rücklage, keine Steuerberechnung. Was das Finanzamt am Ende festsetzt, hängt an deinem gesamten Einkommen, also auch am Hauptjob.</p>
+    </section>
+
+    <section class="sheet wide">
+      <p class="eyebrow">4 · Die Gegenprobe</p>
+      <h2>Und wenn du einen anderen Preis nimmst?</h2>
+      <p>Trag hier ein, was du tatsächlich verlangen willst, und sieh, was dann am Monatsende übrig bleibt. Zeit, Fahrt und Ausgaben von oben werden übernommen.</p>
       <div class="calc-card">
         <div class="calc-row">
           <label for="pk2_preis">Dein geplanter Preis pro Behandlung</label>
-          <input type="number" id="pk2_preis" value="70" step="5">
+          <div class="field"><input type="number" id="pk2_preis" value="70" step="5" min="0" max="1000"><span class="unit">€</span></div>
         </div>
         <div class="calc-row">
-          <label for="pk2_anzahl">Geplante Behandlungen pro Monat</label>
-          <input type="number" id="pk2_anzahl" value="8" step="1">
+          <label for="pk2_anzahl">Geplante Behandlungen im Monat</label>
+          <div class="field"><input type="number" id="pk2_anzahl" value="12" step="1" min="0" max="500"><span class="unit">×</span></div>
         </div>
         <div class="calc-row">
-          <label>Einnahmen pro Monat</label>
+          <label>Einnahmen im Monat</label>
           <span class="out" id="pk2_out_einnahmen">–</span>
         </div>
         <div class="calc-row">
-          <label>Gewinn pro Monat, vor Steuer</label>
+          <label>Ergebnis vor Rücklage</label>
           <span class="out" id="pk2_out_gewinn">–</span>
         </div>
         <div class="calc-row result">
-          <label class="result-label">Netto pro Monat, nach Steuer-Rücklage</label>
+          <label class="result-label">Bleibt dir</label>
           <span class="out" id="pk2_out_netto">–</span>
         </div>
       </div>
+      <p class="micro" id="pk2_hinweis" style="margin-top:12px">–</p>
+
+      <p class="hero-cta" style="margin-top:22px">
+        <a class="btn" href="ziel-rechner.html">Andersherum rechnen: wie viele Patient:innen?</a>
+      </p>
     </section>
 
     <!-- ============ STEUER-RÜCKLAGE ============ -->
@@ -116,20 +209,21 @@
       <p class="eyebrow">Steuer-Rücklage</p>
       <h2>Was leg ich zur Seite?</h2>
       <div class="calc-card">
-        <div class="calc-row"><label for="sr_haft">Berufshaftpflicht / Jahr</label><input type="number" id="sr_haft" value="120" step="10"></div>
-        <div class="calc-row"><label for="sr_fahrt">Fahrtkosten / Jahr</label><input type="number" id="sr_fahrt" value="300" step="10"></div>
-        <div class="calc-row"><label for="sr_material">Material / Verbrauchsmaterial / Jahr</label><input type="number" id="sr_material" value="150" step="10"></div>
-        <div class="calc-row"><label for="sr_fortbildung">Fortbildung / Jahr</label><input type="number" id="sr_fortbildung" value="200" step="10"></div>
-        <div class="calc-row"><label for="sr_sonstiges">Sonstiges / Jahr</label><input type="number" id="sr_sonstiges" value="0" step="10"></div>
+        <div class="calc-row"><label for="sr_haft">Berufshaftpflicht / Jahr</label><input type="number" id="sr_haft" value="120" step="10" min="0"></div>
+        <div class="calc-row"><label for="sr_fahrt">Fahrtkosten / Jahr</label><input type="number" id="sr_fahrt" value="300" step="10" min="0"></div>
+        <div class="calc-row"><label for="sr_material">Material / Verbrauchsmaterial / Jahr</label><input type="number" id="sr_material" value="150" step="10" min="0"></div>
+        <div class="calc-row"><label for="sr_fortbildung">Fortbildung / Jahr</label><input type="number" id="sr_fortbildung" value="200" step="10" min="0"></div>
+        <div class="calc-row"><label for="sr_sonstiges">Sonstiges / Jahr</label><input type="number" id="sr_sonstiges" value="0" step="10" min="0"></div>
         <div class="calc-row"><label>Summe Betriebsausgaben</label><span class="out" id="sr_out_summe">–</span></div>
-        <div class="calc-row"><label for="sr_einnahmen">Einnahmen im Jahr</label><input type="number" id="sr_einnahmen" value="6000" step="100"></div>
+        <div class="calc-row"><label for="sr_einnahmen">Einnahmen im Jahr</label><input type="number" id="sr_einnahmen" value="6000" step="100" min="0"></div>
         <div class="calc-row"><label>Gewinn (Einnahmen − Ausgaben)</label><span class="out" id="sr_out_gewinn">–</span></div>
-        <div class="calc-row"><label for="sr_satz">Geschätzter Grenzsteuersatz</label><span class="field"><input type="number" id="sr_satz" value="35" step="1"><span class="unit">%</span></span></div>
-        <div class="calc-row"><label for="sr_puffer">Sicherheitspuffer</label><span class="field"><input type="number" id="sr_puffer" value="5" step="1"><span class="unit">%</span></span></div>
+        <div class="calc-row"><label for="sr_satz">Geschätzter Grenzsteuersatz</label><span class="field"><input type="number" id="sr_satz" value="35" step="1" min="0"><span class="unit">%</span></span></div>
+        <div class="calc-row"><label for="sr_puffer">Sicherheitspuffer</label><span class="field"><input type="number" id="sr_puffer" value="5" step="1" min="0"><span class="unit">%</span></span></div>
         <div class="calc-row"><label>Geschätzte Einkommensteuer</label><span class="out" id="sr_out_steuer">–</span></div>
         <div class="calc-row result"><label class="result-label">Empfohlene Rücklage</label><span class="out" id="sr_out_ruecklage">–</span></div>
         <div class="calc-row result"><label class="result-label">Netto nach Rücklage</label><span class="out" id="sr_out_netto">–</span></div>
       </div>
+      <p class="micro" id="sr_hinweis" style="margin-top:12px">–</p>
     </section>
 
     <!-- ============ EÜR ============ -->
@@ -203,41 +297,126 @@
 
 <script>
   const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
-  const num = id => parseFloat(document.getElementById(id).value) || 0;
-  const set = (id, text) => { document.getElementById(id).textContent = text; };
+  const zahl0 = n => isFinite(n) ? n.toLocaleString('de-DE', {maximumFractionDigits:0}) : '–';
+  const set = (id, text) => { const e = document.getElementById(id); if (e) e.textContent = text; };
 
-  function calcPreis(){
-    const ziel = num('pk_ziel');
-    const satz = num('pk_satz')/100;
-    const fixJahr = num('pk_fix');
-    const dauer = num('pk_dauer');
-    const std = num('pk_std');
-
-    const fixMonat = fixJahr/12;
-    const gewinnMonat = satz < 1 ? ziel/(1-satz) : NaN;
-    const einnahmenMonat = gewinnMonat + fixMonat;
-    const behandlungen = dauer > 0 ? (std*4.33*60)/dauer : 0;
-    const preis = behandlungen > 0 ? einnahmenMonat/behandlungen : NaN;
-
-    set('pk_out_fixmonat', eur(fixMonat));
-    set('pk_out_beh', behandlungen.toLocaleString('de-DE', {maximumFractionDigits:1}));
-    set('pk_out_preis', eur(preis));
-
-    return fixMonat;
+  /* num() haelt jede Eingabe in dem Bereich, den das Feld erlaubt. Damit
+     landen weder negative Werte noch Tippfehler in der Rechnung. */
+  function num(id){
+    const el = document.getElementById(id);
+    if (!el) return 0;
+    let v = parseFloat(String(el.value).replace(',', '.'));
+    if (!isFinite(v)) v = 0;
+    const min = el.min === '' ? -Infinity : parseFloat(el.min);
+    const max = el.max === '' ?  Infinity : parseFloat(el.max);
+    return Math.min(Math.max(v, min), max);
   }
 
-  function calcGegenprobe(fixMonat){
-    const preis = num('pk2_preis');
-    const anzahl = num('pk2_anzahl');
-    const satz = num('pk_satz')/100;
+  /* ---------- Preis-Kalkulation ----------
+     Rueckwaerts gerechnet: vom Betrag, der uebrig bleiben soll, ueber die
+     Ruecklage und die Ausgaben zurueck zum Preis pro Behandlung.
 
-    const einnahmen = preis*anzahl;
-    const gewinn = einnahmen - fixMonat;
-    const netto = gewinn*(1-satz);
+       benoetigterGewinn = Ziel / (1 − Ruecklagensatz)
+       Preis             = (benoetigterGewinn + Fixkosten) / Termine + Fahrtkosten
+
+     Die Fahrtkosten stehen hinten dran, weil sie mit jedem Termin
+     zusaetzlich anfallen und deshalb im Preis mitverdient sein muessen. */
+
+  function stundenText(h){
+    if (!isFinite(h) || h < 0) return '–';
+    const gesamt = Math.round(h*60), st = Math.floor(gesamt/60), mi = gesamt%60;
+    if (st === 0) return mi + ' Min.';
+    if (mi === 0) return st + ' Std.';
+    return st + ' Std. ' + mi + ' Min.';
+  }
+
+  function preisBasis(){
+    const satz = num('pk_satz')/100;
+    const minutenJeTermin = num('pk_dauer') + num('pk_fahrzeit');
+    const verfuegbareMinuten = num('pk_std') * 4.33 * 60;
+    const auslastung = num('pk_ausl')/100;
+    const termine = minutenJeTermin > 0
+      ? Math.floor(verfuegbareMinuten / minutenJeTermin * auslastung)
+      : 0;
+    return {
+      ziel: num('pk_ziel'),
+      satz: satz,
+      fix: num('pk_fix'),
+      fahrtkosten: num('pk_km') * num('pk_kmsatz'),
+      minutenJeTermin: minutenJeTermin,
+      termine: termine,
+      zeitStunden: termine * minutenJeTermin / 60
+    };
+  }
+
+  function calcPreis(){
+    const b = preisBasis();
+
+    set('pk_out_termin', stundenText(b.minutenJeTermin/60));
+    set('pk_out_beh', b.termine > 0 ? zahl0(b.termine) : '–');
+    set('pk_out_zeit', b.termine > 0 ? stundenText(b.zeitStunden) : '–');
+
+    const leer = ['pk_out_preis','pk_out_umsatz','pk_out_fahrt','pk_out_fixmonat',
+                  'pk_out_vorruecklage','pk_out_ruecklage','pk_out_bleibt','pk_out_stunde'];
+
+    if (b.termine <= 0 || b.satz >= 1){
+      leer.forEach(id => set(id, '–'));
+      set('pk_out_satz', b.termine <= 0
+        ? 'Mit dieser Zeit und Auslastung kommt kein einziger Termin zustande. Plan mehr Zeit ein oder kürze die Behandlungsdauer.'
+        : 'Bei einer Rücklage von 100 Prozent bliebe nichts übrig. Setz den Satz niedriger.');
+      return b;
+    }
+
+    const gewinnNoetig = b.ziel/(1 - b.satz);
+    const preis = (gewinnNoetig + b.fix)/b.termine + b.fahrtkosten;
+
+    const umsatz      = preis * b.termine;
+    const fahrt       = b.fahrtkosten * b.termine;
+    const vorRuecklage = umsatz - fahrt - b.fix;
+    const ruecklage   = Math.max(vorRuecklage, 0) * b.satz;
+    const bleibt      = vorRuecklage - ruecklage;
+    const jeStunde    = b.zeitStunden > 0 ? bleibt / b.zeitStunden : NaN;
+
+    set('pk_out_preis', eur(preis));
+    set('pk_out_satz',
+      'Bei ' + zahl0(b.termine) + ' Behandlungen im Monat und ' + eur(b.ziel) +
+      ', die übrig bleiben sollen, musst du ' + eur(preis) + ' pro Behandlung verlangen.');
+    set('pk_out_umsatz', eur(umsatz));
+    set('pk_out_fahrt', fahrt > 0 ? '− ' + eur(fahrt) : eur(0));
+    set('pk_out_fixmonat', b.fix > 0 ? '− ' + eur(b.fix) : eur(0));
+    set('pk_out_vorruecklage', eur(vorRuecklage));
+    set('pk_out_ruecklage', ruecklage > 0 ? '− ' + eur(ruecklage) : eur(0));
+    set('pk_out_bleibt', eur(bleibt));
+    set('pk_out_stunde', eur(jeStunde));
+
+    return b;
+  }
+
+  function calcGegenprobe(b){
+    const preis  = num('pk2_preis');
+    const anzahl = num('pk2_anzahl');
+
+    const einnahmen    = preis * anzahl;
+    const fahrt        = b.fahrtkosten * anzahl;
+    const vorRuecklage = einnahmen - fahrt - b.fix;
+    const ruecklage    = Math.max(vorRuecklage, 0) * b.satz;
+    const netto        = vorRuecklage - ruecklage;
 
     set('pk2_out_einnahmen', eur(einnahmen));
-    set('pk2_out_gewinn', eur(gewinn));
+    set('pk2_out_gewinn', eur(vorRuecklage));
     set('pk2_out_netto', eur(netto));
+
+    const zeit = anzahl * b.minutenJeTermin / 60;
+    let hinweis = 'Gerechnet mit deinen Ausgaben und Fahrtkosten von oben.';
+    if (anzahl > 0 && zeit > 0){
+      hinweis += ' Das sind ' + stundenText(zeit) + ' im Monat, also rund ' +
+                 stundenText(zeit/4.33) + ' pro Woche.';
+    }
+    if (anzahl > b.termine && b.termine > 0){
+      hinweis += ' Achtung: mehr Termine, als in deine eingeplante Zeit passen (' +
+                 zahl0(b.termine) + ').';
+    }
+    set('pk2_hinweis', hinweis);
   }
 
   function calcSteuer(){
@@ -246,15 +425,28 @@
     const gewinn = einnahmen - summe;
     const satz = num('sr_satz')/100;
     const puffer = num('sr_puffer')/100;
-    const steuer = gewinn*satz;
-    const ruecklage = gewinn*(satz+puffer);
-    const netto = gewinn - ruecklage;
+
+    /* Bei einem Verlust gibt es nichts zurueckzulegen. Ohne diese Grenze
+       kaeme eine negative Ruecklage heraus, was so aussieht, als bekaeme
+       man Geld zurueck — ob ein Verlust sich steuerlich auswirkt, haengt
+       am uebrigen Einkommen und gehoert nicht in diese Faustformel. */
+    const bemessung = Math.max(gewinn, 0);
+    const steuer    = bemessung * satz;
+    const ruecklage = bemessung * (satz + puffer);
+    const netto     = gewinn - ruecklage;
 
     set('sr_out_summe', eur(summe));
     set('sr_out_gewinn', eur(gewinn));
     set('sr_out_steuer', eur(steuer));
     set('sr_out_ruecklage', eur(ruecklage));
     set('sr_out_netto', eur(netto));
+
+    const hinweis = document.getElementById('sr_hinweis');
+    if (hinweis){
+      hinweis.textContent = gewinn < 0
+        ? 'Deine Ausgaben liegen über den Einnahmen. In dem Fall gibt es nichts zurückzulegen — ob sich der Verlust steuerlich auswirkt, klärst du mit deinem Steuerbüro.'
+        : 'Faustformel, keine Steuerberechnung: der Satz ist eine Eingabe, keine hinterlegte Tabelle.';
+    }
   }
 
   const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
@@ -263,7 +455,7 @@
     MONATE.forEach((m, i) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `<td>${m}</td>` +
-        [0,1,2,3,4,5].map(c => `<td><input type="number" class="euer-in" data-row="${i}" data-col="${c}" value="0" step="10"></td>`).join('') +
+        [0,1,2,3,4,5].map(c => `<td><input type="number" class="euer-in" data-row="${i}" data-col="${c}" value="0" step="10" min="0"></td>`).join('') +
         `<td class="calc" id="euer_ausg_${i}">–</td><td class="calc" id="euer_gewinn_${i}">–</td>`;
       body.appendChild(tr);
     });
@@ -287,12 +479,16 @@
   }
 
   function recalcAll(){
-    const fixMonat = calcPreis();
-    calcGegenprobe(fixMonat);
+    const basis = calcPreis();
+    calcGegenprobe(basis);
     calcSteuer();
   }
 
-  document.querySelectorAll('#pk_ziel,#pk_satz,#pk_fix,#pk_dauer,#pk_std,#pk2_preis,#pk2_anzahl').forEach(el => el.addEventListener('input', recalcAll));
+  const preisFelder = '#pk_ziel,#pk_satz,#pk_fix,#pk_std,#pk_dauer,#pk_fahrzeit,#pk_km,#pk_kmsatz,#pk_ausl,#pk2_preis,#pk2_anzahl';
+  document.querySelectorAll(preisFelder).forEach(el => {
+    el.addEventListener('input', recalcAll);
+    el.addEventListener('change', recalcAll);
+  });
   document.querySelectorAll('#sr_haft,#sr_fahrt,#sr_material,#sr_fortbildung,#sr_sonstiges,#sr_einnahmen,#sr_satz,#sr_puffer').forEach(el => el.addEventListener('input', calcSteuer));
 
   buildEuer();

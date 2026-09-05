@@ -38,14 +38,22 @@ physio-nebenbei/
 
 NUR MIT LINK
 v5frhmlitisu/
-  index.html                   Startseite für Käufer:innen, als App speicherbar
-  danke.html                   Ziel der Weiterleitung nach der Zahlung
-  fahrplan.html                alle zehn Kapitel, Kapitel-Tracker plus persoenliche To-do-Liste
+  index.html                   der Fahrplan: zehn Schritte mit Fortschritt, jeder mit
+                               dem passenden Werkzeug verknüpft. Einstieg für Käufer:innen
+  ziel-rechner.html            Wunschbetrag rein, Zahl der Termine raus — für mehrere
+                               Preisstufen nebeneinander, plus Zeitaufwand und Stundenlohn
+  werkzeuge.html               Preis-Kalkulation rückwärts, dazu Steuer-Rücklage, EÜR, Log
   monatsrechner.html           Umsatz, Ausgaben, Steuerrücklage, PDF-Export
-  gehaltsrechner.html          Hauptjob plus Nebenverdienst, Krankenkassen-Ampel
   planungsrechner.html         Auslastung, Fahrtkosten, Rezeptlaufzeit, Geldeingang
-  werkzeuge.html               Preis-Kalkulation
+  gehaltsrechner.html          Hauptjob plus Nebenverdienst, Krankenkassen-Ampel
+  fahrplan.html                alle zehn Kapitel, Kapitel-Tracker plus persönliche To-do-Liste
+  fehler.html                  die zehn Fehler, die am meisten kosten, je mit Gegenmittel
   terminbuchung.html           Zusatzkapitel zur Online-Terminvergabe
+  danke.html                   Ziel der Weiterleitung nach der Zahlung
+
+Der Fortschritt im Fahrplan liegt unter dem localStorage-Schlüssel
+`physionebenbei-schritte`, die Checkliste unter `physionebenbei-todo-eigene`.
+Beides bleibt auf dem Gerät, es gibt kein Konto und keinen Server.
   dateien/                     die elf Dateien plus ZIP
 ```
 
@@ -67,7 +75,7 @@ Elf Dateien zum Herunterladen:
 | `Terminuebersicht.pdf` | Wochenplan zum Ausdrucken |
 | `Patientenliste.pdf` | Kürzel und Klardaten getrennt, mit Löschfristen |
 
-Dazu vier Rechner, die im Kundenbereich im Browser laufen.
+Dazu sieben Rechner, die im Kundenbereich im Browser laufen.
 
 Die beiden HTML-Rechner sind bewusst eigenständige Dateien: speichern, doppelklicken,
 läuft. Kein Internet, keine Installation, alle Eingaben bleiben im Browser des Geräts.

@@ -543,6 +543,20 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   border-color:var(--accent);
   box-shadow:0 0 0 3px var(--accent-soft);
 }
+/* Reine Ausgabezeilen (Label plus Wert, kein Eingabefeld) stehen
+   nebeneinander statt untereinander — das spart auf dem Handy viel
+   Hoehe. Browser ohne :has() zeigen weiter die gestapelte Variante,
+   die genauso funktioniert. */
+.calc-row:has(> .out):not(:has(input)),
+.calc-row:has(> output):not(:has(input)){
+  flex-direction:row;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:16px;
+}
+.calc-row:has(> .out):not(:has(input)) label,
+.calc-row:has(> output):not(:has(input)) label{ flex:1; }
+
 .calc-row output, .calc-row .out{
   font-family:var(--font-mono);
   font-size:20px;

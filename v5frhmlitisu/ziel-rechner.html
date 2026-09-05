@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Wie viele Patient:innen brauche ich? — PhysioNebenbei</title>
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  /* Nur für diese Seite: Ergebnisblock, Preistabelle, Kacheln */
+  .ziel-ergebnis{
+    background:var(--ink);
+    color:var(--auf-tief);
+    border-radius:8px;
+    padding:1.5rem;
+    margin:22px 0 0;
+  }
+  .ziel-ergebnis .z-k{
+    display:block;
+    font-size:12px;
+    color:var(--auf-tief-leise);
+    margin-bottom:8px;
+  }
+  .ziel-ergebnis .z-n{
+    display:block;
+    font-family:var(--font-display);
+    font-size:clamp(40px,8vw,54px);
+    font-weight:600;
+    letter-spacing:-.035em;
+    line-height:1;
+    color:var(--mint);
+    font-variant-numeric:tabular-nums;
+  }
+  .ziel-ergebnis .z-satz{
+    margin:14px 0 0;
+    font-size:16px;
+    line-height:1.5;
+    color:var(--auf-tief);
+    max-width:46ch;
+  }
+  .z-neben{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:24px;
+    padding-top:22px;
+    border-top:1px solid rgba(255,255,255,.14);
+  }
+  .z-neben .z-n{ font-size:24px; color:var(--auf-tief); }
+
+  /* Preistabelle: auf dem Handy je Preis eine Zeile mit Untereinträgen */
+  .preistabelle{ margin:16px 0 0; border-top:1px solid var(--glass-edge); }
+  .pt-zeile{
+    display:grid;
+    grid-template-columns:88px 1fr;
+    gap:4px 18px;
+    padding:16px 0;
+    border-bottom:1px solid var(--glass-edge);
+    align-items:baseline;
+  }
+  .pt-zeile.aktiv{ background:var(--accent-soft); }
+  .pt-preis{
+    font-family:var(--font-display);
+    font-size:22px;
+    font-weight:600;
+    color:var(--accent);
+    letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums;
+  }
+  .pt-preis small{ display:block; font-family:var(--font-sans); font-size:11.5px; font-weight:400; color:var(--ink-faint); letter-spacing:0; }
+  .pt-werte{ display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px 18px; }
+  .pt-wert b{ display:block; font-size:17px; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .pt-wert span{ display:block; font-size:12.5px; color:var(--ink-muted); margin-top:1px; }
+  .pt-zeile.geht-nicht .pt-werte{ font-size:14.5px; color:var(--mark); }
+
+  .kacheln{ display:grid; gap:10px; margin-top:14px; }
+  @media (min-width:560px){ .kacheln.zwei{ grid-template-columns:1fr 1fr; } }
+  .kachel{
+    border:1px solid var(--glass-edge);
+    border-radius:8px;
+    padding:14px 16px;
+  }
+  .kachel .k-titel{ font-size:12px; color:var(--ink-faint); }
+  .kachel .k-wert{ font-family:var(--font-display); font-size:23px; font-weight:600; letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:3px; }
+  .kachel .k-unter{ font-size:12.5px; color:var(--ink-muted); margin-top:3px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="./">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <nav class="crumb">
+    <a href="./">Übersicht</a> · <span>Wie viele Patient:innen?</span>
+  </nav>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <p class="eyebrow">Schritt 5</p>
+      <h1 class="title">Wie viele Patient:innen brauche ich?</h1>
+      <p class="lede">Du sagst, wie viel am Monatsende übrig bleiben soll. Der Rechner sagt dir, wie viele Behandlungen das bei welchem Preis bedeutet und wie viel Zeit dich das kostet.</p>
+    </section>
+
+    <!-- ============ 1 · ZIEL ============ -->
+    <section class="sheet">
+      <p class="eyebrow">1 · Dein Ziel</p>
+      <h2>Was soll übrig bleiben?</h2>
+      <p>Gemeint ist der Betrag, der dir am Monatsende wirklich zur Verfügung steht: nach Ausgaben und nachdem du die Steuerrücklage zur Seite gelegt hast.</p>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="ziel">Das möchte ich zusätzlich im Monat haben</label>
+          <div class="field"><input type="number" id="ziel" value="500" step="50" min="0" max="20000"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="satz">Rücklage für Steuer <span class="micro">Erfahrungswert 25 bis 30 Prozent</span></label>
+          <div class="field"><input type="number" id="satz" value="30" step="1" min="0" max="60"><span class="unit">%</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="fix">Feste Ausgaben im Monat <span class="micro">Haftpflicht, Material, Handy</span></label>
+          <div class="field"><input type="number" id="fix" value="60" step="10" min="0" max="10000"><span class="unit">€</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 · EIN TERMIN ============ -->
+    <section class="sheet">
+      <p class="eyebrow">2 · Ein Termin</p>
+      <h2>Was kostet dich ein Termin an Zeit?</h2>
+      <p>Ein Termin ist mehr als die Behandlung. Die Fahrt und der Papierkram danach gehören zu deiner Arbeitszeit, auch wenn niemand sie bezahlt.</p>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="dauer">Behandlung</label>
+          <div class="field"><input type="number" id="dauer" value="45" step="5" min="5" max="300"><span class="unit">Min.</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="fahrzeit">Fahrt hin und zurück</label>
+          <div class="field"><input type="number" id="fahrzeit" value="20" step="5" min="0" max="300"><span class="unit">Min.</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="doku">Dokumentation und Orga</label>
+          <div class="field"><input type="number" id="doku" value="5" step="5" min="0" max="120"><span class="unit">Min.</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="km">Gefahrene Kilometer je Termin</label>
+          <div class="field"><input type="number" id="km" value="12" step="1" min="0" max="500"><span class="unit">km</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="kmsatz">Kosten je Kilometer <span class="micro">0,30 € ist der übliche Ansatz</span></label>
+          <div class="field"><input type="number" id="kmsatz" value="0.30" step="0.05" min="0" max="5"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Ein Termin belegt</label>
+          <span class="out" id="o_termindauer">–</span>
+        </div>
+      </div>
+      <p class="micro" id="o_fahrtkosten_hinweis" style="margin-top:10px">–</p>
+    </section>
+
+    <!-- ============ 3 · ANTWORT ============ -->
+    <section class="sheet">
+      <p class="eyebrow">3 · Die Antwort</p>
+      <h2>Bei deinem Preis</h2>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label for="preis">Dein Preis pro Behandlung</label>
+          <div class="field"><input type="number" id="preis" value="70" step="5" min="0" max="1000"><span class="unit">€</span></div>
+        </div>
+        <div class="calc-row">
+          <label for="frequenz">Termine je Patient:in pro Woche</label>
+          <div class="field"><input type="number" id="frequenz" value="1" step="0.5" min="0.25" max="7"><span class="unit">×</span></div>
+        </div>
+      </div>
+
+      <div class="ziel-ergebnis">
+        <span class="z-k">Behandlungen im Monat</span>
+        <span class="z-n" id="z_behandlungen">–</span>
+        <p class="z-satz" id="z_satz">–</p>
+        <div class="z-neben">
+          <div>
+            <span class="z-k">Pro Woche</span>
+            <span class="z-n" id="z_woche">–</span>
+          </div>
+          <div>
+            <span class="z-k">Patient:innen parallel</span>
+            <span class="z-n" id="z_patienten">–</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kacheln zwei">
+        <div class="kachel">
+          <div class="k-titel">Zeitaufwand im Monat</div>
+          <div class="k-wert" id="k_zeit">–</div>
+          <div class="k-unter">Behandlung, Fahrt und Doku zusammen</div>
+        </div>
+        <div class="kachel">
+          <div class="k-titel">Das verdienst du je Stunde</div>
+          <div class="k-wert" id="k_stunde">–</div>
+          <div class="k-unter">nach Ausgaben und Rücklage</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4 · NACHRECHNEN ============ -->
+    <section class="sheet">
+      <p class="eyebrow">4 · Die Gegenprobe</p>
+      <h2>So kommt dein Betrag zustande</h2>
+      <p>Damit du siehst, dass am Ende wirklich dein Wunschbetrag steht und nicht irgendeine Zahl.</p>
+
+      <div class="calc-card">
+        <div class="calc-row">
+          <label>Einnahmen</label>
+          <span class="out" id="g_umsatz">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Fahrtkosten</label>
+          <span class="out" id="g_fahrt">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Feste Ausgaben</label>
+          <span class="out" id="g_fix">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Gewinn vor Steuer</label>
+          <span class="out" id="g_gewinn">–</span>
+        </div>
+        <div class="calc-row">
+          <label>Rücklage für Steuer</label>
+          <span class="out" id="g_ruecklage">–</span>
+        </div>
+        <div class="calc-row result">
+          <label class="result-label">Bleibt dir</label>
+          <span class="out" id="g_bleibt">–</span>
+        </div>
+      </div>
+      <p class="micro" style="margin-top:12px">Weil auf ganze Behandlungen aufgerundet wird, liegt der Betrag meist ein paar Euro über deinem Ziel. Die Rücklage ist eine Rücklage, keine Steuerberechnung — was das Finanzamt am Ende festsetzt, hängt an deinem gesamten Einkommen.</p>
+    </section>
+
+    <!-- ============ 5 · PREISVERGLEICH ============ -->
+    <section class="sheet">
+      <p class="eyebrow">5 · Zum Vergleich</p>
+      <h2>Dasselbe Ziel bei anderen Preisen</h2>
+      <p>Der Preis ist der eine Hebel, an dem du sofort drehen kannst. Fünf Euro mehr pro Behandlung sparen dir oft einen ganzen Termin pro Woche.</p>
+
+      <div class="preistabelle" id="preistabelle"></div>
+      <p class="micro" style="margin-top:12px">Alle Zeilen rechnen mit denselben Ausgaben, derselben Rücklage und demselben Zeitaufwand wie oben. Nur der Preis ändert sich. Weil auf ganze Behandlungen aufgerundet wird, ergeben zwei Preise manchmal dieselbe Terminzahl — dann bleibt beim höheren Preis schlicht mehr übrig.</p>
+    </section>
+
+    <!-- ============ 6 · EINORDNUNG ============ -->
+    <section class="sheet">
+      <p class="eyebrow">6 · Und jetzt?</p>
+      <h2>Lohnt sich das für dich?</h2>
+      <div class="ampel" id="ampel">
+        <h3 id="ampel_titel">–</h3>
+        <p id="ampel_text">–</p>
+      </div>
+
+      <p class="hero-cta">
+        <a class="btn" href="werkzeuge.html">Preis genauer kalkulieren</a>
+        <a class="btn ghost" href="planungsrechner.html">Auslastung im Detail planen</a>
+      </p>
+
+      <details class="mehr">
+        <summary>Warum weicht das von der schnellen Kopfrechnung ab?</summary>
+        <div>
+          <p>Die naheliegende Rechnung lautet: 500 € geteilt durch 70 € sind gut sieben Behandlungen. Darin fehlen aber drei Dinge, die später real vom Konto gehen: die Steuerrücklage, die festen Ausgaben und die Fahrtkosten.</p>
+          <p>Deshalb liegt die Zahl hier höher. Sie ist die ehrlichere Antwort auf die Frage, was du tatsächlich arbeiten musst, damit dein Wunschbetrag übrig bleibt.</p>
+        </div>
+      </details>
+
+      <details class="mehr">
+        <summary>Was ist mit der Umsatzsteuer?</summary>
+        <div>
+          <p>Heilbehandlungen sind nach § 4 Nr. 14 UStG in der Regel umsatzsteuerfrei, wenn sie einem therapeutischen Zweck dienen. Für die typische private Physiotherapie mit ärztlicher Verordnung spielt Umsatzsteuer deshalb meist keine Rolle.</p>
+          <p>Anders sieht es aus, sobald du Leistungen ohne therapeutischen Zweck anbietest, also zum Beispiel Training, Wellness-Massage oder Coaching. Ob und ab wann das für dich gilt, klärst du am besten mit deinem Steuerbüro.</p>
+        </div>
+      </details>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Keine Steuer-, Rechts- oder medizinische Beratung. Die Rücklage ist ein Erfahrungswert, keine Steuerberechnung.<br>
+      Fragen? <a href="mailto:info@physiotherapie-grausam.com">info@physiotherapie-grausam.com</a></span>
+    <span><a href="./">Übersicht</a> · <a href="werkzeuge.html">Preis-Kalkulation</a> · <a href="planungsrechner.html">Auslastung</a></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- Hilfsfunktionen ----------
+     num() klemmt jede Eingabe auf den im HTML erlaubten Bereich. Damit
+     kommen weder negative Werte noch Unsinn wie 10.000 Minuten Fahrt in
+     die Rechnung, egal was jemand ins Feld tippt. */
+  function num(id){
+    const el = document.getElementById(id);
+    let v = parseFloat(String(el.value).replace(',', '.'));
+    if (!isFinite(v)) v = 0;
+    const min = el.min === '' ? -Infinity : parseFloat(el.min);
+    const max = el.max === '' ?  Infinity : parseFloat(el.max);
+    return Math.min(Math.max(v, min), max);
+  }
+  const eur   = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
+  const eur2  = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
+  const zahl  = (n, k) => isFinite(n) ? n.toLocaleString('de-DE', {minimumFractionDigits:k, maximumFractionDigits:k}) : '–';
+  const setze = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; };
+
+  const WOCHEN = 4.33;   // durchschnittliche Wochen je Monat
+
+  /* Stunden lesbar machen: 6,5 Stunden werden zu "6 Std. 30 Min." */
+  function stunden(h){
+    if (!isFinite(h) || h < 0) return '–';
+    const gesamt = Math.round(h * 60);
+    const s = Math.floor(gesamt / 60), m = gesamt % 60;
+    if (s === 0) return m + ' Min.';
+    if (m === 0) return s + ' Std.';
+    return s + ' Std. ' + m + ' Min.';
+  }
+
+  /* ---------- Der Kern ----------
+     Gesucht ist die Zahl der Behandlungen n, bei der nach Ausgaben und
+     Ruecklage genau der Wunschbetrag uebrig bleibt:
+
+       (n·Preis − Fixkosten − n·Fahrtkosten) · (1 − Satz) = Ziel
+
+     nach n aufgeloest:
+
+       n = (Ziel / (1 − Satz) + Fixkosten) / (Preis − Fahrtkosten)
+
+     Der Nenner ist das, was ein Termin nach Fahrtkosten wirklich
+     einbringt. Ist er null oder negativ, traegt sich der Termin nicht
+     selbst — dann gibt es keine Loesung, egal wie viel man arbeitet. */
+  function behandlungenFuer(preis, p){
+    const deckung = preis - p.fahrtkosten;
+    if (deckung <= 0) return null;
+    if (p.satz >= 1) return null;
+    const noetigerGewinn = p.ziel / (1 - p.satz) + p.fix;
+    const n = noetigerGewinn / deckung;
+    if (!isFinite(n) || n < 0) return null;
+    return n;
+  }
+
+  function parameter(){
+    const satzProzent = num('satz');
+    return {
+      ziel:        num('ziel'),
+      satz:        satzProzent / 100,
+      fix:         num('fix'),
+      fahrtkosten: num('km') * num('kmsatz'),
+      minuten:     num('dauer') + num('fahrzeit') + num('doku'),
+      frequenz:    Math.max(num('frequenz'), 0.25)
+    };
+  }
+
+  function rechne(){
+    const p = parameter();
+    const preis = num('preis');
+
+    /* --- Abschnitt 2: ein Termin --- */
+    setze('o_termindauer', stunden(p.minuten / 60));
+    setze('o_fahrtkosten_hinweis',
+      p.fahrtkosten > 0
+        ? 'Fahrtkosten je Termin: ' + eur2(p.fahrtkosten) + '. Die ziehst du unten von deinen Einnahmen ab.'
+        : 'Ohne Fahrtkosten — du behandelst offenbar an einem festen Ort.');
+
+    /* --- Abschnitt 3: die Antwort --- */
+    const roh = behandlungenFuer(preis, p);
+    const felder = ['z_behandlungen','z_woche','z_patienten','k_zeit','k_stunde',
+                    'g_umsatz','g_fahrt','g_fix','g_gewinn','g_ruecklage','g_bleibt'];
+
+    if (roh === null){
+      felder.forEach(id => setze(id, '–'));
+      setze('z_satz', preis <= 0
+        ? 'Trag oben einen Preis pro Behandlung ein.'
+        : 'Bei ' + eur2(preis) + ' pro Behandlung bleiben nach Fahrtkosten von ' + eur2(p.fahrtkosten) +
+          ' keine Einnahmen übrig. Bei diesem Preis geht die Rechnung nicht auf, egal wie viele Termine du machst.');
+      ampel(null, p);
+      tabelle(p, preis);
+      return;
+    }
+
+    const n = Math.ceil(roh);                 // ganze Behandlungen, aufgerundet
+    const proWoche = n / WOCHEN;
+    const patienten = proWoche / p.frequenz;
+    const zeitStunden = n * p.minuten / 60;
+
+    /* Gegenprobe mit der aufgerundeten Zahl */
+    const umsatz    = n * preis;
+    const fahrt     = n * p.fahrtkosten;
+    const gewinn    = umsatz - fahrt - p.fix;
+    const ruecklage = Math.max(gewinn, 0) * p.satz;
+    const bleibt    = gewinn - ruecklage;
+    const proStunde = zeitStunden > 0 ? bleibt / zeitStunden : NaN;
+
+    setze('z_behandlungen', zahl(n, 0));
+    setze('z_woche', zahl(proWoche, 1));
+    setze('z_patienten', zahl(Math.ceil(patienten), 0));
+    setze('z_satz',
+      'Bei ' + eur2(preis) + ' pro Behandlung brauchst du ' + zahl(n, 0) + ' Behandlungen im Monat, ' +
+      'damit nach Ausgaben und Rücklage ' + eur(p.ziel) + ' übrig bleiben.');
+
+    setze('k_zeit', stunden(zeitStunden));
+    setze('k_stunde', eur2(proStunde));
+
+    setze('g_umsatz', eur2(umsatz));
+    setze('g_fahrt', fahrt > 0 ? '− ' + eur2(fahrt) : eur2(0));
+    setze('g_fix', p.fix > 0 ? '− ' + eur2(p.fix) : eur2(0));
+    setze('g_gewinn', eur2(gewinn));
+    setze('g_ruecklage', ruecklage > 0 ? '− ' + eur2(ruecklage) : eur2(0));
+    setze('g_bleibt', eur2(bleibt));
+
+    ampel({n:n, proWoche:proWoche, zeitStunden:zeitStunden, proStunde:proStunde}, p);
+    tabelle(p, preis);
+  }
+
+  /* ---------- Preisvergleich ----------
+     Preisstufen um den eigenen Preis herum, damit man sieht, was fuenf
+     Euro mehr oder weniger konkret bedeuten. */
+  function tabelle(p, eigenerPreis){
+    const ziel = document.getElementById('preistabelle');
+    const basis = eigenerPreis > 0 ? eigenerPreis : 60;
+    const stufen = [];
+    for (let i = -2; i <= 3; i++){
+      const preis = Math.round((basis + i * 10) / 5) * 5;
+      if (preis > 0 && stufen.indexOf(preis) === -1) stufen.push(preis);
+    }
+    stufen.sort((a, b) => a - b);
+
+    ziel.innerHTML = stufen.map(preis => {
+      const roh = behandlungenFuer(preis, p);
+      const eigen = Math.abs(preis - eigenerPreis) < 0.01;
+      const kopf = '<div class="pt-preis">' + zahl(preis, 0) + ' €<small>' +
+                   (eigen ? 'dein Preis' : 'je Behandlung') + '</small></div>';
+
+      if (roh === null){
+        return '<div class="pt-zeile geht-nicht' + (eigen ? ' aktiv' : '') + '">' + kopf +
+               '<div class="pt-werte">Zu niedrig: die Fahrtkosten je Termin sind höher als der Preis.</div></div>';
+      }
+
+      const n = Math.ceil(roh);
+      const proWoche = n / WOCHEN;
+      const zeitStunden = n * p.minuten / 60;
+      const umsatz = n * preis;
+      const gewinn = umsatz - n * p.fahrtkosten - p.fix;
+      const bleibt = gewinn - Math.max(gewinn, 0) * p.satz;
+      const proStunde = zeitStunden > 0 ? bleibt / zeitStunden : NaN;
+
+      /* "Bleibt dir" gehoert dazu: weil auf ganze Behandlungen aufgerundet
+         wird, koennen zwei Preisstufen dieselbe Terminzahl ergeben. Dann
+         unterscheiden sie sich nur noch im Geld, und genau das will man
+         an der Stelle sehen. */
+      return '<div class="pt-zeile' + (eigen ? ' aktiv' : '') + '">' + kopf +
+        '<div class="pt-werte">' +
+          '<div class="pt-wert"><b>' + zahl(n, 0) + '</b><span>Behandlungen im Monat</span></div>' +
+          '<div class="pt-wert"><b>' + zahl(proWoche, 1) + '</b><span>pro Woche</span></div>' +
+          '<div class="pt-wert"><b>' + stunden(zeitStunden) + '</b><span>Zeit im Monat</span></div>' +
+          '<div class="pt-wert"><b>' + eur(bleibt) + '</b><span>bleibt dir</span></div>' +
+          '<div class="pt-wert"><b>' + eur2(proStunde) + '</b><span>je Stunde</span></div>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  /* ---------- Einordnung ----------
+     Bewusst nuechtern: die Zahl der Wochenstunden neben einem Vollzeitjob
+     ist der Punkt, an dem die meisten sich verschaetzen. */
+  function ampel(e, p){
+    const titel = document.getElementById('ampel_titel');
+    const text  = document.getElementById('ampel_text');
+    if (!e){
+      titel.textContent = 'Noch keine Aussage möglich';
+      text.textContent  = 'Sobald Preis und Ziel zusammenpassen, steht hier eine Einschätzung.';
+      return;
+    }
+    const wochenstunden = e.zeitStunden / 4.33;
+    const std = stunden(wochenstunden);
+
+    if (wochenstunden <= 4){
+      titel.textContent = 'Das passt gut neben einen Vollzeitjob';
+      text.textContent  = 'Du bist bei rund ' + std + ' pro Woche. Das lässt sich meist an einem festen Abend oder einem Samstagvormittag unterbringen, ohne dass der Hauptjob leidet.';
+    } else if (wochenstunden <= 8){
+      titel.textContent = 'Machbar, aber du musst es planen';
+      text.textContent  = 'Rund ' + std + ' pro Woche heißt: zwei feste Termine in der Woche, die du auch wirklich freihältst. Plan von Anfang an einen Puffer für Ausfälle ein.';
+    } else if (wochenstunden <= 14){
+      titel.textContent = 'Das ist ein zweiter Teilzeitjob';
+      text.textContent  = 'Bei rund ' + std + ' pro Woche neben Vollzeit wird die Erholung knapp. Überleg, ob du stattdessen am Preis drehst oder im Hauptjob Stunden reduzierst.';
+    } else {
+      titel.textContent = 'Neben Vollzeit wird das schwierig';
+      text.textContent  = 'Rund ' + std + ' pro Woche zusätzlich hält kaum jemand über Monate durch. Realistischer ist ein höherer Preis, ein kleineres Ziel oder weniger Stunden im Hauptjob.';
+    }
+  }
+
+  /* ---------- Verdrahtung ---------- */
+  const felder = ['ziel','satz','fix','dauer','fahrzeit','doku','km','kmsatz','preis','frequenz'];
+  felder.forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', rechne);
+    el.addEventListener('change', rechne);
+  });
+  rechne();
+})();
+</script>
+<script src="../physio-nebenbei/zahlenfeld.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

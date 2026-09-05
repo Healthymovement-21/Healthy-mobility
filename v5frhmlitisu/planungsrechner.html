@@ -63,6 +63,15 @@
     <span>Physio<b>Nebenbei</b></span>
   </a>
 
+  <nav class="crumb">
+    <a href="./">Mein Bereich</a> · <span>Auslastung planen</span>
+  </nav>
+
+  <div class="vorschlag" id="vorschlag" hidden>
+    <span id="vorschlag_text">–</span>
+    <button class="btn ghost" type="button" id="vorschlag_knopf">Werte übernehmen</button>
+  </div>
+
   <div class="doc">
 
     <section class="sheet hero">
@@ -240,8 +249,8 @@
       <details class="mehr">
         <summary>Was bedeutet die Kleinunternehmer-Grenze?</summary>
         <div>
-          <p>Als Kleinunternehmer:in nach § 19 UStG weist du keine Umsatzsteuer aus. Das geht, solange dein Umsatz im vorangegangenen Kalenderjahr 25.000 € nicht überschritten hat und im laufenden Jahr 100.000 € nicht übersteigt.</p>
-          <p>Für Heilbehandlungen ist das ohnehin meist zweitrangig, weil sie nach § 4 Nr. 14 UStG umsatzsteuerfrei sind. Wichtig wird die Grenze, sobald du Leistungen ohne therapeutischen Zweck anbietest, also Training, Massage aus Wohlfühlgründen oder Coaching.</p>
+          <p>Als Kleinunternehmer:in nach § 19 UStG weist du keine Umsatzsteuer aus. Nach derzeitigem Stand gilt das, solange dein Umsatz im vorangegangenen Kalenderjahr 25.000 € nicht überschritten hat und im laufenden Jahr 100.000 € nicht übersteigt; die Beträge sind schon mehrfach angepasst worden, prüf also den aktuellen Stand.</p>
+          <p>Für Heilbehandlungen ist das ohnehin meist zweitrangig, weil sie nach § 4 Nr. 14 UStG in der Regel umsatzsteuerfrei sind. Wichtig wird die Grenze, sobald du Leistungen ohne therapeutischen Zweck anbietest, also Training, Massage aus Wohlfühlgründen oder Coaching.</p>
           <p>Die Zahl oben ist eine Hochrechnung aus deinem Planmonat, keine Prognose. Im ersten Jahr zählt außerdem der tatsächliche Umsatz ab Beginn deiner Tätigkeit.</p>
         </div>
       </details>
@@ -331,6 +340,7 @@
 
 <div id="druck" aria-hidden="true"></div>
 
+<script src="daten.js"></script>
 <script>
 (function(){
   'use strict';
@@ -550,6 +560,53 @@
         });
       });
     } catch(e){}
+  }
+
+  /* ---------- Vorschlag aus den gemeinsamen Zahlen ----------
+     Was in der Preis-Kalkulation oder im Ziel-Rechner gespeichert wurde,
+     wird hier angeboten und nicht stillschweigend eingesetzt. Wer hier
+     etwas aendert, aktualisiert die gemeinsamen Werte mit. */
+  var ZUORDNUNG = {
+    preis:'preis', dauer:'dauer', fahrzeit:'fahrzeit', km:'km',
+    kmsatz:'kmsatz', doku:'doku', fix:'fix', satz:'satz'
+  };
+  if (window.Daten && Daten.gespeichertAm()){
+    var z = Daten.zahlen(), abweichend = [];
+    Object.keys(ZUORDNUNG).forEach(function(k){
+      var el = $(ZUORDNUNG[k]);
+      if (!el) return;
+      var g = z[k];
+      if (g === undefined || g === null || g === '') return;
+      if (parseFloat(el.value) !== parseFloat(g)) abweichend.push(k);
+    });
+    if (abweichend.length){
+      $('vorschlag').hidden = false;
+      $('vorschlag_text').textContent =
+        'Du hast schon Zahlen gespeichert: ' +
+        (z.preis || 0).toLocaleString('de-DE') + ' \u20AC je Behandlung, ' +
+        (z.dauer || 0) + ' Min. Behandlungszeit, ' + (z.km || 0) + ' km Anfahrt. ' +
+        'Soll ich damit rechnen?';
+      $('vorschlag_knopf').addEventListener('click', function(){
+        Object.keys(ZUORDNUNG).forEach(function(k){
+          var el = $(ZUORDNUNG[k]);
+          if (el && z[k] !== undefined && z[k] !== null && z[k] !== '') el.value = z[k];
+        });
+        $('vorschlag').hidden = true;
+        rechne(); speichern();
+      });
+    }
+  }
+
+  /* Aenderungen hier fliessen in die gemeinsamen Zahlen zurueck. */
+  if (window.Daten){
+    Object.keys(ZUORDNUNG).forEach(function(k){
+      var el = $(ZUORDNUNG[k]);
+      if (!el) return;
+      el.addEventListener('change', function(){
+        var roh = parseFloat(String(el.value).replace(',', '.'));
+        Daten.setze('zahlen', k, isFinite(roh) ? roh : 0);
+      });
+    });
   }
 
   $('reset').addEventListener('click', function(e){

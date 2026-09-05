@@ -40,54 +40,52 @@
 <body>
 
 <div class="page">
-  <p class="crumb"><a href="./">← Dein Bereich</a></p>
+  <p class="crumb"><a href="./">← Mein Bereich</a></p>
 
   <div class="doc">
 
     <section class="sheet hero">
-      <p class="eyebrow">Kurzkapitel</p>
-      <h1 class="title">Online-Terminbuchung</h1>
-      <p class="lede">Damit Patient:innen abends selbst buchen können, während du im Hauptjob bist. Deine eigenen Termine trägst du im <a href="termine.html">Terminbereich</a> ein — hier geht es um die Buchung durch Patient:innen, und dafür brauchst du einen externen Dienst.</p>
+      <h1 class="title">Termine online buchen lassen</h1>
+      <p class="lede">Damit Patient:innen abends selbst einen Termin nehmen können, während du im Hauptjob bist. Deine eigenen Termine trägst du im <a href="termine.html">Terminbereich</a> ein — hier geht es um die Buchung durch Patient:innen, und dafür brauchst du einen externen Dienst.</p>
     </section>
 
     <section class="sheet">
-      <h2>Drei Regeln vorab</h2>
-      <p>Du arbeitest mit Gesundheitsdaten, die nach Art. 9 DSGVO besonders geschützt sind. Ein Buchungstool ist ein Dienstleister, der Daten deiner Patient:innen verarbeitet. Daran führt kein Weg vorbei:</p>
+      <h2>In drei Schritten eingerichtet</h2>
       <ol class="steps">
-        <li><strong>Auftragsverarbeitungsvertrag abschließen.</strong> Nach Art. 28 DSGVO Pflicht. Seriöse Anbieter stellen ihn bereit — wer keinen hat, fällt raus.</li>
-        <li><strong>Auf den Serverstandort achten.</strong> Verarbeitung in der EU erspart dir Aufwand, den du bei Gesundheitsdaten nicht willst.</li>
-        <li><strong>Im Buchungsformular keine Gesundheitsdaten abfragen.</strong> Name, Kontakt und Terminart reichen. Beschwerden und Diagnosen gehören in den Anamnesebogen beim Termin, nicht in ein Onlineformular. Das ist der Punkt, den die meisten falsch machen.</li>
+        <li><strong>Konto anlegen und Kalender verbinden.</strong> Trag deine Schichten aus dem Hauptjob mit ein, sonst bucht dir jemand einen Termin in die Frühschicht.</li>
+        <li><strong>Terminarten und Zeiten festlegen.</strong> Erstgespräch 60 Minuten, Folgetermin 30, Hausbesuch 45 plus Puffer. Gib nur die Abende frei, an denen du wirklich behandeln willst, und setz eine Obergrenze pro Tag.</li>
+        <li><strong>Bestätigungsmail einschalten und den Link teilen.</strong> In den Text gehören, was mitzubringen ist und deine Absagefrist.</li>
       </ol>
-      <p class="micro">Ergänze außerdem deine Datenschutzerklärung um den Anbieter, sobald du ihn nutzt: wer verarbeitet, wozu, auf welcher Rechtsgrundlage, wo die Daten liegen. Ein Absatz genügt, aber er muss da sein.</p>
+      <p>Verlink das Buchungsformular, statt es einzubetten — dann fließen erst Daten, wenn jemand wirklich buchen will:</p>
+      <pre class="code">&lt;a href="https://DEIN-ANBIETER/DEIN-NAME"&gt;Termin online buchen&lt;/a&gt;</pre>
     </section>
 
     <section class="sheet">
-      <h2>Einrichten, kurz gefasst</h2>
-      <p>Meine Empfehlung ist <strong>Cal.com</strong> in der EU-Variante: kostenlose Stufe, quelloffen, Auftragsverarbeitungsvertrag im Compliance-Bereich. Die Standardvariante verarbeitet nach eigener Datenschutzerklärung auch in den USA — nimm die europäische.</p>
-      <ol class="steps">
-        <li>Konto anlegen, seriösen Benutzernamen wählen — der steht später im Link.</li>
-        <li>Kalender verbinden. Trag auch deine Schichten aus dem Hauptjob dort ein, sonst bucht dir jemand einen Termin in die Frühschicht.</li>
-        <li>Nur die Zeiten freigeben, an denen du wirklich behandeln willst.</li>
-        <li>Terminarten anlegen: Erstgespräch 60 Minuten, Folgetermin 30, Hausbesuch 45. Bei Hausbesuchen mindestens 30 Minuten Puffer.</li>
-        <li>Vorlaufzeit auf mindestens 12 Stunden und eine Obergrenze pro Tag setzen. Zwei Termine nach einem vollen Arbeitstag sind realistisch, vier nicht.</li>
-        <li>Bestätigungs- und Erinnerungsmail einschalten. In den Text gehören: was mitzubringen ist und die Absagefrist aus deiner Honorarvereinbarung.</li>
-      </ol>
-      <p>Auf einer eigenen Seite verlinkst du besser, statt einzubetten — dann fließen erst Daten, wenn jemand wirklich buchen will:</p>
-      <pre class="code">&lt;a href="https://cal.com/DEIN-NAME"&gt;Termin online buchen&lt;/a&gt;</pre>
+      <div class="annotation">
+        <strong>Der eine Punkt, an dem es meistens schiefgeht:</strong> Frag im
+        Buchungsformular keine Beschwerden und keine Diagnosen ab. Name, Kontakt
+        und Terminart reichen. Alles Gesundheitsbezogene gehört in den
+        Anamnesebogen beim Termin. Da ein Buchungsdienst Daten deiner
+        Patient:innen verarbeitet, sind außerdem ein Auftragsverarbeitungsvertrag
+        mit dem Anbieter und ein Absatz dazu in deiner Datenschutzerklärung die
+        üblichen Anforderungen — klär das für deinen konkreten Fall, bevor du
+        startest.
+      </div>
     </section>
 
     <section class="sheet">
-      <h2>Andere Anbieter</h2>
-      <ul class="checklist">
-        <li><strong>Zeeg</strong> — deutscher Anbieter, Verarbeitung in der EU, kostenlose Stufe. Kleinerer Funktionsumfang, für Terminvergabe ausreichend.</li>
-        <li><strong>Calendly</strong> — am ausgereiftesten, kostenlose Stufe, aber Sitz und Verarbeitung in den USA. Das musst du bewusst entscheiden.</li>
-        <li><strong>Doctolib</strong> — auf Gesundheitsberufe zugeschnitten und bekannt, dafür kostenpflichtig mit Vertragsbindung. Für zwei Abende pro Woche überdimensioniert.</li>
-        <li><strong>Gar kein Tool</strong> — für die ersten Wochen völlig legitim. Ein Buchungstool lohnt sich ab dem Punkt, an dem du mehr Zeit mit Terminabsprache verbringst als mit Behandeln.</li>
+      <h2>Anbieter</h2>
+      <ul class="punkte">
+        <li><strong>Cal.com (EU-Variante)</strong> — quelloffen, kostenlose Stufe, Verarbeitung in Europa.</li>
+        <li><strong>Zeeg</strong> — deutscher Anbieter mit kleinerem Funktionsumfang, für reine Terminvergabe ausreichend.</li>
+        <li><strong>Calendly</strong> — am ausgereiftesten, Sitz und Verarbeitung allerdings in den USA.</li>
+        <li><strong>Doctolib</strong> — auf Gesundheitsberufe zugeschnitten, kostenpflichtig mit Vertragsbindung.</li>
+        <li><strong>Gar kein Tool</strong> — für die ersten Wochen völlig in Ordnung, solange Absprachen dich weniger Zeit kosten als das Behandeln.</li>
       </ul>
       <p class="micro">Angaben zu Anbietern, Preisen und Serverstandorten sind vom Stand 2026 und ändern sich. Prüf vor dem Abschluss, was aktuell gilt. Keine Rechtsberatung.</p>
       <p class="hero-cta">
         <a class="btn" href="termine.html">Zu meinen Terminen</a>
-        <a class="btn ghost" href="./">Zurück zum Fahrplan</a>
+        <a class="btn ghost" href="./">Zurück zu Mein Bereich</a>
       </p>
     </section>
 

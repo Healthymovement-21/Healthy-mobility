@@ -138,20 +138,63 @@
     beiAenderung(fn){ horcher.push(fn); },
 
     /* ---------- Export und Import ----------
-       Ein einzelnes JSON, das man sich selbst speichert. Nichts geht
-       dabei an einen Server. */
-    exportieren(){
-      const inhalt = JSON.stringify(daten, null, 2);
-      const blob = new Blob([inhalt], {type:'application/json'});
+       Nichts geht an einen Server, die Datei entsteht im Browser.
+
+       mitTerminen ist bewusst abwaehlbar: Termine enthalten Patienten-
+       namen, und wer seine Kalkulation auf ein zweites Geraet bringen
+       will, braucht die meistens nicht mit. */
+    exportText(mitTerminen){
+      const raus = JSON.parse(JSON.stringify(daten));
+      if (!mitTerminen) raus.termine = [];
+      raus.exportiertAm = new Date().toISOString();
+      raus.enthaeltTermine = !!mitTerminen;
+      return JSON.stringify(raus, null, 2);
+    },
+
+    dateiname(){
+      return 'PhysioNebenbei-Daten-' + new Date().toISOString().slice(0,10) + '.json';
+    },
+
+    /* Klassischer Download. Auf dem Computer der bequemste Weg, auf dem
+       iPhone landet die Datei allerdings in einer Vorschau, aus der man
+       sie kaum sinnvoll weiterverwenden kann — dafuer gibt es unten
+       teilen() und den Text zum Kopieren. */
+    exportieren(mitTerminen){
+      const blob = new Blob([Daten.exportText(mitTerminen)], {type:'application/json'});
       const url = URL.createObjectURL(blob);
-      const heute = new Date().toISOString().slice(0,10);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'PhysioNebenbei-Daten-' + heute + '.json';
+      a.download = Daten.dateiname();
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 1000);
+    },
+
+    /* Kann dieses Geraet Dateien ueber das System-Teilen-Menue
+       weitergeben? Auf dem iPhone ist das der Weg, der wirklich in
+       "Dateien" oder iCloud landet. */
+    kannTeilen(){
+      try {
+        if (!navigator.share || !navigator.canShare) return false;
+        const probe = new File(['{}'], 'probe.json', {type:'application/json'});
+        return navigator.canShare({files:[probe]});
+      } catch(e){ return false; }
+    },
+
+    async teilen(mitTerminen){
+      const datei = new File([Daten.exportText(mitTerminen)], Daten.dateiname(),
+                            {type:'application/json'});
+      await navigator.share({files:[datei], title:'PhysioNebenbei-Daten'});
+    },
+
+    async inZwischenablage(mitTerminen){
+      const text = Daten.exportText(mitTerminen);
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+      return false;
     },
 
     /* Gibt eine Zusammenfassung zurück, damit die Seite melden kann,

@@ -46,11 +46,13 @@
   .raster .w.mint{ color:var(--accent); }
 
   /* Naechster Schritt: die einzige Stelle, die zum Weitermachen auffordert */
-  .naechster-titel{ font-size:13px; color:var(--ink-muted); margin:22px 0 4px; }
   .naechster-name{
-    font-family:var(--font-display); font-size:21px; font-weight:600;
-    letter-spacing:-.02em; color:var(--ink); margin:0; line-height:1.3;
+    font-family:var(--font-display); font-size:clamp(24px,6vw,30px); font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); margin:14px 0 0; line-height:1.2;
   }
+  /* Wo im Weg man steht: Schritt 3 von 10 · Kalkulieren */
+  .wo{ font-size:13px; color:var(--ink-muted); margin:0; }
+  .naechster-zweck{ margin:10px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); max-width:52ch; }
 
   /* Vier wichtige Vorlagen, ohne die ganze Liste */
   .kurzliste{ list-style:none; margin:2px 0 0; padding:0; }
@@ -87,14 +89,6 @@
   .neben-zeile.klein-normal{ font-size:15px; color:var(--ink-muted); }
   .neben-unter{ font-size:14.5px; color:var(--ink-muted); margin:5px 0 0; line-height:1.5; }
 
-  /* Fortschritt im Fahrplan */
-  .fortschritt-zahl{
-    font-family:var(--font-display); font-weight:600; letter-spacing:-.03em;
-    font-size:clamp(30px,7vw,38px); line-height:1.1; color:var(--ink);
-    font-variant-numeric:tabular-nums; margin:24px 0 0;
-  }
-  .fortschritt-zahl .klein{ font-size:.5em; font-weight:500; color:var(--ink-muted); letter-spacing:-.01em; }
-
   /* Was in der Kalkulation noch steckt */
   .mit-drin{ margin:20px 0 0; font-size:14.5px; color:var(--ink-muted); line-height:1.6; }
 
@@ -108,6 +102,12 @@
   .werkzeuge-mehr > summary::-webkit-details-marker{ display:none; }
   .werkzeuge-mehr > summary::after{ content:" ↓"; margin-left:6px; font-weight:400; }
   .werkzeuge-mehr[open] > summary::after{ content:" ↑"; }
+
+  /* Die Werkzeuge stehen nach der Frage sortiert, die sie beantworten.
+     Die Gruppentitel sind nur Zwischenzeilen, keine eigenen Kaesten. */
+  .gruppe{ font-size:13px; font-weight:600; color:var(--ink-muted); margin:22px 0 0; }
+  .gruppe:first-of-type{ margin-top:8px; }
+  .werkzeugliste + .gruppe{ margin-top:26px; }
 
   .minifelder{ display:grid; gap:14px; margin-top:24px; }
   @media (min-width:520px){ .minifelder{ grid-template-columns:1fr 1fr; } }
@@ -155,20 +155,23 @@
 
     <section class="sheet hero">
       <h1 class="title">Mein Bereich</h1>
+      <p class="lede">Dein nächster Schritt, deine Zahlen und alle Werkzeuge an einem Ort.</p>
     </section>
 
     <!-- ============ 1 · MEIN FAHRPLAN ============ -->
     <section class="sheet">
-      <h2 class="haupt-titel">Mein Fahrplan</h2>
-      <p class="haupt-lede">Schritt für Schritt von der ersten Idee bis zur eigenen Nebentätigkeit.</p>
+      <h2 class="haupt-titel">Dein nächster Schritt</h2>
 
-      <p class="fortschritt-zahl"><span id="f_zahl">0</span> <span class="klein">von 10 Schritten abgeschlossen</span></p>
+      <p class="wo" id="f_wo">–</p>
+      <p class="naechster-name" id="f_naechster">–</p>
+      <p class="naechster-zweck" id="f_zweck">–</p>
+
       <div class="balken"><div id="f_balken" style="width:0%"></div></div>
 
-      <p class="naechster-titel">Als Nächstes</p>
-      <p class="naechster-name" id="f_naechster">–</p>
-
-      <p class="tun"><a class="btn" href="schritte.html" id="f_weiter">Fahrplan öffnen</a></p>
+      <p class="tun">
+        <a class="btn" href="schritte.html" id="f_weiter">Weiter</a>
+        <a class="btn leise" href="schritte.html">Mein Fahrplan</a>
+      </p>
     </section>
 
     <!-- ============ 2 · KALKULATION ============ -->
@@ -194,11 +197,11 @@
       </div>
 
       <p class="tun">
-        <a class="btn" href="verdienst.html">Kalkulation öffnen</a>
+        <a class="btn" href="verdienst.html">Verdienst berechnen</a>
         <a class="btn leise" href="werkzeuge.html">Preis berechnen</a>
       </p>
 
-      <p class="mit-drin">Dort rechnest du weiter: Ausgaben, Steuer-Rücklage und was am Ende netto übrig bleibt. Für einzelne Behandlungen, einen ganzen Monat, dein Jahr, deinen Stundenlohn und die Kombination mit dem Gehalt aus dem Hauptjob gibt es je einen eigenen Rechner — alle unter „Weitere Werkzeuge“.</p>
+      <p class="mit-drin">Dort rechnest du weiter: Ausgaben, Steuer-Rücklage und was am Ende netto übrig bleibt. Kosten und Rücklage sind dabei freiwillig — ohne sie funktioniert der Rechner genauso. Für deinen Preis, einen ganzen Monat, deine Auslastung und die Kombination mit dem Gehalt aus dem Hauptjob gibt es je einen eigenen Rechner — alle unter „Weitere Werkzeuge“.</p>
     </section>
 
     <!-- ============ 3 · DOKUMENTE ============ -->
@@ -210,9 +213,9 @@
         <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung erstellen</a><span>Deine Rechnungen schnell und einheitlich, auch ohne Internet</span></li>
         <li><a href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Behandlungsvertrag</a><span>Vorlage für die Vereinbarung mit deinen Patient:innen</span></li>
         <li><a href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Honorarvereinbarung</a><span>Preis, Zahlungsziel und Absagefrist schriftlich</span></li>
-        <li><a href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Dokumentation</a><span>Befund und Verlauf je Behandlung</span></li>
+        <li><a href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Dokumentationsbogen</a><span>Befund und Verlauf je Behandlung</span></li>
       </ul>
-      <p class="tun"><a class="btn ghost" href="dateien.html">Alle Dokumente und Vorlagen</a></p>
+      <p class="tun"><a class="btn ghost" href="dateien.html">Meine Dateien</a></p>
     </section>
 
     <!-- ============ 4 · WEITERE WERKZEUGE ============ -->
@@ -230,16 +233,29 @@
 
       <details class="werkzeuge-mehr">
         <summary>Alle Werkzeuge anzeigen</summary>
+        <p class="gruppe">Planen</p>
         <ul class="werkzeugliste">
           <li><a href="werkzeuge.html">Preis berechnen</a><span>Welcher Preis macht für deine Behandlung und deinen Aufwand Sinn?</span></li>
-          <li><a href="monatsrechner.html">Behandlung kalkulieren</a><span>Was bringt dir eine einzelne Behandlung ungefähr?</span></li>
-          <li><a href="monatsrechner.html">Monat kalkulieren</a><span>Wie sieht dein tatsächlicher Monat mit verschiedenen Behandlungen und Kosten aus?</span></li>
           <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du neben deinem Hauptjob realistisch unter?</span></li>
-          <li><a href="gehaltsrechner.html">Gehalt und Stunden</a><span>Was verändert sich, wenn du deine Arbeitszeit im Hauptjob veränderst?</span></li>
           <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Du hast ein konkretes Einkommensziel? Dann rechne von diesem Ziel zurück.</span></li>
-          <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
+        </ul>
+
+        <p class="gruppe">Genau kalkulieren</p>
+        <ul class="werkzeugliste">
+          <li><a href="monatsrechner.html">Monat kalkulieren</a><span>Was bleibt von einem echten Monat mit deinen Behandlungen und Kosten übrig?</span></li>
+          <li><a href="gehaltsrechner.html">Gehalt und Stunden</a><span>Was verändert sich, wenn du deine Arbeitszeit im Hauptjob veränderst?</span></li>
+        </ul>
+
+        <p class="gruppe">Organisieren</p>
+        <ul class="werkzeugliste">
           <li><a href="termine.html">Kalender</a><span>Deine Termine im Überblick</span></li>
-          <li><a href="dateien.html">Dokumente und Vorlagen</a><span>Alle elf Dateien zum Herunterladen</span></li>
+          <li><a href="dateien.html">Meine Dateien</a><span>Alle elf Dateien zum Herunterladen</span></li>
+        </ul>
+
+        <p class="gruppe">Arbeiten</p>
+        <ul class="werkzeugliste">
+          <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung erstellen</a><span>Deine Rechnungen schnell und einheitlich, auch ohne Internet</span></li>
+          <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
         </ul>
       </details>
     </section>
@@ -270,6 +286,7 @@
   </footer>
 </div>
 
+<script src="fahrplan-schritte.js"></script>
 <script src="daten.js"></script>
 <script src="drive-sync.js"></script>
 <script>
@@ -345,37 +362,29 @@
     });
   });
 
-  /* ---------- Mein Fortschritt ---------- */
-  /* Die zehn Schritte aus dem Fahrplan, in derselben Reihenfolge. */
-  const NAECHSTE = [
-    'Prüfen, ob sich das für dich lohnt',
-    'Anmeldung und Formalitäten erledigen',
-    'Versicherungen prüfen',
-    'Deinen Behandlungspreis festlegen',
-    'Deine erste Rechnung vorbereiten',
-    'Dokumentation aufsetzen',
-    'Datenschutz-Grundlagen klären',
-    'Erste Patient:innen gewinnen',
-    'Die ersten 30 Tage planen',
-    'Typische Anfänger-Fehler vermeiden'
-  ];
-
+  /* ---------- Dein naechster Schritt ----------
+     Titel, Zweck und Abschnitt kommen aus fahrplan-schritte.js, damit
+     hier nichts anders heisst als im Fahrplan selbst. */
   function fortschrittZeichnen(){
-    let fertig = 0;
-    try {
-      const s = JSON.parse(localStorage.getItem('physionebenbei-schritte') || '{}');
-      fertig = Object.keys(s).filter(k => s[k]).length;
-    } catch(e){}
-    fertig = Math.min(fertig, 10);
-    el('f_zahl').textContent = fertig;
-    el('f_balken').style.width = (fertig * 10) + '%';
-    if (fertig >= 10){
-      el('f_naechster').textContent = 'Du bist durch. Ab jetzt geht es ums Dranbleiben.';
-      el('f_weiter').textContent = 'Fahrplan ansehen';
-    } else {
-      el('f_naechster').textContent = NAECHSTE[fertig];
-      el('f_weiter').href = 'schritte.html#schritt' + (fertig + 1);
+    const stand  = Fahrplan.stand();
+    const fertig = Fahrplan.erledigt(stand);
+    const offen  = Fahrplan.naechster(stand);
+
+    el('f_balken').style.width = Math.round(fertig / Fahrplan.anzahl * 100) + '%';
+
+    if (!offen){
+      el('f_wo').textContent        = 'Alle ' + Fahrplan.anzahl + ' Schritte erledigt';
+      el('f_naechster').textContent = 'Du bist durch.';
+      el('f_zweck').textContent     = 'Ab jetzt geht es ums Dranbleiben: einmal im Monat die Einnahmen eintragen und nach dem ersten Quartal noch einmal auf Preis und Auslastung schauen.';
+      el('f_weiter').textContent    = 'Fahrplan ansehen';
+      el('f_weiter').href           = 'schritte.html';
+      return;
     }
+
+    el('f_wo').textContent        = 'Schritt ' + offen.nr + ' von ' + Fahrplan.anzahl + ' · ' + offen.schritt.abschnitt;
+    el('f_naechster').textContent = offen.schritt.titel;
+    el('f_zweck').textContent     = offen.schritt.zweck;
+    el('f_weiter').href           = 'schritte.html#schritt' + offen.nr;
   }
 
   /* ---------- Meine Termine ---------- */

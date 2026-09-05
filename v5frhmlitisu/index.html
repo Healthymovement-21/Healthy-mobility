@@ -46,10 +46,9 @@
   .raster .w.mint{ color:var(--accent); }
 
   /* Naechster Schritt: die einzige Stelle, die zum Weitermachen auffordert */
-  .naechster-titel{ font-size:13px; color:var(--ink-muted); margin:22px 0 4px; }
   .naechster-name{
-    font-family:var(--font-display); font-size:21px; font-weight:600;
-    letter-spacing:-.02em; color:var(--ink); margin:0; line-height:1.3;
+    font-family:var(--font-display); font-size:clamp(24px,6vw,30px); font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); margin:16px 0 0; line-height:1.2;
   }
 
   /* Vier wichtige Vorlagen, ohne die ganze Liste */
@@ -60,7 +59,7 @@
   .kurzliste span{ display:block; font-size:14px; color:var(--ink-muted); margin-top:2px; }
 
   /* Fortschritt */
-  .balken{ height:4px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:16px 0 0; }
+  .balken{ height:4px; margin-top:20px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:20px 0 0; }
   .balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .35s ease; }
 
   /* Aktionen eines Blocks */
@@ -86,14 +85,6 @@
   .neben-zeile{ font-size:17px; color:var(--ink); margin:14px 0 0; line-height:1.4; }
   .neben-zeile.klein-normal{ font-size:15px; color:var(--ink-muted); }
   .neben-unter{ font-size:14.5px; color:var(--ink-muted); margin:5px 0 0; line-height:1.5; }
-
-  /* Fortschritt im Fahrplan */
-  .fortschritt-zahl{
-    font-family:var(--font-display); font-weight:600; letter-spacing:-.03em;
-    font-size:clamp(30px,7vw,38px); line-height:1.1; color:var(--ink);
-    font-variant-numeric:tabular-nums; margin:24px 0 0;
-  }
-  .fortschritt-zahl .klein{ font-size:.5em; font-weight:500; color:var(--ink-muted); letter-spacing:-.01em; }
 
   /* Was in der Kalkulation noch steckt */
   .mit-drin{ margin:20px 0 0; font-size:14.5px; color:var(--ink-muted); line-height:1.6; }
@@ -155,26 +146,24 @@
 
     <section class="sheet hero">
       <h1 class="title">Mein Bereich</h1>
+      <p class="lede">Hier findest du deinen nächsten Schritt, deine wichtigsten Zahlen und alle Werkzeuge an einem Ort.</p>
     </section>
 
     <!-- ============ 1 · MEIN FAHRPLAN ============ -->
     <section class="sheet">
-      <h2 class="haupt-titel">Mein Fahrplan</h2>
-      <p class="haupt-lede">Schritt für Schritt von der ersten Idee bis zur eigenen Nebentätigkeit.</p>
+      <h2 class="haupt-titel">Dein nächster Schritt</h2>
+      <p class="naechster-name" id="f_naechster">–</p>
+      <p class="haupt-lede" id="f_stand">–</p>
 
-      <p class="fortschritt-zahl"><span id="f_zahl">0</span> <span class="klein">von 10 Schritten abgeschlossen</span></p>
       <div class="balken"><div id="f_balken" style="width:0%"></div></div>
 
-      <p class="naechster-titel">Als Nächstes</p>
-      <p class="naechster-name" id="f_naechster">–</p>
-
-      <p class="tun"><a class="btn" href="schritte.html" id="f_weiter">Fahrplan öffnen</a></p>
+      <p class="tun"><a class="btn" href="schritte.html" id="f_weiter">Weiter</a></p>
     </section>
 
     <!-- ============ 2 · KALKULATION ============ -->
     <section class="sheet">
-      <h2 class="haupt-titel">Kalkulation</h2>
-      <p class="haupt-lede">Finde heraus, was dir von deiner Nebentätigkeit tatsächlich bleibt.</p>
+      <h2 class="haupt-titel">Was kann ich nebenbei verdienen?</h2>
+      <p class="haupt-lede">Trag ein, wie viele Behandlungen du pro Woche realistisch anbieten kannst.</p>
 
       <div class="minifelder">
         <div>
@@ -198,7 +187,9 @@
         <a class="btn leise" href="werkzeuge.html">Preis berechnen</a>
       </p>
 
-      <p class="mit-drin">Dort rechnest du weiter: Ausgaben, Steuer-Rücklage und was am Ende netto übrig bleibt. Für einzelne Behandlungen, einen ganzen Monat, dein Jahr, deinen Stundenlohn und die Kombination mit dem Gehalt aus dem Hauptjob gibt es je einen eigenen Rechner — alle unter „Weitere Werkzeuge“.</p>
+      <p class="mit-drin">Dort rechnest du weiter: Kosten, Fahrtkosten und Steuer-Rücklage stehen unter „Mehr Details anzeigen“ und sind alle optional — ohne sie funktioniert der Rechner genauso.</p>
+
+      <p class="mit-drin">Du hast bereits ein konkretes Einkommensziel? <a href="ziel-rechner.html">Rückwärts rechnen</a></p>
     </section>
 
     <!-- ============ 3 · DOKUMENTE ============ -->
@@ -367,13 +358,18 @@
       fertig = Object.keys(s).filter(k => s[k]).length;
     } catch(e){}
     fertig = Math.min(fertig, 10);
-    el('f_zahl').textContent = fertig;
     el('f_balken').style.width = (fertig * 10) + '%';
     if (fertig >= 10){
-      el('f_naechster').textContent = 'Du bist durch. Ab jetzt geht es ums Dranbleiben.';
+      el('f_naechster').textContent = 'Du bist durch.';
+      el('f_stand').textContent = 'Alle zehn Schritte erledigt. Ab jetzt geht es ums Dranbleiben.';
       el('f_weiter').textContent = 'Fahrplan ansehen';
+    } else if (fertig === 0){
+      el('f_naechster').textContent = 'Starte mit dem Fahrplan';
+      el('f_stand').textContent = NAECHSTE[0] + ' — das ist Schritt 1 von 10.';
+      el('f_weiter').href = 'schritte.html#schritt1';
     } else {
       el('f_naechster').textContent = NAECHSTE[fertig];
+      el('f_stand').textContent = 'Schritt ' + (fertig + 1) + ' von 10 · ' + fertig + ' erledigt';
       el('f_weiter').href = 'schritte.html#schritt' + (fertig + 1);
     }
   }

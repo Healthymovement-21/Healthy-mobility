@@ -39,7 +39,13 @@
   }
   .dateiliste b{ font-size:16px; font-weight:600; color:var(--ink); }
   .dateiliste span{ grid-column:1; font-size:14px; color:var(--ink-muted); }
-  .dateiliste a{ grid-column:2; grid-row:1 / span 2; font-size:14.5px; white-space:nowrap; }
+  /* Der Link fuellt die ganze Zeilenhoehe aus, damit man ihn auf dem
+     Handy sicher trifft. */
+  .dateiliste a{
+    grid-column:2; grid-row:1 / span 2;
+    display:flex; align-items:center; align-self:stretch;
+    min-height:40px; font-size:14.5px; white-space:nowrap;
+  }
 
   .meldung{ margin-top:14px; font-size:14.5px; color:var(--accent); }
   .meldung.fehler{ color:var(--mark); }
@@ -66,14 +72,14 @@
     <section class="sheet" id="alle">
       <h2>Alle Dateien</h2>
       <p class="hero-cta">
-        <a class="btn" href="dateien/PhysioNebenbei-Paket.zip" data-drive-datei="PhysioNebenbei-Paket.zip" data-drive-beschriftung="nein" download="PhysioNebenbei-Paket.zip">Alle als ZIP laden</a>
+        <a class="btn" href="dateien/PhysioNebenbei-Paket.zip" data-drive-datei="PhysioNebenbei-Paket.zip" data-drive-beschriftung="nein" download="PhysioNebenbei-Paket.zip">Alle als ZIP herunterladen</a>
         <a class="btn ghost" href="#" data-drive>Bei Google Drive öffnen</a>
       </p>
       <p class="micro warnung" id="drive-hinweis" hidden></p>
 
       <ul class="dateiliste">
-        <li><b>Fahrplan</b><span>Word-Datei mit allen zehn Kapiteln zum Anpassen</span><a data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Laden</a></li>
-        <li><b>Excel-Mappe</b><span>Preis-Kalkulation, Steuer-Rücklage, EÜR, Behandlungs-Log</span><a data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Laden</a></li>
+        <li><b>Fahrplan herunterladen</b><span>Word-Datei (.docx) mit allen zehn Kapiteln zum Anpassen</span><a data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Herunterladen</a></li>
+        <li><b>Excel-Mappe herunterladen</b><span>Excel-Datei (.xlsx) mit Preis-Kalkulation, Steuer-Rücklage, EÜR und Behandlungs-Log</span><a data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Herunterladen</a></li>
         <li><b>Rechnungsgenerator</b><span>Rechnung als PDF, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a></li>
         <li><b>Einnahmen und Ausgaben</b><span>Deine EÜR fürs Jahr, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a></li>
         <li><b>Honorarvereinbarung</b><span>Preis, Zahlungsziel, Absagefrist und Ausfallhonorar</span><a data-drive-datei="Honorarvereinbarung.pdf" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Laden</a></li>
@@ -86,9 +92,11 @@
       </ul>
 
       <p class="micro" style="margin-top:16px">
-        Auf iPhone und iPad ist bei den beiden Rechnern „Öffnen“ der richtige Weg. Eine
-        gespeicherte HTML-Datei lässt sich unter iOS nicht zuverlässig wieder starten,
-        das Herunterladen ist für Mac und Windows gedacht.
+        Word- und Excel-Datei landen auf iPhone und iPad in „Dateien“, nicht in einer
+        zufälligen App. Von dort öffnest du sie mit der App, die du willst.
+        Bei den beiden Rechnern ist „Öffnen“ der richtige Weg: eine gespeicherte
+        HTML-Datei lässt sich unter iOS nicht zuverlässig wieder starten, das
+        Herunterladen ist dort für Mac und Windows gedacht.
       </p>
 
       <div class="annotation" style="margin-top:22px">
@@ -359,6 +367,7 @@
   driveZeichnen();
 })();
 </script>
+<script src="datei-laden.js"></script>
 <script src="../drive.js"></script>
 <script>
   if ('serviceWorker' in navigator) {

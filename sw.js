@@ -3,7 +3,7 @@
    zum Home-Bildschirm hinzugefügt wurde. Kein Tracking, keine Netzwerkzugriffe
    nach außen — es wird nur gecacht, was von dieser Domain kommt. */
 
-const CACHE = 'physionebenbei-v14';
+const CACHE = 'physionebenbei-v15';
 
 /* Nur oeffentliche Dateien vorladen. Der Kundenbereich liegt unter einer
    eigenen Adresse und wird beim ersten Besuch automatisch mitgecacht,

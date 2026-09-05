@@ -67,6 +67,44 @@
   .tun{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
   .tun .btn{ padding:11px 20px; font-size:15px; }
 
+  /* ---------- Hauptrechner, direkt im Bereich ---------- */
+  .haupt-titel{
+    font-family:var(--font-display); font-size:clamp(24px,5.5vw,30px); font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); margin:0; line-height:1.15;
+  }
+  .haupt-lede{ margin:12px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); }
+
+  .minifelder{ display:grid; gap:14px; margin-top:24px; }
+  @media (min-width:520px){ .minifelder{ grid-template-columns:1fr 1fr; } }
+  .minifelder label{ display:block; font-size:14px; color:var(--ink-muted); margin-bottom:6px; }
+  .mfeld{
+    display:flex; align-items:center; gap:8px; min-height:56px;
+    background:var(--input-bg); border:1px solid var(--glass-edge);
+    border-radius:10px; padding:0 16px 0 0;
+  }
+  .mfeld:focus-within{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .mfeld input{
+    width:100%; min-width:0; border:none; background:transparent;
+    padding:10px 0 10px 16px;
+    font-family:var(--font-display); font-size:26px; font-weight:600; letter-spacing:-.02em;
+    color:var(--ink); font-variant-numeric:tabular-nums; -moz-appearance:textfield;
+  }
+  .mfeld input:focus{ outline:none; }
+  .mfeld input::-webkit-outer-spin-button,
+  .mfeld input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .mfeld .eur{ font-size:17px; color:var(--ink-muted); }
+
+  .ergebnis{ background:var(--ink); border-radius:12px; padding:26px 24px; margin-top:22px; }
+  .rechnung{ margin:0; font-size:17px; line-height:2.1; color:var(--auf-tief-leise); }
+  .rechnung b{ color:var(--auf-tief); font-weight:600; }
+  .rechnung .op{ display:inline-block; width:1.4em; }
+  .m-gross{
+    font-family:var(--font-display); font-weight:600; letter-spacing:-.035em;
+    font-size:clamp(40px,11vw,56px); line-height:1.05; color:var(--mint);
+    font-variant-numeric:tabular-nums; margin:20px 0 0;
+  }
+  .m-gross-u{ font-size:14.5px; color:var(--auf-tief-leise); margin:8px 0 0; }
+
   /* Speicherzeile */
   .stand{ font-size:14.5px; color:var(--ink-muted); margin:0; line-height:1.55; }
 
@@ -84,7 +122,52 @@
 
     <section class="sheet hero">
       <h1 class="title">Mein Bereich</h1>
-      <p class="lede">Was du gespeichert hast, auf einen Blick.</p>
+    </section>
+
+    <!-- ============ HAUPTRECHNER ============ -->
+    <section class="sheet">
+      <h2 class="haupt-titel">Was kann ich nebenbei verdienen?</h2>
+      <p class="haupt-lede">Trag ein, wie viele Behandlungen du pro Woche realistisch anbieten kannst und was du dafür ungefähr berechnen möchtest.</p>
+
+      <div class="minifelder">
+        <div>
+          <label for="m_beh">Behandlungen pro Woche</label>
+          <div class="mfeld"><input type="number" id="m_beh" value="8" min="0" max="60" step="1" inputmode="numeric"></div>
+        </div>
+        <div>
+          <label for="m_preis">Preis je Behandlung</label>
+          <div class="mfeld"><input type="number" id="m_preis" value="70" min="0" max="500" step="1" inputmode="decimal"><span class="eur">€</span></div>
+        </div>
+      </div>
+
+      <div class="ergebnis">
+        <p class="rechnung">
+          <b id="m_b">8</b> Behandlungen pro Woche<br>
+          <span class="op">×</span><b id="m_p">70 €</b><br>
+          <span class="op">=</span><b id="m_w">560 €</b> pro Woche
+        </p>
+        <p class="m-gross" id="m_monat">2.425 €</p>
+        <p class="m-gross-u">Umsatz im Monat, gerechnet mit 4,33 Wochen</p>
+      </div>
+
+      <p class="tun">
+        <a class="btn" href="verdienst.html">Kosten und Rücklage dazunehmen</a>
+        <a class="btn ghost" href="werkzeuge.html">Preis berechnen</a>
+      </p>
+      <p class="micro" style="margin-top:12px">Deine Eingaben hier landen im großen Rechner und in allen anderen. Ändern kannst du sie überall.</p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Weitere Rechner</p>
+      <ul class="werkzeugliste">
+        <li><a href="werkzeuge.html">Preis berechnen</a><span>Welcher Preis macht für deine Behandlung und deinen Aufwand Sinn?</span></li>
+        <li><a href="monatsrechner.html">Behandlung kalkulieren</a><span>Was bringt dir eine einzelne Behandlung ungefähr?</span></li>
+        <li><a href="monatsrechner.html">Monat kalkulieren</a><span>Wie sieht dein tatsächlicher Monat mit verschiedenen Behandlungen und Kosten aus?</span></li>
+        <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du neben deinem Hauptjob realistisch unter?</span></li>
+        <li><a href="gehaltsrechner.html">Gehalt und Stunden</a><span>Was verändert sich, wenn du deine Arbeitszeit im Hauptjob veränderst?</span></li>
+        <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Du hast ein konkretes Einkommensziel? Dann rechne von diesem Ziel zurück.</span></li>
+        <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
+      </ul>
     </section>
 
     <section class="sheet">
@@ -98,36 +181,8 @@
         <p class="naechster-titel">Mein nächster Schritt</p>
         <p class="naechster-name" id="f_naechster">–</p>
         <p class="tun">
-          <a class="btn" href="schritte.html" id="f_weiter">Weiter</a>
-          <a class="btn ghost" href="schritte.html">Ganzen Fahrplan ansehen</a>
+          <a class="btn ghost" href="schritte.html" id="f_weiter">Weiter</a>
         </p>
-      </div>
-
-      <!-- ============ 2 · MEINE ZAHLEN ============ -->
-      <div class="block">
-        <h2>Meine Zahlen</h2>
-
-        <div id="z_leer" hidden>
-          <p class="gross leer">Noch keine Zahlen gespeichert.</p>
-          <p class="darunter">Trag einfach ein, wie viele Behandlungen du pro Woche realistisch anbieten kannst und was du dafür nimmst. Das Ergebnis steht sofort da.</p>
-          <p class="tun"><a class="btn" href="verdienst.html">Zahlen berechnen</a></p>
-        </div>
-
-        <div id="z_da" hidden>
-          <p class="gross"><span id="z_bleibt">–</span></p>
-          <p class="darunter" id="z_unter">–</p>
-
-          <div class="raster">
-            <div><div class="t">Behandlungen pro Woche</div><div class="w" id="z_woche">–</div></div>
-            <div><div class="t">Preis je Behandlung</div><div class="w" id="z_preis">–</div></div>
-            <div><div class="t">Umsatz im Monat</div><div class="w" id="z_umsatz">–</div></div>
-            <div><div class="t">Steuer-Rücklage <span id="z_satz"></span></div><div class="w" id="z_ruecklage">–</div></div>
-          </div>
-
-          <p class="micro" style="margin-top:16px">Schätzwerte aus deinen eigenen Eingaben. Die Rücklage ist der Prozentsatz, den du selbst gewählt hast — deine tatsächliche Steuerlast berechnet diese Anwendung nicht.</p>
-
-          <p class="tun"><a class="btn ghost" href="verdienst.html">Zahlen ändern</a></p>
-        </div>
       </div>
 
       <!-- ============ 3 · MEINE TERMINE ============ -->
@@ -162,27 +217,6 @@
 
     </section>
 
-    <section class="sheet">
-      <p class="eyebrow">Mein wichtigster Rechner</p>
-      <h2>Was kann ich nebenbei verdienen?</h2>
-      <p>Trag ein, wie viele Behandlungen du pro Woche schaffst und was du nimmst. Du siehst sofort, was ungefähr übrig bleibt.</p>
-      <p class="hero-cta"><a class="btn" href="verdienst.html">Rechner öffnen</a></p>
-    </section>
-
-    <section class="sheet">
-      <p class="eyebrow">Weitere Werkzeuge</p>
-      <ul class="werkzeugliste">
-        <li><a href="werkzeuge.html">Preis finden</a><span>Welcher Preis passt zu deiner Behandlung und deinem Aufwand?</span></li>
-        <li><a href="monatsrechner.html">Behandlung kalkulieren</a><span>Was bleibt bei einer einzelnen Behandlung ungefähr übrig?</span></li>
-        <li><a href="monatsrechner.html">Monat planen</a><span>Wie sieht dein tatsächlicher Monat aus?</span></li>
-        <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du zeitlich unter?</span></li>
-        <li><a href="gehaltsrechner.html">Gehalt und Hauptjob</a><span>Was passiert mit deinem Hauptjob und deinem Nebenverdienst?</span></li>
-        <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Wie viele Patient:innen brauchst du für einen bestimmten Zielbetrag?</span></li>
-        <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
-      </ul>
-      <p class="micro" style="margin-top:14px">Was du in einem Rechner speicherst, schlagen dir die anderen als Ausgangswert vor. Ändern kannst du es dort jederzeit.</p>
-    </section>
-
   </div>
 
   <footer class="site">
@@ -206,62 +240,61 @@
   const el  = id => document.getElementById(id);
   const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
 
-  /* ---------- Meine Zahlen ----------
-     Dieselbe Vorwaertsrechnung wie im Hauptrechner: Behandlungen mal Preis,
-     minus Kosten, minus die selbst gewaehlte Ruecklage. Ist ein Monat im
-     Monats-Rechner erfasst, gilt dessen Umsatz statt der Planung. */
+  /* ---------- Speicherung ---------- */
+  function standZeichnen(){
+    const iso = Daten.gespeichertAm();
+    let text = 'Noch nichts gespeichert';
+    if (iso){
+      const d = new Date(iso);
+      const uhr = d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
+      text = '✓ Lokal gespeichert: ' +
+             (d.toDateString() === new Date().toDateString() ? 'heute, ' : d.toLocaleDateString('de-DE') + ', ') +
+             uhr + ' Uhr';
+    }
+    el('s_text').textContent = text + (DriveSync.verbunden()
+      ? ' · ✓ Mit Google Drive synchronisiert'
+      : ' · Google Drive nicht verbunden');
+  }
+
+  /* ---------- Der Hauptrechner, direkt hier ----------
+     Zwei Angaben genuegen fuer ein Ergebnis. Kosten und Ruecklage stehen
+     im grossen Rechner, damit der Einstieg hier kurz bleibt. */
   const WOCHEN = 4.33;
 
-  function vorwaerts(){
-    const z = Daten.zahlen();
-    const beh   = z.proWoche || 0;
-    const preis = z.preis || 0;
-    const satz  = Math.min(Math.max((z.satz || 0) / 100, 0), 0.99);
-    const fahrt = (z.km || 0) * (z.kmsatz || 0) * beh * WOCHEN;
-    const kosten = fahrt + (z.raum || 0) + (z.fix || 0);
-
-    const f = Daten.finanzen();
-    const echterMonat = f && f.monat && f.umsatz > 0;
-
-    let umsatz = beh * preis * WOCHEN, ausgaben = kosten, text;
-    if (echterMonat){
-      umsatz = f.umsatz;
-      ausgaben = f.ausgaben || 0;
-      const [j, m] = String(f.monat).split('-');
-      const name = ['Januar','Februar','März','April','Mai','Juni','Juli',
-                    'August','September','Oktober','November','Dezember'][Number(m) - 1];
-      text = name
-        ? 'aus deinem erfassten Monat ' + name + ' ' + j
-        : 'aus deinem zuletzt erfassten Monat';
-    } else {
-      text = 'wenn du ' + beh + ' Behandlungen pro Woche schaffst';
-    }
-
-    const gewinn    = umsatz - ausgaben;
-    const ruecklage = Math.max(gewinn, 0) * satz;
-    return {beh, preis, umsatz, ruecklage, bleibt: gewinn - ruecklage, satz, text};
+  function feldwert(id){
+    const e = el(id);
+    let v = parseFloat(String(e.value).replace(',', '.'));
+    if (!isFinite(v)) v = 0;
+    const min = parseFloat(e.min), max = parseFloat(e.max);
+    if (isFinite(min) && v < min) v = min;
+    if (isFinite(max) && v > max) v = max;
+    return v;
   }
 
-  function zahlenZeichnen(){
-    const eigene = !!Daten.gespeichertAm();
-    const w = vorwaerts();
-
-    if (!eigene || w.beh <= 0 || w.preis <= 0){
-      el('z_leer').hidden = false;
-      el('z_da').hidden   = true;
-      return;
-    }
-    el('z_leer').hidden = true;
-    el('z_da').hidden   = false;
-
-    el('z_bleibt').textContent    = eur(w.bleibt);
-    el('z_unter').textContent     = 'bleiben dir voraussichtlich im Monat, ' + w.text + '.';
-    el('z_woche').textContent     = w.beh;
-    el('z_preis').textContent     = eur(w.preis);
-    el('z_umsatz').textContent    = eur(w.umsatz);
-    el('z_ruecklage').textContent = eur(w.ruecklage);
-    el('z_satz').textContent      = Math.round(w.satz * 100) + ' %';
+  function rechnen(){
+    const beh   = feldwert('m_beh');
+    const preis = feldwert('m_preis');
+    const woche = beh * preis;
+    el('m_b').textContent     = beh.toLocaleString('de-DE');
+    el('m_p').textContent     = eur(preis);
+    el('m_w').textContent     = eur(woche);
+    el('m_monat').textContent = eur(woche * WOCHEN);
   }
+
+  if (window.Daten){
+    Daten.koppeln('zahlen', {proWoche:'#m_beh', preis:'#m_preis'}, rechnen);
+  }
+  ['m_beh','m_preis'].forEach(id => {
+    el(id).addEventListener('input', rechnen);
+    /* Hier gibt es bewusst keinen Speichern-Knopf: der Rechner soll sich
+       wie ein Blick auf die eigenen Zahlen anfuehlen, nicht wie ein
+       Formular. Sobald ein Feld verlassen wird, steht der Wert fest und
+       gilt auch in den anderen Rechnern. */
+    el(id).addEventListener('change', () => {
+      rechnen();
+      if (window.Daten) { Daten.speichern(); standZeichnen(); }
+    });
+  });
 
   /* ---------- Mein Fortschritt ---------- */
   /* Die zehn Schritte aus dem Fahrplan, in derselben Reihenfolge. */
@@ -321,23 +354,7 @@
       (kommend.length > 1 ? ' · danach noch ' + (kommend.length - 1) : '');
   }
 
-  /* ---------- Speicherung ---------- */
-  function standZeichnen(){
-    const iso = Daten.gespeichertAm();
-    let text = 'Noch nichts gespeichert';
-    if (iso){
-      const d = new Date(iso);
-      const uhr = d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
-      text = '✓ Lokal gespeichert: ' +
-             (d.toDateString() === new Date().toDateString() ? 'heute, ' : d.toLocaleDateString('de-DE') + ', ') +
-             uhr + ' Uhr';
-    }
-    el('s_text').textContent = text + (DriveSync.verbunden()
-      ? ' · ✓ Mit Google Drive synchronisiert'
-      : ' · Google Drive nicht verbunden');
-  }
-
-  zahlenZeichnen();
+  rechnen();
   fortschrittZeichnen();
   termineZeichnen();
   standZeichnen();

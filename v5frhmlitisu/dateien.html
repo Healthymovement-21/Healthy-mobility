@@ -32,6 +32,11 @@
   .speicher .ort.warn::before{ content:"!"; color:var(--mark); font-weight:700; }
   .speicher .hinw{ font-size:13.5px; color:var(--ink-muted); margin-top:5px; }
 
+  /* Die Dateien stehen danach sortiert, wann man sie braucht.
+     Die Zwischenzeilen sind Text, keine eigenen Kaesten. */
+  .wann{ font-size:13px; font-weight:600; color:var(--ink-muted); margin:30px 0 0; }
+  .wann:first-of-type{ margin-top:24px; }
+
   .dateiliste{ list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--glass-line); }
   .dateiliste li{
     display:grid; grid-template-columns:1fr auto; gap:4px 16px;
@@ -65,7 +70,7 @@
 
     <section class="sheet hero">
       <h1 class="title">Meine Dateien</h1>
-      <p class="lede">Elf Vorlagen und zwei Rechner zum Mitnehmen. Welche du bei welchem Schritt brauchst, steht in deinem <a href="schritte.html">Fahrplan</a>.</p>
+      <p class="lede">Elf Vorlagen und zwei Rechner zum Mitnehmen — sortiert danach, wann du sie brauchst. Welche zu welchem Schritt gehört, steht in deinem <a href="schritte.html">Mein Fahrplan</a>.</p>
     </section>
 
     <!-- ============ DATEIEN ============ -->
@@ -77,18 +82,27 @@
       </p>
       <p class="micro warnung" id="drive-hinweis" hidden></p>
 
+      <h3 class="wann">Vor dem ersten Patienten</h3>
       <ul class="dateiliste">
-        <li><b>Fahrplan herunterladen</b><span>Word-Datei (.docx) mit allen zehn Kapiteln zum Anpassen</span><a data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Herunterladen</a></li>
-        <li><b>Excel-Mappe herunterladen</b><span>Excel-Datei (.xlsx) mit Preis-Kalkulation, Steuer-Rücklage, EÜR und Behandlungs-Log</span><a data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Herunterladen</a></li>
-        <li><b>Rechnungsgenerator</b><span>Rechnung als PDF, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a></li>
-        <li><b>Einnahmen und Ausgaben</b><span>Deine EÜR fürs Jahr, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a></li>
+        <li><b>Fahrplan als Word-Datei</b><span>Word-Datei (.docx) mit allen zehn Kapiteln zum Anpassen</span><a data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Herunterladen</a></li>
         <li><b>Honorarvereinbarung</b><span>Preis, Zahlungsziel, Absagefrist und Ausfallhonorar</span><a data-drive-datei="Honorarvereinbarung.pdf" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Laden</a></li>
         <li><b>Behandlungsvertrag</b><span>Aufklärung, Mitwirkung, Haftung</span><a data-drive-datei="Behandlungsvertrag.pdf" href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Laden</a></li>
         <li><b>Datenschutz-Information</b><span>Nach Art. 13 DSGVO, zum Aushändigen beim ersten Termin</span><a data-drive-datei="Datenschutz-Patienten.pdf" href="dateien/Datenschutz-Patienten.pdf" download="Datenschutz-Patienten.pdf">Laden</a></li>
+      </ul>
+
+      <h3 class="wann">Für die Behandlung</h3>
+      <ul class="dateiliste">
         <li><b>Anamnesebogen</b><span>Beschwerden, Vorgeschichte, Kontraindikationen, Ziele</span><a data-drive-datei="Anamnesebogen.pdf" href="dateien/Anamnesebogen.pdf" download="Anamnesebogen.pdf">Laden</a></li>
         <li><b>Dokumentationsbogen</b><span>Befund und Verlauf je Behandlung</span><a data-drive-datei="Dokumentationsvorlage.pdf" href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Laden</a></li>
         <li><b>Terminübersicht</b><span>Wochenplan zum Ausdrucken</span><a data-drive-datei="Terminuebersicht.pdf" href="dateien/Terminuebersicht.pdf" download="Terminuebersicht.pdf">Laden</a></li>
         <li><b>Patientenliste</b><span>Mit Aufbewahrungs- und Löschfristen</span><a data-drive-datei="Patientenliste.pdf" href="dateien/Patientenliste.pdf" download="Patientenliste.pdf">Laden</a></li>
+      </ul>
+
+      <h3 class="wann">Für die Abrechnung</h3>
+      <ul class="dateiliste">
+        <li><b>Rechnung erstellen</b><span>Rechnung als PDF, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a></li>
+        <li><b>Einnahmen und Ausgaben</b><span>Deine EÜR fürs Jahr, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a></li>
+        <li><b>Excel-Mappe</b><span>Excel-Datei (.xlsx) mit Preis-Kalkulation, Steuer-Rücklage, EÜR und Behandlungs-Log</span><a data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Herunterladen</a></li>
       </ul>
 
       <p class="micro" style="margin-top:16px">

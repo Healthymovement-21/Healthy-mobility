@@ -38,7 +38,12 @@
   .s-kopf input[type=checkbox]{ width:22px; height:22px; margin:2px 0 0; accent-color:var(--accent); cursor:pointer; }
   /* Der Titel ist die Flaeche zum Antippen und braucht auf dem Handy Hoehe. */
   .s-kopf .s-titel{ display:flex; align-items:center; min-height:40px; cursor:pointer; }
+  /* Die Zeile ueber dem Titel sagt in Worten, wo man steht:
+     erledigt, du bist hier, oder noch offen. Kein Diagramm, nur Text. */
   .s-nr{ font-size:12px; font-weight:600; color:var(--ink-faint); font-variant-numeric:tabular-nums; display:block; margin-bottom:2px; }
+  .s-nr .zeichen{ font-variant-numeric:normal; margin-right:5px; }
+  .schritte-liste > li.erledigt .s-nr .zeichen{ color:var(--accent); }
+  .schritte-liste > li.jetzt .s-nr{ color:var(--ink); }
   .s-titel{ font-family:var(--font-display); font-size:19px; font-weight:600; letter-spacing:-.02em; color:var(--ink); display:block; cursor:pointer; }
   .s-zweck{ font-size:15.5px; line-height:1.55; color:var(--ink-muted); margin:7px 0 0; max-width:58ch; }
   .s-aktionen{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 18px; margin:16px 0 0; }
@@ -77,6 +82,7 @@
     <section class="sheet hero">
       <h1 class="title">Mein Fahrplan</h1>
       <p class="lede">Zehn Schritte von der Frage „lohnt sich das überhaupt?“ bis zur ersten geschriebenen Rechnung. Hak ab, was erledigt ist — dann weißt du beim nächsten Mal sofort, wo du stehst.</p>
+      <p class="micro">Verstehen → Planen → Kalkulieren → Vorbereiten → Starten → Arbeiten</p>
 
       <div class="fortschritt">
         <div class="f-zeile"><span id="f-label">–</span><b id="f-prozent">0 %</b></div>
@@ -114,112 +120,15 @@
   </footer>
 </div>
 
+<script src="fahrplan-schritte.js"></script>
 <script>
 (function(){
   'use strict';
-  /* Die zehn Schritte. Jeder mit einem Zweck in einem Satz und dem
-     Werkzeug, um das es geht. */
-  const SCHRITTE = [
-    {
-      id: 's1',
-      titel: 'Lohnt sich das überhaupt?',
-      zweck: 'Bevor du irgendetwas anmeldest: rechne einmal durch, was neben dem Hauptjob realistisch übrig bleibt und wie viele Abende dich das kostet.',
-      links: [
-        {text:'Durchrechnen', art:'Rechner', href:'ziel-rechner.html', haupt:true},
-        {text:'Kapitel 1 lesen', art:'5 Minuten', href:'fahrplan.html'}
-      ]
-    },
-    {
-      id: 's2',
-      titel: 'Anmeldung und Absicherung',
-      zweck: 'Der Teil, der wirklich erledigt sein muss, bevor die erste Patientin auf der Bank liegt: Finanzamt, BGW, Berufshaftpflicht.',
-      links: [
-        {text:'Checkliste abarbeiten', art:'18 Punkte', href:'fahrplan.html#checkliste', haupt:true},
-        {text:'Kapitel 2 und 3', art:'Anmeldung, Versicherung', href:'fahrplan.html'}
-      ]
-    },
-    {
-      id: 's3',
-      titel: 'Deinen Preis festlegen',
-      zweck: 'Vom Wunscheinkommen rückwärts zum Preis pro Behandlung, mit Fahrtzeit und Steuerrücklage statt Bauchgefühl.',
-      links: [
-        {text:'Preis kalkulieren', art:'Rechner', href:'werkzeuge.html', haupt:true},
-        {text:'Kapitel 4', art:'Preise und Kalkulation', href:'fahrplan.html'}
-      ]
-    },
-    {
-      id: 's4',
-      titel: 'Wie viele Patient:innen du brauchst',
-      zweck: 'Du sagst, was am Monatsende übrig bleiben soll. Der Rechner sagt dir, wie viele Termine das bei welchem Preis bedeutet.',
-      links: [
-        {text:'Ziel eingeben', art:'Rechner', href:'ziel-rechner.html', haupt:true}
-      ]
-    },
-    {
-      id: 's5',
-      titel: 'Was am Monatsende übrig bleibt',
-      zweck: 'Trag deine echten Behandlungen ein und sieh, was nach Ausgaben und Rücklage tatsächlich bleibt. Mit PDF-Export fürs eigene Archiv.',
-      links: [
-        {text:'Monat berechnen', art:'Rechner', href:'monatsrechner.html', haupt:true},
-        {text:'Auslastung planen', art:'Rechner', href:'planungsrechner.html'}
-      ]
-    },
-    {
-      id: 's6',
-      titel: 'Deine Unterlagen vorbereiten',
-      zweck: 'Honorarvereinbarung, Behandlungsvertrag und Datenschutz-Information ausfüllen — und prüfen lassen, bevor jemand unterschreibt.',
-      links: [
-        {text:'Honorarvereinbarung', art:'PDF', href:'dateien/Honorarvereinbarung.pdf', haupt:true},
-        {text:'Behandlungsvertrag', art:'PDF', href:'dateien/Behandlungsvertrag.pdf'},
-        {text:'Datenschutz-Information', art:'PDF', href:'dateien/Datenschutz-Patienten.pdf'}
-      ]
-    },
-    {
-      id: 's7',
-      titel: 'Patient:innen und Termine organisieren',
-      zweck: 'Wer kommt wann, und wo steht das? Eine Liste und ein Wochenplan reichen für den Anfang völlig — Hauptsache, es steht nicht nur im Kopf.',
-      links: [
-        {text:'Termine eintragen', art:'im Browser', href:'termine.html', haupt:true},
-        {text:'Patientenliste', art:'PDF', href:'dateien/Patientenliste.pdf'},
-        {text:'Terminübersicht', art:'PDF', href:'dateien/Terminuebersicht.pdf'},
-        {text:'Online-Terminbuchung', art:'Kurzkapitel', href:'terminbuchung.html'}
-      ]
-    },
-    {
-      id: 's8',
-      titel: 'Behandlungen dokumentieren',
-      zweck: 'Anamnese beim ersten Termin, danach jede Behandlung in zwei Sätzen festhalten. Eine Dokumentation wird von dir erwartet, und im Zweifel schützt sie dich.',
-      links: [
-        {text:'Anamnesebogen', art:'PDF', href:'dateien/Anamnesebogen.pdf', haupt:true},
-        {text:'Dokumentationsbogen', art:'PDF', href:'dateien/Dokumentationsvorlage.pdf'},
-        {text:'Kapitel 6', art:'Dokumentation', href:'fahrplan.html'}
-      ]
-    },
-    {
-      id: 's9',
-      titel: 'Deine erste Rechnung schreiben',
-      zweck: 'Deine Daten trägst du einmal ein, danach dauert jede Rechnung zwei Minuten. Die Nummer läuft automatisch weiter, der QR-Code zum Überweisen ist drauf.',
-      links: [
-        {text:'Rechnung erstellen', art:'Rechner', href:'dateien/PhysioNebenbei-Rechnungsgenerator.html', haupt:true},
-        {text:'Kapitel 5', art:'Pflichtangaben', href:'fahrplan.html'}
-      ]
-    },
-    {
-      id: 's10',
-      titel: 'Dranbleiben und nachsteuern',
-      zweck: 'Nach ein paar Monaten weißt du, was wirklich läuft. Dann lohnt der Blick auf Einnahmen, Auslastung und das, was der Nebenjob mit deiner Woche macht.',
-      links: [
-        {text:'Einnahmen und Ausgaben', art:'Rechner', href:'dateien/PhysioNebenbei-Einnahmen-Ausgaben.html', haupt:true},
-        {text:'Gehalt und Stunden', art:'Rechner', href:'gehaltsrechner.html'},
-        {text:'Häufige Fehler', art:'10 Punkte', href:'fehler.html'}
-      ]
-    }
-  ];
-
-  const KEY = 'physionebenbei-schritte';
-  let stand = {};
-  try { stand = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ stand = {}; }
-  function speichern(){ try { localStorage.setItem(KEY, JSON.stringify(stand)); } catch(e){} }
+  /* Die zehn Schritte stehen in fahrplan-schritte.js — dieselbe Liste,
+     aus der auch Mein Bereich den naechsten Schritt liest. */
+  const SCHRITTE = Fahrplan.SCHRITTE;
+  let stand = Fahrplan.stand();
+  function speichern(){ Fahrplan.speichern(stand); }
 
   function linkHtml(l){
     return '<a href="' + l.href + '"' + (l.haupt ? ' class="haupt"' : '') + '>' +
@@ -230,7 +139,7 @@
     '<li data-id="' + s.id + '" id="schritt' + (i + 1) + '">' +
       '<div class="s-kopf">' +
         '<input type="checkbox" id="chk-' + s.id + '" aria-label="Schritt ' + (i+1) + ' erledigt">' +
-        '<div><span class="s-nr">Schritt ' + (i+1) + '</span>' +
+        '<div><span class="s-nr" id="nr-' + s.id + '">Schritt ' + (i+1) + '</span>' +
         '<label class="s-titel" for="chk-' + s.id + '">' + s.titel + '</label></div>' +
       '</div>' +
       '<div class="s-body"><p class="s-zweck">' + s.zweck + '</p>' +
@@ -239,14 +148,26 @@
   ).join('');
 
   function zeichnen(){
-    let erledigt = 0, naechster = null;
-    SCHRITTE.forEach(s => {
+    const offen = Fahrplan.naechster(stand);
+    const jetzt = offen ? offen.schritt.id : null;
+    let erledigt = 0;
+
+    SCHRITTE.forEach((s, i) => {
       const li  = document.querySelector('[data-id="' + s.id + '"]');
       const box = document.getElementById('chk-' + s.id);
       const ist = !!stand[s.id];
       box.checked = ist;
       li.classList.toggle('erledigt', ist);
-      if (ist) erledigt++; else if (!naechster) naechster = s;
+      li.classList.toggle('jetzt', s.id === jetzt);
+      if (ist) erledigt++;
+
+      /* Erledigt, du bist hier, oder offen — in genau dieser Reihenfolge
+         liest sich die Liste als Weg und nicht als Aufgabenhaufen. */
+      let zeichen = '○', text = 'Schritt ' + (i + 1) + ' · ' + s.abschnitt;
+      if (ist)                    { zeichen = '✓'; text += ' · erledigt'; }
+      else if (s.id === jetzt)    { zeichen = '→'; text += ' · du bist hier'; }
+      document.getElementById('nr-' + s.id).innerHTML =
+        '<span class="zeichen" aria-hidden="true">' + zeichen + '</span>' + text;
     });
 
     const anteil = Math.round(erledigt / SCHRITTE.length * 100);
@@ -256,9 +177,10 @@
 
     const block = document.getElementById('naechster');
     const cta   = document.getElementById('n-cta');
-    if (naechster){
+    if (offen){
+      const naechster = offen.schritt;
       block.classList.remove('fertig');
-      document.getElementById('n-kicker').textContent = 'Dein nächster Schritt';
+      document.getElementById('n-kicker').textContent = 'Dein nächster Schritt · Schritt ' + offen.nr + ' von ' + SCHRITTE.length;
       document.getElementById('n-titel').textContent  = naechster.titel;
       document.getElementById('n-zweck').textContent  = naechster.zweck;
       cta.innerHTML = naechster.links.slice(0, 2).map((l, i) =>

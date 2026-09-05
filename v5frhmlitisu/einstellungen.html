@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Einstellungen — PhysioNebenbei</title>
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  /* Speicherstatus, klebt oben unter der Marke */
+  .stand{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
+    padding:12px 14px; margin:0 0 22px;
+    border:1px solid var(--glass-edge); border-radius:8px;
+    background:var(--pure); font-size:14px; color:var(--ink-muted);
+  }
+  .stand.offen{ border-color:var(--accent); background:var(--accent-soft); }
+  .stand .punkt{ width:8px; height:8px; border-radius:50%; background:var(--ink-faint); flex:none; }
+  .stand.offen .punkt{ background:var(--accent); }
+  .stand .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
+
+  /* Zahlen-Kacheln */
+  .zahlen{ display:grid; gap:10px; margin-top:18px; grid-template-columns:1fr 1fr; }
+  @media (min-width:640px){ .zahlen{ grid-template-columns:repeat(4,1fr); } }
+  .zk{ border:1px solid var(--glass-edge); border-radius:8px; padding:14px 15px; }
+  .zk .t{ font-size:12px; color:var(--ink-faint); }
+  .zk .w{
+    font-family:var(--font-display); font-size:22px; font-weight:600;
+    letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:3px;
+  }
+  .zk.gross{ grid-column:1 / -1; background:var(--ink); border-color:var(--ink); }
+  .zk.gross .t{ color:var(--auf-tief-leise); }
+  .zk.gross .w{ font-size:clamp(32px,7vw,42px); color:var(--mint); }
+  .zk.gross .u{ font-size:14px; color:var(--auf-tief-leise); margin-top:6px; }
+
+  .balken{ height:6px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:12px 0 6px; }
+  .balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .3s ease; }
+
+  /* Dateiliste mit Speicherorten */
+  .speicher{ list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
+  .speicher li{ padding:14px 0; border-bottom:1px solid var(--glass-edge); }
+  .speicher b{ display:block; font-size:16px; font-weight:600; color:var(--ink); }
+  .speicher .orte{ display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:6px; }
+  .speicher .ort{ font-size:13.5px; color:var(--ink-muted); display:inline-flex; align-items:center; gap:5px; }
+  .speicher .ort::before{ content:"✓"; color:var(--accent); font-weight:700; }
+  .speicher .ort.nein::before{ content:"—"; color:var(--ink-faint); }
+  .speicher .ort.warn::before{ content:"!"; color:var(--mark); font-weight:700; }
+  .speicher .hinw{ font-size:13.5px; color:var(--ink-muted); margin-top:5px; }
+
+  .wahl{ display:grid; gap:12px; margin:16px 0 0; }
+  .wahl label{
+    display:grid; grid-template-columns:22px 1fr; gap:12px; align-items:start;
+    font-size:15px; color:var(--ink); cursor:pointer;
+  }
+  .wahl input{ width:20px; height:20px; margin:2px 0 0; accent-color:var(--accent); cursor:pointer; }
+  .wahl .u{ display:block; font-size:13.5px; color:var(--ink-muted); margin-top:3px; }
+
+  .feldgruppe{ display:grid; gap:12px; margin-top:16px; }
+  @media (min-width:560px){ .feldgruppe{ grid-template-columns:1fr 1fr; } .feldgruppe .breit{ grid-column:1 / -1; } }
+  .feldgruppe label{ display:block; font-size:14px; color:var(--ink-muted); margin-bottom:5px; }
+  .feldgruppe input{
+    width:100%; background:var(--pure); border:1px solid var(--glass-edge);
+    border-radius:8px; padding:12px 14px; font-family:var(--font-sans); font-size:17px; color:var(--ink);
+  }
+  .feldgruppe input:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .meldung{ margin-top:14px; font-size:14.5px; color:var(--accent); }
+  .meldung.fehler{ color:var(--mark); }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="./">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Einstellungen</span></nav>
+
+  <div class="stand" id="stand">
+    <span class="punkt"></span>
+    <span id="stand_text">–</span>
+    <button class="btn" type="button" id="jetzt_speichern" hidden>Jetzt speichern</button>
+  </div>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <p class="eyebrow">Einstellungen</p>
+      <h1 class="title">Speicher und Angaben</h1>
+      <p class="lede">Wo deine Daten liegen, wie du sie sicherst und was du an eigenen Angaben hinterlegt hast.</p>
+    </section>
+
+    <!-- ============ 6 · GOOGLE DRIVE ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Zusätzlich</p>
+      <h2>Google Drive verbinden</h2>
+      <p>Freiwillig und jederzeit trennbar. Ohne Verbindung funktioniert alles genau wie bisher — die Verbindung ist eine zweite Kopie, kein Ersatz für die lokale Speicherung.</p>
+
+      <div class="calc-card" style="padding:20px 22px">
+        <p style="margin:0 0 14px" id="drive_status">–</p>
+        <p class="hero-cta" style="margin:0">
+          <a class="btn" href="#" id="drive_verbinden">Google Drive verbinden</a>
+          <a class="btn ghost" href="#" id="drive_hoch" hidden>Jetzt hochladen</a>
+          <a class="btn ghost" href="#" id="drive_runter" hidden>Von Drive laden</a>
+          <a class="btn ghost" href="#" id="drive_trennen" hidden>Trennen</a>
+        </p>
+        <p class="meldung" id="drive_meldung" hidden></p>
+      </div>
+
+      <h3>Was übertragen wird</h3>
+      <div class="wahl">
+        <label>
+          <input type="checkbox" id="w_zahlen" checked>
+          <span>Meine Zahlen und Einstellungen
+            <span class="u">Ziel, Preis, Zeiten, Kosten und deine Rechnungsangaben. Keine Patientendaten.</span>
+          </span>
+        </label>
+        <label>
+          <input type="checkbox" id="w_termine">
+          <span>Meine Termine
+            <span class="u">Enthält Patientennamen. Standardmäßig aus. Schalte es nur ein, wenn du das bewusst willst.</span>
+          </span>
+        </label>
+      </div>
+
+      <h3>Wo liegt gerade was?</h3>
+      <ul class="speicher">
+        <li>
+          <b>Meine Zahlen und Einstellungen</b>
+          <div class="orte">
+            <span class="ort">auf diesem Gerät</span>
+            <span class="ort nein" id="o_zahlen_drive">Drive aus</span>
+          </div>
+        </li>
+        <li>
+          <b>Meine Termine</b>
+          <div class="orte">
+            <span class="ort">auf diesem Gerät</span>
+            <span class="ort nein" id="o_termine_drive">nicht synchronisiert</span>
+          </div>
+          <p class="hinw">Enthält Patientennamen — deshalb bleibt die Übertragung standardmäßig aus.</p>
+        </li>
+        <li>
+          <b>Vorlagen, PDFs und Arbeitsblätter</b>
+          <div class="orte"><span class="ort">im Produkt, du lädst sie herunter</span></div>
+        </li>
+        <li>
+          <b>Fertige Rechnungen aus dem Generator</b>
+          <div class="orte"><span class="ort nein">nirgends gespeichert</span></div>
+          <p class="hinw">Der Generator baut die Rechnung im Browser. Sichere sie als PDF, sonst ist sie nach dem Schließen weg.</p>
+        </li>
+      </ul>
+
+      <div class="annotation" style="margin-top:20px">
+        <strong>Bevor du personenbezogene Daten synchronisierst:</strong> Die Speicherung
+        personenbezogener und besonders geschützter Daten — dazu gehören Patientennamen
+        und alles, was auf einen Gesundheitszustand schließen lässt — erfordert eine
+        geeignete und datenschutzkonforme Konfiguration. Prüfe vor der Nutzung, ob die
+        von dir gewählte Speicherlösung für deine konkreten Daten und deinen
+        Einsatzzweck geeignet ist. Diese Anwendung kann dir diese Prüfung nicht
+        abnehmen und überträgt von sich aus nichts.
+      </div>
+
+      <details class="mehr">
+        <summary>Worauf greift die Verbindung zu?</summary>
+        <div>
+          <p>Nur auf eine einzige Datei, die diese Anwendung selbst in deinem Drive anlegt: <code>PhysioNebenbei-Daten.json</code>. Die verwendete Berechtigung heißt <em>drive.file</em> und erlaubt ausschließlich den Zugriff auf selbst erstellte Dateien. Dein übriges Google Drive bleibt für die Anwendung unsichtbar.</p>
+          <p>Solange du nicht auf „Verbinden“ tippst, wird auch kein Skript von Google geladen und keine Verbindung dorthin aufgebaut.</p>
+          <p>Die Anmeldung gilt für die aktuelle Sitzung. Wenn du den Browser schließt, meldest du dich beim nächsten Mal neu an — das Zugriffsrecht wird bewusst nicht dauerhaft gespeichert.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============ 7 · EINSTELLUNGEN ============ -->
+    <section class="sheet">
+      <p class="eyebrow">Einstellungen</p>
+      <h2>Deine Angaben</h2>
+      <p>Diese Angaben brauchst du für Rechnungen und Verträge. Sie bleiben auf deinem Gerät.</p>
+      <div class="feldgruppe">
+        <div class="breit"><label for="p_name">Name</label><input type="text" id="p_name" autocomplete="name" placeholder="Vor- und Nachname"></div>
+        <div class="breit"><label for="p_zusatz">Zusatz <span class="micro">optional</span></label><input type="text" id="p_zusatz" placeholder="z. B. Physiotherapie · Nebenberuflich"></div>
+        <div class="breit"><label for="p_strasse">Straße und Hausnummer</label><input type="text" id="p_strasse" autocomplete="street-address"></div>
+        <div><label for="p_plzOrt">PLZ und Ort</label><input type="text" id="p_plzOrt"></div>
+        <div><label for="p_telefon">Telefon</label><input type="tel" id="p_telefon" autocomplete="tel"></div>
+        <div class="breit"><label for="p_email">E-Mail</label><input type="email" id="p_email" autocomplete="email"></div>
+      </div>
+      <p class="micro" style="margin-top:14px">
+        Bankverbindung und Steuernummer trägst du direkt im
+        <a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnungsgenerator</a> ein.
+        Der speichert eigenständig auf deinem Gerät, damit diese Angaben nicht zusätzlich
+        hier herumliegen.
+      </p>
+
+      <h3 style="margin-top:34px">Sichern und umziehen</h3>
+      <p>Damit deine Zahlen beim Gerätewechsel nicht verloren gehen. Es geht nichts an einen Server, die Datei entsteht hier im Browser.</p>
+
+      <div class="wahl" style="margin-bottom:16px">
+        <label>
+          <input type="checkbox" id="ex_termine">
+          <span>Termine mitnehmen
+            <span class="u">Enthält Patientennamen. Für den reinen Umzug deiner Kalkulation brauchst du das meist nicht.</span>
+          </span>
+        </label>
+      </div>
+
+      <p class="hero-cta">
+        <a class="btn" href="#" id="export_teilen" hidden>Datei teilen und sichern</a>
+        <a class="btn" href="#" id="export">Als Datei herunterladen</a>
+        <a class="btn ghost" href="#" id="export_text">Text anzeigen und kopieren</a>
+        <a class="btn ghost" href="#" id="import_start">Daten importieren</a>
+        <input type="file" id="import_datei" accept="application/json,.json" hidden>
+      </p>
+      <p class="micro" id="export_hinweis" style="margin-top:10px">–</p>
+
+      <div id="export_kasten" hidden style="margin-top:14px">
+        <label class="micro" for="export_feld">Kopier den Text und sichere ihn, wo du willst — in einer Notiz, einer E-Mail an dich selbst oder in deinem Drive. Zum Zurückholen fügst du ihn unten wieder ein.</label>
+        <textarea id="export_feld" readonly rows="6" style="width:100%;margin-top:8px;border:1px solid var(--glass-edge);border-radius:8px;padding:12px;font-family:var(--font-mono);font-size:13px;background:var(--pure);color:var(--ink)"></textarea>
+        <p class="hero-cta" style="margin-top:10px">
+          <a class="btn ghost" href="#" id="kopieren">In die Zwischenablage</a>
+        </p>
+      </div>
+
+      <div style="margin-top:22px">
+        <label class="micro" for="import_feld">Gesicherten Text wieder einfügen</label>
+        <textarea id="import_feld" rows="4" placeholder="Hier den gesicherten Text einfügen" style="width:100%;margin-top:8px;border:1px solid var(--glass-edge);border-radius:8px;padding:12px;font-family:var(--font-mono);font-size:13px;background:var(--pure);color:var(--ink)"></textarea>
+        <p class="hero-cta" style="margin-top:10px">
+          <a class="btn ghost" href="#" id="import_text">Text übernehmen</a>
+        </p>
+      </div>
+
+      <p class="meldung" id="io_meldung" hidden></p>
+
+      <h3 style="margin-top:34px">Alles zurücksetzen</h3>
+      <p class="micro">Löscht deine gespeicherten Zahlen, Angaben und Termine auf diesem Gerät. Der Fahrplan-Fortschritt bleibt davon unberührt.</p>
+      <p class="hero-cta"><a class="btn ghost" href="#" id="reset">Meine Daten löschen</a></p>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Keine Steuer-, Rechts- oder medizinische Beratung.<br>Deine Daten liegen auf diesem Gerät.</span>
+    <span><a href="./">Mein Bereich</a> · <a href="termine.html">Termine</a></span>
+  </footer>
+</div>
+
+<script src="daten.js"></script>
+<script src="drive-sync.js"></script>
+<script>
+(function(){
+  'use strict';
+  const el = id => document.getElementById(id);
+
+  function zeitText(iso){
+    if (!iso) return null;
+    const d = new Date(iso);
+    if (isNaN(d)) return null;
+    const uhr = d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
+    return d.toDateString() === new Date().toDateString()
+      ? 'heute, ' + uhr + ' Uhr'
+      : d.toLocaleDateString('de-DE') + ', ' + uhr + ' Uhr';
+  }
+
+  /* ---------- Speicherstatus ---------- */
+  function standZeichnen(){
+    const offen = Daten.schmutzig();
+    el('stand').classList.toggle('offen', offen);
+    el('jetzt_speichern').hidden = !offen;
+    if (offen){ el('stand_text').textContent = 'Ungespeicherte Änderungen'; return; }
+    const t = zeitText(Daten.gespeichertAm());
+    const drive = DriveSync.verbunden()
+      ? ' · mit Google Drive verbunden'
+      : (DriveSync.eingerichtet() ? ' · Google Drive nicht verbunden' : '');
+    el('stand_text').textContent = (t ? '✓ Lokal gespeichert: ' + t : 'Noch nichts gespeichert') + drive;
+  }
+  el('jetzt_speichern').addEventListener('click', () => {
+    if (!Daten.speichern()) el('stand_text').textContent = 'Speichern nicht möglich — im privaten Fenster geht das nicht.';
+    standZeichnen();
+  });
+
+  /* ---------- Google Drive ---------- */
+  function driveZeichnen(){
+    const e = Daten.einstellung();
+    el('o_zahlen_drive').textContent = e.driveZahlen ? 'Drive synchronisiert' : 'Drive aus';
+    el('o_zahlen_drive').className = 'ort' + (e.driveZahlen ? '' : ' nein');
+    el('o_termine_drive').textContent = e.driveTermine ? 'Drive synchronisiert' : 'nicht synchronisiert';
+    el('o_termine_drive').className = 'ort' + (e.driveTermine ? ' warn' : ' nein');
+
+    const status = el('drive_status');
+    if (!DriveSync.eingerichtet()){
+      status.textContent = 'Deine Daten werden aktuell nur auf diesem Gerät gespeichert. Die Drive-Verbindung ist noch nicht eingerichtet — über Export und Import kommst du trotzdem auf ein anderes Gerät.';
+      el('drive_verbinden').classList.add('is-disabled');
+      el('drive_verbinden').setAttribute('aria-disabled','true');
+      return;
+    }
+    if (DriveSync.verbunden()){
+      const z = zeitText(DriveSync.zuletzt());
+      status.textContent = '✓ Google Drive verbunden' + (z ? ' · zuletzt übertragen: ' + z : ' · noch nichts übertragen');
+      el('drive_verbinden').hidden = true;
+      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = false);
+    } else {
+      status.textContent = 'Deine Daten werden aktuell nur auf diesem Gerät gespeichert.';
+      el('drive_verbinden').hidden = false;
+      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = true);
+    }
+  }
+  function driveMeldung(text, fehler){
+    const m = el('drive_meldung');
+    m.hidden = false; m.textContent = text;
+    m.className = 'meldung' + (fehler ? ' fehler' : '');
+  }
+
+  el('drive_verbinden').addEventListener('click', async e => {
+    e.preventDefault();
+    if (!DriveSync.eingerichtet()) return;
+    driveMeldung('Anmeldefenster wird geöffnet …', false);
+    try { await DriveSync.verbinden(); driveMeldung('Verbunden. Jetzt kannst du deine Zahlen hochladen.', false); }
+    catch(err){ driveMeldung('Verbindung nicht zustande gekommen: ' + err.message, true); }
+    driveZeichnen(); standZeichnen();
+  });
+  el('drive_hoch').addEventListener('click', async e => {
+    e.preventDefault(); driveMeldung('Wird übertragen …', false);
+    try { await DriveSync.hochladen(); driveMeldung('In deinem Drive gespeichert als ' + DriveSync.dateiname + '.', false); }
+    catch(err){ driveMeldung('Hochladen fehlgeschlagen: ' + err.message, true); }
+    driveZeichnen(); standZeichnen();
+  });
+  el('drive_runter').addEventListener('click', async e => {
+    e.preventDefault(); driveMeldung('Wird geladen …', false);
+    try {
+      const r = await DriveSync.herunterladen();
+      driveMeldung(r.ok ? 'Daten aus Drive übernommen.' : r.grund, !r.ok);
+      if (r.ok) felderFuellen();
+    } catch(err){ driveMeldung('Laden fehlgeschlagen: ' + err.message, true); }
+    driveZeichnen(); standZeichnen();
+  });
+  el('drive_trennen').addEventListener('click', e => {
+    e.preventDefault(); DriveSync.trennen();
+    driveMeldung('Verbindung getrennt. Deine Daten bleiben lokal erhalten.', false);
+    driveZeichnen(); standZeichnen();
+  });
+
+  ['w_zahlen','w_termine'].forEach(id => {
+    el(id).addEventListener('change', () => {
+      Daten.setze('einstellung', id === 'w_zahlen' ? 'driveZahlen' : 'driveTermine', el(id).checked);
+      Daten.speichern(); standZeichnen(); driveZeichnen();
+    });
+  });
+
+  /* ---------- Export ----------
+     Drei Wege, weil der Download auf dem iPhone in einer Vorschau
+     landet, aus der sich die Datei kaum weiterverwenden laesst. */
+  const mitTerminen = () => el('ex_termine').checked;
+
+  function ioMeldung(text, fehler){
+    const m = el('io_meldung');
+    m.hidden = false; m.textContent = text;
+    m.className = 'meldung' + (fehler ? ' fehler' : '');
+  }
+
+  if (Daten.kannTeilen()){
+    el('export_teilen').hidden = false;
+    el('export_hinweis').textContent = 'Auf diesem Gerät ist „Teilen“ der beste Weg: die Datei landet dann wirklich in „Dateien“ oder deinem Drive.';
+  } else {
+    el('export_hinweis').textContent = 'Der Download landet in deinem Download-Ordner. Falls dein Gerät die Datei nur als Vorschau anzeigt, nimm stattdessen den Text zum Kopieren.';
+  }
+
+  el('export_teilen').addEventListener('click', async e => {
+    e.preventDefault();
+    try { await Daten.teilen(mitTerminen()); }
+    catch(err){ if (err && err.name !== 'AbortError') ioMeldung('Teilen hat nicht geklappt. Nimm den Text zum Kopieren.', true); }
+  });
+
+  el('export').addEventListener('click', e => { e.preventDefault(); Daten.exportieren(mitTerminen()); });
+
+  el('export_text').addEventListener('click', e => {
+    e.preventDefault();
+    el('export_feld').value = Daten.exportText(mitTerminen());
+    el('export_kasten').hidden = false;
+    el('export_feld').focus();
+    el('export_feld').select();
+  });
+
+  el('kopieren').addEventListener('click', async e => {
+    e.preventDefault();
+    const ok = await Daten.inZwischenablage(mitTerminen());
+    ioMeldung(ok ? 'In die Zwischenablage kopiert.' : 'Kopieren ging nicht — markier den Text und kopier ihn von Hand.', !ok);
+  });
+
+  /* ---------- Import ---------- */
+  el('import_start').addEventListener('click', e => { e.preventDefault(); el('import_datei').click(); });
+
+  function uebernehmen(text){
+    const r = Daten.importieren(text);
+    ioMeldung(r.ok ? 'Übernommen' + (r.termine ? ', darunter ' + r.termine + ' Termine' : '') + '.' : r.grund, !r.ok);
+    if (r.ok){ felderFuellen(); standZeichnen(); driveZeichnen(); }
+  }
+
+  el('import_datei').addEventListener('change', e => {
+    const datei = e.target.files && e.target.files[0];
+    if (!datei) return;
+    const leser = new FileReader();
+    leser.onload = () => uebernehmen(String(leser.result));
+    leser.readAsText(datei);
+    e.target.value = '';
+  });
+
+  el('import_text').addEventListener('click', e => {
+    e.preventDefault();
+    const t = el('import_feld').value.trim();
+    if (!t){ ioMeldung('Füg oben erst deinen gesicherten Text ein.', true); return; }
+    uebernehmen(t);
+  });
+
+  el('reset').addEventListener('click', e => {
+    e.preventDefault();
+    if (!confirm('Deine gespeicherten Zahlen, Angaben und Termine auf diesem Gerät löschen?')) return;
+    Daten.zuruecksetzen(); felderFuellen(); standZeichnen(); driveZeichnen();
+  });
+
+  /* ---------- Eigene Angaben ---------- */
+  function felderFuellen(){
+    const p = Daten.profil(), e = Daten.einstellung();
+    el('p_name').value    = p.name    || '';
+    el('p_zusatz').value  = p.zusatz  || '';
+    el('p_strasse').value = p.strasse || '';
+    el('p_plzOrt').value  = p.plzOrt  || '';
+    el('p_telefon').value = p.telefon || '';
+    el('p_email').value   = p.email   || '';
+    el('w_zahlen').checked  = !!e.driveZahlen;
+    el('w_termine').checked = !!e.driveTermine;
+  }
+
+  felderFuellen();
+  Daten.koppeln('profil', {name:'#p_name', zusatz:'#p_zusatz', strasse:'#p_strasse',
+                           plzOrt:'#p_plzOrt', telefon:'#p_telefon', email:'#p_email'});
+  Daten.beiAenderung(standZeichnen);
+  standZeichnen();
+  driveZeichnen();
+})();
+</script>
+<script src="../physio-nebenbei/zahlenfeld.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

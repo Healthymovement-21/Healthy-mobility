@@ -19,6 +19,15 @@
     <span>Physio<b>Nebenbei</b></span>
   </a>
 
+  <nav class="crumb">
+    <a href="./">Mein Bereich</a> · <span>Monat berechnen</span>
+  </nav>
+
+  <div class="vorschlag" id="vorschlag" hidden>
+    <span id="vorschlag_text">–</span>
+    <button class="btn ghost" type="button" id="vorschlag_knopf">Übernehmen</button>
+  </div>
+
   <div class="doc">
 
     <section class="sheet hero">
@@ -260,6 +269,7 @@
 <!-- Druckansicht: nur beim Drucken sichtbar, wird per JS befüllt -->
 <div id="druck" aria-hidden="true"></div>
 
+<script src="daten.js"></script>
 <script>
 const KEY = 'physionebenbei-monat';
 const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
@@ -555,6 +565,34 @@ if (!laden()) {
 }
 render();
 if (beispiel) document.getElementById('beispiel-hinweis').hidden = false;
+
+/* ---------- Vorschlag aus den gemeinsamen Zahlen ----------
+   Behandlungspreis und Ruecklagensatz stehen woanders schon fest.
+   Sie werden hier angeboten, nicht ungefragt eingesetzt. */
+if (window.Daten && Daten.gespeichertAm()) {
+  const zg = Daten.zahlen();
+  const gPreis = parseFloat(zg.preis) || 0;
+  const gSatz  = parseFloat(zg.satz)  || 0;
+  const feldPreis = document.getElementById('pv_kg');
+  const feldSatz  = document.getElementById('satz');
+  const preisAnders = gPreis > 0 && parseFloat(feldPreis.value) !== gPreis;
+  const satzAnders  = gSatz  > 0 && parseFloat(feldSatz.value)  !== gSatz;
+  if (preisAnders || satzAnders) {
+    const teile = [];
+    if (preisAnders) teile.push(gPreis.toLocaleString('de-DE') + ' \u20AC je Behandlung');
+    if (satzAnders)  teile.push(gSatz + ' % R\u00fccklage');
+    document.getElementById('vorschlag').hidden = false;
+    document.getElementById('vorschlag_text').textContent =
+      'Gespeichert hast du ' + teile.join(' und ') +
+      '. Soll ich das als Ausgangswert eintragen? \u00c4ndern kannst du es hier trotzdem.';
+    document.getElementById('vorschlag_knopf').addEventListener('click', () => {
+      if (preisAnders) feldPreis.value = gPreis;
+      if (satzAnders)  feldSatz.value  = gSatz;
+      document.getElementById('vorschlag').hidden = true;
+      render();
+    });
+  }
+}
 </script>
 <script>
   if ('serviceWorker' in navigator) {

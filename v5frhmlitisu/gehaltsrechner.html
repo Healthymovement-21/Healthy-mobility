@@ -59,10 +59,17 @@
     <span>Physio<b>Nebenbei</b></span>
   </a>
 
+  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Gehalt und Stunden</span></nav>
+
+  <div class="vorschlag" id="vorschlag" hidden>
+    <span id="vorschlag_text">–</span>
+    <button class="btn ghost" type="button" id="vorschlag_knopf">Übernehmen</button>
+  </div>
+
   <div class="doc">
 
     <section class="sheet hero">
-      <h1>Gehalt &amp; Stunden</h1>
+      <h1>Gehalt und Stunden</h1>
       <p class="lede">Gehalt plus Nebenverdienst. Und was passiert, wenn du reduzierst.</p>
     </section>
 
@@ -202,7 +209,10 @@
     <section class="sheet">
       <p class="eyebrow">6 · Sichern</p>
       <h2>Als PDF speichern</h2>
-      <p class="hero-cta"><a class="btn" id="pdf" href="#">Als PDF speichern</a></p>
+      <p class="hero-cta">
+        <a class="btn" id="pdf" href="#">Als PDF speichern</a>
+        <a class="btn ghost" id="reset" href="#">Eingaben zurücksetzen</a>
+      </p>
       <details class="mehr">
         <summary>Wie speichere ich das auf dem Handy?</summary>
         <div>
@@ -228,6 +238,7 @@
 <!-- Druckansicht: nur beim Drucken sichtbar, wird per JS befüllt -->
 <div id="druck" aria-hidden="true"></div>
 
+<script src="daten.js"></script>
 <script>
 const KEY = 'physionebenbei-gehalt';
 const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
@@ -467,6 +478,64 @@ document.querySelectorAll('#brutto,#stunden,#netto,#gewinn,#satz,#nstunden,#bezu
 
 laden();
 rechne();
+
+/* ---------- Zuruecksetzen ---------- */
+document.getElementById('reset').addEventListener('click', e => {
+  e.preventDefault();
+  if (!confirm('Alle Eingaben auf dieser Seite zurücksetzen?')) return;
+  try { localStorage.removeItem(KEY); } catch(err){}
+  location.reload();
+});
+
+/* ---------- Vorschlag aus den gemeinsamen Zahlen ----------
+   Der Gewinn nebenbei und der Ruecklagensatz stehen woanders schon fest.
+   Sie werden hier angeboten, nicht ungefragt eingesetzt. */
+if (window.Daten && Daten.gespeichertAm()) {
+  const z = Daten.zahlen(), f = Daten.finanzen();
+  const satz = parseFloat(z.satz) || 0;
+
+  /* Erste Wahl: ein wirklich erfasster Monat. Sonst die Vorausplanung —
+     das Ziel ist der Betrag nach Ruecklage, hier zaehlt der davor. */
+  let gewinn = 0, woher = '';
+  if (f && f.monat && f.umsatz > 0) {
+    gewinn = f.umsatz - (f.ausgaben || 0);
+    woher = 'aus deinem erfassten Monat';
+  } else if (satz < 100) {
+    gewinn = (parseFloat(z.ziel) || 0) / (1 - satz / 100);
+    woher = 'aus deiner Kalkulation';
+  }
+  gewinn = Math.round(gewinn);
+
+  const fG = document.getElementById('gewinn');
+  const fS = document.getElementById('satz');
+  const gAnders = gewinn > 0 && parseFloat(fG.value) !== gewinn;
+  const sAnders = satz  > 0 && parseFloat(fS.value) !== satz;
+
+  if (gAnders || sAnders) {
+    const teile = [];
+    if (gAnders) teile.push(gewinn.toLocaleString('de-DE') + ' € Gewinn im Monat ' + woher);
+    if (sAnders) teile.push(satz + ' % Rücklage');
+    document.getElementById('vorschlag').hidden = false;
+    document.getElementById('vorschlag_text').textContent =
+      'Du hast schon ' + teile.join(' und ') +
+      ' gespeichert. Soll ich damit rechnen? Ändern kannst du es hier trotzdem.';
+    document.getElementById('vorschlag_knopf').addEventListener('click', () => {
+      if (gAnders) fG.value = gewinn;
+      if (sAnders) fS.value = satz;
+      document.getElementById('vorschlag').hidden = true;
+      rechne();
+    });
+  }
+}
+
+/* Der Ruecklagensatz bedeutet ueberall dasselbe — Aenderungen hier
+   gelten deshalb auch in den anderen Rechnern. */
+if (window.Daten) {
+  document.getElementById('satz').addEventListener('change', function(){
+    const roh = parseFloat(String(this.value).replace(',', '.'));
+    if (isFinite(roh)) Daten.setze('zahlen', 'satz', roh);
+  });
+}
 </script>
 <script>
   if ('serviceWorker' in navigator) {

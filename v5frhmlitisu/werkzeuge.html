@@ -68,9 +68,9 @@
   <div class="doc">
 
     <section class="sheet hero">
-      <p class="eyebrow">Schritt 3</p>
-      <h1 class="title">Was muss ich verlangen?</h1>
-      <p class="lede">Der Preis ist die eine Zahl, die du am Anfang festlegen musst und danach nur schwer wieder änderst. Hier rechnest du ihn rückwärts aus: vom Betrag, der übrig bleiben soll, zurück zum Preis pro Behandlung.</p>
+      <p class="eyebrow">Preis finden</p>
+      <h1 class="title">Welcher Preis passt zu deiner Behandlung?</h1>
+      <p class="lede">Der Preis ist die eine Zahl, die du am Anfang festlegst und danach nur schwer wieder änderst. Hier bekommst du einen Richtwert, der zu deinem Aufwand passt. Entscheiden musst du selbst — was üblich ist, hängt auch von deiner Region und deinen Leistungen ab.</p>
     </section>
 
     <!-- ============ PREIS-KALKULATION ============ -->
@@ -136,10 +136,10 @@
 
     <section class="sheet wide">
       <p class="eyebrow">3 · Das Ergebnis</p>
-      <h2>Das musst du verlangen</h2>
+      <h2>Dein sinnvoller Richtwert</h2>
 
       <div class="preis-ergebnis">
-        <span class="pe-k">Nötiger Preis pro Behandlung</span>
+        <span class="pe-k">Etwa so viel pro Behandlung</span>
         <span class="pe-n" id="pk_out_preis">–</span>
         <p class="pe-satz" id="pk_out_satz">–</p>
       </div>
@@ -295,7 +295,8 @@
       <h2>Dieselben Formeln als Excel</h2>
       <p>Zum Speichern deiner eigenen Zahlen, offline auf deinem Gerät.</p>
       <p class="hero-cta">
-        <a class="btn" href="index.html#dateien">Excel-Mappe herunterladen</a>
+        <a class="btn" href="dateien.html">Excel-Mappe herunterladen</a>
+        <a class="btn ghost" href="#" id="reset">Eingaben zurücksetzen</a>
       </p>
     </section>
 
@@ -395,10 +396,18 @@
     const bleibt      = vorRuecklage - ruecklage;
     const jeStunde    = b.zeitStunden > 0 ? bleibt / b.zeitStunden : NaN;
 
-    set('pk_out_preis', eur(preis));
+    /* Eine Spanne statt einer Zahl auf zwei Nachkommastellen: der Wert
+       haengt an Annahmen, die sich jeden Monat verschieben. Auf volle
+       fuenf Euro gerundet, nach oben etwas Luft. */
+    const unten = Math.max(Math.floor(preis / 5) * 5, 0);
+    const oben  = unten + 10;
+    set('pk_out_preis', isFinite(preis) && preis > 0
+      ? 'ca. ' + zahl0(unten) + '–' + zahl0(oben) + ' €'
+      : '–');
     set('pk_out_satz',
-      'Bei ' + zahl0(b.termine) + ' Behandlungen im Monat und ' + eur(b.ziel) +
-      ', die übrig bleiben sollen, musst du ' + eur(preis) + ' pro Behandlung verlangen.');
+      'Damit bei ' + zahl0(b.termine) + ' Behandlungen im Monat rund ' + eur(b.ziel) +
+      ' übrig bleiben, brauchst du rechnerisch ' + eur(preis) + '. Was du am Ende nimmst, ' +
+      'entscheidest du selbst — die Spanne gibt dir Luft nach oben.');
     set('pk_out_umsatz', eur(umsatz));
     set('pk_out_fahrt', fahrt > 0 ? '− ' + eur(fahrt) : eur(0));
     set('pk_out_fixmonat', b.fix > 0 ? '− ' + eur(b.fix) : eur(0));
@@ -516,6 +525,26 @@
   document.querySelectorAll(preisFelder).forEach(el => {
     el.addEventListener('input', recalcAll);
     el.addEventListener('change', recalcAll);
+  });
+
+  /* ---------- Zuruecksetzen ----------
+     Stellt die Felder auf die Ausgangswerte zurueck, die im HTML stehen.
+     Die gespeicherten Zahlen bleiben, bis der Nutzer wieder speichert —
+     geloescht wird hier bewusst nichts. */
+  document.getElementById('reset').addEventListener('click', e => {
+    e.preventDefault();
+    if (!confirm('Alle Eingaben auf dieser Seite auf die Ausgangswerte zurücksetzen?')) return;
+    document.querySelectorAll('input[type="number"]').forEach(el => {
+      const start = el.getAttribute('value');
+      if (start === null) return;
+      el.value = start;
+      /* Das normale Ereignis ausloesen, damit die Datenschicht und die
+         Speicherleiste denselben Weg gehen wie bei einer Eingabe von Hand.
+         Danach steht in der Leiste "Ungespeicherte Aenderungen" — der
+         Nutzer entscheidet selbst, ob er das so speichern will. */
+      el.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    recalcAll();
   });
 
   /* Speicherleiste */

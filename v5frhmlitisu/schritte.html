@@ -33,9 +33,11 @@
   .f-balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .3s ease; }
 
   .schritte-liste{ list-style:none; margin:22px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
-  .schritte-liste > li{ border-bottom:1px solid var(--glass-edge); padding:20px 0; }
+  .schritte-liste > li{ border-bottom:1px solid var(--glass-edge); padding:20px 0; scroll-margin-top:20px; }
   .s-kopf{ display:grid; grid-template-columns:26px 1fr; gap:14px; align-items:start; }
   .s-kopf input[type=checkbox]{ width:22px; height:22px; margin:2px 0 0; accent-color:var(--accent); cursor:pointer; }
+  /* Der Titel ist die Flaeche zum Antippen und braucht auf dem Handy Hoehe. */
+  .s-kopf .s-titel{ display:flex; align-items:center; min-height:40px; cursor:pointer; }
   .s-nr{ font-size:12px; font-weight:600; color:var(--ink-faint); font-variant-numeric:tabular-nums; display:block; margin-bottom:2px; }
   .s-titel{ font-family:var(--font-display); font-size:19px; font-weight:600; letter-spacing:-.02em; color:var(--ink); display:block; cursor:pointer; }
   .s-zweck{ font-size:15.5px; line-height:1.55; color:var(--ink-muted); margin:7px 0 0; max-width:58ch; }
@@ -222,7 +224,7 @@
   }
 
   document.getElementById('schritte').innerHTML = SCHRITTE.map((s, i) =>
-    '<li data-id="' + s.id + '">' +
+    '<li data-id="' + s.id + '" id="schritt' + (i + 1) + '">' +
       '<div class="s-kopf">' +
         '<input type="checkbox" id="chk-' + s.id + '" aria-label="Schritt ' + (i+1) + ' erledigt">' +
         '<div><span class="s-nr">Schritt ' + (i+1) + '</span>' +

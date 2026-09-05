@@ -122,9 +122,10 @@
   <div class="doc">
 
     <section class="sheet hero">
-      <p class="eyebrow">Schritt 5</p>
+      <p class="eyebrow">Rückwärts rechnen</p>
       <h1 class="title">Wie viele Patient:innen brauche ich?</h1>
-      <p class="lede">Du sagst, wie viel am Monatsende übrig bleiben soll. Der Rechner sagt dir, wie viele Behandlungen das bei welchem Preis bedeutet und wie viel Zeit dich das kostet.</p>
+      <p class="lede">Hier gehst du vom Ziel aus: Du sagst, wie viel am Monatsende übrig bleiben soll, und siehst, wie viele Behandlungen das bei welchem Preis bedeutet.</p>
+      <p class="micro" style="margin-top:14px">Du weißt schon, wie viel Zeit du hast? Dann ist <a href="verdienst.html">Was kann ich nebenbei verdienen?</a> der schnellere Weg.</p>
     </section>
 
     <!-- ============ 1 · ZIEL ============ -->
@@ -287,6 +288,7 @@
       <p class="hero-cta">
         <a class="btn" href="werkzeuge.html">Preis genauer kalkulieren</a>
         <a class="btn ghost" href="planungsrechner.html">Auslastung im Detail planen</a>
+        <a class="btn ghost" href="#" id="reset">Eingaben zurücksetzen</a>
       </p>
 
       <details class="mehr">
@@ -531,6 +533,24 @@
     felder.forEach(f => zuordnung[f] = '#' + f);
     Daten.koppeln('zahlen', zuordnung, rechne);
   }
+
+  /* ---------- Zuruecksetzen ----------
+     Setzt die Felder auf die Ausgangswerte aus dem HTML. Gespeicherte
+     Zahlen bleiben erhalten, bis wieder gespeichert wird. */
+  document.getElementById('reset').addEventListener('click', e => {
+    e.preventDefault();
+    if (!confirm('Alle Eingaben auf dieser Seite auf die Ausgangswerte zurücksetzen?')) return;
+    felder.forEach(id => {
+      const el = document.getElementById(id);
+      const start = el.getAttribute('value');
+      if (start === null) return;
+      el.value = start;
+      /* Das normale Ereignis ausloesen, damit die Datenschicht und die
+         Speicherleiste denselben Weg gehen wie bei einer Eingabe von Hand. */
+      el.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    rechne();
+  });
 
   felder.forEach(id => {
     const el = document.getElementById(id);

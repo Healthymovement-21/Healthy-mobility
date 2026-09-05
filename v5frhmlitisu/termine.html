@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Termine — PhysioNebenbei</title>
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  .naechster{
+    background:var(--ink); color:var(--auf-tief);
+    border-radius:8px; padding:1.4rem; margin:20px 0 0;
+  }
+  .naechster .n-k{ display:block; font-size:12px; color:var(--auf-tief-leise); margin-bottom:8px; }
+  .naechster .n-zeit{
+    display:block; font-family:var(--font-display); font-size:clamp(26px,6vw,34px);
+    font-weight:600; letter-spacing:-.03em; line-height:1.1; color:var(--mint);
+  }
+  .naechster .n-wer{ margin:8px 0 0; font-size:16px; color:var(--auf-tief); }
+  .naechster .n-ort{ margin:3px 0 0; font-size:14.5px; color:var(--auf-tief-leise); }
+
+  .tag-block{ margin-top:26px; }
+  .tag-titel{
+    font-size:13px; font-weight:600; color:var(--ink-faint);
+    padding-bottom:8px; border-bottom:1px solid var(--glass-edge);
+  }
+  .t-liste{ list-style:none; margin:0; padding:0; }
+  .t-liste li{
+    display:grid; grid-template-columns:62px 1fr auto;
+    gap:2px 14px; align-items:baseline;
+    padding:13px 0; border-bottom:1px solid var(--glass-line);
+  }
+  .t-zeit{ font-variant-numeric:tabular-nums; font-weight:600; font-size:16px; color:var(--accent); }
+  .t-wer{ font-size:16px; font-weight:500; color:var(--ink); }
+  .t-info{ grid-column:2; font-size:13.5px; color:var(--ink-muted); }
+  .t-weg{
+    grid-column:3; grid-row:1 / span 2;
+    border:none; background:none; cursor:pointer;
+    color:var(--ink-faint); font-size:18px; line-height:1;
+    width:32px; height:32px; border-radius:6px;
+  }
+  .t-weg:hover{ color:var(--mark); background:var(--mark-soft); }
+  .t-leer{ padding:18px 0; font-size:15.5px; color:var(--ink-muted); }
+
+  .t-form{ display:grid; gap:12px; margin-top:16px; }
+  @media (min-width:560px){
+    .t-form{ grid-template-columns:1fr 1fr; }
+    .t-form .breit{ grid-column:1 / -1; }
+  }
+  .t-form label{ display:block; font-size:14px; color:var(--ink-muted); margin-bottom:5px; }
+  .t-form input, .t-form select, .t-form textarea{
+    width:100%; background:var(--pure);
+    border:1px solid var(--glass-edge); border-radius:8px;
+    padding:12px 14px; font-family:var(--font-sans); font-size:17px; color:var(--ink);
+  }
+  .t-form textarea{ min-height:64px; resize:vertical; }
+  .t-form input:focus, .t-form select:focus, .t-form textarea:focus{
+    outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  .t-meldung{ margin-top:12px; font-size:14.5px; color:var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="./">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <nav class="crumb"><a href="./">Übersicht</a> · <a href="mein-bereich.html">Mein Bereich</a> · <span>Termine</span></nav>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <h1 class="title">Termine</h1>
+      <p class="lede">Deine nächsten Termine auf einen Blick. Bleibt auf diesem Gerät, wird nicht von allein irgendwohin übertragen.</p>
+      <div class="naechster" id="naechster" hidden>
+        <span class="n-k">Nächster Termin</span>
+        <span class="n-zeit" id="n_zeit">–</span>
+        <p class="n-wer" id="n_wer">–</p>
+        <p class="n-ort" id="n_ort"></p>
+      </div>
+    </section>
+
+    <section class="sheet">
+      <div id="liste"></div>
+    </section>
+
+    <section class="sheet">
+      <h2>Termin eintragen</h2>
+      <form class="t-form" id="formular">
+        <div class="breit">
+          <label for="f_patient">Patient:in</label>
+          <input type="text" id="f_patient" required autocomplete="off" placeholder="Name oder Kürzel">
+        </div>
+        <div>
+          <label for="f_datum">Datum</label>
+          <input type="date" id="f_datum" required>
+        </div>
+        <div>
+          <label for="f_zeit">Uhrzeit</label>
+          <input type="time" id="f_zeit" required value="17:00">
+        </div>
+        <div>
+          <label for="f_dauer">Dauer</label>
+          <select id="f_dauer">
+            <option value="20">20 Minuten</option>
+            <option value="30">30 Minuten</option>
+            <option value="45" selected>45 Minuten</option>
+            <option value="60">60 Minuten</option>
+            <option value="90">90 Minuten</option>
+          </select>
+        </div>
+        <div>
+          <label for="f_ort">Ort</label>
+          <input type="text" id="f_ort" autocomplete="off" placeholder="Hausbesuch, Praxis, …">
+        </div>
+        <div class="breit">
+          <label for="f_notiz">Notiz <span class="micro">optional</span></label>
+          <textarea id="f_notiz" placeholder="Kurz, ohne Gesundheitsdaten"></textarea>
+        </div>
+        <div class="breit">
+          <button class="btn" type="submit">Speichern</button>
+        </div>
+      </form>
+      <p class="t-meldung" id="meldung" hidden></p>
+      <p class="micro" style="margin-top:16px">
+        Für die Behandlungsdokumentation nimm den <a href="dateien/Dokumentationsvorlage.pdf" download>Dokumentationsbogen</a>.
+        Diese Liste ist nur eine Terminübersicht — Beschwerden, Befunde und andere
+        Gesundheitsdaten gehören nicht in die Notiz.
+      </p>
+    </section>
+
+    <section class="sheet">
+      <details class="mehr">
+        <summary>Patient:innen sollen selbst online buchen können?</summary>
+        <div>
+          <p>Dafür brauchst du einen Dienst mit Kalender und Bestätigungsmails, das kann eine Seite wie diese nicht leisten. Welcher Anbieter dafür taugt und worauf du beim Datenschutz achten musst, steht kurz zusammengefasst im <a href="terminbuchung.html">Kapitel zur Online-Terminbuchung</a>.</p>
+        </div>
+      </details>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Keine Steuer-, Rechts- oder medizinische Beratung.<br>
+      Termine bleiben auf diesem Gerät.</span>
+    <span><a href="./">Übersicht</a> · <a href="mein-bereich.html">Mein Bereich</a></span>
+  </footer>
+</div>
+
+<script src="daten.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  const WOCHENTAG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  const el = id => document.getElementById(id);
+
+  function heuteIso(){
+    const d = new Date();
+    return new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  }
+
+  /* Datum lesbar machen: "Heute", "Morgen" oder "Dienstag, 9. September" */
+  function datumText(iso){
+    const heute = heuteIso();
+    if (iso === heute) return 'Heute';
+    const d = new Date(iso + 'T00:00:00');
+    const morgen = new Date(new Date(heute + 'T00:00:00').getTime() + 86400000);
+    if (d.getTime() === morgen.getTime()) return 'Morgen';
+    return WOCHENTAG[d.getDay()] + ', ' + d.getDate() + '. ' +
+           ['Januar','Februar','März','April','Mai','Juni','Juli','August',
+            'September','Oktober','November','Dezember'][d.getMonth()];
+  }
+
+  function sortiert(){
+    return Daten.termine().slice().sort((a,b) =>
+      (a.datum + a.zeit).localeCompare(b.datum + b.zeit));
+  }
+
+  function zeichnen(){
+    const alle = sortiert();
+    const heute = heuteIso();
+    const jetzt = new Date().toTimeString().slice(0,5);
+
+    /* ---------- Nächster Termin ---------- */
+    const kommend = alle.filter(t => t.datum > heute || (t.datum === heute && t.zeit >= jetzt));
+    const block = el('naechster');
+    if (kommend.length){
+      const t = kommend[0];
+      block.hidden = false;
+      el('n_zeit').textContent = datumText(t.datum) + ', ' + t.zeit + ' Uhr';
+      el('n_wer').textContent  = t.patient + ' · ' + t.dauer + ' Minuten';
+      el('n_ort').textContent  = [t.ort, t.notiz].filter(Boolean).join(' · ');
+    } else {
+      block.hidden = true;
+    }
+
+    /* ---------- Liste nach Tagen ---------- */
+    const ziel = el('liste');
+    const kuenftig = alle.filter(t => t.datum >= heute);
+
+    if (!kuenftig.length){
+      ziel.innerHTML = '<p class="t-leer">Noch keine Termine eingetragen. Trag unten deinen ersten ein.</p>';
+      return;
+    }
+
+    const tage = {};
+    kuenftig.forEach(t => { (tage[t.datum] = tage[t.datum] || []).push(t); });
+
+    ziel.innerHTML = Object.keys(tage).sort().map(datum =>
+      '<div class="tag-block">' +
+        '<div class="tag-titel">' + datumText(datum) + '</div>' +
+        '<ul class="t-liste">' + tage[datum].map(t =>
+          '<li>' +
+            '<span class="t-zeit">' + t.zeit + '</span>' +
+            '<span class="t-wer"></span>' +
+            '<button class="t-weg" type="button" data-weg="' + t.id + '" aria-label="Termin löschen">✕</button>' +
+            '<span class="t-info"></span>' +
+          '</li>'
+        ).join('') + '</ul>' +
+      '</div>'
+    ).join('');
+
+    /* Namen und Notizen als Text setzen, nicht als HTML — sonst könnte
+       ein Name mit spitzen Klammern die Seite durcheinanderbringen. */
+    const flach = Object.keys(tage).sort().reduce((a, d) => a.concat(tage[d]), []);
+    ziel.querySelectorAll('li').forEach((li, i) => {
+      const t = flach[i];
+      li.querySelector('.t-wer').textContent = t.patient;
+      li.querySelector('.t-info').textContent =
+        [t.dauer + ' Min.', t.ort, t.notiz].filter(Boolean).join(' · ');
+    });
+  }
+
+  /* ---------- Eintragen ---------- */
+  el('formular').addEventListener('submit', e => {
+    e.preventDefault();
+    const patient = el('f_patient').value.trim();
+    const datum   = el('f_datum').value;
+    const zeit    = el('f_zeit').value;
+    if (!patient || !datum || !zeit) return;
+
+    const liste = Daten.termine();
+    liste.push({
+      id: 't' + Date.now(),
+      patient: patient,
+      datum: datum,
+      zeit: zeit,
+      dauer: parseInt(el('f_dauer').value, 10) || 45,
+      ort: el('f_ort').value.trim(),
+      notiz: el('f_notiz').value.trim()
+    });
+    Daten.setzeBereich('termine', liste);
+
+    const ok = Daten.speichern();
+    const m = el('meldung');
+    m.hidden = false;
+    m.textContent = ok
+      ? 'Termin gespeichert.'
+      : 'Der Browser lässt gerade kein Speichern zu — im privaten Fenster geht das nicht.';
+    setTimeout(() => { m.hidden = true; }, 3000);
+
+    el('f_patient').value = '';
+    el('f_notiz').value = '';
+    zeichnen();
+  });
+
+  document.getElementById('liste').addEventListener('click', e => {
+    const knopf = e.target.closest('[data-weg]');
+    if (!knopf) return;
+    const id = knopf.getAttribute('data-weg');
+    Daten.setzeBereich('termine', Daten.termine().filter(t => t.id !== id));
+    Daten.speichern();
+    zeichnen();
+  });
+
+  el('f_datum').value = heuteIso();
+  zeichnen();
+})();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

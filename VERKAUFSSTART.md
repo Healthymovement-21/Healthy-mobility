@@ -269,7 +269,37 @@ gehen in den Ordner aus Weg 1, und ohne beides bleibt der lokale Link stehen.
 
 ---
 
-## Schritt 6 — Reichweitenmessung aktivieren (optional)
+## Schritt 6 — Google Drive für Käufer:innen (optional)
+
+Im Mein-Bereich können Käufer:innen ihre eigenen Zahlen zusätzlich in ihrem
+**eigenen** Google Drive sichern. Das ist etwas anderes als Schritt 5: dort
+liegen *deine* Produktdateien, hier sichert *jede Person ihre eigenen* Daten.
+
+Dafür brauchst du eine OAuth-Client-ID:
+
+1. `console.cloud.google.com` öffnen, Projekt anlegen
+2. APIs & Dienste → Bibliothek → **Google Drive API** aktivieren
+3. OAuth-Zustimmungsbildschirm ausfüllen
+4. Anmeldedaten → OAuth-Client-ID, Typ **Webanwendung**
+5. Als autorisierte JavaScript-Quelle die Adresse deines Kundenbereichs
+   eintragen, etwa `https://healthymovement-21.github.io`
+6. Client-ID oben in `v5frhmlitisu/drive-sync.js` einsetzen
+
+```js
+const DRIVE_CLIENT_ID = '1234567890-abcdef.apps.googleusercontent.com';
+```
+
+Solange das Feld leer ist, zeigt der Bereich einen Hinweis und alles andere
+funktioniert unverändert. Die Speicherung bleibt in jedem Fall lokal — Drive
+ist ein Zusatz, kein Ersatz.
+
+**Was bewusst nicht synchronisiert wird:** Termine enthalten Patientennamen und
+sind standardmäßig ausgeschlossen. Die Patientenliste des Rechnungsgenerators
+wird nie erfasst. Beides steht so auch für Käufer:innen auf der Seite.
+
+---
+
+## Schritt 7 — Reichweitenmessung aktivieren (optional)
 
 In `index.html` steht im `<head>` ein auskommentierter Block:
 
@@ -286,7 +316,7 @@ aktivierst, streiche Abschnitt 7 aus der Datenschutzerklärung.**
 
 ---
 
-## Schritt 7 — Danach
+## Schritt 8 — Danach
 
 - Eigene Domain verbinden statt der GitHub-Adresse (wirkt bei einem Vertrauens­produkt
   mehr als jede Textänderung).

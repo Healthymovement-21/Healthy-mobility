@@ -38,11 +38,12 @@ physio-nebenbei/
 
 NUR MIT LINK
 v5frhmlitisu/
-  index.html                   Mein Bereich: das Dashboard mit sechs Bereichen —
-                               Zahlen, Rechner, Termine, Dateien, Fahrplan, Einstellungen
+  index.html                   Mein Bereich: fünf Blöcke — Zahlen, Fortschritt,
+                               Termine, Dateien, Speicherung. Sonst nichts
   schritte.html                der interaktive Fahrplan: zehn Schritte mit Fortschritt,
                                jeder mit dem passenden Werkzeug verknüpft
-  einstellungen.html           Google Drive, Speicherorte, eigene Angaben, Export/Import
+  dateien.html                 alle Dateien plus Speicher: lokal, Google Drive optional
+  einstellungen.html           eigene Angaben, Export und Import, Zurücksetzen
   ziel-rechner.html            Wunschbetrag rein, Zahl der Termine raus — für mehrere
                                Preisstufen nebeneinander, plus Zeitaufwand und Stundenlohn
   werkzeuge.html               Preis-Kalkulation rückwärts, dazu Steuer-Rücklage, EÜR, Log

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Einstellungen — PhysioNebenbei</title>
+<title>Angaben und Sicherung — PhysioNebenbei</title>
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
@@ -12,44 +12,19 @@
 <link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
 <style>
   /* Speicherstatus, klebt oben unter der Marke */
+  /* Speicherstand: eine ruhige Zeile, wie auf den anderen Seiten auch.
+     Erst wenn etwas offen ist, wird daraus ein sichtbarer Kasten. */
   .stand{
     display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
-    padding:12px 14px; margin:0 0 22px;
-    border:1px solid var(--glass-edge); border-radius:8px;
-    background:var(--pure); font-size:14px; color:var(--ink-muted);
+    margin:0 0 22px; font-size:14.5px; color:var(--ink-muted); line-height:1.55;
   }
-  .stand.offen{ border-color:var(--accent); background:var(--accent-soft); }
-  .stand .punkt{ width:8px; height:8px; border-radius:50%; background:var(--ink-faint); flex:none; }
-  .stand.offen .punkt{ background:var(--accent); }
+  .stand.offen{
+    padding:12px 14px; border:1px solid var(--accent);
+    border-radius:8px; background:var(--accent-soft); color:var(--ink);
+  }
+  .stand .punkt{ display:none; }
+  .stand.offen .punkt{ display:block; width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
   .stand .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
-
-  /* Zahlen-Kacheln */
-  .zahlen{ display:grid; gap:10px; margin-top:18px; grid-template-columns:1fr 1fr; }
-  @media (min-width:640px){ .zahlen{ grid-template-columns:repeat(4,1fr); } }
-  .zk{ border:1px solid var(--glass-edge); border-radius:8px; padding:14px 15px; }
-  .zk .t{ font-size:12px; color:var(--ink-faint); }
-  .zk .w{
-    font-family:var(--font-display); font-size:22px; font-weight:600;
-    letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:3px;
-  }
-  .zk.gross{ grid-column:1 / -1; background:var(--ink); border-color:var(--ink); }
-  .zk.gross .t{ color:var(--auf-tief-leise); }
-  .zk.gross .w{ font-size:clamp(32px,7vw,42px); color:var(--mint); }
-  .zk.gross .u{ font-size:14px; color:var(--auf-tief-leise); margin-top:6px; }
-
-  .balken{ height:6px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:12px 0 6px; }
-  .balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .3s ease; }
-
-  /* Dateiliste mit Speicherorten */
-  .speicher{ list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
-  .speicher li{ padding:14px 0; border-bottom:1px solid var(--glass-edge); }
-  .speicher b{ display:block; font-size:16px; font-weight:600; color:var(--ink); }
-  .speicher .orte{ display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:6px; }
-  .speicher .ort{ font-size:13.5px; color:var(--ink-muted); display:inline-flex; align-items:center; gap:5px; }
-  .speicher .ort::before{ content:"✓"; color:var(--accent); font-weight:700; }
-  .speicher .ort.nein::before{ content:"—"; color:var(--ink-faint); }
-  .speicher .ort.warn::before{ content:"!"; color:var(--mark); font-weight:700; }
-  .speicher .hinw{ font-size:13.5px; color:var(--ink-muted); margin-top:5px; }
 
   .wahl{ display:grid; gap:12px; margin:16px 0 0; }
   .wahl label{
@@ -79,7 +54,7 @@
     <span>Physio<b>Nebenbei</b></span>
   </a>
 
-  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Einstellungen</span></nav>
+  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Angaben und Sicherung</span></nav>
 
   <div class="stand" id="stand">
     <span class="punkt"></span>
@@ -90,95 +65,12 @@
   <div class="doc">
 
     <section class="sheet hero">
-      <p class="eyebrow">Einstellungen</p>
-      <h1 class="title">Speicher und Angaben</h1>
-      <p class="lede">Wo deine Daten liegen, wie du sie sicherst und was du an eigenen Angaben hinterlegt hast.</p>
-    </section>
-
-    <!-- ============ 6 · GOOGLE DRIVE ============ -->
-    <section class="sheet">
-      <p class="eyebrow">Zusätzlich</p>
-      <h2>Google Drive verbinden</h2>
-      <p>Freiwillig und jederzeit trennbar. Ohne Verbindung funktioniert alles genau wie bisher — die Verbindung ist eine zweite Kopie, kein Ersatz für die lokale Speicherung.</p>
-
-      <div class="calc-card" style="padding:20px 22px">
-        <p style="margin:0 0 14px" id="drive_status">–</p>
-        <p class="hero-cta" style="margin:0">
-          <a class="btn" href="#" id="drive_verbinden">Google Drive verbinden</a>
-          <a class="btn ghost" href="#" id="drive_hoch" hidden>Jetzt hochladen</a>
-          <a class="btn ghost" href="#" id="drive_runter" hidden>Von Drive laden</a>
-          <a class="btn ghost" href="#" id="drive_trennen" hidden>Trennen</a>
-        </p>
-        <p class="meldung" id="drive_meldung" hidden></p>
-      </div>
-
-      <h3>Was übertragen wird</h3>
-      <div class="wahl">
-        <label>
-          <input type="checkbox" id="w_zahlen" checked>
-          <span>Meine Zahlen und Einstellungen
-            <span class="u">Ziel, Preis, Zeiten, Kosten und deine Rechnungsangaben. Keine Patientendaten.</span>
-          </span>
-        </label>
-        <label>
-          <input type="checkbox" id="w_termine">
-          <span>Meine Termine
-            <span class="u">Enthält Patientennamen. Standardmäßig aus. Schalte es nur ein, wenn du das bewusst willst.</span>
-          </span>
-        </label>
-      </div>
-
-      <h3>Wo liegt gerade was?</h3>
-      <ul class="speicher">
-        <li>
-          <b>Meine Zahlen und Einstellungen</b>
-          <div class="orte">
-            <span class="ort">auf diesem Gerät</span>
-            <span class="ort nein" id="o_zahlen_drive">Drive aus</span>
-          </div>
-        </li>
-        <li>
-          <b>Meine Termine</b>
-          <div class="orte">
-            <span class="ort">auf diesem Gerät</span>
-            <span class="ort nein" id="o_termine_drive">nicht synchronisiert</span>
-          </div>
-          <p class="hinw">Enthält Patientennamen — deshalb bleibt die Übertragung standardmäßig aus.</p>
-        </li>
-        <li>
-          <b>Vorlagen, PDFs und Arbeitsblätter</b>
-          <div class="orte"><span class="ort">im Produkt, du lädst sie herunter</span></div>
-        </li>
-        <li>
-          <b>Fertige Rechnungen aus dem Generator</b>
-          <div class="orte"><span class="ort nein">nirgends gespeichert</span></div>
-          <p class="hinw">Der Generator baut die Rechnung im Browser. Sichere sie als PDF, sonst ist sie nach dem Schließen weg.</p>
-        </li>
-      </ul>
-
-      <div class="annotation" style="margin-top:20px">
-        <strong>Bevor du personenbezogene Daten synchronisierst:</strong> Die Speicherung
-        personenbezogener und besonders geschützter Daten — dazu gehören Patientennamen
-        und alles, was auf einen Gesundheitszustand schließen lässt — erfordert eine
-        geeignete und datenschutzkonforme Konfiguration. Prüfe vor der Nutzung, ob die
-        von dir gewählte Speicherlösung für deine konkreten Daten und deinen
-        Einsatzzweck geeignet ist. Diese Anwendung kann dir diese Prüfung nicht
-        abnehmen und überträgt von sich aus nichts.
-      </div>
-
-      <details class="mehr">
-        <summary>Worauf greift die Verbindung zu?</summary>
-        <div>
-          <p>Nur auf eine einzige Datei, die diese Anwendung selbst in deinem Drive anlegt: <code>PhysioNebenbei-Daten.json</code>. Die verwendete Berechtigung heißt <em>drive.file</em> und erlaubt ausschließlich den Zugriff auf selbst erstellte Dateien. Dein übriges Google Drive bleibt für die Anwendung unsichtbar.</p>
-          <p>Solange du nicht auf „Verbinden“ tippst, wird auch kein Skript von Google geladen und keine Verbindung dorthin aufgebaut.</p>
-          <p>Die Anmeldung gilt für die aktuelle Sitzung. Wenn du den Browser schließt, meldest du dich beim nächsten Mal neu an — das Zugriffsrecht wird bewusst nicht dauerhaft gespeichert.</p>
-        </div>
-      </details>
+      <h1 class="title">Angaben und Sicherung</h1>
+      <p class="lede">Was du für Rechnungen und Verträge brauchst — und wie du deine Zahlen auf ein anderes Gerät bekommst. Wo deine Dateien liegen, steht unter <a href="dateien.html">Meine Dateien</a>.</p>
     </section>
 
     <!-- ============ 7 · EINSTELLUNGEN ============ -->
     <section class="sheet">
-      <p class="eyebrow">Einstellungen</p>
       <h2>Deine Angaben</h2>
       <p>Diese Angaben brauchst du für Rechnungen und Verträge. Sie bleiben auf deinem Gerät.</p>
       <div class="feldgruppe">
@@ -244,12 +136,11 @@
 
   <footer class="site">
     <span>Keine Steuer-, Rechts- oder medizinische Beratung.<br>Deine Daten liegen auf diesem Gerät.</span>
-    <span><a href="./">Mein Bereich</a> · <a href="termine.html">Termine</a></span>
+    <span><a href="./">Mein Bereich</a> · <a href="dateien.html">Meine Dateien</a></span>
   </footer>
 </div>
 
 <script src="daten.js"></script>
-<script src="drive-sync.js"></script>
 <script>
 (function(){
   'use strict';
@@ -272,90 +163,11 @@
     el('jetzt_speichern').hidden = !offen;
     if (offen){ el('stand_text').textContent = 'Ungespeicherte Änderungen'; return; }
     const t = zeitText(Daten.gespeichertAm());
-    const drive = DriveSync.verbunden()
-      ? ' · mit Google Drive verbunden'
-      : (DriveSync.eingerichtet() ? ' · Google Drive nicht verbunden' : '');
-    el('stand_text').textContent = (t ? '✓ Lokal gespeichert: ' + t : 'Noch nichts gespeichert') + drive;
+    el('stand_text').textContent = t ? '✓ Lokal gespeichert: ' + t : 'Noch nichts gespeichert';
   }
   el('jetzt_speichern').addEventListener('click', () => {
     if (!Daten.speichern()) el('stand_text').textContent = 'Speichern nicht möglich — im privaten Fenster geht das nicht.';
     standZeichnen();
-  });
-
-  /* ---------- Google Drive ---------- */
-  function driveZeichnen(){
-    const e = Daten.einstellung();
-    /* Angehakt heisst nur: waere dabei. Uebertragen wird erst, wenn Drive
-       auch wirklich verbunden ist — das muss die Anzeige unterscheiden. */
-    const anDrive = DriveSync.verbunden();
-    function ortSetzen(id, gewaehlt, ausText){
-      const n = el(id);
-      if (!gewaehlt){ n.textContent = ausText; n.className = 'ort nein'; return; }
-      n.textContent = anDrive ? 'auch in deinem Google Drive' : 'für Drive vorgemerkt, noch nicht verbunden';
-      n.className = 'ort' + (anDrive ? '' : ' nein');
-    }
-    ortSetzen('o_zahlen_drive', e.driveZahlen, 'nicht bei Drive');
-    ortSetzen('o_termine_drive', e.driveTermine, 'nicht synchronisiert');
-    if (e.driveTermine && anDrive) el('o_termine_drive').className = 'ort warn';
-
-    const status = el('drive_status');
-    if (!DriveSync.eingerichtet()){
-      status.textContent = 'Deine Daten werden aktuell nur auf diesem Gerät gespeichert. Die Drive-Verbindung ist noch nicht eingerichtet — über Export und Import kommst du trotzdem auf ein anderes Gerät.';
-      el('drive_verbinden').classList.add('is-disabled');
-      el('drive_verbinden').setAttribute('aria-disabled','true');
-      return;
-    }
-    if (DriveSync.verbunden()){
-      const z = zeitText(DriveSync.zuletzt());
-      status.textContent = '✓ Google Drive verbunden' + (z ? ' · zuletzt übertragen: ' + z : ' · noch nichts übertragen');
-      el('drive_verbinden').hidden = true;
-      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = false);
-    } else {
-      status.textContent = 'Deine Daten werden aktuell nur auf diesem Gerät gespeichert.';
-      el('drive_verbinden').hidden = false;
-      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = true);
-    }
-  }
-  function driveMeldung(text, fehler){
-    const m = el('drive_meldung');
-    m.hidden = false; m.textContent = text;
-    m.className = 'meldung' + (fehler ? ' fehler' : '');
-  }
-
-  el('drive_verbinden').addEventListener('click', async e => {
-    e.preventDefault();
-    if (!DriveSync.eingerichtet()) return;
-    driveMeldung('Anmeldefenster wird geöffnet …', false);
-    try { await DriveSync.verbinden(); driveMeldung('Verbunden. Jetzt kannst du deine Zahlen hochladen.', false); }
-    catch(err){ driveMeldung('Verbindung nicht zustande gekommen: ' + err.message, true); }
-    driveZeichnen(); standZeichnen();
-  });
-  el('drive_hoch').addEventListener('click', async e => {
-    e.preventDefault(); driveMeldung('Wird übertragen …', false);
-    try { await DriveSync.hochladen(); driveMeldung('In deinem Drive gespeichert als ' + DriveSync.dateiname + '.', false); }
-    catch(err){ driveMeldung('Hochladen fehlgeschlagen: ' + err.message, true); }
-    driveZeichnen(); standZeichnen();
-  });
-  el('drive_runter').addEventListener('click', async e => {
-    e.preventDefault(); driveMeldung('Wird geladen …', false);
-    try {
-      const r = await DriveSync.herunterladen();
-      driveMeldung(r.ok ? 'Daten aus Drive übernommen.' : r.grund, !r.ok);
-      if (r.ok) felderFuellen();
-    } catch(err){ driveMeldung('Laden fehlgeschlagen: ' + err.message, true); }
-    driveZeichnen(); standZeichnen();
-  });
-  el('drive_trennen').addEventListener('click', e => {
-    e.preventDefault(); DriveSync.trennen();
-    driveMeldung('Verbindung getrennt. Deine Daten bleiben lokal erhalten.', false);
-    driveZeichnen(); standZeichnen();
-  });
-
-  ['w_zahlen','w_termine'].forEach(id => {
-    el(id).addEventListener('change', () => {
-      Daten.setze('einstellung', id === 'w_zahlen' ? 'driveZahlen' : 'driveTermine', el(id).checked);
-      Daten.speichern(); standZeichnen(); driveZeichnen();
-    });
   });
 
   /* ---------- Export ----------
@@ -404,7 +216,7 @@
   function uebernehmen(text){
     const r = Daten.importieren(text);
     ioMeldung(r.ok ? 'Übernommen' + (r.termine ? ', darunter ' + r.termine + ' Termine' : '') + '.' : r.grund, !r.ok);
-    if (r.ok){ felderFuellen(); standZeichnen(); driveZeichnen(); }
+    if (r.ok){ felderFuellen(); standZeichnen(); }
   }
 
   el('import_datei').addEventListener('change', e => {
@@ -426,20 +238,18 @@
   el('reset').addEventListener('click', e => {
     e.preventDefault();
     if (!confirm('Deine gespeicherten Zahlen, Angaben und Termine auf diesem Gerät löschen?')) return;
-    Daten.zuruecksetzen(); felderFuellen(); standZeichnen(); driveZeichnen();
+    Daten.zuruecksetzen(); felderFuellen(); standZeichnen();
   });
 
   /* ---------- Eigene Angaben ---------- */
   function felderFuellen(){
-    const p = Daten.profil(), e = Daten.einstellung();
+    const p = Daten.profil();
     el('p_name').value    = p.name    || '';
     el('p_zusatz').value  = p.zusatz  || '';
     el('p_strasse').value = p.strasse || '';
     el('p_plzOrt').value  = p.plzOrt  || '';
     el('p_telefon').value = p.telefon || '';
     el('p_email').value   = p.email   || '';
-    el('w_zahlen').checked  = !!e.driveZahlen;
-    el('w_termine').checked = !!e.driveTermine;
   }
 
   felderFuellen();
@@ -447,7 +257,6 @@
                            plzOrt:'#p_plzOrt', telefon:'#p_telefon', email:'#p_email'});
   Daten.beiAenderung(standZeichnen);
   standZeichnen();
-  driveZeichnen();
 })();
 </script>
 <script src="../physio-nebenbei/zahlenfeld.js" defer></script>

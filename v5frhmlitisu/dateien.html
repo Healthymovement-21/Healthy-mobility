@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Meine Dateien — PhysioNebenbei</title>
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  /* Speicherstand: eine Zeile, sonst nichts. */
+  .stand{ margin:0 0 20px; font-size:14.5px; color:var(--ink-muted); line-height:1.55; }
+
+  .wahl{ display:grid; gap:12px; margin:16px 0 0; }
+  .wahl label{
+    display:grid; grid-template-columns:22px 1fr; gap:12px; align-items:start;
+    font-size:15px; color:var(--ink); cursor:pointer;
+  }
+  .wahl input{ width:20px; height:20px; margin:2px 0 0; accent-color:var(--accent); cursor:pointer; }
+  .wahl .u{ display:block; font-size:13.5px; color:var(--ink-muted); margin-top:3px; }
+
+  .speicher{ list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
+  .speicher li{ padding:14px 0; border-bottom:1px solid var(--glass-edge); }
+  .speicher b{ display:block; font-size:16px; font-weight:600; color:var(--ink); }
+  .speicher .orte{ display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:6px; }
+  .speicher .ort{ font-size:13.5px; color:var(--ink-muted); display:inline-flex; align-items:center; gap:5px; }
+  .speicher .ort::before{ content:"✓"; color:var(--accent); font-weight:700; }
+  .speicher .ort.nein::before{ content:"—"; color:var(--ink-faint); }
+  .speicher .ort.warn::before{ content:"!"; color:var(--mark); font-weight:700; }
+  .speicher .hinw{ font-size:13.5px; color:var(--ink-muted); margin-top:5px; }
+
+  .dateiliste{ list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--glass-line); }
+  .dateiliste li{
+    display:grid; grid-template-columns:1fr auto; gap:4px 16px;
+    align-items:baseline; padding:13px 0; border-bottom:1px solid var(--glass-line);
+  }
+  .dateiliste b{ font-size:16px; font-weight:600; color:var(--ink); }
+  .dateiliste span{ grid-column:1; font-size:14px; color:var(--ink-muted); }
+  .dateiliste a{ grid-column:2; grid-row:1 / span 2; font-size:14.5px; white-space:nowrap; }
+
+  .meldung{ margin-top:14px; font-size:14.5px; color:var(--accent); }
+  .meldung.fehler{ color:var(--mark); }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="./">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Meine Dateien</span></nav>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <h1 class="title">Meine Dateien</h1>
+      <p class="lede">Elf Vorlagen und zwei Rechner zum Mitnehmen. Welche du bei welchem Schritt brauchst, steht in deinem <a href="schritte.html">Fahrplan</a>.</p>
+    </section>
+
+    <!-- ============ DATEIEN ============ -->
+    <section class="sheet" id="alle">
+      <h2>Alle Dateien</h2>
+      <p class="hero-cta">
+        <a class="btn" href="dateien/PhysioNebenbei-Paket.zip" data-drive-datei="PhysioNebenbei-Paket.zip" data-drive-beschriftung="nein" download="PhysioNebenbei-Paket.zip">Alle als ZIP laden</a>
+        <a class="btn ghost" href="#" data-drive>Bei Google Drive öffnen</a>
+      </p>
+      <p class="micro warnung" id="drive-hinweis" hidden></p>
+
+      <ul class="dateiliste">
+        <li><b>Fahrplan</b><span>Word-Datei mit allen zehn Kapiteln zum Anpassen</span><a data-drive-datei="PhysioNebenbei-Fahrplan.docx" href="dateien/PhysioNebenbei-Fahrplan.docx" download="PhysioNebenbei-Fahrplan.docx">Laden</a></li>
+        <li><b>Excel-Mappe</b><span>Preis-Kalkulation, Steuer-Rücklage, EÜR, Behandlungs-Log</span><a data-drive-datei="PhysioNebenbei-Werkzeuge.xlsx" href="dateien/PhysioNebenbei-Werkzeuge.xlsx" download="PhysioNebenbei-Werkzeuge.xlsx">Laden</a></li>
+        <li><b>Rechnungsgenerator</b><span>Rechnung als PDF, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Öffnen</a></li>
+        <li><b>Einnahmen und Ausgaben</b><span>Deine EÜR fürs Jahr, läuft auch ohne Internet</span><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Öffnen</a></li>
+        <li><b>Honorarvereinbarung</b><span>Preis, Zahlungsziel, Absagefrist und Ausfallhonorar</span><a data-drive-datei="Honorarvereinbarung.pdf" href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Laden</a></li>
+        <li><b>Behandlungsvertrag</b><span>Aufklärung, Mitwirkung, Haftung</span><a data-drive-datei="Behandlungsvertrag.pdf" href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Laden</a></li>
+        <li><b>Datenschutz-Information</b><span>Nach Art. 13 DSGVO, zum Aushändigen beim ersten Termin</span><a data-drive-datei="Datenschutz-Patienten.pdf" href="dateien/Datenschutz-Patienten.pdf" download="Datenschutz-Patienten.pdf">Laden</a></li>
+        <li><b>Anamnesebogen</b><span>Beschwerden, Vorgeschichte, Kontraindikationen, Ziele</span><a data-drive-datei="Anamnesebogen.pdf" href="dateien/Anamnesebogen.pdf" download="Anamnesebogen.pdf">Laden</a></li>
+        <li><b>Dokumentationsbogen</b><span>Befund und Verlauf je Behandlung</span><a data-drive-datei="Dokumentationsvorlage.pdf" href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Laden</a></li>
+        <li><b>Terminübersicht</b><span>Wochenplan zum Ausdrucken</span><a data-drive-datei="Terminuebersicht.pdf" href="dateien/Terminuebersicht.pdf" download="Terminuebersicht.pdf">Laden</a></li>
+        <li><b>Patientenliste</b><span>Mit Aufbewahrungs- und Löschfristen</span><a data-drive-datei="Patientenliste.pdf" href="dateien/Patientenliste.pdf" download="Patientenliste.pdf">Laden</a></li>
+      </ul>
+
+      <p class="micro" style="margin-top:16px">
+        Auf iPhone und iPad ist bei den beiden Rechnern „Öffnen“ der richtige Weg. Eine
+        gespeicherte HTML-Datei lässt sich unter iOS nicht zuverlässig wieder starten,
+        das Herunterladen ist für Mac und Windows gedacht.
+      </p>
+
+      <div class="annotation" style="margin-top:22px">
+        <strong>Zu den Vorlagen:</strong> Honorarvereinbarung, Behandlungsvertrag und
+        Datenschutz-Information sind Muster, keine geprüften Rechtsdokumente. Lass sie vor
+        dem ersten Einsatz von einer Anwältin, einem Anwalt oder dem Rechtsservice deines
+        Berufsverbands prüfen und an deinen Fall anpassen.
+      </div>
+    </section>
+
+    <!-- ============ SPEICHER ============ -->
+    <section class="sheet">
+      <h2>Speicher</h2>
+      <p class="stand" id="stand_text">–</p>
+      <p id="drive_status">–</p>
+      <p class="hero-cta">
+        <a class="btn" href="#" id="drive_verbinden">Google Drive verbinden</a>
+        <a class="btn ghost" href="#" id="drive_hoch" hidden>Jetzt hochladen</a>
+        <a class="btn ghost" href="#" id="drive_runter" hidden>Von Drive laden</a>
+        <a class="btn ghost" href="#" id="drive_trennen" hidden>Trennen</a>
+      </p>
+      <p class="meldung" id="drive_meldung" hidden></p>
+
+      <p class="micro" style="margin-top:20px">Freiwillig und jederzeit trennbar. Ohne Verbindung funktioniert alles genauso — Drive ist eine zweite Kopie, kein Ersatz für die Speicherung auf deinem Gerät.</p>
+
+      <h3 style="margin-top:32px">Was übertragen wird</h3>
+      <div class="wahl">
+        <label>
+          <input type="checkbox" id="w_zahlen" checked>
+          <span>Meine Zahlen und Angaben
+            <span class="u">Preis, Ziel, Kosten, Zeiten und deine Rechnungsangaben. Keine Patientendaten.</span>
+          </span>
+        </label>
+        <label>
+          <input type="checkbox" id="w_termine">
+          <span>Meine Termine
+            <span class="u">Enthält Patientennamen. Standardmäßig aus.</span>
+          </span>
+        </label>
+      </div>
+
+      <h3 style="margin-top:32px">Wo liegt gerade was?</h3>
+      <ul class="speicher">
+        <li>
+          <b>Meine Zahlen und Angaben</b>
+          <div class="orte">
+            <span class="ort">auf diesem Gerät</span>
+            <span class="ort nein" id="o_zahlen_drive">nicht bei Drive</span>
+          </div>
+        </li>
+        <li>
+          <b>Meine Termine</b>
+          <div class="orte">
+            <span class="ort">auf diesem Gerät</span>
+            <span class="ort nein" id="o_termine_drive">nicht synchronisiert</span>
+          </div>
+          <p class="hinw">Enthält Patientennamen — deshalb bleibt die Übertragung standardmäßig aus.</p>
+        </li>
+        <li>
+          <b>Vorlagen und Arbeitsblätter</b>
+          <div class="orte"><span class="ort">im Produkt, du lädst sie herunter</span></div>
+        </li>
+        <li>
+          <b>Fertige Rechnungen</b>
+          <div class="orte"><span class="ort nein">nirgends gespeichert</span></div>
+          <p class="hinw">Der Generator baut die Rechnung im Browser. Sichere sie als PDF, sonst ist sie nach dem Schließen weg.</p>
+        </li>
+      </ul>
+
+      <div class="annotation" style="margin-top:24px">
+        <strong>Bevor du personenbezogene Daten synchronisierst:</strong> Anamnesen, Befunde,
+        Diagnosen und alles, was auf einen Gesundheitszustand schließen lässt, gehören nicht
+        ungeprüft in eine Cloud. Ob eine Speicherlösung für deine konkreten Daten geeignet
+        ist, musst du selbst klären — diese Anwendung überträgt von sich aus nichts und
+        kann dir die Prüfung nicht abnehmen.
+      </div>
+
+      <details class="mehr">
+        <summary>Worauf greift die Verbindung zu?</summary>
+        <div>
+          <p>Nur auf eine einzige Datei, die diese Anwendung selbst in deinem Drive anlegt: <code>PhysioNebenbei-Daten.json</code>. Die Berechtigung heißt <em>drive.file</em> und erlaubt ausschließlich den Zugriff auf selbst erstellte Dateien. Dein übriges Drive bleibt unsichtbar.</p>
+          <p>Solange du nicht auf „Verbinden“ tippst, wird kein Skript von Google geladen.</p>
+          <p>Die Anmeldung gilt für die aktuelle Sitzung. Das Zugriffsrecht wird bewusst nicht dauerhaft gespeichert.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============ ALS APP ============ -->
+    <section class="sheet">
+      <h2>Als App speichern</h2>
+      <p>Dann hast du Fahrplan und Rechner mit einem Tipp offen, auch ohne Internet.</p>
+      <details class="mehr">
+        <summary>So geht's</summary>
+        <div>
+          <p><strong>iPhone und iPad</strong> — diese Seite in Safari öffnen, unten auf das Teilen-Symbol tippen, dann <em>Zum Home-Bildschirm</em>.</p>
+          <p><strong>Android</strong> — diese Seite in Chrome öffnen, Menü mit den drei Punkten, dann <em>App installieren</em>.</p>
+          <p><strong>Laptop</strong> — Seite als Lesezeichen speichern. In Chrome und Edge geht auch das Installieren-Symbol in der Adresszeile.</p>
+        </div>
+      </details>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Vorlagen sind Muster, vor Einsatz prüfen lassen. Keine Steuer-, Rechts- oder medizinische Beratung.<br>
+      Etwas lässt sich nicht öffnen? <a href="mailto:info@physiotherapie-grausam.com">info@physiotherapie-grausam.com</a></span>
+    <span><a href="./">Mein Bereich</a> · <a href="einstellungen.html">Angaben und Sicherung</a></span>
+  </footer>
+</div>
+
+<script src="daten.js"></script>
+<script src="drive-sync.js"></script>
+<script>
+(function(){
+  'use strict';
+  const el = id => document.getElementById(id);
+
+  function zeitText(iso){
+    if (!iso) return null;
+    const d = new Date(iso);
+    if (isNaN(d)) return null;
+    const uhr = d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
+    return d.toDateString() === new Date().toDateString()
+      ? 'heute, ' + uhr + ' Uhr'
+      : d.toLocaleDateString('de-DE') + ', ' + uhr + ' Uhr';
+  }
+
+  function standZeichnen(){
+    const t = zeitText(Daten.gespeichertAm());
+    const drive = DriveSync.verbunden()
+      ? ' · ✓ Mit Google Drive synchronisiert'
+      : ' · Google Drive nicht verbunden';
+    el('stand_text').textContent = (t ? '✓ Lokal gespeichert: ' + t : 'Noch nichts gespeichert') + drive;
+  }
+
+  /* ---------- Google Drive ----------
+     Ein Haken heisst nur "waere dabei". Uebertragen wird erst, wenn die
+     Verbindung wirklich steht — das muss die Anzeige unterscheiden. */
+  function driveZeichnen(){
+    const e = Daten.einstellung();
+    const anDrive = DriveSync.verbunden();
+    function ortSetzen(id, gewaehlt, ausText){
+      const n = el(id);
+      if (!gewaehlt){ n.textContent = ausText; n.className = 'ort nein'; return; }
+      n.textContent = anDrive ? 'auch in deinem Google Drive' : 'für Drive vorgemerkt, noch nicht verbunden';
+      n.className = 'ort' + (anDrive ? '' : ' nein');
+    }
+    ortSetzen('o_zahlen_drive', e.driveZahlen, 'nicht bei Drive');
+    ortSetzen('o_termine_drive', e.driveTermine, 'nicht synchronisiert');
+    if (e.driveTermine && anDrive) el('o_termine_drive').className = 'ort warn';
+
+    const status = el('drive_status');
+    if (!DriveSync.eingerichtet()){
+      status.textContent = 'Deine Daten liegen auf diesem Gerät. Die Drive-Verbindung ist noch nicht eingerichtet — über Sichern und Umziehen kommst du trotzdem auf ein anderes Gerät.';
+      el('drive_verbinden').classList.add('is-disabled');
+      el('drive_verbinden').setAttribute('aria-disabled','true');
+      return;
+    }
+    if (anDrive){
+      const z = zeitText(DriveSync.zuletzt());
+      status.textContent = '✓ Google Drive verbunden' + (z ? ' · zuletzt synchronisiert: ' + z : ' · noch nichts übertragen');
+      el('drive_verbinden').hidden = true;
+      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = false);
+    } else {
+      status.textContent = 'Deine Daten liegen auf diesem Gerät.';
+      el('drive_verbinden').hidden = false;
+      ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = true);
+    }
+  }
+  function driveMeldung(text, fehler){
+    const m = el('drive_meldung');
+    m.hidden = false; m.textContent = text;
+    m.className = 'meldung' + (fehler ? ' fehler' : '');
+  }
+
+  el('drive_verbinden').addEventListener('click', async e => {
+    e.preventDefault();
+    if (!DriveSync.eingerichtet()) return;
+    driveMeldung('Anmeldefenster wird geöffnet …', false);
+    try { await DriveSync.verbinden(); driveMeldung('Verbunden.', false); }
+    catch(err){ driveMeldung('Verbindung nicht zustande gekommen: ' + err.message, true); }
+    driveZeichnen(); standZeichnen();
+  });
+  el('drive_hoch').addEventListener('click', async e => {
+    e.preventDefault(); driveMeldung('Wird übertragen …', false);
+    try { await DriveSync.hochladen(); driveMeldung('In deinem Drive gespeichert als ' + DriveSync.dateiname + '.', false); }
+    catch(err){ driveMeldung('Hochladen fehlgeschlagen: ' + err.message, true); }
+    driveZeichnen(); standZeichnen();
+  });
+  el('drive_runter').addEventListener('click', async e => {
+    e.preventDefault(); driveMeldung('Wird geladen …', false);
+    try {
+      const r = await DriveSync.herunterladen();
+      driveMeldung(r.ok ? 'Daten aus Drive übernommen.' : r.grund, !r.ok);
+      if (r.ok) haken();
+    } catch(err){ driveMeldung('Laden fehlgeschlagen: ' + err.message, true); }
+    driveZeichnen(); standZeichnen();
+  });
+  el('drive_trennen').addEventListener('click', e => {
+    e.preventDefault(); DriveSync.trennen();
+    driveMeldung('Verbindung getrennt. Deine Daten bleiben auf dem Gerät.', false);
+    driveZeichnen(); standZeichnen();
+  });
+
+  ['w_zahlen','w_termine'].forEach(id => {
+    el(id).addEventListener('change', () => {
+      Daten.setze('einstellung', id === 'w_zahlen' ? 'driveZahlen' : 'driveTermine', el(id).checked);
+      Daten.speichern(); standZeichnen(); driveZeichnen();
+    });
+  });
+
+  function haken(){
+    const e = Daten.einstellung();
+    el('w_zahlen').checked  = !!e.driveZahlen;
+    el('w_termine').checked = !!e.driveTermine;
+  }
+
+  haken();
+  standZeichnen();
+  driveZeichnen();
+})();
+</script>
+<script src="../drive.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

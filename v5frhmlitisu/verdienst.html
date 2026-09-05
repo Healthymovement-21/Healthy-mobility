@@ -21,17 +21,14 @@
   }
   .speicherleiste .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
 
-  /* Drei Schritte, jeder mit genau einer Frage */
-  .schritt{ padding:26px 0; border-top:1px solid var(--glass-edge); }
-  .schritt:first-of-type{ border-top:none; padding-top:4px; }
-  .schritt-nr{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:24px; height:24px; border-radius:50%;
-    background:var(--accent-soft); color:var(--accent);
-    font-size:12.5px; font-weight:650; margin-right:9px; vertical-align:2px;
+  /* Zwei Fragen, mehr braucht das erste Ergebnis nicht. */
+  .frageblock{ padding:26px 0; border-top:1px solid var(--glass-edge); }
+  .frageblock:first-of-type{ border-top:none; padding-top:2px; }
+  .frage-titel{
+    display:block; font-family:var(--font-display); font-size:20px; font-weight:600;
+    letter-spacing:-.02em; color:var(--ink); line-height:1.3; cursor:pointer;
   }
-  .schritt h2{ display:inline; font-size:20px; }
-  .schritt .frage{ margin:10px 0 0; color:var(--ink-muted); font-size:15.5px; line-height:1.55; }
+  .frage-hilfe{ margin:8px 0 0; color:var(--ink-muted); font-size:15.5px; line-height:1.55; }
 
   .eingabe{ display:flex; align-items:center; gap:12px; margin-top:16px; flex-wrap:wrap; }
   .eingabe input[type=number]{
@@ -65,14 +62,14 @@
   .fixzeile .eur{ font-size:15px; color:var(--ink-muted); }
 
   /* Ergebnis: die Rechnung zum Mitlesen */
-  .ergebnis{ background:var(--ink); border-radius:12px; padding:26px 24px; margin-top:8px; }
+  .ergebnis{ background:var(--ink); border-radius:12px; padding:26px 24px; margin-top:30px; }
   .rechnung{ margin:0; font-size:17px; line-height:2.1; color:var(--auf-tief-leise); }
   .rechnung b{ color:var(--auf-tief); font-weight:600; }
   .rechnung .op{ display:inline-block; width:1.4em; color:var(--auf-tief-leise); }
   .gross{
     font-family:var(--font-display); font-weight:600; letter-spacing:-.035em;
-    font-size:clamp(38px,10vw,52px); line-height:1.05; color:var(--mint);
-    font-variant-numeric:tabular-nums; margin:18px 0 0;
+    font-size:clamp(40px,11vw,58px); line-height:1.05; color:var(--mint);
+    font-variant-numeric:tabular-nums; margin:20px 0 0;
   }
   .gross-u{ font-size:14.5px; color:var(--auf-tief-leise); margin:8px 0 0; line-height:1.5; }
 
@@ -86,6 +83,17 @@
   .abzug .z.summe b{ color:var(--mint); font-size:21px; }
 
   .warnung-dunkel{ margin:18px 0 0; font-size:14.5px; color:var(--mint); line-height:1.55; }
+
+  /* Die Aufstellung auf hellem Grund, unter den optionalen Feldern */
+  .abzug.hell{ border-top-color:var(--glass-edge); margin-top:26px; }
+  .abzug.hell .z{ color:var(--ink-muted); }
+  .abzug.hell .z b{ color:var(--ink); }
+  .abzug.hell .z.summe{ border-top-color:var(--glass-edge); }
+  .abzug.hell .z.summe b{ color:var(--accent); font-size:24px; }
+
+  .ruecklage-zeile{ margin-top:26px; padding-top:22px; border-top:1px solid var(--glass-edge); }
+  .ruecklage-zeile > label{ font-size:14px; color:var(--ink-muted); }
+  .ruecklage-zeile .eingabe input{ width:104px; font-size:22px; min-height:46px; }
 
   details.mehr > summary{ min-height:40px; display:flex; align-items:center; }
 
@@ -121,11 +129,10 @@
 
     <section class="sheet">
 
-      <div class="schritt">
-        <span class="schritt-nr">1</span><h2>Deine Zeit</h2>
-        <p class="frage">Wie viele Behandlungen schaffst du pro Woche neben dem Hauptjob? Zwei Abende mit je vier Terminen wären zum Beispiel acht.</p>
+      <div class="frageblock">
+        <label class="frage-titel" for="proWoche">Wie viele Behandlungen schaffst du ungefähr pro Woche?</label>
+        <p class="frage-hilfe">Zwei Abende mit je vier Terminen wären zum Beispiel acht.</p>
         <p class="eingabe">
-          <label for="proWoche" class="visually-hidden">Behandlungen pro Woche</label>
           <input type="number" id="proWoche" value="8" min="0" max="60" step="1" inputmode="numeric">
           <span class="einheit">Behandlungen pro Woche</span>
         </p>
@@ -134,79 +141,78 @@
         </p>
       </div>
 
-      <div class="schritt">
-        <span class="schritt-nr">2</span><h2>Dein Preis</h2>
-        <p class="frage">Was nimmst du für eine Behandlung?</p>
+      <div class="frageblock">
+        <label class="frage-titel" for="preis">Was verlangst du durchschnittlich pro Behandlung?</label>
         <p class="eingabe">
-          <label for="preis" class="visually-hidden">Preis je Behandlung</label>
           <input type="number" id="preis" value="70" min="0" max="500" step="1" inputmode="decimal">
           <span class="einheit">€ je Behandlung</span>
         </p>
         <p class="micro" style="margin-top:10px">
-          Noch keinen Preis? <a href="werkzeuge.html">Preis finden</a>
+          Noch keinen Preis im Kopf? <a href="werkzeuge.html">Preis berechnen</a>
         </p>
       </div>
 
-      <div class="schritt">
-        <span class="schritt-nr">3</span><h2>Deine Kosten</h2>
-        <p class="frage">Was geht im Monat weg? Wenn du nichts davon hast, lass die Felder auf 0.</p>
-        <div class="fixzeile">
-          <div>
-            <label for="fahrt">Fahrtkosten</label>
-            <div class="feld"><input type="number" id="fahrt" value="0" min="0" step="10" inputmode="decimal"><span class="eur">€</span></div>
-          </div>
-          <div>
-            <label for="raum">Raum oder Miete</label>
-            <div class="feld"><input type="number" id="raum" value="0" min="0" step="10" inputmode="decimal"><span class="eur">€</span></div>
-          </div>
-          <div>
-            <label for="fix">Sonstiges</label>
-            <div class="feld"><input type="number" id="fix" value="60" min="0" step="10" inputmode="decimal"><span class="eur">€</span></div>
-          </div>
-        </div>
-        <p class="micro" style="margin-top:10px">Alles pro Monat. Unter „Sonstiges“ fallen Versicherung, Material und Fortbildung.</p>
-
-        <p class="vorschlag-zeile" id="vorschlag" hidden>
-          <span id="vorschlag_text">–</span>
-          <button class="btn ghost" type="button" id="vorschlag_knopf">Eintragen</button>
-        </p>
-
-        <details class="mehr" style="margin-top:16px">
-          <summary>Wie viel soll für die Steuer liegen bleiben?</summary>
-          <div>
-            <p>Ein Anteil deines Gewinns, den du zur Seite legst, damit die Steuernachzahlung dich später nicht überrascht. Dreißig Prozent sind ein gängiger Ausgangswert — deine tatsächliche Steuerlast hängt von deinem gesamten Einkommen ab und lässt sich hier nicht berechnen.</p>
-            <p class="eingabe" style="margin-top:6px">
-              <label for="satz" class="visually-hidden">Rücklage in Prozent</label>
-              <input type="number" id="satz" value="30" min="0" max="60" step="1" inputmode="numeric">
-              <span class="einheit">% Rücklage</span>
-            </p>
-          </div>
-        </details>
-      </div>
-
-    </section>
-
-    <!-- ============ ERGEBNIS ============ -->
-    <section class="sheet">
-      <h2>Was dabei herauskommt</h2>
+      <!-- Der zentrale Moment: nach zwei Angaben steht die Zahl da. -->
       <div class="ergebnis">
         <p class="rechnung">
           <b id="r_beh">8</b> Behandlungen pro Woche<br>
           <span class="op">×</span><b id="r_preis">70 €</b><br>
-          <span class="op">=</span><b id="r_woche">560 €</b> pro Woche<br>
-          <span class="op">≈</span><b id="r_monat">2.425 €</b> Umsatz im Monat
+          <span class="op">=</span><b id="r_woche">560 €</b> pro Woche
         </p>
-
-        <div class="abzug">
-          <div class="z"><span>Kosten</span><b id="r_kosten">–60 €</b></div>
-          <div class="z"><span>Rücklage für die Steuer <span id="r_satz">30 %</span></span><b id="r_ruecklage">–709 €</b></div>
-          <div class="z summe"><span>Voraussichtlich übrig</span><b id="r_bleibt">1.655 €</b></div>
-        </div>
-
-        <p class="gross" id="r_gross">1.655 €</p>
-        <p class="gross-u" id="r_gross_u">bleiben dir im Monat, wenn es so läuft wie eingetragen</p>
+        <p class="gross" id="r_monat">2.425 €</p>
+        <p class="gross-u">Umsatz im Monat, gerechnet mit 4,33 Wochen</p>
         <p class="warnung-dunkel" id="r_warnung" hidden></p>
       </div>
+
+    </section>
+
+    <!-- ============ OPTIONAL: WAS BLEIBT ÜBRIG ============ -->
+    <section class="sheet">
+      <h2>Was bleibt ungefähr übrig?</h2>
+      <p>Wenn du Kosten hast, trag sie hier ein. Lässt du die Felder leer, rechnet der Rechner einfach ohne sie weiter.</p>
+
+      <div class="fixzeile">
+        <div>
+          <label for="fahrt">Fahrtkosten</label>
+          <div class="feld"><input type="number" id="fahrt" value="0" min="0" step="10" inputmode="decimal" placeholder="0"><span class="eur">€</span></div>
+        </div>
+        <div>
+          <label for="raum">Raum oder Miete</label>
+          <div class="feld"><input type="number" id="raum" value="0" min="0" step="10" inputmode="decimal" placeholder="0"><span class="eur">€</span></div>
+        </div>
+        <div>
+          <label for="fix">Sonstiges</label>
+          <div class="feld"><input type="number" id="fix" value="0" min="0" step="10" inputmode="decimal" placeholder="0"><span class="eur">€</span></div>
+        </div>
+      </div>
+      <p class="micro" style="margin-top:10px">Alles pro Monat. Unter „Sonstiges“ fallen zum Beispiel Versicherung, Material und Fortbildung.</p>
+
+      <p class="vorschlag-zeile" id="vorschlag" hidden>
+        <span id="vorschlag_text">–</span>
+        <button class="btn ghost" type="button" id="vorschlag_knopf">Eintragen</button>
+      </p>
+
+      <div class="ruecklage-zeile">
+        <label for="satz">Steuer-Rücklage</label>
+        <p class="eingabe" style="margin:6px 0 0">
+          <input type="number" id="satz" value="30" min="0" max="60" step="1" inputmode="numeric">
+          <span class="einheit">% vom Gewinn</span>
+        </p>
+        <p class="micro" style="margin-top:8px">
+          Der Anteil, den du zur Seite legst, damit dich die Steuer später nicht überrascht.
+          Dreißig Prozent sind ein gängiger Ausgangswert zur Orientierung — deine tatsächliche
+          Steuerlast hängt von deinem gesamten Einkommen ab und wird hier nicht berechnet.
+        </p>
+      </div>
+
+      <div class="abzug hell">
+        <div class="z"><span>Umsatz im Monat</span><b id="r_umsatz">2.425 €</b></div>
+        <div class="z"><span>Kosten</span><b id="r_kosten">0 €</b></div>
+        <div class="z"><span>Rücklage für die Steuer <span id="r_satz">30 %</span></span><b id="r_ruecklage">–727 €</b></div>
+        <div class="z summe"><span>Voraussichtlich übrig</span><b id="r_bleibt">1.698 €</b></div>
+      </div>
+
+      <p class="micro" style="margin-top:14px" id="r_einordnung">–</p>
 
       <p class="micro" style="margin-top:16px">
         Gerechnet mit 4,33 Wochen je Monat. Das sind Schätzwerte auf Basis deiner Eingaben,
@@ -280,31 +286,36 @@
     const rueck  = Math.max(gewinn, 0) * satz;   // bei Verlust wird nichts zurückgelegt
     const bleibt = gewinn - rueck;
 
+    /* Der zentrale Moment: die Rechnung zum Mitlesen. */
     el('r_beh').textContent   = beh.toLocaleString('de-DE');
     el('r_preis').textContent = eur(preis);
     el('r_woche').textContent = eur(woche);
     el('r_monat').textContent = eur(monat);
 
+    /* Darunter, freiwillig: was davon übrig bleibt. */
+    el('r_umsatz').textContent    = eur(monat);
     el('r_kosten').textContent    = kosten > 0 ? '–' + eur(kosten) : eur(0);
     el('r_satz').textContent      = Math.round(satz * 100) + ' %';
     el('r_ruecklage').textContent = rueck > 0 ? '–' + eur(rueck) : eur(0);
     el('r_bleibt').textContent    = eur(bleibt);
-    el('r_gross').textContent     = eur(bleibt);
 
-    /* Ein Satz, der zur Lage passt — statt einer Zahl ohne Einordnung. */
     const w = el('r_warnung');
     if (beh === 0 || preis === 0){
-      el('r_gross_u').textContent = 'Trag oben deine Behandlungen und deinen Preis ein.';
-      w.hidden = true;
-    } else if (gewinn <= 0){
-      el('r_gross_u').textContent = 'So deckt der Umsatz deine Kosten noch nicht.';
       w.hidden = false;
-      w.textContent = 'Deine monatlichen Kosten sind höher als das, was reinkommt. Entweder mehr Behandlungen, ein höherer Preis oder weniger feste Kosten.';
+      w.textContent = 'Trag oben ein, wie viele Behandlungen du pro Woche schaffst und was du dafür nimmst.';
+      el('r_einordnung').textContent = '';
+      return;
+    }
+    w.hidden = true;
+
+    if (gewinn <= 0){
+      el('r_einordnung').textContent =
+        'Deine monatlichen Kosten sind höher als das, was reinkommt. Entweder mehr Behandlungen, ein höherer Preis oder weniger feste Kosten.';
     } else {
-      el('r_gross_u').textContent = 'bleiben dir im Monat, wenn es so läuft wie eingetragen';
-      w.hidden = false;
-      w.textContent = 'Das sind rund ' + eur(bleibt / WOCHEN) + ' pro Woche für '
-        + beh.toLocaleString('de-DE') + ' Behandlungen.';
+      el('r_einordnung').textContent =
+        'Das sind rund ' + eur(bleibt / WOCHEN) + ' pro Woche. Schätzwerte auf Basis deiner Eingaben — '
+        + 'die Rücklage ist der Prozentsatz, den du selbst gewählt hast, keine Berechnung deiner '
+        + 'tatsächlichen Steuerlast und keine Steuerberatung.';
     }
   }
 
@@ -314,6 +325,14 @@
     Daten.koppeln('zahlen', {
       proWoche:'#proWoche', preis:'#preis', raum:'#raum', fix:'#fix', satz:'#satz'
     }, rechne);
+
+    /* Solange der Nutzer noch nichts gespeichert hat, sind die Kostenfelder
+       leer. Die Vorbelegung aus der Datenschicht ist fuer die anderen
+       Rechner gedacht — hier soll niemand mit Kosten starten, die er nie
+       eingetragen hat. Zwei Angaben muessen fuer ein Ergebnis reichen. */
+    if (!Daten.gespeichertAm()){
+      ['fahrt','raum','fix'].forEach(id => el(id).value = 0);
+    }
   }
   FELDER.forEach(id => {
     el(id).addEventListener('input', rechne);

@@ -136,13 +136,14 @@
 
     <section class="sheet wide">
       <p class="eyebrow">3 · Das Ergebnis</p>
-      <h2>Dein sinnvoller Richtwert</h2>
+      <h2>Dein kalkulierter Richtwert</h2>
 
       <div class="preis-ergebnis">
         <span class="pe-k">Etwa so viel pro Behandlung</span>
         <span class="pe-n" id="pk_out_preis">–</span>
         <p class="pe-satz" id="pk_out_satz">–</p>
       </div>
+      <p class="micro" style="margin-top:14px">Der Wert dient als Orientierung. Deinen tatsächlichen Preis legst du selbst fest — was üblich ist, hängt auch von deiner Region und deinen Leistungen ab.</p>
 
       <h3 style="margin-top:30px">So kommt der Preis zustande</h3>
       <div class="calc-card">
@@ -396,18 +397,13 @@
     const bleibt      = vorRuecklage - ruecklage;
     const jeStunde    = b.zeitStunden > 0 ? bleibt / b.zeitStunden : NaN;
 
-    /* Eine Spanne statt einer Zahl auf zwei Nachkommastellen: der Wert
-       haengt an Annahmen, die sich jeden Monat verschieben. Auf volle
-       fuenf Euro gerundet, nach oben etwas Luft. */
-    const unten = Math.max(Math.floor(preis / 5) * 5, 0);
-    const oben  = unten + 10;
-    set('pk_out_preis', isFinite(preis) && preis > 0
-      ? 'ca. ' + zahl0(unten) + '–' + zahl0(oben) + ' €'
-      : '–');
+    /* Ein gerundeter Richtwert statt einer Zahl auf zwei Nachkommastellen:
+       er haengt an Annahmen, die sich jeden Monat verschieben. */
+    const richtwert = Math.max(Math.round(preis / 5) * 5, 0);
+    set('pk_out_preis', isFinite(preis) && preis > 0 ? 'ca. ' + zahl0(richtwert) + ' €' : '–');
     set('pk_out_satz',
       'Damit bei ' + zahl0(b.termine) + ' Behandlungen im Monat rund ' + eur(b.ziel) +
-      ' übrig bleiben, brauchst du rechnerisch ' + eur(preis) + '. Was du am Ende nimmst, ' +
-      'entscheidest du selbst — die Spanne gibt dir Luft nach oben.');
+      ' übrig bleiben, brauchst du rechnerisch ' + eur(preis) + '.');
     set('pk_out_umsatz', eur(umsatz));
     set('pk_out_fahrt', fahrt > 0 ? '− ' + eur(fahrt) : eur(0));
     set('pk_out_fixmonat', b.fix > 0 ? '− ' + eur(b.fix) : eur(0));

@@ -1,71 +1,90 @@
 /* ============================================================
    PhysioNebenbei — Design-System
 
-   Weiß und Blau. Weißer Grund, dunkelblaue Baender fuer Auftakt,
-   Preis und Fuss, dazwischen ein sehr helles Blaugrau als zweite
-   Flaeche. Blau ist die einzige Farbe: kraeftiges Blau auf Weiß,
-   helles Blau auf Dunkelblau. Ueberschriften in einer Serifenschrift,
-   Fliesstext serifenlos.
+   Dunkel/Hell mit einer einzigen Interaktionsfarbe: kraeftiges
+   Ultramarinblau. Off-White als Seitengrund, ein bis zwei tief-
+   dunkle Baender pro Seite fuer Kopf, Preis und Ziel. Mint kommt
+   sparsam vor und markiert ausschliesslich ein Ergebnis oder ein
+   Ziel, nie Dekoration. Ueberschriften und grosse Zahlen in einer
+   Groteskschrift mit Charakter (Bricolage Grotesque), Fliesstext
+   in einer ruhigen Grotesk (Instrument Sans).
 
-   Schrift: Systemschriften. Kein Google Fonts, keine externen
-   Schriftdienste, damit keine Besucher-IPs an Dritte gehen. Die
-   Serifenschrift ist auf jedem System vorhanden (Georgia bzw. Iowan
-   Old Style auf Apple-Geraeten).
+   Schriften: selbst gehostet unter physio-nebenbei/fonts/, siehe
+   fonts.css. Es wird nichts von fonts.googleapis.com geladen —
+   das wuerde bei jedem Aufruf Besucher-IPs an Google uebertragen.
 
-   Alle Farben sind auf Kontrast geprueft: Fliesstext liegt ueberall
-   ueber 4,5:1, die meisten Paarungen deutlich darueber.
+   Keine Kaesten mit Schatten: Flaechen trennen sich durch Linien
+   und Weissraum, nicht durch box-shadow. Der einzige Schatten im
+   ganzen System ist der Fokusring.
+
+   Farben sind auf Kontrast geprueft. Eine Abweichung von der
+   Vorlage: --ink-muted ist um zwei Stufen dunkler als der
+   Ausgangswert #6E767F, weil der auf dem Seitengrund nur 4,25:1
+   erreichte — knapp unter der 4,5:1-Grenze fuer Fliesstext.
    ============================================================ */
+
+@import url("fonts.css");
 
 :root{
   color-scheme: light;
 
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --font-sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Bricolage Grotesque", "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Basis: Weiß, dazu ein sehr helles Blaugrau als zweite Flaeche */
-  --paper:        #FFFFFF;
-  --surface:      #F4F7FB;
-  --surface-2:    #E8EEF6;
+  /* Grundflaechen */
+  --paper:        #F5F6F4;  /* Seitengrund, kuehles Off-White */
+  --pure:         #FFFFFF;  /* Eingabefelder, Ueberschriften auf Dunkel */
+  --surface:      #FFFFFF;
+  --surface-2:    #EEF0FE;
 
-  --ink:          #14181D;
-  --ink-muted:    #4C5560;
-  --ink-faint:    #69737F;
+  --ink:          #0C1015;  /* Fliesstext, dunkle Flaechen */
+  --ink-2:        #161D26;  /* abgesetzte Flaeche im Dunklen */
+  --ink-muted:    #5F6970;  /* Hilfstext auf hell, 5,2:1 auf --paper */
+  --ink-faint:    #5F6970;
 
-  /* Die Farbe: kraeftiges Blau */
-  --accent:       #14509B;
-  --accent-dark:  #0F3D77;
+  /* Die einzige Interaktionsfarbe: Ultramarinblau */
+  --accent:       #2F35E8;
+  --accent-dark:  #4A50FF;  /* heller bei Hover, nicht dunkler */
   --accent-ink:   #FFFFFF;
-  --accent-soft:  rgba(20,80,155,.07);
-  --accent-line:  rgba(20,80,155,.32);
+  --accent-soft:  #EEF0FE;
+  --accent-line:  rgba(47,53,232,.32);
 
-  /* Dunkelblaues Band: traegt Auftakt, Preis und Fuss */
-  --tief:         #0E2340;
-  --tief-2:       #143254;
-  --auf-tief:     #EDF2F8;
-  --auf-tief-leise: #A9BDD4;
+  /* Dunkles Band: traegt Kopf, Preis und Ziel. Nie mehr als zwei
+     pro Seite. */
+  --tief:            #0C1015;
+  --tief-2:          #161D26;
+  --auf-tief:        #FFFFFF;
+  --auf-tief-leise:  #8B939C;
 
-  /* Dieselbe Farbe in zwei Helligkeiten: hell auf Dunkelblau,
-     kraeftig auf Weiß. */
-  --blau-tief:    #14509B;
-  --blau-hell:    #9CC3F2;
-  --blau-linie:   rgba(20,80,155,.34);
-  --blau-soft:    rgba(20,80,155,.10);
+  /* Zweite Helligkeit derselben Farbe: hell auf Dunkel */
+  --blau-tief:    #2F35E8;
+  --blau-hell:    #4A50FF;
+  --blau-linie:   rgba(255,255,255,.14);
+  --blau-soft:    rgba(74,80,255,.16);
+  /* Fliesstext-taugliches Blau auf Dunkel: --blau-hell erreicht bei
+     kleiner Schrift nur 3,5:1, dieser Ton kommt auf 5,8:1. */
+  --blau-text:    #7B80FF;
 
-  /* Warnung / Hinweis, gedeckt statt grell */
-  --mark:         #B0281C;
-  --mark-soft:    rgba(176,40,28,.06);
-  --focus:        #14509B;
+  /* Mint: ausschliesslich fuer ein Ergebnis oder ein Ziel, nie
+     als Deko, hoechstens zweimal je Seite. */
+  --mint:         #9FF3CE;
 
-  /* Karten und Trennlinien */
+  /* Warnung / Hinweis */
+  --mark:         #C4291A;
+  --mark-soft:    #FCEBE8;
+  --focus:        #4A50FF;
+
+  /* Linien statt Kaesten */
   --glass:        var(--surface);
   --glass-strong: var(--surface);
-  --glass-edge:   #D9E1EC;
-  --glass-line:   #E6ECF4;
+  --glass-edge:   #E1E4E0;
+  --glass-line:   #E1E4E0;
   --input-bg:     #FFFFFF;
 
-  --shadow:       0 1px 2px rgba(14,35,64,.06);
-  --shadow-lift:  0 6px 22px rgba(14,35,64,.10);
+  /* Der einzige Schatten im System ist der Fokusring. */
+  --shadow:       none;
+  --shadow-lift:  none;
   --glow-cyan:    none;
 
   --aura-1: transparent;
@@ -80,28 +99,38 @@
 *{ box-sizing:border-box; }
 ::selection{ background:var(--accent-soft); color:var(--ink); }
 
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
 
 body{
   margin:0;
   background:var(--paper);
   color:var(--ink);
   font-family:var(--font-sans);
-  font-size:18px;
+  font-size:17px;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
 }
 
-a{ color:var(--accent); }
+a{ color:var(--accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+a:focus-visible, button:focus-visible, summary:focus-visible,
+input:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--focus);
+  outline-offset:3px;
+  border-radius:3px;
+}
+
 h1,h2,h3{
   font-family:var(--font-display);
   font-weight:600;
-  letter-spacing:-.012em;
+  letter-spacing:-.035em;
+  line-height:1;
   text-wrap:balance;
   margin:0;
   color:var(--ink);
 }
+h3{ letter-spacing:-.01em; }
 strong{ font-weight:600; }
 
 .page{
@@ -119,8 +148,8 @@ strong{ font-weight:600; }
   margin-bottom:22px;
   flex-wrap:wrap;
 }
-.crumb a{ text-decoration:none; }
-.crumb a:hover{ text-decoration:underline; }
+.crumb a{ color:var(--ink-muted); text-decoration:none; border-bottom:1px solid var(--glass-edge); }
+.crumb a:hover{ color:var(--ink); border-color:var(--accent); }
 
 /* ---------- Marke ---------- */
 .brand{
@@ -138,14 +167,16 @@ strong{ font-weight:600; }
   flex:none;
 }
 .brand span{
-  font-size:16.5px;
+  font-family:var(--font-display);
+  font-size:17px;
   font-weight:600;
-  letter-spacing:-.01em;
+  letter-spacing:-.02em;
 }
 .brand span b{ font-weight:600; color:var(--accent); }
 
 /* ---------- Ausklappbare Details ----------
-   Pflichthinweise bleiben verfügbar, ohne die Seite zuzutexten. */
+   Pflichthinweise bleiben verfügbar, ohne die Seite zuzutexten.
+   Chevron statt Plus/Minus, dreht beim Oeffnen. */
 details.mehr{
   margin:16px 0;
   border-top:1px solid var(--glass-line);
@@ -158,22 +189,24 @@ details.mehr > summary{
   padding:14px 2px;
   font-size:15.5px;
   font-weight:500;
-  color:var(--ink-muted);
+  color:var(--ink);
   display:flex;
   align-items:center;
-  gap:10px;
+  justify-content:space-between;
+  gap:12px;
 }
 details.mehr > summary::-webkit-details-marker{ display:none; }
-details.mehr > summary::before{
+details.mehr > summary::after{
   content:"";
-  width:7px; height:7px;
-  border-right:1.6px solid var(--accent);
-  border-bottom:1.6px solid var(--accent);
-  transform:rotate(-45deg);
   flex:none;
+  width:9px; height:9px;
+  border-right:2px solid var(--accent);
+  border-bottom:2px solid var(--accent);
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform .2s ease;
 }
-details.mehr[open] > summary::before{ transform:rotate(45deg); }
-details.mehr > summary:hover{ color:var(--ink); }
+details.mehr[open] > summary::after{ transform:rotate(-135deg) translateY(-2px); }
+details.mehr > summary:hover{ color:var(--accent); }
 details.mehr > div{
   padding:0 2px 18px;
   font-size:15.5px;
@@ -185,27 +218,27 @@ details.mehr > div p:last-child{ margin-bottom:0; }
 
 .doc{ background:transparent; }
 
-/* Sections: keine Rahmen, nur Luft. Der „cleane" Teil. */
+/* Sections: keine Rahmen, nur Luft. */
 .sheet{ padding:40px 0; max-width:none; }
 .sheet + .sheet{ border-top:1px solid var(--glass-line); }
 .sheet.wide{ max-width:none; }
 
+/* Kleine Auszeichnung ueber einer Ueberschrift: farbig, aber in
+   normaler Schreibweise statt gesperrter Grossbuchstaben. */
 .eyebrow{
-  font-size:11.5px;
+  font-size:13.5px;
   font-weight:600;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--ink-faint);
-  margin:0 0 12px;
+  color:var(--accent);
+  margin:0 0 10px;
 }
 
 .doc-tag{ display:none; }
 
 h1.title, .hero h1{
-  font-size:clamp(28px,4.6vw,38px);
+  font-size:clamp(30px,4.6vw,40px);
   font-weight:600;
-  line-height:1.15;
-  letter-spacing:-.024em;
+  letter-spacing:-.03em;
+  line-height:1.06;
   margin:0;
 }
 p.lede{
@@ -215,15 +248,14 @@ p.lede{
   color:var(--ink-muted);
 }
 
-h2{ font-size:clamp(21px,2.6vw,25px); font-weight:600; line-height:1.28; margin-bottom:12px; }
+h2{ font-size:clamp(22px,2.8vw,27px); font-weight:600; letter-spacing:-.03em; line-height:1.1; margin-bottom:12px; }
 h3{ font-size:16.5px; font-weight:600; margin:24px 0 8px; color:var(--ink); }
 
 p{ margin:0 0 16px; max-width:64ch; }
 p:last-child{ margin-bottom:0; }
 
 /* ---------- Karten-Grundbaustein ----------
-   Flache Karte: weißer bzw. leicht abgesetzter Grund, ein Rand,
-   ein sehr dezenter Schatten. Kein Verlauf, kein Blur. */
+   Kein Schatten. Flaeche trennt sich durch Rand und Weissraum. */
 .glass,
 .calc-card,
 .price-box,
@@ -233,10 +265,10 @@ p:last-child{ margin-bottom:0; }
 .split > div,
 .ampel{
   position:relative;
-  background:var(--surface);
+  background:var(--pure);
   border:1px solid var(--glass-edge);
-  border-radius:14px;
-  box-shadow:var(--shadow);
+  border-radius:8px;
+  box-shadow:none;
 }
 
 /* ---------- Buttons ---------- */
@@ -249,15 +281,15 @@ p:last-child{ margin-bottom:0; }
   color:var(--accent-ink);
   font-size:16px;
   font-weight:600;
-  letter-spacing:-.005em;
+  letter-spacing:0;
   text-decoration:none;
-  padding:13px 24px;
-  border-radius:10px;
+  padding:15px 26px;
+  border-radius:8px;
   border:1px solid transparent;
   cursor:pointer;
   transition:background .15s ease, border-color .15s ease, color .15s ease;
 }
-.btn:hover{ background:var(--accent-dark); }
+.btn:hover{ background:var(--accent-dark); text-decoration:none; }
 .btn:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
 .btn.ghost{
   background:transparent;
@@ -267,15 +299,14 @@ p:last-child{ margin-bottom:0; }
 .btn.ghost:hover{
   border-color:var(--accent);
   color:var(--accent);
+  background:transparent;
 }
-/* Der eine Weg nach vorn. Auf dunklem Grund helles Blau mit dunkler
-   Schrift, sonst wuerde ein blauer Button im blauen Band verschwinden. */
-.btn.stark{
-  background:var(--blau-hell);
-  border-color:var(--blau-hell);
-  color:var(--tief);
-}
-.btn.stark:hover{ background:#A9C6EE; border-color:#A9C6EE; }
+/* .stark ist deckungsgleich mit dem Standard-Button: die dunklen
+   Baender dieses Systems sind Tiefschwarz, kein Blauton, ein
+   gefuellter blauer Button hebt sich davon klar ab. Der Alias bleibt
+   erhalten, weil ihn mehrere Seiten schon referenzieren. */
+.btn.stark{ background:var(--accent); border-color:transparent; color:var(--accent-ink); }
+.btn.stark:hover{ background:var(--accent-dark); }
 
 .micro{ font-size:14px; color:var(--ink-muted); }
 
@@ -417,9 +448,9 @@ p:last-child{ margin-bottom:0; }
 .tbl-wrap{
   overflow-x:auto;
   margin:16px 0;
-  border-radius:14px;
+  border-radius:8px;
   border:1px solid var(--glass-edge);
-  background:var(--paper);
+  background:var(--pure);
 }
 table.data{
   border-collapse:collapse;
@@ -437,8 +468,7 @@ table.data tr:last-child td{ border-bottom:none; }
 table.data th{
   font-size:12px;
   font-weight:600;
-  letter-spacing:.05em;
-  text-transform:uppercase;
+  letter-spacing:.03em;
   color:var(--ink-muted);
 }
 table.data td.example{ color:var(--ink-muted); font-style:italic; }
@@ -490,8 +520,8 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   margin-top:8px;
   padding-top:20px;
 }
-.calc-row label{ font-size:16px; font-weight:500; }
-.calc-row .result-label{ font-weight:650; color:var(--accent); font-size:17px; }
+.calc-row label{ font-size:14.5px; color:var(--ink-muted); }
+.calc-row .result-label{ font-weight:650; color:var(--accent); font-size:15.5px; }
 .calc-row .field{ display:flex; align-items:center; gap:10px; }
 .calc-row .field input{ flex:1; }
 .calc-row input[type=number],
@@ -499,10 +529,10 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   width:100%;
   background:var(--input-bg);
   border:1px solid var(--glass-edge);
-  border-radius:10px;
+  border-radius:8px;
   padding:13px 16px;
   font-family:var(--font-mono);
-  font-size:20px;
+  font-size:17px;
   color:var(--ink);
   text-align:right;
   transition:border-color .16s ease, box-shadow .16s ease;
@@ -535,14 +565,15 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   border-color:var(--accent);
 }
 .price-box .amount{
+  font-family:var(--font-display);
   font-size:44px;
   font-weight:650;
-  letter-spacing:-.02em;
+  letter-spacing:-.035em;
   color:var(--ink);
-  line-height:1.05;
+  line-height:1;
   font-variant-numeric:tabular-nums;
 }
-.price-box .amount small{ font-size:15px; font-weight:500; color:var(--ink-muted); letter-spacing:0; }
+.price-box .amount small{ font-family:var(--font-sans); font-size:15px; font-weight:500; color:var(--ink-muted); letter-spacing:0; }
 .price-box .btn{ width:100%; font-size:17px; padding:16px 24px; margin:20px 0 14px; }
 
 .trust{
@@ -553,7 +584,13 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   color:var(--ink-muted);
 }
 .trust li{ display:grid; grid-template-columns:20px 1fr; gap:10px; align-items:start; }
-.trust li::before{ content:"✓"; color:var(--accent); font-weight:700; }
+.trust li::before{
+  content:"";
+  width:7px; height:7px;
+  margin-top:7px;
+  border-radius:50%;
+  background:var(--accent-dark);
+}
 
 .deliverables{
   list-style:none;
@@ -571,11 +608,12 @@ table.data td a[data-del]:hover{ color:var(--mark); }
   width:36px; height:36px;
   border-radius:8px;
   display:flex; align-items:center; justify-content:center;
-  font-size:13.5px; font-weight:700;
-  background:var(--surface-2);
+  font-family:var(--font-display);
+  font-size:14px; font-weight:600;
+  background:var(--accent-soft);
   border:1px solid var(--glass-edge);
-  color:var(--ink-muted);
-  letter-spacing:-.01em;
+  color:var(--accent);
+  letter-spacing:0;
 }
 .deliverables .d-name{ display:block; font-weight:600; font-size:16.5px; }
 .deliverables .d-type{
@@ -594,7 +632,7 @@ img.vorschau{
   width:100%;
   height:auto;
   margin-top:14px;
-  border-radius:10px;
+  border-radius:8px;
   border:1px solid var(--glass-line);
 }
 
@@ -657,8 +695,8 @@ footer.site{
   font-size:13.5px;
   color:var(--ink-muted);
 }
-footer.site a{ text-decoration:none; }
-footer.site a:hover{ text-decoration:underline; }
+footer.site a{ color:var(--ink-muted); text-decoration:none; border-bottom:1px solid var(--glass-edge); }
+footer.site a:hover{ color:var(--ink); border-color:var(--accent); }
 
 @media (max-width:640px){
   body{ font-size:17px; }
@@ -669,7 +707,7 @@ footer.site a:hover{ text-decoration:underline; }
 
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
-  *{ transition:none !important; }
+  *{ transition:none !important; animation:none !important; }
 }
 
 /* ============================================================
@@ -766,7 +804,7 @@ body.zpad-offen{ overflow:hidden; }
   z-index:200;
   display:flex;
   align-items:flex-end;
-  background:rgba(20,20,18,.35);
+  background:rgba(12,16,21,.45);
 }
 .zpad[hidden]{ display:none; }
 
@@ -776,9 +814,9 @@ body.zpad-offen{ overflow:hidden; }
   margin:0 auto;
   padding:16px 14px calc(16px + env(safe-area-inset-bottom));
   border-radius:16px 16px 0 0;
-  background:var(--paper);
+  background:var(--pure);
   border-top:1px solid var(--glass-edge);
-  box-shadow:0 -8px 30px -12px rgba(20,20,18,.25);
+  box-shadow:none;
 }
 
 .zpad-kopf{
@@ -799,9 +837,10 @@ body.zpad-offen{ overflow:hidden; }
 }
 .zpad-wert{
   flex:none;
+  font-family:var(--font-display);
   font-size:26px;
-  font-weight:500;
-  letter-spacing:-.02em;
+  font-weight:600;
+  letter-spacing:-.03em;
   color:var(--accent);
   font-variant-numeric:tabular-nums;
 }
@@ -815,9 +854,9 @@ body.zpad-offen{ overflow:hidden; }
 }
 .zpad-schritt button{
   height:46px;
-  border-radius:10px;
+  border-radius:8px;
   border:1px solid var(--glass-edge);
-  background:var(--surface);
+  background:var(--paper);
   color:var(--ink);
   font-size:21px;
   cursor:pointer;
@@ -830,9 +869,9 @@ body.zpad-offen{ overflow:hidden; }
 }
 .zpad-raster button{
   height:54px;
-  border-radius:10px;
+  border-radius:8px;
   border:1px solid var(--glass-edge);
-  background:var(--surface);
+  background:var(--paper);
   color:var(--ink);
   font-family:var(--font-sans);
   font-size:21px;
@@ -847,7 +886,7 @@ body.zpad-offen{ overflow:hidden; }
   width:100%;
   height:50px;
   margin-top:10px;
-  border-radius:10px;
+  border-radius:8px;
   border:none;
   background:var(--accent);
   color:var(--accent-ink);
@@ -856,6 +895,7 @@ body.zpad-offen{ overflow:hidden; }
   font-weight:600;
   cursor:pointer;
 }
+.zpad-fertig:hover{ background:var(--accent-dark); }
 
 /* Schreibgeschuetzte Felder sollen trotzdem antippbar wirken */
 input[type=number][readonly]{
@@ -871,15 +911,14 @@ input[type=number][readonly]{
 /* ============================================================
    Preisliste im Monats-Rechner
    Auf breiten Schirmen drei Spalten wie eine Tabelle, auf dem
-   Handy bricht der Name in eine eigene Zeile um. Kein Wischen
-   nach rechts mehr.
+   Handy bricht der Name in eine eigene Zeile um.
    ============================================================ */
 .preisliste{
   margin:16px 0 6px;
   border:1px solid var(--glass-edge);
-  border-radius:12px;
+  border-radius:8px;
   overflow:hidden;
-  background:var(--paper);
+  background:var(--pure);
 }
 .pl-kopf,
 .pl-zeile{
@@ -890,12 +929,11 @@ input[type=number][readonly]{
   padding:12px 16px;
 }
 .pl-kopf{
-  font-size:11px;
+  font-size:11.5px;
   font-weight:600;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--ink-faint);
-  background:var(--surface);
+  letter-spacing:.03em;
+  color:var(--ink-muted);
+  background:var(--paper);
   border-bottom:1px solid var(--glass-line);
   padding-top:13px; padding-bottom:13px;
 }
@@ -953,10 +991,9 @@ input[type=number][readonly]{
   .pl-tag{
     display:block;
     width:100%;
-    font-size:10.5px;
+    font-size:11px;
     font-weight:600;
-    letter-spacing:.09em;
-    text-transform:uppercase;
+    letter-spacing:.03em;
     color:var(--ink-faint);
     margin-bottom:2px;
   }
@@ -970,16 +1007,14 @@ input[type=number][readonly]{
 
 /* ============================================================
    Behandlungen im Monats-Rechner
-   Frueher eine Tabelle mit sieben Spalten, die auf dem Handy
-   nur per Wischen erreichbar war. Jetzt eine Karte pro Patient,
-   die auf jeder Breite komplett sichtbar bleibt.
+   Eine Karte pro Patient, auf jeder Breite komplett sichtbar.
    ============================================================ */
 .behandlungen{ display:flex; flex-direction:column; gap:10px; margin:16px 0 6px; }
 
 .bh-karte{
   border:1px solid var(--glass-edge);
-  border-radius:10px;
-  background:var(--paper);
+  border-radius:8px;
+  background:var(--pure);
   padding:13px 15px 15px;
 }
 .bh-kopf{
@@ -991,15 +1026,15 @@ input[type=number][readonly]{
   border-bottom:1px solid var(--glass-line);
 }
 .bh-nr{
-  font-size:12px;
+  font-size:12.5px;
   font-weight:600;
-  letter-spacing:.09em;
-  text-transform:uppercase;
+  letter-spacing:.03em;
   color:var(--ink-faint);
 }
 .bh-summe{
   margin-left:auto;
-  font-size:16px;
+  font-family:var(--font-display);
+  font-size:17px;
   font-weight:600;
   color:var(--accent);
   font-variant-numeric:tabular-nums;
@@ -1027,10 +1062,9 @@ input[type=number][readonly]{
 .bh-feld{ display:block; cursor:pointer; }
 .bh-tag{
   display:block;
-  font-size:10.5px;
+  font-size:11px;
   font-weight:600;
-  letter-spacing:.09em;
-  text-transform:uppercase;
+  letter-spacing:.03em;
   color:var(--ink-faint);
   margin-bottom:5px;
 }

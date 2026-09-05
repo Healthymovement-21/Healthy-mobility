@@ -14,12 +14,12 @@ L = 56.7                      # linker Rand
 R = W - 56.7                  # rechter Rand
 BREITE = R - L
 
-INK      = HexColor('#17191B')
-GRAU     = HexColor('#55595D')
-GRUEN    = HexColor('#0F6B5C')   # einzige Akzentfarbe, identisch zur Website
-ROT      = HexColor('#17191B')   # Warnkasten-Rahmen: neutral statt zweiter Farbe
-BOX_BG   = HexColor('#F1F1EE')
-LINIE    = HexColor('#C9CFCB')
+INK      = HexColor('#0C1015')
+GRAU     = HexColor('#5F6970')
+GRUEN    = HexColor('#2F35E8')   # einzige Akzentfarbe, identisch zur Website
+ROT      = HexColor('#0C1015')   # Warnkasten-Rahmen: neutral statt zweiter Farbe
+BOX_BG   = HexColor('#EEF0FE')
+LINIE    = HexColor('#E1E4E0')
 WASSER   = HexColor('#B9BEC0')   # Wasserzeichen neutral grau, nicht farbig
 
 FUSS = 'PhysioNebenbei — Muster-Vorlage, keine Rechtsberatung'

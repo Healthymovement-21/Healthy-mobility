@@ -295,7 +295,8 @@
       <h2>Dieselben Formeln als Excel</h2>
       <p>Zum Speichern deiner eigenen Zahlen, offline auf deinem Gerät.</p>
       <p class="hero-cta">
-        <a class="btn" href="index.html#dateien">Excel-Mappe herunterladen</a>
+        <a class="btn" href="dateien.html">Excel-Mappe herunterladen</a>
+        <a class="btn ghost" href="#" id="reset">Eingaben zurücksetzen</a>
       </p>
     </section>
 
@@ -516,6 +517,26 @@
   document.querySelectorAll(preisFelder).forEach(el => {
     el.addEventListener('input', recalcAll);
     el.addEventListener('change', recalcAll);
+  });
+
+  /* ---------- Zuruecksetzen ----------
+     Stellt die Felder auf die Ausgangswerte zurueck, die im HTML stehen.
+     Die gespeicherten Zahlen bleiben, bis der Nutzer wieder speichert —
+     geloescht wird hier bewusst nichts. */
+  document.getElementById('reset').addEventListener('click', e => {
+    e.preventDefault();
+    if (!confirm('Alle Eingaben auf dieser Seite auf die Ausgangswerte zurücksetzen?')) return;
+    document.querySelectorAll('input[type="number"]').forEach(el => {
+      const start = el.getAttribute('value');
+      if (start === null) return;
+      el.value = start;
+      /* Das normale Ereignis ausloesen, damit die Datenschicht und die
+         Speicherleiste denselben Weg gehen wie bei einer Eingabe von Hand.
+         Danach steht in der Leiste "Ungespeicherte Aenderungen" — der
+         Nutzer entscheidet selbst, ob er das so speichern will. */
+      el.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    recalcAll();
   });
 
   /* Speicherleiste */

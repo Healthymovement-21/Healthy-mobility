@@ -27,7 +27,11 @@
   .wahlreihe button[aria-pressed="true"] b{ color:var(--accent); }
 
   .regler{ display:flex; align-items:center; gap:14px; margin-top:6px; }
-  .regler input[type=range]{ flex:1; accent-color:var(--accent); background:none; border:none; padding:0; }
+  /* Die Bahn bleibt schlank, die Flaeche zum Ziehen wird fingergerecht. */
+  .regler input[type=range]{
+    flex:1; accent-color:var(--accent); background:none; border:none;
+    padding:12px 0; height:40px; cursor:pointer;
+  }
   .regler .zahl{
     font-variant-numeric:tabular-nums; font-size:26px; color:var(--accent);
     min-width:2.2em; text-align:right;

@@ -287,6 +287,7 @@
       <p class="hero-cta">
         <a class="btn" href="werkzeuge.html">Preis genauer kalkulieren</a>
         <a class="btn ghost" href="planungsrechner.html">Auslastung im Detail planen</a>
+        <a class="btn ghost" href="#" id="reset">Eingaben zurücksetzen</a>
       </p>
 
       <details class="mehr">
@@ -531,6 +532,24 @@
     felder.forEach(f => zuordnung[f] = '#' + f);
     Daten.koppeln('zahlen', zuordnung, rechne);
   }
+
+  /* ---------- Zuruecksetzen ----------
+     Setzt die Felder auf die Ausgangswerte aus dem HTML. Gespeicherte
+     Zahlen bleiben erhalten, bis wieder gespeichert wird. */
+  document.getElementById('reset').addEventListener('click', e => {
+    e.preventDefault();
+    if (!confirm('Alle Eingaben auf dieser Seite auf die Ausgangswerte zurücksetzen?')) return;
+    felder.forEach(id => {
+      const el = document.getElementById(id);
+      const start = el.getAttribute('value');
+      if (start === null) return;
+      el.value = start;
+      /* Das normale Ereignis ausloesen, damit die Datenschicht und die
+         Speicherleiste denselben Weg gehen wie bei einer Eingabe von Hand. */
+      el.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    rechne();
+  });
 
   felder.forEach(id => {
     const el = document.getElementById(id);

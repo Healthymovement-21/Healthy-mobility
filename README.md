@@ -38,8 +38,8 @@ physio-nebenbei/
 
 NUR MIT LINK
 v5frhmlitisu/
-  index.html                   Mein Bereich: fünf Blöcke — Zahlen, Fortschritt,
-                               Termine, Dateien, Speicherung. Sonst nichts
+  index.html                   Mein Bereich: fünf Blöcke — Fortschritt mit dem
+                               nächsten Schritt, Zahlen, Termine, Dateien, Speicherung
   schritte.html                der interaktive Fahrplan: zehn Schritte mit Fortschritt,
                                jeder mit dem passenden Werkzeug verknüpft
   dateien.html                 alle Dateien plus Speicher: lokal, Google Drive optional
@@ -66,6 +66,11 @@ v5frhmlitisu/
 | `physionebenbei-daten` | Zahlen, Profil, Termine, Sync-Einstellungen (siehe `daten.js`) |
 | `physionebenbei-schritte` | Fortschritt im zehnstufigen Fahrplan |
 | `physionebenbei-todo` | abgehakte Kapitel im Fahrplan-Handbuch |
+| `physionebenbei-euer` | Einnahmen-Überschuss-Tabelle in werkzeuge.html |
+| `physionebenbei-gehalt` | Gehalts- und Stundenrechner |
+| `physionebenbei-monat` | Monats-Rechner, plus `-ergebnis` |
+| `physionebenbei-planung` | Auslastungs-Rechner |
+| `physionebenbei-rechnungen` | Rechnungsgenerator, eigener Speicher |
 | `physionebenbei-todo-eigene` | die persönliche Checkliste |
 | `physionebenbei-drive` | wann zuletzt zu Drive übertragen wurde (kein Token) |
 

@@ -45,6 +45,20 @@
   }
   .raster .w.mint{ color:var(--accent); }
 
+  /* Naechster Schritt: die einzige Stelle, die zum Weitermachen auffordert */
+  .naechster-titel{ font-size:13px; color:var(--ink-muted); margin:22px 0 4px; }
+  .naechster-name{
+    font-family:var(--font-display); font-size:21px; font-weight:600;
+    letter-spacing:-.02em; color:var(--ink); margin:0; line-height:1.3;
+  }
+
+  /* Vier wichtige Vorlagen, ohne die ganze Liste */
+  .kurzliste{ list-style:none; margin:2px 0 0; padding:0; }
+  .kurzliste li{ padding:12px 0; border-bottom:1px solid var(--glass-edge); }
+  .kurzliste li:first-child{ border-top:1px solid var(--glass-edge); }
+  .kurzliste a{ font-size:16.5px; font-weight:600; }
+  .kurzliste span{ display:block; font-size:14px; color:var(--ink-muted); margin-top:2px; }
+
   /* Fortschritt */
   .balken{ height:4px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:16px 0 0; }
   .balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .35s ease; }
@@ -78,31 +92,45 @@
 
     <section class="sheet">
 
-      <!-- ============ 1 · MEINE ZAHLEN ============ -->
-      <div class="block">
-        <h2>Meine Zahlen</h2>
-        <p class="gross"><span id="z_preis">–</span> <span class="klein">je Behandlung</span></p>
-        <p class="darunter" id="z_unter">–</p>
-
-        <div class="raster">
-          <div><div class="t">Umsatz</div><div class="w" id="z_umsatz">–</div></div>
-          <div><div class="t">Ausgaben</div><div class="w" id="z_ausgaben">–</div></div>
-          <div><div class="t">Rücklage <span id="z_satz"></span></div><div class="w" id="z_ruecklage">–</div></div>
-          <div><div class="t">Verfügbar</div><div class="w mint" id="z_verfuegbar">–</div></div>
-        </div>
-
-        <p class="micro" style="margin-top:16px">Kalkulationswerte aus deinen eigenen Eingaben. Die Rücklage ist der Prozentsatz, den du selbst gewählt hast — deine tatsächliche Steuerlast berechnet diese Anwendung nicht.</p>
-
-        <p class="tun"><a class="btn ghost" href="werkzeuge.html">Zahlen ändern</a></p>
-      </div>
-
-      <!-- ============ 2 · MEIN FORTSCHRITT ============ -->
+      <!-- ============ 1 · MEIN FORTSCHRITT ============ -->
       <div class="block">
         <h2>Mein Fortschritt</h2>
-        <p class="gross"><span id="f_zahl">0</span> <span class="klein">von 10 Schritten</span></p>
+        <p class="gross"><span id="f_zahl">0</span> <span class="klein">von 10 Schritten erledigt</span></p>
         <div class="balken"><div id="f_balken" style="width:0%"></div></div>
-        <p class="darunter" id="f_naechster">–</p>
-        <p class="tun"><a class="btn ghost" href="schritte.html">Fahrplan öffnen</a></p>
+
+        <p class="naechster-titel">Mein nächster Schritt</p>
+        <p class="naechster-name" id="f_naechster">–</p>
+        <p class="tun">
+          <a class="btn" href="schritte.html" id="f_weiter">Weiter</a>
+          <a class="btn ghost" href="schritte.html">Ganzen Fahrplan ansehen</a>
+        </p>
+      </div>
+
+      <!-- ============ 2 · MEINE ZAHLEN ============ -->
+      <div class="block">
+        <h2>Meine Zahlen</h2>
+
+        <div id="z_leer" hidden>
+          <p class="gross leer">Noch keine Zahlen gespeichert.</p>
+          <p class="darunter">Rechne einmal durch, wie viele Patient:innen du ungefähr brauchst, damit sich das für dich lohnt. Danach steht das Ergebnis hier.</p>
+          <p class="tun"><a class="btn" href="ziel-rechner.html">Zahlen berechnen</a></p>
+        </div>
+
+        <div id="z_da" hidden>
+          <p class="gross"><span id="z_beh">–</span> <span class="klein" id="z_beh_wort">Behandlungen im Monat</span></p>
+          <p class="darunter" id="z_unter">–</p>
+
+          <div class="raster">
+            <div><div class="t">Gewünschter Nebenverdienst</div><div class="w" id="z_ziel">–</div></div>
+            <div><div class="t">Patient:innen pro Woche</div><div class="w" id="z_patienten">–</div></div>
+            <div><div class="t">Umsatz im Monat</div><div class="w" id="z_umsatz">–</div></div>
+            <div><div class="t">Steuer-Rücklage <span id="z_satz"></span></div><div class="w" id="z_ruecklage">–</div></div>
+          </div>
+
+          <p class="micro" style="margin-top:16px">Kalkulationswerte aus deinen eigenen Eingaben. Die Rücklage ist der Prozentsatz, den du selbst gewählt hast — deine tatsächliche Steuerlast berechnet diese Anwendung nicht.</p>
+
+          <p class="tun"><a class="btn ghost" href="werkzeuge.html">Zahlen ändern</a></p>
+        </div>
       </div>
 
       <!-- ============ 3 · MEINE TERMINE ============ -->
@@ -112,19 +140,20 @@
         <p class="darunter" id="t_wer">–</p>
         <p class="tun">
           <a class="btn ghost" href="termine.html#neu">Termin hinzufügen</a>
-          <a class="btn ghost" href="termine.html">Kalender</a>
+          <a class="btn ghost" href="termine.html">Alle Termine</a>
         </p>
       </div>
 
       <!-- ============ 4 · MEINE DATEIEN ============ -->
       <div class="block">
         <h2>Meine Dateien</h2>
-        <p class="gross">11 <span class="klein">Vorlagen und Rechner</span></p>
-        <p class="darunter">Verträge, Bögen und Arbeitsblätter zum Herunterladen. Rechnungen erstellst du im Rechnungsgenerator.</p>
-        <p class="tun">
-          <a class="btn ghost" href="dateien.html">Dateien öffnen</a>
-          <a class="btn ghost" href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung schreiben</a>
-        </p>
+        <ul class="kurzliste">
+          <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung schreiben</a><span>Deine Rechnungen schnell und einheitlich</span></li>
+          <li><a href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Behandlungsvertrag</a><span>Vorlage für die Vereinbarung mit deinen Patient:innen</span></li>
+          <li><a href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Honorarvereinbarung</a><span>Preis, Zahlungsziel und Absagefrist schriftlich</span></li>
+          <li><a href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Dokumentation</a><span>Befund und Verlauf je Behandlung</span></li>
+        </ul>
+        <p class="tun"><a class="btn ghost" href="dateien.html">Alle Dateien anzeigen</a></p>
       </div>
 
       <!-- ============ 5 · SPEICHERUNG ============ -->
@@ -173,27 +202,13 @@
   const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
 
   /* ---------- Meine Zahlen ----------
-     Zwei Quellen, in dieser Reihenfolge:
-     1. ein im Monats-Rechner erfasster Monat — das sind echte Zahlen,
-     2. sonst die Kalkulation aus Ziel, Preis und Kosten.
-     Welche der beiden gilt, steht im Text darunter. */
-  function ausMonat(){
-    const f = Daten.finanzen();
-    if (!f || !f.monat || !(f.umsatz > 0)) return null;
-    const satz = (Daten.zahlen().satz || 0) / 100;
-    const gewinn = f.umsatz - (f.ausgaben || 0);
-    const ruecklage = Math.max(gewinn, 0) * satz;
-    const [j, m] = String(f.monat).split('-');
-    const name = ['Januar','Februar','März','April','Mai','Juni','Juli',
-                  'August','September','Oktober','November','Dezember'][Number(m) - 1];
-    return {
-      umsatz: f.umsatz, ausgaben: f.ausgaben || 0, ruecklage,
-      verfuegbar: gewinn - ruecklage, satz,
-      text: name ? 'Dein erfasster Monat ' + name + ' ' + j + '.' : 'Dein zuletzt erfasster Monat.'
-    };
-  }
+     Dieselbe Rechnung wie im Ziel-Rechner, damit ueberall dieselbe Zahl
+     steht. Der Umsatz kommt aus einem erfassten Monat, sobald einer da
+     ist — sonst aus der Vorausplanung. Welche der beiden gilt, sagt der
+     Satz darunter. */
+  const WOCHEN = 4.33;
 
-  function ausKalkulation(){
+  function kalkulation(){
     const z = Daten.zahlen();
     const fahrtkosten = (z.km || 0) * (z.kmsatz || 0);
     const deckung = (z.preis || 0) - fahrtkosten;
@@ -203,48 +218,78 @@
     const beh = Math.ceil(((z.ziel || 0) / (1 - satz) + (z.fix || 0)) / deckung);
     if (!isFinite(beh) || beh < 0) return null;
 
+    const frequenz  = Math.max(z.frequenz || 1, 0.25);
     const umsatz    = beh * (z.preis || 0);
-    const ausgaben  = beh * fahrtkosten + (z.fix || 0);
-    const gewinn    = umsatz - ausgaben;
-    const ruecklage = Math.max(gewinn, 0) * satz;
+    const gewinn    = umsatz - beh * fahrtkosten - (z.fix || 0);
     return {
-      umsatz, ausgaben, ruecklage, verfuegbar: gewinn - ruecklage, satz,
-      text: 'Geplant mit ' + beh + ' Behandlungen im Monat.'
+      beh,
+      patienten: Math.ceil((beh / WOCHEN) / frequenz),
+      ziel:      z.ziel || 0,
+      umsatz,
+      ruecklage: Math.max(gewinn, 0) * satz,
+      satz
     };
   }
 
   function zahlenZeichnen(){
     const eigene = !!Daten.gespeichertAm();
-    const w = ausMonat() || ausKalkulation();
-    el('z_preis').textContent = eur(Daten.zahlen().preis || 0);
+    const k = kalkulation();
 
-    if (!w){
-      ['z_umsatz','z_ausgaben','z_ruecklage','z_verfuegbar'].forEach(i => el(i).textContent = '–');
-      el('z_unter').textContent = 'Deine Zahlen gehen so nicht auf — der Preis deckt die Fahrtkosten noch nicht.';
+    if (!eigene || !k){
+      el('z_leer').hidden = false;
+      el('z_da').hidden   = true;
+      if (eigene && !k){
+        el('z_leer').querySelector('.gross').textContent = 'Deine Zahlen gehen so nicht auf.';
+        el('z_leer').querySelector('.darunter').textContent =
+          'Der Behandlungspreis deckt die Fahrtkosten noch nicht. Geh einmal in die Preis-Kalkulation und schau dir die Zahlen an.';
+      }
       return;
     }
-    el('z_umsatz').textContent     = eur(w.umsatz);
-    el('z_ausgaben').textContent   = eur(w.ausgaben);
-    el('z_ruecklage').textContent  = eur(w.ruecklage);
-    el('z_verfuegbar').textContent = eur(w.verfuegbar);
-    el('z_satz').textContent       = Math.round(w.satz * 100) + ' %';
-    el('z_unter').textContent = eigene
-      ? w.text
-      : 'Beispielrechnung mit den Startwerten. Sobald du eigene Zahlen speicherst, steht hier deine eigene Rechnung.';
+    el('z_leer').hidden = true;
+    el('z_da').hidden   = false;
+
+    /* Ein erfasster Monat schlaegt die Vorausplanung. */
+    const f = Daten.finanzen();
+    const echterMonat = f && f.monat && f.umsatz > 0;
+    let umsatz = k.umsatz, ruecklage = k.ruecklage, text;
+
+    if (echterMonat){
+      const gewinn = f.umsatz - (f.ausgaben || 0);
+      umsatz    = f.umsatz;
+      ruecklage = Math.max(gewinn, 0) * k.satz;
+      const [j, m] = String(f.monat).split('-');
+      const name = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                    'August','September','Oktober','November','Dezember'][Number(m) - 1];
+      text = name
+        ? 'Umsatz und Rücklage stammen aus deinem erfassten Monat ' + name + ' ' + j + '. Die Zahl der Behandlungen ist deine Planung.'
+        : 'Umsatz und Rücklage stammen aus deinem zuletzt erfassten Monat.';
+    } else {
+      text = 'So oft musst du behandeln, damit von deinem Wunschbetrag am Ende wirklich etwas übrig bleibt.';
+    }
+
+    el('z_beh').textContent       = k.beh;
+    el('z_beh_wort').textContent  = k.beh === 1 ? 'Behandlung im Monat' : 'Behandlungen im Monat';
+    el('z_unter').textContent     = text;
+    el('z_ziel').textContent      = eur(k.ziel);
+    el('z_patienten').textContent = k.patienten;
+    el('z_umsatz').textContent    = eur(umsatz);
+    el('z_ruecklage').textContent = eur(ruecklage);
+    el('z_satz').textContent      = Math.round(k.satz * 100) + ' %';
   }
 
   /* ---------- Mein Fortschritt ---------- */
+  /* Die zehn Schritte aus dem Fahrplan, in derselben Reihenfolge. */
   const NAECHSTE = [
-    'Als Nächstes: durchrechnen, ob sich das für dich lohnt.',
-    'Als Nächstes: Finanzamt, BGW und Berufshaftpflicht klären.',
-    'Als Nächstes: deinen Behandlungspreis festlegen.',
-    'Als Nächstes: ausrechnen, wie viele Patient:innen du brauchst.',
-    'Als Nächstes: einen echten Monat durchrechnen.',
-    'Als Nächstes: Honorarvereinbarung und Verträge vorbereiten.',
-    'Als Nächstes: deine ersten Termine eintragen.',
-    'Als Nächstes: Anamnese- und Dokumentationsbogen ausdrucken.',
-    'Als Nächstes: deine erste Rechnung schreiben.',
-    'Als Nächstes: Einnahmen und Ausgaben laufend eintragen.'
+    'Prüfen, ob sich das für dich lohnt',
+    'Anmeldung und Formalitäten erledigen',
+    'Versicherungen prüfen',
+    'Deinen Behandlungspreis festlegen',
+    'Deine erste Rechnung vorbereiten',
+    'Dokumentation aufsetzen',
+    'Datenschutz-Grundlagen klären',
+    'Erste Patient:innen gewinnen',
+    'Die ersten 30 Tage planen',
+    'Typische Anfänger-Fehler vermeiden'
   ];
 
   function fortschrittZeichnen(){
@@ -256,9 +301,13 @@
     fertig = Math.min(fertig, 10);
     el('f_zahl').textContent = fertig;
     el('f_balken').style.width = (fertig * 10) + '%';
-    el('f_naechster').textContent = fertig >= 10
-      ? 'Alle zehn Schritte erledigt. Ab jetzt geht es ums Dranbleiben.'
-      : NAECHSTE[fertig];
+    if (fertig >= 10){
+      el('f_naechster').textContent = 'Du bist durch. Ab jetzt geht es ums Dranbleiben.';
+      el('f_weiter').textContent = 'Fahrplan ansehen';
+    } else {
+      el('f_naechster').textContent = NAECHSTE[fertig];
+      el('f_weiter').href = 'schritte.html#schritt' + (fertig + 1);
+    }
   }
 
   /* ---------- Meine Termine ---------- */
@@ -271,9 +320,9 @@
       .sort((a, b) => (a.datum + a.zeit).localeCompare(b.datum + b.zeit));
 
     if (!kommend.length){
-      el('t_wann').textContent = 'Kein Termin eingetragen';
+      el('t_wann').textContent = 'Noch keine Termine.';
       el('t_wann').classList.add('leer');
-      el('t_wer').textContent  = 'Sobald du einen einträgst, steht er hier.';
+      el('t_wer').textContent  = 'Sobald du einen einträgst, steht der nächste hier.';
       return;
     }
     const t = kommend[0];

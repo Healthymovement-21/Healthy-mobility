@@ -77,6 +77,38 @@
   }
   .haupt-lede{ margin:12px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); }
 
+  /* Zweite Ebene: sichtbar kleiner als Fahrplan, Kalkulation und
+     Dokumente, damit die Rangfolge auf einen Blick stimmt. */
+  .neben-titel{
+    font-family:var(--font-display); font-size:19px; font-weight:600;
+    letter-spacing:-.02em; color:var(--ink); margin:0 0 4px;
+  }
+  .neben-zeile{ font-size:17px; color:var(--ink); margin:14px 0 0; line-height:1.4; }
+  .neben-zeile.klein-normal{ font-size:15px; color:var(--ink-muted); }
+  .neben-unter{ font-size:14.5px; color:var(--ink-muted); margin:5px 0 0; line-height:1.5; }
+
+  /* Fortschritt im Fahrplan */
+  .fortschritt-zahl{
+    font-family:var(--font-display); font-weight:600; letter-spacing:-.03em;
+    font-size:clamp(30px,7vw,38px); line-height:1.1; color:var(--ink);
+    font-variant-numeric:tabular-nums; margin:24px 0 0;
+  }
+  .fortschritt-zahl .klein{ font-size:.5em; font-weight:500; color:var(--ink-muted); letter-spacing:-.01em; }
+
+  /* Was in der Kalkulation noch steckt */
+  .mit-drin{ margin:20px 0 0; font-size:14.5px; color:var(--ink-muted); line-height:1.6; }
+
+  /* Die vollstaendige Werkzeugliste bleibt zu, bis sie gebraucht wird */
+  .werkzeuge-mehr{ margin-top:24px; border-top:1px solid var(--glass-edge); }
+  .werkzeuge-mehr > summary{
+    display:flex; align-items:center; min-height:48px;
+    font-size:15.5px; font-weight:600; color:var(--accent);
+    cursor:pointer; list-style:none;
+  }
+  .werkzeuge-mehr > summary::-webkit-details-marker{ display:none; }
+  .werkzeuge-mehr > summary::after{ content:" ↓"; margin-left:6px; font-weight:400; }
+  .werkzeuge-mehr[open] > summary::after{ content:" ↑"; }
+
   .minifelder{ display:grid; gap:14px; margin-top:24px; }
   @media (min-width:520px){ .minifelder{ grid-template-columns:1fr 1fr; } }
   .minifelder label{ display:block; font-size:14px; color:var(--ink-muted); margin-bottom:6px; }
@@ -125,10 +157,24 @@
       <h1 class="title">Mein Bereich</h1>
     </section>
 
-    <!-- ============ HAUPTRECHNER ============ -->
+    <!-- ============ 1 · MEIN FAHRPLAN ============ -->
     <section class="sheet">
-      <h2 class="haupt-titel">Was kann ich nebenbei verdienen?</h2>
-      <p class="haupt-lede">Trag ein, wie viele Behandlungen du pro Woche realistisch anbieten kannst und was du dafür ungefähr berechnen möchtest.</p>
+      <h2 class="haupt-titel">Mein Fahrplan</h2>
+      <p class="haupt-lede">Schritt für Schritt von der ersten Idee bis zur eigenen Nebentätigkeit.</p>
+
+      <p class="fortschritt-zahl"><span id="f_zahl">0</span> <span class="klein">von 10 Schritten abgeschlossen</span></p>
+      <div class="balken"><div id="f_balken" style="width:0%"></div></div>
+
+      <p class="naechster-titel">Als Nächstes</p>
+      <p class="naechster-name" id="f_naechster">–</p>
+
+      <p class="tun"><a class="btn" href="schritte.html" id="f_weiter">Fahrplan öffnen</a></p>
+    </section>
+
+    <!-- ============ 2 · KALKULATION ============ -->
+    <section class="sheet">
+      <h2 class="haupt-titel">Kalkulation</h2>
+      <p class="haupt-lede">Finde heraus, was dir von deiner Nebentätigkeit tatsächlich bleibt.</p>
 
       <div class="minifelder">
         <div>
@@ -148,69 +194,65 @@
       </div>
 
       <p class="tun">
-        <a class="btn" href="verdienst.html">Kosten und Rücklage dazunehmen</a>
+        <a class="btn" href="verdienst.html">Kalkulation öffnen</a>
         <a class="btn leise" href="werkzeuge.html">Preis berechnen</a>
       </p>
+
+      <p class="mit-drin">Dort rechnest du weiter: Ausgaben, Steuer-Rücklage und was am Ende netto übrig bleibt. Für einzelne Behandlungen, einen ganzen Monat, dein Jahr, deinen Stundenlohn und die Kombination mit dem Gehalt aus dem Hauptjob gibt es je einen eigenen Rechner — alle unter „Weitere Werkzeuge“.</p>
     </section>
 
+    <!-- ============ 3 · DOKUMENTE ============ -->
     <section class="sheet">
-      <p class="eyebrow">Weitere Rechner</p>
-      <ul class="werkzeugliste">
-        <li><a href="werkzeuge.html">Preis berechnen</a><span>Welcher Preis macht für deine Behandlung und deinen Aufwand Sinn?</span></li>
-        <li><a href="monatsrechner.html">Behandlung kalkulieren</a><span>Was bringt dir eine einzelne Behandlung ungefähr?</span></li>
-        <li><a href="monatsrechner.html">Monat kalkulieren</a><span>Wie sieht dein tatsächlicher Monat mit verschiedenen Behandlungen und Kosten aus?</span></li>
-        <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du neben deinem Hauptjob realistisch unter?</span></li>
-        <li><a href="gehaltsrechner.html">Gehalt und Stunden</a><span>Was verändert sich, wenn du deine Arbeitszeit im Hauptjob veränderst?</span></li>
-        <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Du hast ein konkretes Einkommensziel? Dann rechne von diesem Ziel zurück.</span></li>
-        <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
+      <h2 class="haupt-titel">Dokumente</h2>
+      <p class="haupt-lede">Erstelle, speichere und verwalte deine wichtigsten Unterlagen.</p>
+
+      <ul class="kurzliste">
+        <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung erstellen</a><span>Deine Rechnungen schnell und einheitlich, auch ohne Internet</span></li>
+        <li><a href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Behandlungsvertrag</a><span>Vorlage für die Vereinbarung mit deinen Patient:innen</span></li>
+        <li><a href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Honorarvereinbarung</a><span>Preis, Zahlungsziel und Absagefrist schriftlich</span></li>
+        <li><a href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Dokumentation</a><span>Befund und Verlauf je Behandlung</span></li>
       </ul>
+      <p class="tun"><a class="btn ghost" href="dateien.html">Alle Dokumente und Vorlagen</a></p>
     </section>
 
+    <!-- ============ 4 · WEITERE WERKZEUGE ============ -->
     <section class="sheet">
+      <h2 class="neben-titel">Weitere Werkzeuge</h2>
 
-      <!-- ============ 1 · MEIN FORTSCHRITT ============ -->
       <div class="block">
-        <h2>Mein Fortschritt</h2>
-        <p class="gross"><span id="f_zahl">0</span> <span class="klein">von 10 Schritten erledigt</span></p>
-        <div class="balken"><div id="f_balken" style="width:0%"></div></div>
-
-        <p class="naechster-titel">Mein nächster Schritt</p>
-        <p class="naechster-name" id="f_naechster">–</p>
-        <p class="tun">
-          <a class="btn ghost" href="schritte.html" id="f_weiter">Weiter</a>
-        </p>
-      </div>
-
-      <!-- ============ 3 · MEINE TERMINE ============ -->
-      <div class="block">
-        <h2>Meine Termine</h2>
-        <p class="gross" id="t_wann">–</p>
-        <p class="darunter" id="t_wer">–</p>
+        <p class="neben-zeile" id="t_wann">–</p>
+        <p class="neben-unter" id="t_wer">–</p>
         <p class="tun">
           <a class="btn ghost" href="termine.html#neu">Termin hinzufügen</a>
-          <a class="btn leise" href="termine.html">Alle Termine</a>
+          <a class="btn leise" href="termine.html">Kalender</a>
         </p>
       </div>
 
-      <!-- ============ 4 · MEINE DATEIEN ============ -->
-      <div class="block">
-        <h2>Meine Dateien</h2>
-        <ul class="kurzliste">
-          <li><a href="dateien/PhysioNebenbei-Rechnungsgenerator.html">Rechnung schreiben</a><span>Deine Rechnungen schnell und einheitlich</span></li>
-          <li><a href="dateien/Behandlungsvertrag.pdf" download="Behandlungsvertrag.pdf">Behandlungsvertrag</a><span>Vorlage für die Vereinbarung mit deinen Patient:innen</span></li>
-          <li><a href="dateien/Honorarvereinbarung.pdf" download="Honorarvereinbarung.pdf">Honorarvereinbarung</a><span>Preis, Zahlungsziel und Absagefrist schriftlich</span></li>
-          <li><a href="dateien/Dokumentationsvorlage.pdf" download="Dokumentationsvorlage.pdf">Dokumentation</a><span>Befund und Verlauf je Behandlung</span></li>
+      <details class="werkzeuge-mehr">
+        <summary>Alle Werkzeuge anzeigen</summary>
+        <ul class="werkzeugliste">
+          <li><a href="werkzeuge.html">Preis berechnen</a><span>Welcher Preis macht für deine Behandlung und deinen Aufwand Sinn?</span></li>
+          <li><a href="monatsrechner.html">Behandlung kalkulieren</a><span>Was bringt dir eine einzelne Behandlung ungefähr?</span></li>
+          <li><a href="monatsrechner.html">Monat kalkulieren</a><span>Wie sieht dein tatsächlicher Monat mit verschiedenen Behandlungen und Kosten aus?</span></li>
+          <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du neben deinem Hauptjob realistisch unter?</span></li>
+          <li><a href="gehaltsrechner.html">Gehalt und Stunden</a><span>Was verändert sich, wenn du deine Arbeitszeit im Hauptjob veränderst?</span></li>
+          <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Du hast ein konkretes Einkommensziel? Dann rechne von diesem Ziel zurück.</span></li>
+          <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
+          <li><a href="termine.html">Kalender</a><span>Deine Termine im Überblick</span></li>
+          <li><a href="dateien.html">Dokumente und Vorlagen</a><span>Alle elf Dateien zum Herunterladen</span></li>
         </ul>
-        <p class="tun"><a class="btn leise" href="dateien.html">Alle Dateien anzeigen</a></p>
-      </div>
+      </details>
+    </section>
 
-      <!-- ============ 5 · SPEICHERUNG ============ -->
-      <div class="block">
-        <h2>Speicherung</h2>
-        <p class="stand" id="s_text">–</p>
-        <p class="tun"><a class="btn leise" href="einstellungen.html">Angaben und Sicherung</a></p>
-      </div>
-
+    <!-- ============ 5 · DATEN UND SICHERUNG ============ -->
+    <section class="sheet">
+      <h2 class="neben-titel">Daten und Sicherung</h2>
+      <p class="neben-zeile klein-normal" id="s_text">–</p>
+      <p class="neben-unter" id="s_drive">–</p>
+      <p class="tun">
+        <a class="btn ghost" href="einstellungen.html">Angaben und Sicherung</a>
+        <a class="btn leise" href="dateien.html#speicher" id="s_drive_link">Google Drive</a>
+      </p>
     </section>
 
   </div>
@@ -236,7 +278,9 @@
   const el  = id => document.getElementById(id);
   const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
 
-  /* ---------- Speicherung ---------- */
+  /* ---------- Daten und Sicherung ----------
+     Der lokale Stand und Google Drive stehen getrennt, damit Drive
+     erkennbar ein Zusatz ist und keine eigene Hauptfunktion. */
   function standZeichnen(){
     const iso = Daten.gespeichertAm();
     let text = 'Noch nichts gespeichert';
@@ -247,9 +291,18 @@
              (d.toDateString() === new Date().toDateString() ? 'heute, ' : d.toLocaleDateString('de-DE') + ', ') +
              uhr + ' Uhr';
     }
-    el('s_text').textContent = text + (DriveSync.verbunden()
-      ? ' · ✓ Mit Google Drive synchronisiert'
-      : ' · Google Drive nicht verbunden');
+    el('s_text').textContent = text;
+
+    if (DriveSync.verbunden()){
+      el('s_drive').textContent = 'Google Drive verbunden';
+      el('s_drive_link').textContent = 'Google Drive';
+    } else if (DriveSync.eingerichtet()){
+      el('s_drive').textContent = 'Google Drive nicht verbunden';
+      el('s_drive_link').textContent = 'Mit Google Drive verbinden';
+    } else {
+      el('s_drive').textContent = 'Google Drive ist noch nicht eingerichtet — deine Daten liegen auf diesem Gerät.';
+      el('s_drive_link').textContent = 'Google Drive einrichten';
+    }
   }
 
   /* ---------- Der Hauptrechner, direkt hier ----------
@@ -335,8 +388,7 @@
       .sort((a, b) => (a.datum + a.zeit).localeCompare(b.datum + b.zeit));
 
     if (!kommend.length){
-      el('t_wann').textContent = 'Noch keine Termine.';
-      el('t_wann').classList.add('leer');
+      el('t_wann').textContent = 'Noch keine Termine eingetragen';
       el('t_wer').textContent  = 'Sobald du einen einträgst, steht der nächste hier.';
       return;
     }

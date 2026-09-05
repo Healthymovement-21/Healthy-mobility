@@ -40,6 +40,8 @@ NUR MIT LINK
 v5frhmlitisu/
   index.html                   Mein Bereich: fünf Blöcke — Fortschritt mit dem
                                nächsten Schritt, Zahlen, Termine, Dateien, Speicherung
+  verdienst.html               Hauptrechner: Behandlungen pro Woche mal Preis,
+                               minus Kosten und Rücklage. Vorwärts gerechnet
   schritte.html                der interaktive Fahrplan: zehn Schritte mit Fortschritt,
                                jeder mit dem passenden Werkzeug verknüpft
   dateien.html                 alle Dateien plus Speicher: lokal, Google Drive optional

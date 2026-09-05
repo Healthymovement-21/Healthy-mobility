@@ -70,9 +70,6 @@
   /* Speicherzeile */
   .stand{ font-size:14.5px; color:var(--ink-muted); margin:0; line-height:1.55; }
 
-  /* Rechner als ruhige Textzeile, keine Kacheln */
-  .rechnerzeile{ display:flex; flex-wrap:wrap; gap:6px 18px; margin:0; }
-  .rechnerzeile a{ font-size:15px; }
 </style>
 </head>
 <body>
@@ -112,24 +109,24 @@
 
         <div id="z_leer" hidden>
           <p class="gross leer">Noch keine Zahlen gespeichert.</p>
-          <p class="darunter">Rechne einmal durch, wie viele Patient:innen du ungefähr brauchst, damit sich das für dich lohnt. Danach steht das Ergebnis hier.</p>
-          <p class="tun"><a class="btn" href="ziel-rechner.html">Zahlen berechnen</a></p>
+          <p class="darunter">Trag einfach ein, wie viele Behandlungen du pro Woche realistisch anbieten kannst und was du dafür nimmst. Das Ergebnis steht sofort da.</p>
+          <p class="tun"><a class="btn" href="verdienst.html">Zahlen berechnen</a></p>
         </div>
 
         <div id="z_da" hidden>
-          <p class="gross"><span id="z_beh">–</span> <span class="klein" id="z_beh_wort">Behandlungen im Monat</span></p>
+          <p class="gross"><span id="z_bleibt">–</span></p>
           <p class="darunter" id="z_unter">–</p>
 
           <div class="raster">
-            <div><div class="t">Gewünschter Nebenverdienst</div><div class="w" id="z_ziel">–</div></div>
-            <div><div class="t">Patient:innen pro Woche</div><div class="w" id="z_patienten">–</div></div>
+            <div><div class="t">Behandlungen pro Woche</div><div class="w" id="z_woche">–</div></div>
+            <div><div class="t">Preis je Behandlung</div><div class="w" id="z_preis">–</div></div>
             <div><div class="t">Umsatz im Monat</div><div class="w" id="z_umsatz">–</div></div>
             <div><div class="t">Steuer-Rücklage <span id="z_satz"></span></div><div class="w" id="z_ruecklage">–</div></div>
           </div>
 
-          <p class="micro" style="margin-top:16px">Kalkulationswerte aus deinen eigenen Eingaben. Die Rücklage ist der Prozentsatz, den du selbst gewählt hast — deine tatsächliche Steuerlast berechnet diese Anwendung nicht.</p>
+          <p class="micro" style="margin-top:16px">Schätzwerte aus deinen eigenen Eingaben. Die Rücklage ist der Prozentsatz, den du selbst gewählt hast — deine tatsächliche Steuerlast berechnet diese Anwendung nicht.</p>
 
-          <p class="tun"><a class="btn ghost" href="werkzeuge.html">Zahlen ändern</a></p>
+          <p class="tun"><a class="btn ghost" href="verdienst.html">Zahlen ändern</a></p>
         </div>
       </div>
 
@@ -166,15 +163,23 @@
     </section>
 
     <section class="sheet">
-      <p class="eyebrow">Rechner</p>
-      <p class="rechnerzeile">
-        <a href="werkzeuge.html">Preis-Kalkulation</a>
-        <a href="ziel-rechner.html">Wie viele Patient:innen?</a>
-        <a href="monatsrechner.html">Monat berechnen</a>
-        <a href="planungsrechner.html">Auslastung</a>
-        <a href="gehaltsrechner.html">Gehalt und Stunden</a>
-        <a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a>
-      </p>
+      <p class="eyebrow">Mein wichtigster Rechner</p>
+      <h2>Was kann ich nebenbei verdienen?</h2>
+      <p>Trag ein, wie viele Behandlungen du pro Woche schaffst und was du nimmst. Du siehst sofort, was ungefähr übrig bleibt.</p>
+      <p class="hero-cta"><a class="btn" href="verdienst.html">Rechner öffnen</a></p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Weitere Werkzeuge</p>
+      <ul class="werkzeugliste">
+        <li><a href="werkzeuge.html">Preis finden</a><span>Welcher Preis passt zu deiner Behandlung und deinem Aufwand?</span></li>
+        <li><a href="monatsrechner.html">Behandlung kalkulieren</a><span>Was bleibt bei einer einzelnen Behandlung ungefähr übrig?</span></li>
+        <li><a href="monatsrechner.html">Monat planen</a><span>Wie sieht dein tatsächlicher Monat aus?</span></li>
+        <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du zeitlich unter?</span></li>
+        <li><a href="gehaltsrechner.html">Gehalt und Hauptjob</a><span>Was passiert mit deinem Hauptjob und deinem Nebenverdienst?</span></li>
+        <li><a href="ziel-rechner.html">Rückwärts rechnen</a><span>Wie viele Patient:innen brauchst du für einen bestimmten Zielbetrag?</span></li>
+        <li><a href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen und Ausgaben</a><span>Deine Aufstellung fürs ganze Jahr</span></li>
+      </ul>
       <p class="micro" style="margin-top:14px">Was du in einem Rechner speicherst, schlagen dir die anderen als Ausgangswert vor. Ändern kannst du es dort jederzeit.</p>
     </section>
 
@@ -202,79 +207,60 @@
   const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
 
   /* ---------- Meine Zahlen ----------
-     Dieselbe Rechnung wie im Ziel-Rechner, damit ueberall dieselbe Zahl
-     steht. Der Umsatz kommt aus einem erfassten Monat, sobald einer da
-     ist — sonst aus der Vorausplanung. Welche der beiden gilt, sagt der
-     Satz darunter. */
+     Dieselbe Vorwaertsrechnung wie im Hauptrechner: Behandlungen mal Preis,
+     minus Kosten, minus die selbst gewaehlte Ruecklage. Ist ein Monat im
+     Monats-Rechner erfasst, gilt dessen Umsatz statt der Planung. */
   const WOCHEN = 4.33;
 
-  function kalkulation(){
+  function vorwaerts(){
     const z = Daten.zahlen();
-    const fahrtkosten = (z.km || 0) * (z.kmsatz || 0);
-    const deckung = (z.preis || 0) - fahrtkosten;
-    const satz = Math.min(Math.max((z.satz || 0) / 100, 0), 0.99);
-    if (deckung <= 0) return null;
+    const beh   = z.proWoche || 0;
+    const preis = z.preis || 0;
+    const satz  = Math.min(Math.max((z.satz || 0) / 100, 0), 0.99);
+    const fahrt = (z.km || 0) * (z.kmsatz || 0) * beh * WOCHEN;
+    const kosten = fahrt + (z.raum || 0) + (z.fix || 0);
 
-    const beh = Math.ceil(((z.ziel || 0) / (1 - satz) + (z.fix || 0)) / deckung);
-    if (!isFinite(beh) || beh < 0) return null;
+    const f = Daten.finanzen();
+    const echterMonat = f && f.monat && f.umsatz > 0;
 
-    const frequenz  = Math.max(z.frequenz || 1, 0.25);
-    const umsatz    = beh * (z.preis || 0);
-    const gewinn    = umsatz - beh * fahrtkosten - (z.fix || 0);
-    return {
-      beh,
-      patienten: Math.ceil((beh / WOCHEN) / frequenz),
-      ziel:      z.ziel || 0,
-      umsatz,
-      ruecklage: Math.max(gewinn, 0) * satz,
-      satz
-    };
+    let umsatz = beh * preis * WOCHEN, ausgaben = kosten, text;
+    if (echterMonat){
+      umsatz = f.umsatz;
+      ausgaben = f.ausgaben || 0;
+      const [j, m] = String(f.monat).split('-');
+      const name = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                    'August','September','Oktober','November','Dezember'][Number(m) - 1];
+      text = name
+        ? 'aus deinem erfassten Monat ' + name + ' ' + j
+        : 'aus deinem zuletzt erfassten Monat';
+    } else {
+      text = 'wenn du ' + beh + ' Behandlungen pro Woche schaffst';
+    }
+
+    const gewinn    = umsatz - ausgaben;
+    const ruecklage = Math.max(gewinn, 0) * satz;
+    return {beh, preis, umsatz, ruecklage, bleibt: gewinn - ruecklage, satz, text};
   }
 
   function zahlenZeichnen(){
     const eigene = !!Daten.gespeichertAm();
-    const k = kalkulation();
+    const w = vorwaerts();
 
-    if (!eigene || !k){
+    if (!eigene || w.beh <= 0 || w.preis <= 0){
       el('z_leer').hidden = false;
       el('z_da').hidden   = true;
-      if (eigene && !k){
-        el('z_leer').querySelector('.gross').textContent = 'Deine Zahlen gehen so nicht auf.';
-        el('z_leer').querySelector('.darunter').textContent =
-          'Der Behandlungspreis deckt die Fahrtkosten noch nicht. Geh einmal in die Preis-Kalkulation und schau dir die Zahlen an.';
-      }
       return;
     }
     el('z_leer').hidden = true;
     el('z_da').hidden   = false;
 
-    /* Ein erfasster Monat schlaegt die Vorausplanung. */
-    const f = Daten.finanzen();
-    const echterMonat = f && f.monat && f.umsatz > 0;
-    let umsatz = k.umsatz, ruecklage = k.ruecklage, text;
-
-    if (echterMonat){
-      const gewinn = f.umsatz - (f.ausgaben || 0);
-      umsatz    = f.umsatz;
-      ruecklage = Math.max(gewinn, 0) * k.satz;
-      const [j, m] = String(f.monat).split('-');
-      const name = ['Januar','Februar','März','April','Mai','Juni','Juli',
-                    'August','September','Oktober','November','Dezember'][Number(m) - 1];
-      text = name
-        ? 'Umsatz und Rücklage stammen aus deinem erfassten Monat ' + name + ' ' + j + '. Die Zahl der Behandlungen ist deine Planung.'
-        : 'Umsatz und Rücklage stammen aus deinem zuletzt erfassten Monat.';
-    } else {
-      text = 'So oft musst du behandeln, damit von deinem Wunschbetrag am Ende wirklich etwas übrig bleibt.';
-    }
-
-    el('z_beh').textContent       = k.beh;
-    el('z_beh_wort').textContent  = k.beh === 1 ? 'Behandlung im Monat' : 'Behandlungen im Monat';
-    el('z_unter').textContent     = text;
-    el('z_ziel').textContent      = eur(k.ziel);
-    el('z_patienten').textContent = k.patienten;
-    el('z_umsatz').textContent    = eur(umsatz);
-    el('z_ruecklage').textContent = eur(ruecklage);
-    el('z_satz').textContent      = Math.round(k.satz * 100) + ' %';
+    el('z_bleibt').textContent    = eur(w.bleibt);
+    el('z_unter').textContent     = 'bleiben dir voraussichtlich im Monat, ' + w.text + '.';
+    el('z_woche').textContent     = w.beh;
+    el('z_preis').textContent     = eur(w.preis);
+    el('z_umsatz').textContent    = eur(w.umsatz);
+    el('z_ruecklage').textContent = eur(w.ruecklage);
+    el('z_satz').textContent      = Math.round(w.satz * 100) + ' %';
   }
 
   /* ---------- Mein Fortschritt ---------- */

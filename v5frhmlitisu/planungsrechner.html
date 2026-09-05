@@ -57,6 +57,11 @@
   .kachel .k-unter{ font-size:12.5px; color:var(--ink-muted); margin-top:3px; }
   .kachel.hell{ border-color:var(--accent-line); background:var(--accent-soft); }
   .kachel.hell .k-wert{ color:var(--accent); }
+  .uebergabe{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
+    margin:18px 0 0; font-size:14.5px; color:var(--ink-muted); line-height:1.55;
+  }
+  .uebergabe .btn{ padding:9px 18px; font-size:14px; }
 </style>
 </head>
 <body>
@@ -185,6 +190,11 @@
       </div>
 
       <div class="besuchsraster" id="raster"></div>
+
+      <p class="uebergabe" id="uebergabe" hidden>
+        <span id="uebergabe_text">–</span>
+        <a class="btn ghost" href="#" id="uebergabe_knopf">In den Hauptrechner übernehmen</a>
+      </p>
 
       <div class="kacheln zwei">
         <div class="kachel hell">
@@ -504,6 +514,19 @@
     $('k_besuche_u').textContent = stand.patienten + ' Patient:innen × ' + stand.frequenz + ' Termine';
     $('k_wochen').textContent = stunden(w.minutenWoche);
 
+    /* Was hier zeitlich rauskommt, ist genau die Zahl, mit der der
+       Hauptrechner arbeitet. Angeboten, nicht stillschweigend gesetzt. */
+    proWoche = Math.round(w.besuche / 4.33);
+    if (window.Daten && proWoche > 0){
+      var gespeichert = Daten.zahlen().proWoche;
+      var anders = parseFloat(gespeichert) !== proWoche;
+      $('uebergabe').hidden = !anders;
+      if (anders){
+        $('uebergabe_text').textContent =
+          'Das sind rund ' + proWoche + ' Behandlungen pro Woche.';
+      }
+    }
+
     $('o_umsatz').textContent = eur(w.umsatz);
     $('o_fahrt').textContent = eur(w.fahrt);
     $('o_km_micro').textContent = (val('km') * w.besuche).toLocaleString('de-DE') + ' km im Monat';
@@ -612,6 +635,17 @@
       });
     });
   }
+
+  var proWoche = 0;
+
+  $('uebergabe_knopf').addEventListener('click', function(e){
+    e.preventDefault();
+    if (!window.Daten || proWoche <= 0) return;
+    Daten.setze('zahlen', 'proWoche', proWoche);
+    Daten.speichern();
+    $('uebergabe').hidden = true;
+    location.href = 'verdienst.html';
+  });
 
   $('reset').addEventListener('click', function(e){
     e.preventDefault();

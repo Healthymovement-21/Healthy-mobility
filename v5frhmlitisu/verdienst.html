@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Was kann ich nebenbei verdienen? — PhysioNebenbei</title>
+<link rel="stylesheet" href="../physio-nebenbei/base.css">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="app.webmanifest">
+<link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
+<link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
+<style>
+  .speicherleiste{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
+    margin:0 0 22px; font-size:14.5px; color:var(--ink-muted); line-height:1.55;
+  }
+  .speicherleiste.offen{
+    padding:12px 14px; border:1px solid var(--accent);
+    border-radius:8px; background:var(--accent-soft); color:var(--ink);
+  }
+  .speicherleiste .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
+
+  /* Drei Schritte, jeder mit genau einer Frage */
+  .schritt{ padding:26px 0; border-top:1px solid var(--glass-edge); }
+  .schritt:first-of-type{ border-top:none; padding-top:4px; }
+  .schritt-nr{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:24px; height:24px; border-radius:50%;
+    background:var(--accent-soft); color:var(--accent);
+    font-size:12.5px; font-weight:650; margin-right:9px; vertical-align:2px;
+  }
+  .schritt h2{ display:inline; font-size:20px; }
+  .schritt .frage{ margin:10px 0 0; color:var(--ink-muted); font-size:15.5px; line-height:1.55; }
+
+  .eingabe{ display:flex; align-items:center; gap:12px; margin-top:16px; flex-wrap:wrap; }
+  .eingabe input[type=number]{
+    width:130px; min-height:52px;
+    background:var(--input-bg); border:1px solid var(--glass-edge); border-radius:10px;
+    padding:10px 14px; font-family:var(--font-display); font-size:26px; font-weight:600;
+    letter-spacing:-.02em; color:var(--ink); text-align:center;
+    font-variant-numeric:tabular-nums; -moz-appearance:textfield;
+  }
+  .eingabe input[type=number]::-webkit-outer-spin-button,
+  .eingabe input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .eingabe input:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .eingabe .einheit{ font-size:16px; color:var(--ink-muted); }
+
+  .fixzeile{ display:grid; gap:12px; margin-top:16px; }
+  @media (min-width:560px){ .fixzeile{ grid-template-columns:1fr 1fr 1fr; } }
+  .fixzeile label{ display:block; font-size:14px; color:var(--ink-muted); margin-bottom:5px; }
+  .fixzeile .feld{
+    display:flex; align-items:center; min-height:44px;
+    background:var(--input-bg); border:1px solid var(--glass-edge); border-radius:8px; padding:0 12px 0 0;
+  }
+  .fixzeile input{
+    width:100%; min-width:0; border:none; background:transparent;
+    padding:11px 0 11px 12px; font-family:var(--font-mono); font-size:16px;
+    color:var(--ink); text-align:right; -moz-appearance:textfield;
+  }
+  .fixzeile input::-webkit-outer-spin-button,
+  .fixzeile input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .fixzeile input:focus{ outline:none; }
+  .fixzeile .feld:focus-within{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .fixzeile .eur{ font-size:15px; color:var(--ink-muted); }
+
+  /* Ergebnis: die Rechnung zum Mitlesen */
+  .ergebnis{ background:var(--ink); border-radius:12px; padding:26px 24px; margin-top:8px; }
+  .rechnung{ margin:0; font-size:17px; line-height:2.1; color:var(--auf-tief-leise); }
+  .rechnung b{ color:var(--auf-tief); font-weight:600; }
+  .rechnung .op{ display:inline-block; width:1.4em; color:var(--auf-tief-leise); }
+  .gross{
+    font-family:var(--font-display); font-weight:600; letter-spacing:-.035em;
+    font-size:clamp(38px,10vw,52px); line-height:1.05; color:var(--mint);
+    font-variant-numeric:tabular-nums; margin:18px 0 0;
+  }
+  .gross-u{ font-size:14.5px; color:var(--auf-tief-leise); margin:8px 0 0; line-height:1.5; }
+
+  .abzug{ margin-top:22px; padding-top:18px; border-top:1px solid var(--blau-linie); }
+  .abzug .z{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    font-size:16px; color:var(--auf-tief-leise); padding:7px 0;
+  }
+  .abzug .z b{ color:var(--auf-tief); font-weight:600; font-variant-numeric:tabular-nums; }
+  .abzug .z.summe{ border-top:1px solid var(--blau-linie); margin-top:8px; padding-top:14px; }
+  .abzug .z.summe b{ color:var(--mint); font-size:21px; }
+
+  .warnung-dunkel{ margin:18px 0 0; font-size:14.5px; color:var(--mint); line-height:1.55; }
+
+  details.mehr > summary{ min-height:40px; display:flex; align-items:center; }
+
+  /* Vorschlag steht dort, wo er gebraucht wird, nicht am Seitenkopf. */
+  .vorschlag-zeile{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
+    margin:14px 0 0; font-size:14.5px; color:var(--ink-muted); line-height:1.55;
+  }
+  .vorschlag-zeile .btn{ padding:9px 18px; font-size:14px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <a class="brand" href="./">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+    <span>Physio<b>Nebenbei</b></span>
+  </a>
+
+  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Was kann ich nebenbei verdienen?</span></nav>
+
+  <div class="speicherleiste" id="speicherleiste">
+    <span id="speicher_text">–</span>
+    <button class="btn" type="button" id="speicher_knopf" hidden>Meine Zahlen speichern</button>
+  </div>
+
+  <div class="doc">
+
+    <section class="sheet hero">
+      <h1 class="title">Was kann ich nebenbei verdienen?</h1>
+      <p class="lede">Trag ein, wie viel du realistisch schaffst und was du nimmst. Das Ergebnis steht sofort darunter.</p>
+    </section>
+
+    <section class="sheet">
+
+      <div class="schritt">
+        <span class="schritt-nr">1</span><h2>Deine Zeit</h2>
+        <p class="frage">Wie viele Behandlungen schaffst du pro Woche neben dem Hauptjob? Zwei Abende mit je vier Terminen wären zum Beispiel acht.</p>
+        <p class="eingabe">
+          <label for="proWoche" class="visually-hidden">Behandlungen pro Woche</label>
+          <input type="number" id="proWoche" value="8" min="0" max="60" step="1" inputmode="numeric">
+          <span class="einheit">Behandlungen pro Woche</span>
+        </p>
+        <p class="micro" style="margin-top:10px">
+          Unsicher, wie viel zeitlich reingeht? <a href="planungsrechner.html">Zeit und Auslastung durchgehen</a>
+        </p>
+      </div>
+
+      <div class="schritt">
+        <span class="schritt-nr">2</span><h2>Dein Preis</h2>
+        <p class="frage">Was nimmst du für eine Behandlung?</p>
+        <p class="eingabe">
+          <label for="preis" class="visually-hidden">Preis je Behandlung</label>
+          <input type="number" id="preis" value="70" min="0" max="500" step="1" inputmode="decimal">
+          <span class="einheit">€ je Behandlung</span>
+        </p>
+        <p class="micro" style="margin-top:10px">
+          Noch keinen Preis? <a href="werkzeuge.html">Preis finden</a>
+        </p>
+      </div>
+
+      <div class="schritt">
+        <span class="schritt-nr">3</span><h2>Deine Kosten</h2>
+        <p class="frage">Was geht im Monat weg? Wenn du nichts davon hast, lass die Felder auf 0.</p>
+        <div class="fixzeile">
+          <div>
+            <label for="fahrt">Fahrtkosten</label>
+            <div class="feld"><input type="number" id="fahrt" value="0" min="0" step="10" inputmode="decimal"><span class="eur">€</span></div>
+          </div>
+          <div>
+            <label for="raum">Raum oder Miete</label>
+            <div class="feld"><input type="number" id="raum" value="0" min="0" step="10" inputmode="decimal"><span class="eur">€</span></div>
+          </div>
+          <div>
+            <label for="fix">Sonstiges</label>
+            <div class="feld"><input type="number" id="fix" value="60" min="0" step="10" inputmode="decimal"><span class="eur">€</span></div>
+          </div>
+        </div>
+        <p class="micro" style="margin-top:10px">Alles pro Monat. Unter „Sonstiges“ fallen Versicherung, Material und Fortbildung.</p>
+
+        <p class="vorschlag-zeile" id="vorschlag" hidden>
+          <span id="vorschlag_text">–</span>
+          <button class="btn ghost" type="button" id="vorschlag_knopf">Eintragen</button>
+        </p>
+
+        <details class="mehr" style="margin-top:16px">
+          <summary>Wie viel soll für die Steuer liegen bleiben?</summary>
+          <div>
+            <p>Ein Anteil deines Gewinns, den du zur Seite legst, damit die Steuernachzahlung dich später nicht überrascht. Dreißig Prozent sind ein gängiger Ausgangswert — deine tatsächliche Steuerlast hängt von deinem gesamten Einkommen ab und lässt sich hier nicht berechnen.</p>
+            <p class="eingabe" style="margin-top:6px">
+              <label for="satz" class="visually-hidden">Rücklage in Prozent</label>
+              <input type="number" id="satz" value="30" min="0" max="60" step="1" inputmode="numeric">
+              <span class="einheit">% Rücklage</span>
+            </p>
+          </div>
+        </details>
+      </div>
+
+    </section>
+
+    <!-- ============ ERGEBNIS ============ -->
+    <section class="sheet">
+      <h2>Was dabei herauskommt</h2>
+      <div class="ergebnis">
+        <p class="rechnung">
+          <b id="r_beh">8</b> Behandlungen pro Woche<br>
+          <span class="op">×</span><b id="r_preis">70 €</b><br>
+          <span class="op">=</span><b id="r_woche">560 €</b> pro Woche<br>
+          <span class="op">≈</span><b id="r_monat">2.425 €</b> Umsatz im Monat
+        </p>
+
+        <div class="abzug">
+          <div class="z"><span>Kosten</span><b id="r_kosten">–60 €</b></div>
+          <div class="z"><span>Rücklage für die Steuer <span id="r_satz">30 %</span></span><b id="r_ruecklage">–709 €</b></div>
+          <div class="z summe"><span>Voraussichtlich übrig</span><b id="r_bleibt">1.655 €</b></div>
+        </div>
+
+        <p class="gross" id="r_gross">1.655 €</p>
+        <p class="gross-u" id="r_gross_u">bleiben dir im Monat, wenn es so läuft wie eingetragen</p>
+        <p class="warnung-dunkel" id="r_warnung" hidden></p>
+      </div>
+
+      <p class="micro" style="margin-top:16px">
+        Gerechnet mit 4,33 Wochen je Monat. Das sind Schätzwerte auf Basis deiner Eingaben,
+        keine Berechnung deiner tatsächlichen Steuerlast und keine Steuerberatung.
+      </p>
+
+      <p class="hero-cta">
+        <a class="btn" href="#" id="uebernehmen">Diese Zahlen speichern</a>
+        <a class="btn ghost" href="#" id="reset">Eingaben zurücksetzen</a>
+      </p>
+    </section>
+
+    <!-- ============ ANDERSHERUM ============ -->
+    <section class="sheet">
+      <h2>Lieber mit einem festen Ziel rechnen?</h2>
+      <p>Wenn du weißt, welcher Betrag am Ende übrig bleiben soll, kannst du es auch andersherum durchgehen: Der Ziel-Rechner sagt dir, wie viele Behandlungen dafür nötig sind.</p>
+      <p class="hero-cta"><a class="btn ghost" href="ziel-rechner.html">Rückwärts rechnen</a></p>
+    </section>
+
+    <section class="sheet">
+      <p class="eyebrow">Weitere Werkzeuge</p>
+      <ul class="werkzeugliste">
+        <li><a href="werkzeuge.html">Preis finden</a><span>Welcher Preis passt zu deiner Behandlung und deinem Aufwand?</span></li>
+        <li><a href="monatsrechner.html">Behandlung kalkulieren</a><span>Was bleibt bei einer einzelnen Behandlung ungefähr übrig?</span></li>
+        <li><a href="monatsrechner.html">Monat planen</a><span>Wie sieht dein tatsächlicher Monat aus?</span></li>
+        <li><a href="planungsrechner.html">Zeit und Auslastung</a><span>Wie viele Termine bekommst du zeitlich unter?</span></li>
+        <li><a href="gehaltsrechner.html">Gehalt und Hauptjob</a><span>Was passiert mit deinem Hauptjob und deinem Nebenverdienst?</span></li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer class="site">
+    <span>Keine Steuer-, Rechts- oder medizinische Beratung. Deine Zahlen bleiben auf diesem Gerät.</span>
+    <span><a href="./">Mein Bereich</a> · <a href="ziel-rechner.html">Rückwärts rechnen</a></span>
+  </footer>
+</div>
+
+<script src="daten.js"></script>
+<script>
+(function(){
+  'use strict';
+  const WOCHEN = 4.33;                       // durchschnittliche Wochen je Monat
+  const el  = id => document.getElementById(id);
+  const eur = n => isFinite(n)
+    ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0})
+    : '–';
+
+  /* Wert aus einem Feld, begrenzt auf dessen eigenes min und max. */
+  function num(id){
+    const e = el(id);
+    let v = parseFloat(String(e.value).replace(',', '.'));
+    if (!isFinite(v)) v = 0;
+    const min = parseFloat(e.min), max = parseFloat(e.max);
+    if (isFinite(min) && v < min) v = min;
+    if (isFinite(max) && v > max) v = max;
+    return v;
+  }
+
+  const FELDER = ['proWoche','preis','fahrt','raum','fix','satz'];
+
+  function rechne(){
+    const beh    = num('proWoche');
+    const preis  = num('preis');
+    const kosten = num('fahrt') + num('raum') + num('fix');
+    const satz   = Math.min(Math.max(num('satz') / 100, 0), 0.99);
+
+    const woche  = beh * preis;
+    const monat  = woche * WOCHEN;
+    const gewinn = monat - kosten;
+    const rueck  = Math.max(gewinn, 0) * satz;   // bei Verlust wird nichts zurückgelegt
+    const bleibt = gewinn - rueck;
+
+    el('r_beh').textContent   = beh.toLocaleString('de-DE');
+    el('r_preis').textContent = eur(preis);
+    el('r_woche').textContent = eur(woche);
+    el('r_monat').textContent = eur(monat);
+
+    el('r_kosten').textContent    = kosten > 0 ? '–' + eur(kosten) : eur(0);
+    el('r_satz').textContent      = Math.round(satz * 100) + ' %';
+    el('r_ruecklage').textContent = rueck > 0 ? '–' + eur(rueck) : eur(0);
+    el('r_bleibt').textContent    = eur(bleibt);
+    el('r_gross').textContent     = eur(bleibt);
+
+    /* Ein Satz, der zur Lage passt — statt einer Zahl ohne Einordnung. */
+    const w = el('r_warnung');
+    if (beh === 0 || preis === 0){
+      el('r_gross_u').textContent = 'Trag oben deine Behandlungen und deinen Preis ein.';
+      w.hidden = true;
+    } else if (gewinn <= 0){
+      el('r_gross_u').textContent = 'So deckt der Umsatz deine Kosten noch nicht.';
+      w.hidden = false;
+      w.textContent = 'Deine monatlichen Kosten sind höher als das, was reinkommt. Entweder mehr Behandlungen, ein höherer Preis oder weniger feste Kosten.';
+    } else {
+      el('r_gross_u').textContent = 'bleiben dir im Monat, wenn es so läuft wie eingetragen';
+      w.hidden = false;
+      w.textContent = 'Das sind rund ' + eur(bleibt / WOCHEN) + ' pro Woche für '
+        + beh.toLocaleString('de-DE') + ' Behandlungen.';
+    }
+  }
+
+  /* ---------- Datenschicht ----------
+     Was hier steht, steht auch in den anderen Rechnern. */
+  if (window.Daten){
+    Daten.koppeln('zahlen', {
+      proWoche:'#proWoche', preis:'#preis', raum:'#raum', fix:'#fix', satz:'#satz'
+    }, rechne);
+  }
+  FELDER.forEach(id => {
+    el(id).addEventListener('input', rechne);
+    el(id).addEventListener('change', rechne);
+  });
+
+  /* Fahrtkosten je Monat aus km und Kilometersatz vorschlagen, falls dort
+     schon etwas steht — der Nutzer kann es jederzeit überschreiben. */
+  if (window.Daten){
+    const z = Daten.zahlen();
+    const jeTermin = (z.km || 0) * (z.kmsatz || 0);
+    const monatlich = Math.round(jeTermin * (z.proWoche || 8) * WOCHEN);
+    if (Daten.gespeichertAm() && monatlich > 0 && num('fahrt') === 0){
+      el('vorschlag').hidden = false;
+      el('vorschlag_text').textContent =
+        'Du hast ' + (z.km || 0) + ' km je Termin gespeichert. Das wären etwa '
+        + eur(monatlich) + ' Fahrtkosten im Monat. Soll ich das eintragen?';
+      el('vorschlag_knopf').addEventListener('click', () => {
+        el('fahrt').value = monatlich;
+        el('vorschlag').hidden = true;
+        rechne();
+      });
+    }
+  }
+
+  /* ---------- Speicherleiste ---------- */
+  if (window.Daten){
+    const leiste = el('speicherleiste'), text = el('speicher_text'), knopf = el('speicher_knopf');
+    function standZeichnen(){
+      const offen = Daten.schmutzig();
+      leiste.classList.toggle('offen', offen);
+      knopf.hidden = !offen;
+      if (offen){ text.textContent = 'Ungespeicherte Änderungen'; return; }
+      const iso = Daten.gespeichertAm();
+      if (!iso){ text.textContent = 'Noch nichts gespeichert'; return; }
+      const d = new Date(iso);
+      const uhr = d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'});
+      text.textContent = '✓ Lokal gespeichert: ' +
+        (d.toDateString() === new Date().toDateString() ? 'heute, ' : d.toLocaleDateString('de-DE') + ', ')
+        + uhr + ' Uhr';
+    }
+    knopf.addEventListener('click', () => {
+      if (!Daten.speichern()) text.textContent = 'Speichern nicht möglich — im privaten Fenster geht das nicht.';
+      standZeichnen();
+    });
+    el('uebernehmen').addEventListener('click', e => {
+      e.preventDefault();
+      Daten.speichern();
+      standZeichnen();
+    });
+    Daten.beiAenderung(standZeichnen);
+    standZeichnen();
+  }
+
+  /* ---------- Zurücksetzen ---------- */
+  el('reset').addEventListener('click', e => {
+    e.preventDefault();
+    if (!confirm('Alle Eingaben auf dieser Seite auf die Ausgangswerte zurücksetzen?')) return;
+    FELDER.forEach(id => {
+      const feld = el(id), start = feld.getAttribute('value');
+      if (start === null) return;
+      feld.value = start;
+      feld.dispatchEvent(new Event('change', {bubbles:true}));
+    });
+    rechne();
+  });
+
+  rechne();
+})();
+</script>
+<script src="../physio-nebenbei/zahlenfeld.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

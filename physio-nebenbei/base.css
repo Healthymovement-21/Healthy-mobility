@@ -1181,3 +1181,17 @@ input[type=number][readonly]{
   width:6px; height:6px; border-radius:50%; background:var(--accent);
 }
 .punkte li:last-child{ margin-bottom:0; }
+
+/* ---------- Werkzeugliste ----------
+   Name, darunter die Frage, die das Werkzeug beantwortet. */
+.werkzeugliste{ list-style:none; margin:2px 0 0; padding:0; }
+.werkzeugliste li{ padding:13px 0; border-bottom:1px solid var(--glass-edge); }
+.werkzeugliste li:first-child{ border-top:1px solid var(--glass-edge); }
+.werkzeugliste a{ font-size:16.5px; font-weight:600; }
+.werkzeugliste span{ display:block; font-size:14px; color:var(--ink-muted); margin-top:2px; line-height:1.5; }
+
+/* Beschriftung nur fuer Vorlesewerkzeuge */
+.visually-hidden{
+  position:absolute; width:1px; height:1px; margin:-1px; padding:0;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}

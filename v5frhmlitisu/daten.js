@@ -40,7 +40,9 @@
       kmsatz: 0.30,     // Kosten je Kilometer
       stunden: 4,       // eingeplante Stunden pro Woche
       auslastung: 80,   // realistische Auslastung in Prozent
-      frequenz: 1       // Termine je Patient:in und Woche
+      frequenz: 1,      // Termine je Patient:in und Woche
+      proWoche: 8,      // Behandlungen, die du pro Woche schaffst
+      raum: 0           // Raummiete oder Ähnliches im Monat
     },
     finanzen: { umsatz: 0, ausgaben: 0, monat: '' },
     profil:   { name: '', zusatz: '', strasse: '', plzOrt: '', email: '', telefon: '' },

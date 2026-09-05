@@ -262,10 +262,20 @@ p:last-child{ margin-bottom:0; }
 /* ---------- Karten-Grundbaustein ----------
    Kein Schatten. Flaeche trennt sich durch Rand und Weissraum. */
 .glass,
+/* Flaeche nur dort, wo sie etwas leistet. Eingabegruppen, Aufgaben und
+   Listen brauchen keinen eigenen Rahmen — Abstand und eine Haarlinie
+   trennen sie ruhiger als eine Karte. */
 .calc-card,
-.price-box,
 .deliverables li,
-.todo li,
+.todo li{
+  position:relative;
+  background:transparent;
+  border:none;
+  border-radius:0;
+  box-shadow:none;
+}
+/* Diese drei tragen eine Aussage und duerfen sich abheben. */
+.price-box,
 .exclusions,
 .split > div,
 .ampel{
@@ -378,13 +388,17 @@ p:last-child{ margin-bottom:0; }
 }
 
 /* ---------- To-do ---------- */
-.todo{ list-style:none; margin:0 0 8px; padding:0; display:flex; flex-direction:column; gap:9px; }
+.todo{
+  list-style:none; margin:4px 0 8px; padding:0;
+  border-top:1px solid var(--glass-line);
+}
 .todo li{
   display:grid;
   grid-template-columns:26px 1fr;
   gap:14px;
   align-items:start;
-  padding:14px 16px;
+  padding:14px 0;
+  border-bottom:1px solid var(--glass-line);
 }
 .todo input[type=checkbox]{
   width:22px; height:22px;
@@ -401,7 +415,7 @@ p:last-child{ margin-bottom:0; }
 }
 .todo .t-title{ font-weight:600; }
 .todo .t-desc{ color:var(--ink-muted); font-size:14.5px; margin-top:2px; }
-.todo li.done{ background:var(--accent-soft); }
+.todo li.done .t-title{ color:var(--ink-muted); }
 .todo li.done label{ text-decoration:line-through; color:var(--ink-muted); }
 
 .progress-bar{
@@ -471,9 +485,7 @@ p:last-child{ margin-bottom:0; }
 .tbl-wrap{
   overflow-x:auto;
   margin:16px 0;
-  border-radius:8px;
-  border:1px solid var(--glass-edge);
-  background:var(--pure);
+  border-top:1px solid var(--glass-edge);
 }
 table.data{
   border-collapse:collapse;
@@ -528,7 +540,10 @@ table.data td a[data-del]{ color:var(--ink-muted); text-decoration:none; font-si
 table.data td a[data-del]:hover{ color:var(--mark); }
 
 /* ---------- Rechner ---------- */
-.calc-card{ padding:24px 26px; margin:22px 0 30px; }
+.calc-card{
+  padding:4px 0 0;
+  margin:20px 0 28px;
+}
 .calc-row{
   display:flex;
   flex-direction:column;
@@ -1051,11 +1066,13 @@ input[type=number][readonly]{
 .behandlungen{ display:flex; flex-direction:column; gap:10px; margin:16px 0 6px; }
 
 .bh-karte{
-  border:1px solid var(--glass-edge);
-  border-radius:8px;
-  background:var(--pure);
-  padding:13px 15px 15px;
+  border:none;
+  border-top:1px solid var(--glass-line);
+  border-radius:0;
+  background:transparent;
+  padding:16px 0 18px;
 }
+.bh-karte:first-child{ border-top:none; padding-top:4px; }
 .bh-kopf{
   display:flex;
   align-items:center;
@@ -1195,3 +1212,17 @@ input[type=number][readonly]{
   position:absolute; width:1px; height:1px; margin:-1px; padding:0;
   overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
 }
+
+
+/* ---------- Dritte Stufe der Schaltflaechen ----------
+   Hauptaktion deutlich, Nebenaktion zurueckhaltend, weiterfuehrender
+   Link schlicht. Nicht jeder Weg braucht einen Rahmen. */
+.btn.leise{
+  background:transparent;
+  border-color:transparent;
+  color:var(--accent);
+  padding-left:0;
+  padding-right:0;
+}
+.btn.leise:hover{ background:transparent; border-color:transparent; text-decoration:underline; }
+.btn.leise::after{ content:" →"; }

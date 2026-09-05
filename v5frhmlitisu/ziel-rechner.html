@@ -79,14 +79,11 @@
 
   .kacheln{ display:grid; gap:10px; margin-top:14px; }
   @media (min-width:560px){ .kacheln.zwei{ grid-template-columns:1fr 1fr; } }
-  .kachel{
-    border:1px solid var(--glass-edge);
-    border-radius:8px;
-    padding:14px 16px;
-  }
-  .kachel .k-titel{ font-size:12px; color:var(--ink-faint); }
-  .kachel .k-wert{ font-family:var(--font-display); font-size:23px; font-weight:600; letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:3px; }
-  .kachel .k-unter{ font-size:12.5px; color:var(--ink-muted); margin-top:3px; }
+  /* Zahl und Beschriftung stehen fuer sich, ohne Rahmen um jede Zahl. */
+  .kachel{ padding:2px 0; }
+  .kachel .k-titel{ font-size:12.5px; color:var(--ink-muted); }
+  .kachel .k-wert{ font-family:var(--font-display); font-size:26px; font-weight:600; letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; margin-top:4px; }
+  .kachel .k-unter{ font-size:12.5px; color:var(--ink-faint); margin-top:4px; line-height:1.45; }
 
   /* Speicherleiste */
   .speicherleiste{

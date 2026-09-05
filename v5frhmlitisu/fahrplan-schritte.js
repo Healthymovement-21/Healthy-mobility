@@ -1,17 +1,20 @@
 /* ---------------------------------------------------------------
-   Der rote Faden: die zehn Schritte an einer einzigen Stelle.
+   Die Roadmap: die zehn Kapitel an einer einzigen Stelle.
 
-   Bis eben stand die Liste zweimal im Projekt — einmal ausfuehrlich
-   in schritte.html und einmal verkuerzt in Mein Bereich. Die beiden
-   waren auseinandergelaufen: derselbe Schritt hiess an einer Stelle
-   "Deinen Behandlungspreis festlegen" und an der anderen "Deinen Preis
-   festlegen". Jetzt liest jede Seite dieselben Namen aus dieser Datei.
+   Das sind dieselben zehn Kapitel wie im Handbuch (fahrplan.html),
+   in derselben Reihenfolge. Mein Bereich, die Roadmap-Übersicht und
+   die einzelnen Kapitel-Seiten lesen alle von hier, damit nirgends
+   ein anderer Titel für dasselbe Kapitel auftaucht.
 
-   Ueber den zehn Schritten liegen sechs Abschnitte. Sie sagen dem
+   Ueber den zehn Kapiteln liegen sechs Abschnitte. Sie sagen dem
    Nutzer, in welchem Teil der Reise er gerade ist:
 
      1 Verstehen · 2 Planen · 3 Kalkulieren
      4 Vorbereiten · 5 Starten · 6 Arbeiten
+
+   "link" ist optional und wird nur auf der Kapitel-Seite selbst als
+   ein einziger, zurückhaltender Hinweis auf ein passendes Werkzeug
+   gezeigt — nie als Pflichtschritt. Fehlt er, gibt es keinen.
 --------------------------------------------------------------- */
 (function(){
   'use strict';
@@ -23,97 +26,61 @@
   const SCHRITTE = [
     {
       id: 's1', abschnitt: 'Verstehen',
-      titel: 'Lohnt sich das überhaupt?',
-      zweck: 'Bevor du irgendetwas anmeldest: rechne einmal durch, was neben dem Hauptjob realistisch übrig bleibt und wie viele Abende dich das kostet.',
-      links: [
-        {text:'Verdienst berechnen', art:'Rechner', href:'verdienst.html', haupt:true},
-        {text:'Kapitel 1 lesen', art:'5 Minuten', href:'fahrplan.html'}
-      ]
+      titel: 'Bist du bereit?',
+      zweck: 'Ein kurzer Realitäts-Check, ob eine Nebentätigkeit gerade in dein Leben passt.'
     },
     {
       id: 's2', abschnitt: 'Planen',
-      titel: 'Anmeldung und Absicherung',
-      zweck: 'Der Teil, der wirklich erledigt sein muss, bevor die erste Patientin auf der Bank liegt: Finanzamt, BGW, Berufshaftpflicht.',
-      links: [
-        {text:'Checkliste abarbeiten', art:'18 Punkte', href:'fahrplan.html#checkliste', haupt:true},
-        {text:'Kapitel 2 und 3', art:'Anmeldung, Versicherung', href:'fahrplan.html'}
-      ]
+      titel: 'Anmeldung & Formalitäten',
+      zweck: 'Die Anmeldung beim Finanzamt und die nötigen Formalitäten für den Start.'
     },
     {
-      id: 's3', abschnitt: 'Kalkulieren',
-      titel: 'Deinen Preis festlegen',
-      zweck: 'Vom Wunscheinkommen rückwärts zum Preis pro Behandlung, mit Fahrtzeit und Steuerrücklage statt Bauchgefühl.',
-      links: [
-        {text:'Preis berechnen', art:'Rechner', href:'werkzeuge.html', haupt:true},
-        {text:'Kapitel 4', art:'Preise und Kalkulation', href:'fahrplan.html'}
-      ]
+      id: 's3', abschnitt: 'Planen',
+      titel: 'Versicherungen',
+      zweck: 'Berufshaftpflicht, Kranken- und Rentenversicherung: was für dich als Nebenberufler:in gilt.'
     },
     {
       id: 's4', abschnitt: 'Kalkulieren',
-      titel: 'Wie viele Patient:innen du brauchst',
-      zweck: 'Du sagst, was am Monatsende übrig bleiben soll. Der Rechner sagt dir, wie viele Termine das bei welchem Preis bedeutet.',
-      links: [
-        {text:'Rückwärts rechnen', art:'Rechner', href:'ziel-rechner.html', haupt:true}
-      ]
+      titel: 'Preise & Kalkulation',
+      zweck: 'Wie du einen Preis festlegst und was du dabei einkalkulieren solltest.'
+      /* Kein zusaetzlicher Werkzeug-Hinweis: das Kapitel verlinkt den
+         Preisrechner schon in seinem eigenen Text. */
     },
     {
-      id: 's5', abschnitt: 'Kalkulieren',
-      titel: 'Was am Monatsende übrig bleibt',
-      zweck: 'Trag deine echten Behandlungen ein und sieh, was nach Ausgaben und Rücklage tatsächlich bleibt. Mit PDF-Export fürs eigene Archiv.',
-      links: [
-        {text:'Monat kalkulieren', art:'Rechner', href:'monatsrechner.html', haupt:true},
-        {text:'Zeit und Auslastung', art:'Rechner', href:'planungsrechner.html'}
-      ]
+      id: 's5', abschnitt: 'Vorbereiten',
+      titel: 'Rechnung',
+      zweck: 'Was auf eine ordnungsgemäße Rechnung gehört.',
+      link: {text:'Rechnung erstellen', href:'dateien/PhysioNebenbei-Rechnungsgenerator.html'}
     },
     {
       id: 's6', abschnitt: 'Vorbereiten',
-      titel: 'Deine Unterlagen vorbereiten',
-      zweck: 'Honorarvereinbarung, Behandlungsvertrag und Datenschutz-Information ausfüllen — und prüfen lassen, bevor jemand unterschreibt.',
-      links: [
-        {text:'Honorarvereinbarung', art:'PDF', href:'dateien/Honorarvereinbarung.pdf', haupt:true},
-        {text:'Behandlungsvertrag', art:'PDF', href:'dateien/Behandlungsvertrag.pdf'},
-        {text:'Datenschutz-Information', art:'PDF', href:'dateien/Datenschutz-Patienten.pdf'}
-      ]
+      titel: 'Dokumentation',
+      zweck: 'Was du zu jeder Behandlung schriftlich festhalten solltest.'
+      /* Kein zusaetzlicher Werkzeug-Hinweis: das Kapitel verlinkt die
+         Vorlage schon in seinem eigenen Text. */
     },
     {
-      id: 's7', abschnitt: 'Starten',
-      titel: 'Patient:innen und Termine organisieren',
-      zweck: 'Wer kommt wann, und wo steht das? Eine Liste und ein Wochenplan reichen für den Anfang völlig — Hauptsache, es steht nicht nur im Kopf.',
-      links: [
-        {text:'Kalender', art:'im Browser', href:'termine.html', haupt:true},
-        {text:'Patientenliste', art:'PDF', href:'dateien/Patientenliste.pdf'},
-        {text:'Terminübersicht', art:'PDF', href:'dateien/Terminuebersicht.pdf'},
-        {text:'Online-Terminbuchung', art:'Kurzkapitel', href:'terminbuchung.html'}
-      ]
+      id: 's7', abschnitt: 'Vorbereiten',
+      titel: 'Datenschutz-Grundlagen',
+      zweck: 'Die wichtigsten Grundregeln im Umgang mit Patientendaten.',
+      link: {text:'Datenschutz-Information', href:'dateien/Datenschutz-Patienten.pdf'}
     },
     {
       id: 's8', abschnitt: 'Starten',
-      titel: 'Behandlungen dokumentieren',
-      zweck: 'Anamnese beim ersten Termin, danach jede Behandlung in zwei Sätzen festhalten. Eine Dokumentation wird von dir erwartet, und im Zweifel schützt sie dich.',
-      links: [
-        {text:'Anamnesebogen', art:'PDF', href:'dateien/Anamnesebogen.pdf', haupt:true},
-        {text:'Dokumentationsbogen', art:'PDF', href:'dateien/Dokumentationsvorlage.pdf'},
-        {text:'Kapitel 6', art:'Dokumentation', href:'fahrplan.html'}
-      ]
+      titel: 'Erste Patient:innen gewinnen',
+      zweck: 'Wie die ersten Patient:innen in der Praxis meistens wirklich zustande kommen.',
+      link: {text:'Kalender', href:'termine.html'}
     },
     {
       id: 's9', abschnitt: 'Starten',
-      titel: 'Deine erste Rechnung schreiben',
-      zweck: 'Deine Daten trägst du einmal ein, danach dauert jede Rechnung zwei Minuten. Die Nummer läuft automatisch weiter, der QR-Code zum Überweisen ist drauf.',
-      links: [
-        {text:'Rechnung erstellen', art:'Rechner', href:'dateien/PhysioNebenbei-Rechnungsgenerator.html', haupt:true},
-        {text:'Kapitel 5', art:'Pflichtangaben', href:'fahrplan.html'}
-      ]
+      titel: 'Die ersten 30 Tage',
+      zweck: 'Ein realistischer Zeitplan für die ersten vier Wochen.'
     },
     {
       id: 's10', abschnitt: 'Arbeiten',
-      titel: 'Dranbleiben und nachsteuern',
-      zweck: 'Nach ein paar Monaten weißt du, was wirklich läuft. Dann lohnt der Blick auf Einnahmen, Auslastung und das, was der Nebenjob mit deiner Woche macht.',
-      links: [
-        {text:'Einnahmen und Ausgaben', art:'Rechner', href:'dateien/PhysioNebenbei-Einnahmen-Ausgaben.html', haupt:true},
-        {text:'Gehalt und Stunden', art:'Rechner', href:'gehaltsrechner.html'},
-        {text:'Häufige Fehler', art:'10 Punkte', href:'fehler.html'}
-      ]
+      titel: 'Typische Anfänger-Fehler',
+      zweck: 'Die Fehler, die am Anfang am häufigsten passieren — und wie du sie vermeidest.',
+      link: {text:'Häufige Fehler', href:'fehler.html'}
     }
   ];
 
@@ -127,8 +94,8 @@
     try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e){}
   }
 
-  /* Der naechste offene Schritt — der erste ohne Haken. Ist alles
-     abgehakt, gibt es keinen mehr und die Seiten zeigen den
+  /* Das naechste offene Kapitel — das erste ohne Haken. Ist alles
+     abgehakt, gibt es keins mehr und die Seiten zeigen den
      Abschlusstext. */
   function naechster(s){
     s = s || stand();
@@ -143,6 +110,18 @@
     return SCHRITTE.filter(x => s[x.id]).length;
   }
 
+  /* Ein einzelnes Kapitel als erledigt markieren, unabhaengig davon,
+     ob vorherige Kapitel schon abgehakt sind — wer in der Uebersicht
+     vor- oder zurueckspringt, soll trotzdem seinen eigenen Stand
+     behalten. */
+  function markieren(nr){
+    const s = stand();
+    const k = SCHRITTE[nr - 1];
+    if (!k) return;
+    s[k.id] = true;
+    speichern(s);
+  }
+
   window.Fahrplan = {
     KEY: KEY,
     ABSCHNITTE: ABSCHNITTE,
@@ -151,6 +130,7 @@
     stand: stand,
     speichern: speichern,
     naechster: naechster,
-    erledigt: erledigt
+    erledigt: erledigt,
+    markieren: markieren
   };
 })();

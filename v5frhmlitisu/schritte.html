@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mein Fahrplan — PhysioNebenbei</title>
+<title>Roadmap — PhysioNebenbei</title>
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <link rel="manifest" href="app.webmanifest">
@@ -18,7 +18,7 @@
   .naechster .n-k{ display:block; font-size:12px; color:var(--auf-tief-leise); margin-bottom:10px; }
   .naechster h2{ color:var(--auf-tief); font-size:clamp(24px,5.5vw,30px); margin:0 0 10px; }
   .naechster p{ color:var(--auf-tief-leise); font-size:16px; line-height:1.55; margin:0; max-width:48ch; }
-  .naechster .n-cta{ display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 0; }
+  .naechster .n-cta{ margin:20px 0 0; }
   .naechster .btn.ghost{ border-color:rgba(255,255,255,.22); color:var(--auf-tief); background:transparent; }
   .naechster .btn.ghost:hover{ border-color:var(--auf-tief); color:var(--auf-tief); background:rgba(255,255,255,.06); }
   .naechster.fertig .n-k{ color:var(--mint); }
@@ -32,39 +32,28 @@
   .f-balken{ height:6px; border-radius:999px; background:var(--glass-line); overflow:hidden; }
   .f-balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .3s ease; }
 
-  .schritte-liste{ list-style:none; margin:22px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
-  .schritte-liste > li{ border-bottom:1px solid var(--glass-edge); padding:20px 0; scroll-margin-top:20px; }
-  .s-kopf{ display:grid; grid-template-columns:26px 1fr; gap:14px; align-items:start; }
-  .s-kopf input[type=checkbox]{ width:22px; height:22px; margin:2px 0 0; accent-color:var(--accent); cursor:pointer; }
-  /* Der Titel ist die Flaeche zum Antippen und braucht auf dem Handy Hoehe. */
-  .s-kopf .s-titel{ display:flex; align-items:center; min-height:40px; cursor:pointer; }
-  /* Die Zeile ueber dem Titel sagt in Worten, wo man steht:
-     erledigt, du bist hier, oder noch offen. Kein Diagramm, nur Text. */
-  .s-nr{ font-size:12px; font-weight:600; color:var(--ink-faint); font-variant-numeric:tabular-nums; display:block; margin-bottom:2px; }
-  .s-nr .zeichen{ font-variant-numeric:normal; margin-right:5px; }
-  .schritte-liste > li.erledigt .s-nr .zeichen{ color:var(--accent); }
-  .schritte-liste > li.jetzt .s-nr{ color:var(--ink); }
-  .s-titel{ font-family:var(--font-display); font-size:19px; font-weight:600; letter-spacing:-.02em; color:var(--ink); display:block; cursor:pointer; }
-  .s-zweck{ font-size:15.5px; line-height:1.55; color:var(--ink-muted); margin:7px 0 0; max-width:58ch; }
-  .s-aktionen{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 18px; margin:16px 0 0; }
-  /* Je Schritt eine sichtbare Hauptaktion. Alles Weitere ist ein Link
-     und braucht keinen eigenen Rahmen. */
-  .s-aktionen a{
-    display:inline-flex; align-items:center; gap:7px; min-height:40px;
-    font-size:15px; font-weight:500; color:var(--accent); text-decoration:none;
+  /* Die Uebersicht ist ein Inhaltsverzeichnis zum Nachschlagen und
+     Vor-/Zurueckspringen, keine zweite Handlungsebene. Darum je Zeile
+     nur Status und Titel, kein Rechner, kein zweiter Knopf. */
+  .kapitel-liste{ list-style:none; margin:22px 0 0; padding:0; border-top:1px solid var(--glass-edge); }
+  .kapitel-liste > li{ border-bottom:1px solid var(--glass-edge); }
+  .kapitel-liste a{
+    display:flex; align-items:center; gap:12px; min-height:52px;
+    padding:14px 0; color:var(--ink); text-decoration:none;
   }
-  .s-aktionen a:hover{ text-decoration:underline; }
-  .s-aktionen a.haupt{
-    background:var(--accent); border-radius:8px; padding:0 18px;
-    color:var(--accent-ink); font-weight:600; margin-right:6px;
+  .kapitel-liste a:hover .k-titel{ color:var(--accent); }
+  .kapitel-liste .k-zeichen{
+    font-size:15px; color:var(--ink-faint); font-variant-numeric:tabular-nums;
+    flex:none; width:22px;
   }
-  .s-aktionen a.haupt:hover{ background:var(--accent-dark); text-decoration:none; }
-  .s-aktionen a .art{ font-size:11.5px; color:var(--ink-faint); font-weight:400; }
-  .s-aktionen a.haupt .art{ color:rgba(255,255,255,.7); }
-  .schritte-liste > li.erledigt .s-titel{ color:var(--ink-muted); }
-  .schritte-liste > li.erledigt .s-zweck{ opacity:.75; }
-  .s-body{ margin-left:40px; }
-  @media (max-width:520px){ .s-body{ margin-left:0; } }
+  .kapitel-liste li.erledigt .k-zeichen{ color:var(--accent); }
+  .kapitel-liste li.jetzt .k-zeichen{ color:var(--ink); font-weight:700; }
+  .k-titel{
+    font-family:var(--font-display); font-size:16.5px; font-weight:600;
+    letter-spacing:-.01em; color:var(--ink);
+  }
+  .kapitel-liste li.erledigt .k-titel{ color:var(--ink-muted); }
+  .kapitel-liste li.jetzt .k-titel{ color:var(--ink); }
 </style>
 </head>
 <body>
@@ -75,13 +64,13 @@
     <span>Physio<b>Nebenbei</b></span>
   </a>
 
-  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Mein Fahrplan</span></nav>
+  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Roadmap</span></nav>
 
   <div class="doc">
 
     <section class="sheet hero">
-      <h1 class="title">Mein Fahrplan</h1>
-      <p class="lede">Zehn Schritte von der Frage „lohnt sich das überhaupt?“ bis zur ersten geschriebenen Rechnung. Hak ab, was erledigt ist — dann weißt du beim nächsten Mal sofort, wo du stehst.</p>
+      <h1 class="title">Roadmap</h1>
+      <p class="lede">Zehn Kapitel von der Frage „lohnt sich das überhaupt?“ bis zur ersten geschriebenen Rechnung. Ein Kapitel nach dem anderen, jedes auf seiner eigenen Seite.</p>
       <p class="micro">Verstehen → Planen → Kalkulieren → Vorbereiten → Starten → Arbeiten</p>
 
       <div class="fortschritt">
@@ -90,33 +79,31 @@
       </div>
 
       <div class="naechster" id="naechster">
-        <span class="n-k" id="n-kicker">Dein nächster Schritt</span>
+        <span class="n-k" id="n-kicker">Dein nächstes Kapitel</span>
         <h2 id="n-titel">–</h2>
         <p id="n-zweck">–</p>
-        <div class="n-cta" id="n-cta"></div>
+        <p class="n-cta"><a class="btn" id="n-cta" href="#">–</a></p>
       </div>
     </section>
 
     <section class="sheet">
-      <ol class="schritte-liste" id="schritte"></ol>
-      <p class="hero-cta" style="margin-top:20px">
-        <a class="btn ghost" href="#" id="zuruecksetzen">Fortschritt zurücksetzen</a>
-      </p>
+      <ol class="kapitel-liste" id="kapitel-liste"></ol>
     </section>
 
     <section class="sheet">
-      <p>Die zehn Kapitel zum Nachlesen und die persönliche Checkliste mit 18 Punkten stehen im ausführlichen Fahrplan.</p>
+      <p>Alle zehn Kapitel am Stück und die persönliche Checkliste mit 18 Punkten stehen im Handbuch.</p>
       <p class="hero-cta">
-        <a class="btn" href="fahrplan.html">Kapitel lesen</a>
-        <a class="btn ghost" href="fahrplan.html#checkliste">Zur Checkliste</a>
+        <a class="btn ghost" href="fahrplan.html">Zum Handbuch</a>
+        <a class="btn leise" href="fahrplan.html#checkliste">Zur Checkliste</a>
       </p>
+      <p class="micro" style="margin-top:20px"><a href="#" id="zuruecksetzen">Fortschritt zurücksetzen</a></p>
     </section>
 
   </div>
 
   <footer class="site">
     <span>Der Stand wird nur auf diesem Gerät gespeichert.<br>Keine Steuer-, Rechts- oder medizinische Beratung.</span>
-    <span><a href="./">Mein Bereich</a> · <a href="fahrplan.html">Kapitel</a></span>
+    <span><a href="./">Mein Bereich</a> · <a href="fahrplan.html">Handbuch</a></span>
   </footer>
 </div>
 
@@ -124,85 +111,59 @@
 <script>
 (function(){
   'use strict';
-  /* Die zehn Schritte stehen in fahrplan-schritte.js — dieselbe Liste,
-     aus der auch Mein Bereich den naechsten Schritt liest. */
+  /* Die zehn Kapitel stehen in fahrplan-schritte.js — dieselbe Liste,
+     aus der auch Mein Bereich das naechste Kapitel liest. */
   const SCHRITTE = Fahrplan.SCHRITTE;
   let stand = Fahrplan.stand();
-  function speichern(){ Fahrplan.speichern(stand); }
 
-  function linkHtml(l){
-    return '<a href="' + l.href + '"' + (l.haupt ? ' class="haupt"' : '') + '>' +
-           l.text + ' <span class="art">' + l.art + '</span></a>';
-  }
-
-  document.getElementById('schritte').innerHTML = SCHRITTE.map((s, i) =>
-    '<li data-id="' + s.id + '" id="schritt' + (i + 1) + '">' +
-      '<div class="s-kopf">' +
-        '<input type="checkbox" id="chk-' + s.id + '" aria-label="Schritt ' + (i+1) + ' erledigt">' +
-        '<div><span class="s-nr" id="nr-' + s.id + '">Schritt ' + (i+1) + '</span>' +
-        '<label class="s-titel" for="chk-' + s.id + '">' + s.titel + '</label></div>' +
-      '</div>' +
-      '<div class="s-body"><p class="s-zweck">' + s.zweck + '</p>' +
-      '<div class="s-aktionen">' + s.links.map(linkHtml).join('') + '</div></div>' +
-    '</li>'
+  document.getElementById('kapitel-liste').innerHTML = SCHRITTE.map((s, i) =>
+    '<li data-id="' + s.id + '"><a href="fahrplan.html?kapitel=' + (i + 1) + '">' +
+      '<span class="k-zeichen" id="z-' + s.id + '" aria-hidden="true">○</span>' +
+      '<span class="k-titel">Kapitel ' + (i + 1) + ' · ' + s.titel + '</span>' +
+    '</a></li>'
   ).join('');
 
   function zeichnen(){
     const offen = Fahrplan.naechster(stand);
     const jetzt = offen ? offen.schritt.id : null;
-    let erledigt = 0;
+    const erledigt = Fahrplan.erledigt(stand);
 
-    SCHRITTE.forEach((s, i) => {
-      const li  = document.querySelector('[data-id="' + s.id + '"]');
-      const box = document.getElementById('chk-' + s.id);
+    SCHRITTE.forEach(s => {
+      const li = document.querySelector('[data-id="' + s.id + '"]');
       const ist = !!stand[s.id];
-      box.checked = ist;
       li.classList.toggle('erledigt', ist);
       li.classList.toggle('jetzt', s.id === jetzt);
-      if (ist) erledigt++;
-
-      /* Erledigt, du bist hier, oder offen — in genau dieser Reihenfolge
-         liest sich die Liste als Weg und nicht als Aufgabenhaufen. */
-      let zeichen = '○', text = 'Schritt ' + (i + 1) + ' · ' + s.abschnitt;
-      if (ist)                    { zeichen = '✓'; text += ' · erledigt'; }
-      else if (s.id === jetzt)    { zeichen = '→'; text += ' · du bist hier'; }
-      document.getElementById('nr-' + s.id).innerHTML =
-        '<span class="zeichen" aria-hidden="true">' + zeichen + '</span>' + text;
+      document.getElementById('z-' + s.id).textContent = ist ? '✓' : (s.id === jetzt ? '→' : '○');
     });
 
     const anteil = Math.round(erledigt / SCHRITTE.length * 100);
     document.getElementById('f-balken').style.width = anteil + '%';
     document.getElementById('f-prozent').textContent = anteil + ' %';
-    document.getElementById('f-label').textContent = erledigt + ' von ' + SCHRITTE.length + ' Schritten erledigt';
+    document.getElementById('f-label').textContent = erledigt + ' von ' + SCHRITTE.length + ' Kapiteln erledigt';
 
     const block = document.getElementById('naechster');
     const cta   = document.getElementById('n-cta');
     if (offen){
-      const naechster = offen.schritt;
       block.classList.remove('fertig');
-      document.getElementById('n-kicker').textContent = 'Dein nächster Schritt · Schritt ' + offen.nr + ' von ' + SCHRITTE.length;
-      document.getElementById('n-titel').textContent  = naechster.titel;
-      document.getElementById('n-zweck').textContent  = naechster.zweck;
-      cta.innerHTML = naechster.links.slice(0, 2).map((l, i) =>
-        '<a class="btn' + (i === 0 ? '' : ' ghost') + '" href="' + l.href + '">' + l.text + '</a>').join('');
+      document.getElementById('n-kicker').textContent = 'Dein nächstes Kapitel · Kapitel ' + offen.nr + ' von ' + SCHRITTE.length;
+      document.getElementById('n-titel').textContent  = offen.schritt.titel;
+      document.getElementById('n-zweck').textContent  = offen.schritt.zweck;
+      cta.textContent = erledigt === 0 ? 'Kapitel 1 öffnen' : 'Weiter mit Kapitel ' + offen.nr;
+      cta.href = 'fahrplan.html?kapitel=' + offen.nr;
     } else {
       block.classList.add('fertig');
-      document.getElementById('n-kicker').textContent = 'Alle zehn Schritte erledigt';
-      document.getElementById('n-titel').textContent  = 'Du bist startklar.';
-      document.getElementById('n-zweck').textContent  = 'Ab jetzt geht es ums Dranbleiben: einmal im Monat die Einnahmen eintragen, und nach dem ersten Quartal noch einmal auf Preis und Auslastung schauen.';
-      cta.innerHTML = '<a class="btn" href="dateien/PhysioNebenbei-Einnahmen-Ausgaben.html">Einnahmen eintragen</a>' +
-                      '<a class="btn ghost" href="planungsrechner.html">Auslastung prüfen</a>';
+      document.getElementById('n-kicker').textContent = 'Alle zehn Kapitel erledigt';
+      document.getElementById('n-titel').textContent  = 'Du bist durch.';
+      document.getElementById('n-zweck').textContent  = 'Ab jetzt geht es ums Dranbleiben: einmal im Monat die Einnahmen eintragen und nach dem ersten Quartal noch einmal auf Preis und Auslastung schauen.';
+      cta.textContent = 'Werkzeuge ansehen';
+      cta.href = 'werkzeuge-uebersicht.html';
     }
   }
 
-  document.getElementById('schritte').addEventListener('change', e => {
-    if (e.target.type !== 'checkbox') return;
-    stand[e.target.closest('li').dataset.id] = e.target.checked;
-    speichern(); zeichnen();
-  });
   document.getElementById('zuruecksetzen').addEventListener('click', e => {
-    e.preventDefault(); stand = {}; speichern(); zeichnen();
+    e.preventDefault(); stand = {}; Fahrplan.speichern(stand); zeichnen();
   });
+
   zeichnen();
 })();
 </script>

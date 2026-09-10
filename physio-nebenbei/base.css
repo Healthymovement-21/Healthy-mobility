@@ -156,6 +156,56 @@ strong{ font-weight:600; }
 .crumb a{ color:var(--ink-muted); text-decoration:none; border-bottom:1px solid var(--glass-edge); }
 .crumb a:hover{ color:var(--ink); border-color:var(--accent); }
 
+/* ---------- Bereichs-Navigation ----------
+   Feste Legende ueber allen Seiten des Kundenbereichs: Marke links,
+   die vier Bereiche rechts. Gleiche Machart wie die Navigation der
+   oeffentlichen Seiten, nur ohne Kaufen-Knopf und ohne Burger --
+   vier kurze Woerter passen auch auf dem Handy in eine Zeile. */
+.bnav{
+  display:flex;
+  align-items:center;
+  gap:18px 24px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--glass-edge);
+}
+.bnav .brand{ margin:0; flex:none; }
+.bnav-links{
+  display:flex;
+  gap:20px;
+  margin:0 0 0 auto;
+  padding:0;
+  list-style:none;
+  flex-wrap:wrap;
+}
+.bnav-links a{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  min-height:32px;
+  font-size:15px;
+  color:var(--ink-muted);
+  text-decoration:none;
+}
+.bnav-links a:hover{ color:var(--ink); text-decoration:none; }
+.bnav-links a[aria-current="page"]{ color:var(--ink); font-weight:600; }
+.bnav-links a[aria-current="page"]::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-5px;
+  height:2px;
+  background:var(--accent);
+  border-radius:2px;
+}
+/* Auf schmalen Schirmen stehen die vier Bereiche unter der Marke,
+   linksbuendig statt rechts. */
+@media (max-width:520px){
+  .bnav{ gap:14px; }
+  .bnav-links{ margin-left:0; gap:16px; width:100%; }
+  .bnav-links a{ font-size:14.5px; }
+}
+
 /* ---------- Marke ---------- */
 .brand{
   display:inline-flex;

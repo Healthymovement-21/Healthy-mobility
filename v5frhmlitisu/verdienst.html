@@ -79,12 +79,20 @@
 <body>
 
 <div class="page">
-  <a class="brand" href="./">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
-    <span>Physio<b>Nebenbei</b></span>
-  </a>
+  <nav class="bnav">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+      <span>Physio<b>Nebenbei</b></span>
+    </a>
+    <ul class="bnav-links">
+      <li><a href="./">Dashboard</a></li>
+      <li><a href="rechner-uebersicht.html" aria-current="page">Rechner</a></li>
+      <li><a href="dateien.html">Dateien</a></li>
+      <li><a href="rechnungen.html">Rechnungen</a></li>
+    </ul>
+  </nav>
 
-  <nav class="crumb"><a href="./">Mein Bereich</a> · <span>Was kann ich nebenbei verdienen?</span></nav>
+  <nav class="crumb"><a href="./">Dashboard</a> · <span>Was kann ich nebenbei verdienen?</span></nav>
 
   <div class="speicherleiste" id="speicherleiste">
     <span id="speicher_text">–</span>
@@ -191,7 +199,7 @@
 
   <footer class="site">
     <span>Keine Steuer-, Rechts- oder medizinische Beratung. Deine Zahlen bleiben auf diesem Gerät.</span>
-    <span><a href="./">Mein Bereich</a> · <a href="ziel-rechner.html">Rückwärts rechnen</a></span>
+    <span><a href="./">Dashboard</a> · <a href="ziel-rechner.html">Rückwärts rechnen</a></span>
   </footer>
 </div>
 

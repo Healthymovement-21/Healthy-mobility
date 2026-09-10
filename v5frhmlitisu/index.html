@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mein Bereich — PhysioNebenbei</title>
+<title>Dashboard — PhysioNebenbei</title>
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <link rel="manifest" href="app.webmanifest">
@@ -44,16 +44,24 @@
 <body>
 
 <div class="page">
-  <a class="brand" href="../">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
-    <span>Physio<b>Nebenbei</b></span>
-  </a>
+  <nav class="bnav">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+      <span>Physio<b>Nebenbei</b></span>
+    </a>
+    <ul class="bnav-links">
+      <li><a href="./" aria-current="page">Dashboard</a></li>
+      <li><a href="rechner-uebersicht.html">Rechner</a></li>
+      <li><a href="dateien.html">Dateien</a></li>
+      <li><a href="rechnungen.html">Rechnungen</a></li>
+    </ul>
+  </nav>
 
   <div class="doc">
 
     <section class="sheet hero">
-      <h1 class="title">Mein Bereich</h1>
-      <p class="lede">Dein nächstes Kapitel und der Zugang zu allem anderen.</p>
+      <h1 class="title">Dashboard</h1>
+      <p class="lede">Dein nächstes Kapitel — und oben rechts der Weg zu allem anderen.</p>
     </section>
 
     <!-- ============ DEINE ROADMAP ============ -->
@@ -76,9 +84,8 @@
     <!-- ============ ZUGANG ZU ALLEM ANDEREN ============ -->
     <section class="sheet">
       <p class="zugang">
-        <a href="werkzeuge-uebersicht.html">Werkzeuge</a> ·
-        <a href="dateien.html">Meine Dateien</a> ·
         <a href="termine.html">Kalender</a> ·
+        <a href="fahrplan.html">Handbuch</a> ·
         <a href="einstellungen.html">Einstellungen</a>
       </p>
     </section>

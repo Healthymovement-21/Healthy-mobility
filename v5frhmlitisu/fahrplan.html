@@ -13,12 +13,20 @@
 <body>
 
 <div class="page">
-  <a class="brand" href="../">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
-    <span>Physio<b>Nebenbei</b></span>
-  </a>
+  <nav class="bnav">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5.5 24.5 A 13 13 0 0 1 22 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="24.2" cy="22.4" r="3.4" fill="currentColor"/></svg>
+      <span>Physio<b>Nebenbei</b></span>
+    </a>
+    <ul class="bnav-links">
+      <li><a href="./" aria-current="page">Dashboard</a></li>
+      <li><a href="rechner-uebersicht.html">Rechner</a></li>
+      <li><a href="dateien.html">Dateien</a></li>
+      <li><a href="rechnungen.html">Rechnungen</a></li>
+    </ul>
+  </nav>
 
-  <nav class="crumb" id="crumb"><a href="./">Mein Bereich</a> · <span>Handbuch</span></nav>
+  <nav class="crumb" id="crumb"><a href="./">Dashboard</a> · <span>Handbuch</span></nav>
 
   <div class="doc">
 
@@ -209,7 +217,7 @@
           </tbody>
         </table>
       </div>
-      <p class="micro">Zum fortlaufenden Ausfüllen: die Excel-Mappe unter <a href="dateien.html">Meine Dateien</a>.</p>
+      <p class="micro">Zum fortlaufenden Ausfüllen: die Excel-Mappe unter <a href="dateien.html">Dateien</a>.</p>
     </section>
 
     <section class="sheet" id="kapitel7" data-kapitel="7">
@@ -271,7 +279,7 @@
       <h2>Und jetzt die Dateien</h2>
       <p>Die Roadmap als Word-Datei, die Rechner als Excel und alle Vorlagen als PDF findest du in deinem Bereich.</p>
       <p class="hero-cta">
-        <a class="btn" href="dateien.html">Meine Dateien</a>
+        <a class="btn" href="dateien.html">Dateien</a>
       </p>
     </section>
 
@@ -406,7 +414,7 @@
   const letzte = n === Fahrplan.anzahl;
 
   document.getElementById('crumb').innerHTML =
-    '<a href="./">Mein Bereich</a> · <a href="schritte.html">Roadmap</a> · <span>Kapitel ' + n + '</span>';
+    '<a href="./">Dashboard</a> · <a href="schritte.html">Roadmap</a> · <span>Kapitel ' + n + '</span>';
   document.title = 'Kapitel ' + n + ' · Roadmap — PhysioNebenbei';
 
   const kopf = document.createElement('div');
@@ -424,7 +432,7 @@
       '<a class="btn" href="' + (letzte ? 'schritte.html' : 'fahrplan.html?kapitel=' + (n + 1)) + '" id="kap-weiter">' +
         (letzte ? 'Fertig' : 'Weiter zu Kapitel ' + (n + 1)) +
       '</a>' +
-      '<a class="btn ghost" href="./">Zurück zu Mein Bereich</a>' +
+      '<a class="btn ghost" href="./">Zurück zum Dashboard</a>' +
     '</p>';
   aktiv.parentNode.insertBefore(nav, aktiv.nextSibling);
 

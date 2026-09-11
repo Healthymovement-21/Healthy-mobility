@@ -1,10 +1,10 @@
 /* ============================================================
-   PhysioNebenbei — Dateien wirklich herunterladen
+   PhysioNebenbei, Dateien wirklich herunterladen
 
    Das Problem: Safari auf iPhone und iPad ignoriert bei Office-
    Dateien das download-Attribut. Der Server liefert die .docx mit
    ihrem echten MIME-Typ aus, iOS erkennt sie als Word-Dokument und
-   bietet statt eines Downloads "In App öffnen" an — dort landet
+   bietet statt eines Downloads "In App öffnen" an, dort landet
    dann irgendeine installierte App, die Office-Dateien beansprucht.
 
    Zwei Wege, in dieser Reihenfolge:
@@ -18,7 +18,7 @@
       Browser die Datei keiner App mehr zuordnen und speichert sie.
       Auf Mac, Windows und Android ist das der normale Weg.
 
-   Klappt beides nicht — kein Netz, alter Browser, abgebrochen —,
+   Klappt beides nicht, kein Netz, alter Browser, abgebrochen ,,
    geht der Klick ganz normal weiter wie vorher. Die Dateien selbst
    bleiben unverändert und weiterhin unter ihren bisherigen Pfaden.
    ============================================================ */
@@ -97,7 +97,7 @@
             return;
           }
         } catch(fehler){
-          /* Abgebrochen ist kein Fehler — dann ist der Nutzer fertig. */
+          /* Abgebrochen ist kein Fehler, dann ist der Nutzer fertig. */
           if (fehler && fehler.name === 'AbortError'){ zurueck(a); return; }
           /* Sonst weiter mit Weg 2. */
         }
@@ -123,7 +123,7 @@
     if (!url || !FORMATE.test(url)) return;
 
     /* Zeigt der Link inzwischen auf Google Drive, gehört er nicht
-       mehr uns — dann nicht eingreifen. */
+       mehr uns, dann nicht eingreifen. */
     if (!istEigeneDatei(a)) return;
 
     /* Ohne diese Bausteine bleibt alles beim Alten. */

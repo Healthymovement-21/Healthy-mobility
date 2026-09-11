@@ -14,7 +14,7 @@
 
    "link" ist optional und wird nur auf der Kapitel-Seite selbst als
    ein einziger, zurückhaltender Hinweis auf ein passendes Werkzeug
-   gezeigt — nie als Pflichtschritt. Fehlt er, gibt es keinen.
+   gezeigt, nie als Pflichtschritt. Fehlt er, gibt es keinen.
 --------------------------------------------------------------- */
 (function(){
   'use strict';
@@ -79,7 +79,7 @@
     {
       id: 's10', abschnitt: 'Arbeiten',
       titel: 'Typische Anfänger-Fehler',
-      zweck: 'Die Fehler, die am Anfang am häufigsten passieren — und wie du sie vermeidest.',
+      zweck: 'Die Fehler, die am Anfang am häufigsten passieren, und wie du sie vermeidest.',
       link: {text:'Häufige Fehler', href:'fehler.html'}
     }
   ];
@@ -94,7 +94,7 @@
     try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e){}
   }
 
-  /* Das naechste offene Kapitel — das erste ohne Haken. Ist alles
+  /* Das naechste offene Kapitel, das erste ohne Haken. Ist alles
      abgehakt, gibt es keins mehr und die Seiten zeigen den
      Abschlusstext. */
   function naechster(s){
@@ -111,7 +111,7 @@
   }
 
   /* Ein einzelnes Kapitel als erledigt markieren, unabhaengig davon,
-     ob vorherige Kapitel schon abgehakt sind — wer in der Uebersicht
+     ob vorherige Kapitel schon abgehakt sind, wer in der Uebersicht
      vor- oder zurueckspringt, soll trotzdem seinen eigenen Stand
      behalten. */
   function markieren(nr){

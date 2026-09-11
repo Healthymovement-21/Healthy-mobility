@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Termine — PhysioNebenbei</title>
+<title>Termine · PhysioNebenbei</title>
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
@@ -89,8 +89,8 @@
       <p class="lede">Deine nächsten Termine auf einen Blick. Bleibt auf diesem Gerät, wird nicht von allein irgendwohin übertragen.</p>
       <div class="naechster" id="naechster" hidden>
         <span class="n-k">Nächster Termin</span>
-        <span class="n-zeit" id="n_zeit">–</span>
-        <p class="n-wer" id="n_wer">–</p>
+        <span class="n-zeit" id="n_zeit"></span>
+        <p class="n-wer" id="n_wer"></p>
         <p class="n-ort" id="n_ort"></p>
       </div>
     </section>
@@ -139,7 +139,7 @@
       <p class="t-meldung" id="meldung" hidden></p>
       <p class="micro" style="margin-top:16px">
         Für die Behandlungsdokumentation nimm den <a href="dateien/Dokumentationsvorlage.pdf" download>Dokumentationsbogen</a>.
-        Diese Liste ist nur eine Terminübersicht — Beschwerden, Befunde und andere
+        Diese Liste ist nur eine Terminübersicht. Beschwerden, Befunde und andere
         Gesundheitsdaten gehören nicht in die Notiz.
       </p>
     </section>
@@ -236,7 +236,7 @@
       '</div>'
     ).join('');
 
-    /* Namen und Notizen als Text setzen, nicht als HTML — sonst könnte
+    /* Namen und Notizen als Text setzen, nicht als HTML, sonst könnte
        ein Name mit spitzen Klammern die Seite durcheinanderbringen. */
     const flach = Object.keys(tage).sort().reduce((a, d) => a.concat(tage[d]), []);
     ziel.querySelectorAll('li').forEach((li, i) => {
@@ -272,7 +272,7 @@
     m.hidden = false;
     m.textContent = ok
       ? 'Termin gespeichert.'
-      : 'Der Browser lässt gerade kein Speichern zu — im privaten Fenster geht das nicht.';
+      : 'Im privaten Fenster lässt der Browser kein Speichern zu.';
     setTimeout(() => { m.hidden = true; }, 3000);
 
     el('f_patient').value = '';

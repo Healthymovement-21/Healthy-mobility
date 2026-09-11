@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Einnahmen und Ausgaben — PhysioNebenbei</title>
+<title>Einnahmen und Ausgaben · PhysioNebenbei</title>
 <meta name="robots" content="noindex, nofollow">
 <!--
   Eigenständige Datei. Speichern, doppelklicken, fertig.
@@ -188,7 +188,7 @@
     </div>
     <div class="kachel">
       <span class="k">Bester Monat</span>
-      <span class="n" id="j_best">–</span>
+      <span class="n" id="j_best">·</span>
     </div>
   </div>
 
@@ -295,14 +295,14 @@
 
   function rechnen(){
     var d = alles[jahr];
-    var ein = 0, aus = 0, best = -Infinity, bestName = '–';
+    var ein = 0, aus = 0, best = -Infinity, bestName = '·';
 
     d.monate.forEach(function(m, i){
       var e = parseFloat(m.ein) || 0;
       var a = ausgabenSumme(m);
       ein += e; aus += a;
       var g = e - a;
-      if (e > best) { best = e; bestName = e > 0 ? MONATE[i] : '–'; }
+      if (e > best) { best = e; bestName = e > 0 ? MONATE[i] : '·'; }
       var el = document.querySelector('[data-g="' + i + '"]');
       if (el) {
         el.textContent = eur(g);

@@ -1,5 +1,5 @@
 /* ============================================================
-   Zahlenfeld — eigenes Ziffernraster statt Handytastatur.
+   Zahlenfeld, eigenes Ziffernraster statt Handytastatur.
 
    Problem: Auf dem Handy schiebt die System-Tastatur die Seite hoch,
    verdeckt das Ergebnis und klappt bei jedem Zurück-Tippen wieder zu.

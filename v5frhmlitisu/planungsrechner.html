@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Planungs-Rechner — PhysioNebenbei</title>
+<title>Planungs-Rechner · PhysioNebenbei</title>
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
@@ -62,7 +62,7 @@
     display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px;
     margin:18px 0 0; font-size:14.5px; color:var(--ink-muted); line-height:1.55;
   }
-  .uebergabe .btn{ padding:9px 18px; font-size:14px; }
+  .uebergabe .btn{ padding:9px 18px; font-size:14px; min-height:40px; border-radius:10px; }
 </style>
 </head>
 <body>
@@ -86,7 +86,7 @@
   </nav>
 
   <div class="vorschlag" id="vorschlag" hidden>
-    <span id="vorschlag_text">–</span>
+    <span id="vorschlag_text"></span>
     <button class="btn ghost" type="button" id="vorschlag_knopf">Werte übernehmen</button>
   </div>
 
@@ -139,22 +139,22 @@
       <div class="kacheln zwei">
         <div class="kachel">
           <div class="k-titel">Einnahme je Besuch</div>
-          <div class="k-wert" id="k_ein">–</div>
+          <div class="k-wert" id="k_ein">·</div>
           <div class="k-unter" id="k_ein_u">Behandlung plus Wegegeld</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Nach Fahrtkosten</div>
-          <div class="k-wert" id="k_nachfahrt">–</div>
-          <div class="k-unter" id="k_nachfahrt_u">–</div>
+          <div class="k-wert" id="k_nachfahrt">·</div>
+          <div class="k-unter" id="k_nachfahrt_u">·</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Zeit je Besuch</div>
-          <div class="k-wert" id="k_zeit">–</div>
+          <div class="k-wert" id="k_zeit">·</div>
           <div class="k-unter" id="k_zeit_u">inklusive Fahrt und Doku</div>
         </div>
         <div class="kachel hell">
           <div class="k-titel">Verdienst je Stunde</div>
-          <div class="k-wert" id="k_stunde">–</div>
+          <div class="k-wert" id="k_stunde">·</div>
           <div class="k-unter">nach Fahrtkosten, vor Steuer</div>
         </div>
       </div>
@@ -201,19 +201,19 @@
       <div class="besuchsraster" id="raster"></div>
 
       <p class="uebergabe" id="uebergabe" hidden>
-        <span id="uebergabe_text">–</span>
+        <span id="uebergabe_text"></span>
         <a class="btn ghost" href="#" id="uebergabe_knopf">In den Hauptrechner übernehmen</a>
       </p>
 
       <div class="kacheln zwei">
         <div class="kachel hell">
           <div class="k-titel">Besuche im Monat</div>
-          <div class="k-wert" id="k_besuche">–</div>
-          <div class="k-unter" id="k_besuche_u">–</div>
+          <div class="k-wert" id="k_besuche">·</div>
+          <div class="k-unter" id="k_besuche_u">·</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Zeitaufwand pro Woche</div>
-          <div class="k-wert" id="k_wochen">–</div>
+          <div class="k-wert" id="k_wochen">·</div>
           <div class="k-unter">inklusive Fahrt und Doku</div>
         </div>
       </div>
@@ -227,11 +227,11 @@
       <div class="calc-card">
         <div class="calc-row">
           <label>Einnahmen</label>
-          <span class="out" id="o_umsatz">–</span>
+          <span class="out" id="o_umsatz"></span>
         </div>
         <div class="calc-row">
-          <label>Fahrtkosten <span class="micro" id="o_km_micro">–</span></label>
-          <span class="out" id="o_fahrt">–</span>
+          <label>Fahrtkosten <span class="micro" id="o_km_micro"></span></label>
+          <span class="out" id="o_fahrt"></span>
         </div>
         <div class="calc-row">
           <label for="fix">Weitere Ausgaben <span class="micro">Versicherung, Material, Handy</span></label>
@@ -239,7 +239,7 @@
         </div>
         <div class="calc-row">
           <label>Gewinn vor Steuer</label>
-          <span class="out" id="o_gewinn">–</span>
+          <span class="out" id="o_gewinn"></span>
         </div>
         <div class="calc-row">
           <label for="satz">Rücklage-Satz <span class="micro">Steuer plus Puffer</span></label>
@@ -247,26 +247,26 @@
         </div>
         <div class="calc-row result">
           <label class="result-label">Bleibt dir</label>
-          <span class="out" id="o_bleibt">–</span>
+          <span class="out" id="o_bleibt"></span>
         </div>
       </div>
 
       <div class="kacheln zwei">
         <div class="kachel">
           <div class="k-titel">Einnahmen im Jahr</div>
-          <div class="k-wert" id="k_jahr">–</div>
+          <div class="k-wert" id="k_jahr">·</div>
           <div class="k-unter">bei gleichbleibender Auslastung</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Stundenlohn nach allem</div>
-          <div class="k-wert" id="k_effektiv">–</div>
+          <div class="k-wert" id="k_effektiv">·</div>
           <div class="k-unter">nach Ausgaben und Rücklage</div>
         </div>
       </div>
 
       <div class="ampel" id="ampel">
-        <h3 id="ampel_titel">–</h3>
-        <p id="ampel_text">–</p>
+        <h3 id="ampel_titel">·</h3>
+        <p id="ampel_text"></p>
       </div>
 
       <details class="mehr">
@@ -298,27 +298,27 @@
       <div class="kacheln zwei">
         <div class="kachel">
           <div class="k-titel">Laufzeit je Rezept</div>
-          <div class="k-wert" id="k_laufzeit">–</div>
-          <div class="k-unter" id="k_laufzeit_u">–</div>
+          <div class="k-wert" id="k_laufzeit">·</div>
+          <div class="k-unter" id="k_laufzeit_u">·</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Rechnungsbetrag je Rezept</div>
-          <div class="k-wert" id="k_rezeptsumme">–</div>
-          <div class="k-unter" id="k_rezeptsumme_u">–</div>
+          <div class="k-wert" id="k_rezeptsumme">·</div>
+          <div class="k-unter" id="k_rezeptsumme_u">·</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Arbeitszeit je Rezept</div>
-          <div class="k-wert" id="k_rezeptzeit">–</div>
+          <div class="k-wert" id="k_rezeptzeit">·</div>
           <div class="k-unter">inklusive Fahrt und Doku</div>
         </div>
         <div class="kachel hell">
           <div class="k-titel">Erste Zahlung frühestens</div>
-          <div class="k-wert" id="k_erstgeld">–</div>
+          <div class="k-wert" id="k_erstgeld">·</div>
           <div class="k-unter">nach dem letzten Termin plus Zahlungsziel</div>
         </div>
       </div>
 
-      <div class="annotation" id="cashflow">–</div>
+      <div class="annotation" id="cashflow">·</div>
 
       <details class="mehr">
         <summary>Muss ich wirklich bis zum Schluss warten?</summary>
@@ -371,13 +371,13 @@
   var KEY = 'physionebenbei-planung';
   var $ = function(id){ return document.getElementById(id); };
   var eur = function(n){
-    return isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
+    return isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '·';
   };
   var eur0 = function(n){
-    return isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
+    return isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '·';
   };
   /* Haelt jede Eingabe in dem Bereich, den das Feld erlaubt. parseFloat
-     allein wuerde getippte oder eingefuegte Minuswerte durchlassen — die
+     allein wuerde getippte oder eingefuegte Minuswerte durchlassen, die
      min- und max-Angaben am Feld gelten sonst nur fuer die Pfeiltasten. */
   function klemme(el){
     var v = parseFloat(String(el.value).replace(',', '.'));
@@ -489,7 +489,7 @@
 
     $('k_laufzeit').textContent = monate > 0
       ? monate.toLocaleString('de-DE', {maximumFractionDigits:1}) + ' Monate'
-      : '–';
+      : '·';
     $('k_laufzeit_u').textContent = termine + ' Termine bei ' + stand.frequenz +
       ' pro Monat, das sind rund ' + Math.round(wochen) + ' Wochen';
     $('k_rezeptsumme').textContent = eur(summe);

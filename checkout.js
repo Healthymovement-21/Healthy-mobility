@@ -1,5 +1,5 @@
 /* ============================================================
-   CHECKOUT-KONFIGURATION — die einzige Stelle, die du ändern musst.
+   CHECKOUT-KONFIGURATION, die einzige Stelle, die du ändern musst.
 
    Trag hier den Bestell-Link deines Digistore24-Produkts ein.
    Zu finden im Digistore24-Backend unter:
@@ -8,7 +8,7 @@
    Beispiel: 'https://www.digistore24.com/product/612345'
 
    Solange das Feld leer bleibt, zeigen die Kauf-Buttons einen
-   Hinweis statt eines toten Links — die Seite ist also nie kaputt,
+   Hinweis statt eines toten Links, die Seite ist also nie kaputt,
    sie ist nur noch nicht verkaufsbereit.
    ============================================================ */
 
@@ -17,7 +17,7 @@ const CHECKOUT_URL = '';
 /* Gültigkeit der Download-Links: unbegrenzt.
    Begründung: Käufer:innen wechseln Geräte und suchen die Dateien oft
    Monate später wieder. Ein ablaufender Link erzeugt genau dann
-   Support-Aufwand, ohne den Schutz real zu erhöhen — wer weitergeben
+   Support-Aufwand, ohne den Schutz real zu erhöhen, wer weitergeben
    will, tut das in den ersten Minuten. Digistore24 hält den Link im
    Kundenkonto dauerhaft bereit. */
 
@@ -59,7 +59,7 @@ const CHECKOUT_URL = '';
         btn.removeAttribute('href');
       });
       if (hinweis) {
-        hinweis.textContent = 'Der Checkout wird gerade eingerichtet — in Kürze kaufbar.';
+        hinweis.textContent = 'Der Checkout wird gerade eingerichtet und ist in Kürze kaufbar.';
         hinweis.hidden = false;
       }
       const gate = checkbox && checkbox.closest('.gate');

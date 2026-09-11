@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Roadmap — PhysioNebenbei</title>
+<title>Roadmap · PhysioNebenbei</title>
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <link rel="manifest" href="app.webmanifest">
@@ -82,15 +82,15 @@
       <p class="micro">Verstehen → Planen → Kalkulieren → Vorbereiten → Starten → Arbeiten</p>
 
       <div class="fortschritt">
-        <div class="f-zeile"><span id="f-label">–</span><b id="f-prozent">0 %</b></div>
+        <div class="f-zeile"><span id="f-label"></span><b id="f-prozent">0 %</b></div>
         <div class="f-balken"><div id="f-balken" style="width:0"></div></div>
       </div>
 
       <div class="naechster" id="naechster">
         <span class="n-k" id="n-kicker">Dein nächstes Kapitel</span>
-        <h2 id="n-titel">–</h2>
-        <p id="n-zweck">–</p>
-        <p class="n-cta"><a class="btn" id="n-cta" href="#">–</a></p>
+        <h2 id="n-titel"></h2>
+        <p id="n-zweck"></p>
+        <p class="n-cta"><a class="btn" id="n-cta" href="#">Kapitel öffnen</a></p>
       </div>
     </section>
 
@@ -119,7 +119,7 @@
 <script>
 (function(){
   'use strict';
-  /* Die zehn Kapitel stehen in fahrplan-schritte.js — dieselbe Liste,
+  /* Die zehn Kapitel stehen in fahrplan-schritte.js, dieselbe Liste,
      aus der auch Mein Bereich das naechste Kapitel liest. */
   const SCHRITTE = Fahrplan.SCHRITTE;
   let stand = Fahrplan.stand();

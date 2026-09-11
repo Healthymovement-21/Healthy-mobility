@@ -1,9 +1,9 @@
 /* Service Worker für PhysioNebenbei.
    Zweck: Die Rechner sollen offline funktionieren, wenn die Seite einmal
    zum Home-Bildschirm hinzugefügt wurde. Kein Tracking, keine Netzwerkzugriffe
-   nach außen — es wird nur gecacht, was von dieser Domain kommt. */
+   nach außen, es wird nur gecacht, was von dieser Domain kommt. */
 
-const CACHE = 'physionebenbei-v26';
+const CACHE = 'physionebenbei-v27';
 
 /* Nur oeffentliche Dateien vorladen. Der Kundenbereich liegt unter einer
    eigenen Adresse und wird beim ersten Besuch automatisch mitgecacht,

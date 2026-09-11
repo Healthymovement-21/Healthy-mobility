@@ -1,5 +1,5 @@
 /* ============================================================
-   PhysioNebenbei — gemeinsame Datenschicht
+   PhysioNebenbei, gemeinsame Datenschicht
 
    Alle Rechner und der Mein-Bereich lesen und schreiben durch dieses
    Modul. Dadurch ist der Preis, den du im Preis-Kalkulator einträgst,
@@ -15,7 +15,7 @@
      zahlen      die geteilten Rechnerwerte (Ziel, Preis, Zeiten, Kosten)
      finanzen    Umsatz und Ausgaben des laufenden Monats
      profil      deine eigenen Angaben für Rechnungen
-     termine     deine Termine — enthalten Patientennamen und werden
+     termine     deine Termine, enthalten Patientennamen und werden
                  deshalb nur auf ausdrücklichen Wunsch synchronisiert
      einstellung was du synchronisieren möchtest
    ============================================================ */
@@ -114,7 +114,7 @@
     finanzen(){ return daten.finanzen; },
     einstellung(){ return daten.einstellung; },
 
-    /* Einen Wert setzen. Speichert nicht sofort — erst wenn jemand
+    /* Einen Wert setzen. Speichert nicht sofort, erst wenn jemand
        speichern() aufruft oder die Seite es automatisch tut. */
     setze(bereich, feld, wert){
       if (!daten[bereich]) daten[bereich] = {};
@@ -159,7 +159,7 @@
 
     /* Klassischer Download. Auf dem Computer der bequemste Weg, auf dem
        iPhone landet die Datei allerdings in einer Vorschau, aus der man
-       sie kaum sinnvoll weiterverwenden kann — dafuer gibt es unten
+       sie kaum sinnvoll weiterverwenden kann, dafuer gibt es unten
        teilen() und den Text zum Kopieren. */
     exportieren(mitTerminen){
       const blob = new Blob([Daten.exportText(mitTerminen)], {type:'application/json'});

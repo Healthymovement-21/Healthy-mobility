@@ -1,5 +1,5 @@
 /* ============================================================
-   COMMUNITY-KONFIGURATION — die einzige Stelle, die du ändern musst.
+   COMMUNITY-KONFIGURATION, die einzige Stelle, die du ändern musst.
 
    Trag hier deinen WhatsApp-Einladungslink ein, sobald die Gruppe
    oder der Community-Kanal steht.
@@ -37,7 +37,7 @@ const WHATSAPP_URL = '';
         btn.removeAttribute('href');
       });
       if (hinweis) {
-        hinweis.textContent = 'Der Einladungslink wird gerade eingerichtet — in Kürze verfügbar.';
+        hinweis.textContent = 'Der Einladungslink wird gerade eingerichtet und ist in Kürze verfügbar.';
         hinweis.hidden = false;
       }
       return;

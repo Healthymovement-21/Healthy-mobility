@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Dateien — PhysioNebenbei</title>
+<title>Dateien · PhysioNebenbei</title>
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
@@ -28,7 +28,7 @@
   .speicher .orte{ display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:6px; }
   .speicher .ort{ font-size:13.5px; color:var(--ink-muted); display:inline-flex; align-items:center; gap:5px; }
   .speicher .ort::before{ content:"✓"; color:var(--accent); font-weight:700; }
-  .speicher .ort.nein::before{ content:"—"; color:var(--ink-faint); }
+  .speicher .ort.nein::before{ content:"○"; color:var(--ink-faint); }
   .speicher .ort.warn::before{ content:"!"; color:var(--mark); font-weight:700; }
   .speicher .hinw{ font-size:13.5px; color:var(--ink-muted); margin-top:5px; }
 
@@ -76,7 +76,6 @@
 
     <section class="sheet hero">
       <h1 class="title">Dateien</h1>
-      <p class="lede">Elf Vorlagen und zwei Rechner zum Mitnehmen — sortiert danach, wann du sie brauchst. Welche zu welchem Schritt gehört, steht in deiner <a href="schritte.html">Roadmap</a>.</p>
     </section>
 
     <!-- ============ DATEIEN ============ -->
@@ -130,8 +129,8 @@
     <!-- ============ SPEICHER ============ -->
     <section class="sheet" id="speicher">
       <h2>Speicher</h2>
-      <p class="stand" id="stand_text">–</p>
-      <p id="drive_status">–</p>
+      <p class="stand" id="stand_text"></p>
+      <p id="drive_status"></p>
       <p class="hero-cta">
         <a class="btn" href="#" id="drive_verbinden">Google Drive verbinden</a>
         <a class="btn ghost" href="#" id="drive_hoch" hidden>Jetzt hochladen</a>
@@ -148,13 +147,13 @@
             <li><strong>Projekt anlegen.</strong> In der <a href="https://console.cloud.google.com" target="_blank" rel="noopener">Google Cloud Console</a> ein neues Projekt erstellen.</li>
             <li><strong>Drive-API einschalten.</strong> Unter „APIs &amp; Dienste → Bibliothek“ die <em>Google Drive API</em> aktivieren.</li>
             <li><strong>Zustimmungsbildschirm ausfüllen.</strong> Nutzertyp „Extern“, die eigene Google-Adresse als Testnutzer eintragen und den Bereich <code>drive.file</code> hinzufügen.</li>
-            <li><strong>Client-ID erstellen.</strong> Unter „Anmeldedaten“ eine OAuth-Client-ID vom Typ „Webanwendung“ anlegen und als autorisierte JavaScript-Quelle <code id="drive_origin">–</code> eintragen. Eine Weiterleitungs-URI wird nicht gebraucht.</li>
+            <li><strong>Client-ID erstellen.</strong> Unter „Anmeldedaten“ eine OAuth-Client-ID vom Typ „Webanwendung“ anlegen und als autorisierte JavaScript-Quelle <code id="drive_origin">·</code> eintragen. Eine Weiterleitungs-URI wird nicht gebraucht.</li>
             <li><strong>Eintragen.</strong> Die Client-ID in der Datei <code>drive-sync.js</code> ganz oben zwischen die Anführungszeichen setzen.</li>
           </ol>
         </div>
       </details>
 
-      <p class="micro" style="margin-top:20px">Freiwillig und jederzeit trennbar. Ohne Verbindung funktioniert alles genauso — Drive ist eine zweite Kopie, kein Ersatz für die Speicherung auf deinem Gerät.</p>
+      <p class="micro" style="margin-top:20px">Freiwillig und jederzeit trennbar. Ohne Verbindung funktioniert alles genauso. Drive ist eine zweite Kopie, kein Ersatz für die Speicherung auf deinem Gerät.</p>
 
       <h3 style="margin-top:32px">Was übertragen wird</h3>
       <div class="wahl">
@@ -187,7 +186,7 @@
             <span class="ort">auf diesem Gerät</span>
             <span class="ort nein" id="o_termine_drive">nicht synchronisiert</span>
           </div>
-          <p class="hinw">Enthält Patientennamen — deshalb bleibt die Übertragung standardmäßig aus.</p>
+          <p class="hinw">Enthält Patientennamen, deshalb bleibt die Übertragung standardmäßig aus.</p>
         </li>
         <li>
           <b>Vorlagen und Arbeitsblätter</b>
@@ -204,7 +203,7 @@
         <strong>Bevor du personenbezogene Daten synchronisierst:</strong> Anamnesen, Befunde,
         Diagnosen und alles, was auf einen Gesundheitszustand schließen lässt, gehören nicht
         ungeprüft in eine Cloud. Ob eine Speicherlösung für deine konkreten Daten geeignet
-        ist, musst du selbst klären — diese Anwendung überträgt von sich aus nichts und
+        ist, musst du selbst klären. Diese Anwendung überträgt von sich aus nichts und
         kann dir die Prüfung nicht abnehmen.
       </div>
 
@@ -225,9 +224,9 @@
       <details class="mehr">
         <summary>So geht's</summary>
         <div>
-          <p><strong>iPhone und iPad</strong> — diese Seite in Safari öffnen, unten auf das Teilen-Symbol tippen, dann <em>Zum Home-Bildschirm</em>.</p>
-          <p><strong>Android</strong> — diese Seite in Chrome öffnen, Menü mit den drei Punkten, dann <em>App installieren</em>.</p>
-          <p><strong>Laptop</strong> — Seite als Lesezeichen speichern. In Chrome und Edge geht auch das Installieren-Symbol in der Adresszeile.</p>
+          <p><strong>iPhone und iPad:</strong> diese Seite in Safari öffnen, unten auf das Teilen-Symbol tippen, dann <em>Zum Home-Bildschirm</em>.</p>
+          <p><strong>Android:</strong> diese Seite in Chrome öffnen, Menü mit den drei Punkten, dann <em>App installieren</em>.</p>
+          <p><strong>Laptop:</strong> Seite als Lesezeichen speichern. In Chrome und Edge geht auch das Installieren-Symbol in der Adresszeile.</p>
         </div>
       </details>
     </section>
@@ -268,7 +267,7 @@
 
   /* ---------- Google Drive ----------
      Ein Haken heisst nur "waere dabei". Uebertragen wird erst, wenn die
-     Verbindung wirklich steht — das muss die Anzeige unterscheiden. */
+     Verbindung wirklich steht, das muss die Anzeige unterscheiden. */
   function driveZeichnen(){
     const e = Daten.einstellung();
     const anDrive = DriveSync.verbunden();
@@ -288,7 +287,7 @@
        eingerichtet ist, verschwindet er und an seiner Stelle steht,
        was zu tun ist. */
     if (!DriveSync.eingerichtet()){
-      status.textContent = 'Google Drive ist noch nicht verbunden. Die Verbindung muss einmal eingerichtet werden — bis dahin liegen deine Daten wie gewohnt auf diesem Gerät, und über Sichern und Umziehen kommst du trotzdem auf ein anderes.';
+      status.textContent = 'Google Drive ist noch nicht verbunden. Die Verbindung muss einmal eingerichtet werden. Bis dahin liegen deine Daten wie gewohnt auf diesem Gerät, und über Sichern und Umziehen kommst du trotzdem auf ein anderes.';
       el('drive_verbinden').hidden = true;
       ['drive_hoch','drive_runter','drive_trennen'].forEach(i => el(i).hidden = true);
       el('drive_einrichten').hidden = false;
@@ -333,7 +332,7 @@
     } catch(err){
       const m = err && err.message;
       if (m === 'herkunft')
-        driveMeldung('Von hier aus geht es nicht — Google erlaubt die Anmeldung nur über eine echte Web-Adresse.', true);
+        driveMeldung('Von hier aus geht es nicht. Google erlaubt die Anmeldung nur über eine echte Web-Adresse.', true);
       else if (m === 'nicht-eingerichtet')
         driveMeldung('Die Verbindung ist noch nicht eingerichtet.', true);
       else
@@ -342,7 +341,7 @@
     driveZeichnen(); standZeichnen();
   });
   /* Eine abgelaufene Anmeldung ist kein Fehlschlag, sondern ein
-     Zwischenstand — die Meldung soll das nicht doppelt betonen. */
+     Zwischenstand, die Meldung soll das nicht doppelt betonen. */
   function fehlerText(einleitung, err){
     const m = (err && err.message) || 'Unbekannter Fehler.';
     return /abgelaufen|unerwartet/.test(m) ? m : einleitung + ' ' + m;

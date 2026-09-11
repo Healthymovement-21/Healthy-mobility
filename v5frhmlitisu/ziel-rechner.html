@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Wie viele Patient:innen brauche ich? — PhysioNebenbei</title>
+<title>Wie viele Patient:innen brauche ich? · PhysioNebenbei</title>
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
@@ -95,7 +95,7 @@
   .speicherleiste.offen{ border-color:var(--accent); background:var(--accent-soft); }
   .speicherleiste .punkt{ width:8px; height:8px; border-radius:50%; background:var(--ink-faint); flex:none; }
   .speicherleiste.offen .punkt{ background:var(--accent); }
-  .speicherleiste .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
+  .speicherleiste .btn{ padding:8px 16px; font-size:14px; min-height:40px; border-radius:10px; margin-left:auto; }
 </style>
 </head>
 <body>
@@ -120,7 +120,7 @@
 
   <div class="speicherleiste" id="speicherleiste">
     <span class="punkt"></span>
-    <span id="speicher_text">–</span>
+    <span id="speicher_text"></span>
     <button class="btn" type="button" id="speicher_knopf" hidden>Meine Zahlen speichern</button>
   </div>
 
@@ -184,10 +184,10 @@
         </div>
         <div class="calc-row result">
           <label class="result-label">Ein Termin belegt</label>
-          <span class="out" id="o_termindauer">–</span>
+          <span class="out" id="o_termindauer"></span>
         </div>
       </div>
-      <p class="micro" id="o_fahrtkosten_hinweis" style="margin-top:10px">–</p>
+      <p class="micro" id="o_fahrtkosten_hinweis" style="margin-top:10px"></p>
     </section>
 
     <!-- ============ 3 · ANTWORT ============ -->
@@ -208,16 +208,16 @@
 
       <div class="ziel-ergebnis">
         <span class="z-k">Behandlungen im Monat</span>
-        <span class="z-n" id="z_behandlungen">–</span>
-        <p class="z-satz" id="z_satz">–</p>
+        <span class="z-n" id="z_behandlungen"></span>
+        <p class="z-satz" id="z_satz"></p>
         <div class="z-neben">
           <div>
             <span class="z-k">Pro Woche</span>
-            <span class="z-n" id="z_woche">–</span>
+            <span class="z-n" id="z_woche"></span>
           </div>
           <div>
             <span class="z-k">Patient:innen parallel</span>
-            <span class="z-n" id="z_patienten">–</span>
+            <span class="z-n" id="z_patienten"></span>
           </div>
         </div>
       </div>
@@ -225,12 +225,12 @@
       <div class="kacheln zwei">
         <div class="kachel">
           <div class="k-titel">Zeitaufwand im Monat</div>
-          <div class="k-wert" id="k_zeit">–</div>
+          <div class="k-wert" id="k_zeit">·</div>
           <div class="k-unter">Behandlung, Fahrt und Doku zusammen</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Das verdienst du je Stunde</div>
-          <div class="k-wert" id="k_stunde">–</div>
+          <div class="k-wert" id="k_stunde">·</div>
           <div class="k-unter">nach Ausgaben und Rücklage</div>
         </div>
       </div>
@@ -245,30 +245,30 @@
       <div class="calc-card">
         <div class="calc-row">
           <label>Einnahmen</label>
-          <span class="out" id="g_umsatz">–</span>
+          <span class="out" id="g_umsatz"></span>
         </div>
         <div class="calc-row">
           <label>Fahrtkosten</label>
-          <span class="out" id="g_fahrt">–</span>
+          <span class="out" id="g_fahrt"></span>
         </div>
         <div class="calc-row">
           <label>Feste Ausgaben</label>
-          <span class="out" id="g_fix">–</span>
+          <span class="out" id="g_fix"></span>
         </div>
         <div class="calc-row">
           <label>Gewinn vor Steuer</label>
-          <span class="out" id="g_gewinn">–</span>
+          <span class="out" id="g_gewinn"></span>
         </div>
         <div class="calc-row">
           <label>Rücklage für Steuer</label>
-          <span class="out" id="g_ruecklage">–</span>
+          <span class="out" id="g_ruecklage"></span>
         </div>
         <div class="calc-row result">
           <label class="result-label">Bleibt dir</label>
-          <span class="out" id="g_bleibt">–</span>
+          <span class="out" id="g_bleibt"></span>
         </div>
       </div>
-      <p class="micro" style="margin-top:12px">Weil auf ganze Behandlungen aufgerundet wird, liegt der Betrag meist ein paar Euro über deinem Ziel. Die Rücklage ist eine Rücklage, keine Steuerberechnung — was das Finanzamt am Ende festsetzt, hängt an deinem gesamten Einkommen.</p>
+      <p class="micro" style="margin-top:12px">Weil auf ganze Behandlungen aufgerundet wird, liegt der Betrag meist ein paar Euro über deinem Ziel. Die Rücklage ist eine Rücklage, keine Steuerberechnung. Was das Finanzamt am Ende festsetzt, hängt an deinem gesamten Einkommen.</p>
     </section>
 
     <!-- ============ 5 · PREISVERGLEICH ============ -->
@@ -278,7 +278,7 @@
       <p>Der Preis ist der eine Hebel, an dem du sofort drehen kannst. Fünf Euro mehr pro Behandlung sparen dir oft einen ganzen Termin pro Woche.</p>
 
       <div class="preistabelle" id="preistabelle"></div>
-      <p class="micro" style="margin-top:12px">Alle Zeilen rechnen mit denselben Ausgaben, derselben Rücklage und demselben Zeitaufwand wie oben. Nur der Preis ändert sich. Weil auf ganze Behandlungen aufgerundet wird, ergeben zwei Preise manchmal dieselbe Terminzahl — dann bleibt beim höheren Preis schlicht mehr übrig.</p>
+      <p class="micro" style="margin-top:12px">Alle Zeilen rechnen mit denselben Ausgaben, derselben Rücklage und demselben Zeitaufwand wie oben. Nur der Preis ändert sich. Weil auf ganze Behandlungen aufgerundet wird, ergeben zwei Preise manchmal dieselbe Terminzahl, dann bleibt beim höheren Preis schlicht mehr übrig.</p>
     </section>
 
     <!-- ============ 6 · EINORDNUNG ============ -->
@@ -286,8 +286,8 @@
       <p class="eyebrow">6 · Und jetzt?</p>
       <h2>Lohnt sich das für dich?</h2>
       <div class="ampel" id="ampel">
-        <h3 id="ampel_titel">–</h3>
-        <p id="ampel_text">–</p>
+        <h3 id="ampel_titel">·</h3>
+        <p id="ampel_text"></p>
       </div>
 
       <p class="hero-cta">
@@ -339,16 +339,16 @@
     const max = el.max === '' ?  Infinity : parseFloat(el.max);
     return Math.min(Math.max(v, min), max);
   }
-  const eur   = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '–';
-  const eur2  = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
-  const zahl  = (n, k) => isFinite(n) ? n.toLocaleString('de-DE', {minimumFractionDigits:k, maximumFractionDigits:k}) : '–';
+  const eur   = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0}) : '·';
+  const eur2  = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '·';
+  const zahl  = (n, k) => isFinite(n) ? n.toLocaleString('de-DE', {minimumFractionDigits:k, maximumFractionDigits:k}) : '·';
   const setze = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; };
 
   const WOCHEN = 4.33;   // durchschnittliche Wochen je Monat
 
   /* Stunden lesbar machen: 6,5 Stunden werden zu "6 Std. 30 Min." */
   function stunden(h){
-    if (!isFinite(h) || h < 0) return '–';
+    if (!isFinite(h) || h < 0) return '·';
     const gesamt = Math.round(h * 60);
     const s = Math.floor(gesamt / 60), m = gesamt % 60;
     if (s === 0) return m + ' Min.';
@@ -368,7 +368,7 @@
 
      Der Nenner ist das, was ein Termin nach Fahrtkosten wirklich
      einbringt. Ist er null oder negativ, traegt sich der Termin nicht
-     selbst — dann gibt es keine Loesung, egal wie viel man arbeitet. */
+     selbst, dann gibt es keine Loesung, egal wie viel man arbeitet. */
   function behandlungenFuer(preis, p){
     const deckung = preis - p.fahrtkosten;
     if (deckung <= 0) return null;
@@ -400,7 +400,7 @@
     setze('o_fahrtkosten_hinweis',
       p.fahrtkosten > 0
         ? 'Fahrtkosten je Termin: ' + eur2(p.fahrtkosten) + '. Die ziehst du unten von deinen Einnahmen ab.'
-        : 'Ohne Fahrtkosten — du behandelst offenbar an einem festen Ort.');
+        : 'Ohne Fahrtkosten. Du behandelst offenbar an einem festen Ort.');
 
     /* --- Abschnitt 3: die Antwort --- */
     const roh = behandlungenFuer(preis, p);
@@ -408,7 +408,7 @@
                     'g_umsatz','g_fahrt','g_fix','g_gewinn','g_ruecklage','g_bleibt'];
 
     if (roh === null){
-      felder.forEach(id => setze(id, '–'));
+      felder.forEach(id => setze(id, '·'));
       setze('z_satz', preis <= 0
         ? 'Trag oben einen Preis pro Behandlung ein.'
         : 'Bei ' + eur2(preis) + ' pro Behandlung bleiben nach Fahrtkosten von ' + eur2(p.fahrtkosten) +
@@ -581,7 +581,7 @@
         d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}) + ' Uhr';
     }
     knopf.addEventListener('click', () => {
-      if (!Daten.speichern()) text.textContent = 'Speichern nicht möglich — im privaten Fenster geht das nicht.';
+      if (!Daten.speichern()) text.textContent = 'Speichern ist im privaten Fenster nicht möglich.';
       standZeichnen();
     });
     Daten.beiAenderung(standZeichnen);

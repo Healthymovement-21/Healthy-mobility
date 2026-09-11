@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Gehalt &amp; Stunden — PhysioNebenbei</title>
+<title>Gehalt &amp; Stunden · PhysioNebenbei</title>
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
 <link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
 <link rel="icon" href="../physio-nebenbei/logo.svg" type="image/svg+xml">
 <style>
-  /* Ampel — erbt Glas aus base.css, hier nur die Zustandsfarben */
+  /* Ampel, erbt Glas aus base.css, hier nur die Zustandsfarben */
   .ampel{ padding:24px 26px; margin:20px 0; border-left-width:3px; }
   .ampel h3{ margin:0 0 8px; font-size:19px; }
   .ampel p{ margin:0; font-size:16px; max-width:62ch; }
@@ -70,7 +70,7 @@
   <nav class="crumb"><a href="./">Dashboard</a> · <span>Gehalt und Stunden</span></nav>
 
   <div class="vorschlag" id="vorschlag" hidden>
-    <span id="vorschlag_text">–</span>
+    <span id="vorschlag_text"></span>
     <button class="btn ghost" type="button" id="vorschlag_knopf">Übernehmen</button>
   </div>
 
@@ -100,10 +100,10 @@
         </div>
         <div class="calc-row">
           <label>Abzugsquote</label>
-          <span class="out" id="o_quote">–</span>
+          <span class="out" id="o_quote"></span>
         </div>
       </div>
-      <p class="micro">Netto auf 0 lassen, wenn du es nicht zur Hand hast — dann rechnet er mit pauschal 38 %.</p>
+      <p class="micro">Netto auf 0 lassen, wenn du es nicht zur Hand hast, dann rechnet er mit pauschal 38 %.</p>
     </section>
 
     <!-- ============ NEBENVERDIENST ============ -->
@@ -125,7 +125,7 @@
         </div>
         <div class="calc-row">
           <label>Nach Rücklage</label>
-          <span class="out" id="o_nebennetto">–</span>
+          <span class="out" id="o_nebennetto"></span>
         </div>
       </div>
       <p class="hero-cta"><a class="btn ghost" id="uebernehmen" href="#">Aus Monats-Rechner übernehmen</a></p>
@@ -138,23 +138,23 @@
       <div class="calc-card">
         <div class="calc-row">
           <label>Netto Hauptjob</label>
-          <span class="out" id="o_hauptnetto">–</span>
+          <span class="out" id="o_hauptnetto"></span>
         </div>
         <div class="calc-row">
           <label>Nebenverdienst nach Rücklage</label>
-          <span class="out" id="o_neben2">–</span>
+          <span class="out" id="o_neben2"></span>
         </div>
         <div class="calc-row result">
           <label class="result-label">Gesamt pro Monat</label>
-          <span class="out" id="o_gesamt">–</span>
+          <span class="out" id="o_gesamt"></span>
         </div>
         <div class="calc-row">
           <label>Arbeitszeit pro Woche</label>
-          <span class="out" id="o_gesamtstunden">–</span>
+          <span class="out" id="o_gesamtstunden"></span>
         </div>
         <div class="calc-row">
           <label>Stundenlohn nebenbei <span class="micro">nach Rücklage</span></label>
-          <span class="out" id="o_stundenlohn">–</span>
+          <span class="out" id="o_stundenlohn"></span>
         </div>
       </div>
     </section>
@@ -179,7 +179,7 @@
           <tbody id="szen_rows"></tbody>
         </table>
       </div>
-      <p class="micro">Vorsichtig gerechnet — real bleibt bei weniger Brutto meist etwas mehr übrig, weil der Steuersatz mitsinkt.</p>
+      <p class="micro">Vorsichtig gerechnet: real bleibt bei weniger Brutto meist etwas mehr übrig, weil der Steuersatz mitsinkt.</p>
     </section>
 
     <!-- ============ KRANKENKASSE ============ -->
@@ -188,8 +188,8 @@
       <h2>Noch nebenberuflich?</h2>
 
       <div class="ampel" id="ampel">
-        <h3 id="ampel_titel">–</h3>
-        <p id="ampel_text">–</p>
+        <h3 id="ampel_titel">·</h3>
+        <p id="ampel_text"></p>
       </div>
 
       <div class="calc-card">
@@ -199,16 +199,16 @@
         </div>
         <div class="calc-row">
           <label>Halbe Bezugsgröße</label>
-          <span class="out" id="o_halb">–</span>
+          <span class="out" id="o_halb"></span>
         </div>
       </div>
 
       <details class="mehr">
         <summary>Wie entscheidet die Kasse das?</summary>
         <div>
-          <p>Kippt die Einstufung auf „hauptberuflich selbstständig" (§ 5 Abs. 5 SGB V), fällt die Pflichtversicherung über den Job weg — und es wird teurer.</p>
+          <p>Kippt die Einstufung auf „hauptberuflich selbstständig" (§ 5 Abs. 5 SGB V), fällt die Pflichtversicherung über den Job weg und es wird teurer.</p>
           <p>Faustregeln: über 20 Stunden pro Woche selbstständig, Einkommen über der halben Bezugsgröße, oder die Selbstständigkeit bringt mehr ein als der Job.</p>
-          <p>Der Begriff ist gesetzlich nicht definiert, die Kassen entscheiden im Einzelfall. Diese Ampel ist eine Orientierung, keine verbindliche Auskunft — im Zweifel schriftliche Auskunft von deiner Kasse geben lassen.</p>
+          <p>Der Begriff ist gesetzlich nicht definiert, die Kassen entscheiden im Einzelfall. Diese Ampel ist eine Orientierung, keine verbindliche Auskunft. Im Zweifel schriftliche Auskunft von deiner Kasse geben lassen.</p>
         </div>
       </details>
     </section>
@@ -224,8 +224,8 @@
       <details class="mehr">
         <summary>Wie speichere ich das auf dem Handy?</summary>
         <div>
-          <p><strong>iPhone &amp; iPad</strong> — tippen, dann <em>Drucken</em>. In der Vorschau oben rechts das Teilen-Symbol, dann <em>In Dateien sichern</em>.</p>
-          <p><strong>Windows</strong> — als Drucker <em>Microsoft Print to PDF</em> wählen. <strong>Mac</strong> — unten links <em>Als PDF sichern</em>.</p>
+          <p><strong>iPhone &amp; iPad:</strong> tippen, dann <em>Drucken</em>. In der Vorschau oben rechts das Teilen-Symbol, dann <em>In Dateien sichern</em>.</p>
+          <p><strong>Windows:</strong> als Drucker <em>Microsoft Print to PDF</em> wählen. <strong>Mac:</strong> unten links <em>Als PDF sichern</em>.</p>
         </div>
       </details>
     </section>
@@ -249,9 +249,9 @@
 <script src="daten.js"></script>
 <script>
 const KEY = 'physionebenbei-gehalt';
-const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
+const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '·';
 /* Haelt jede Eingabe in dem Bereich, den das Feld erlaubt. parseFloat
-   allein wuerde getippte oder eingefuegte Minuswerte durchlassen — die
+   allein wuerde getippte oder eingefuegte Minuswerte durchlassen, die
    min- und max-Angaben am Feld gelten sonst nur fuer die Pfeiltasten. */
 function klemme(el){
   var v = parseFloat(String(el.value).replace(',', '.'));
@@ -294,7 +294,7 @@ function rechne(){
   set('o_neben2', eur(nebenNetto));
   set('o_gesamt', eur(gesamt));
   set('o_gesamtstunden', gesamtStunden.toLocaleString('de-DE', {maximumFractionDigits:1}) + ' Std');
-  set('o_stundenlohn', nstunden > 0 ? eur(nebenNetto / (nstunden * 4.33)) + ' / Std' : '–');
+  set('o_stundenlohn', nstunden > 0 ? eur(nebenNetto / (nstunden * 4.33)) + ' / Std' : '·');
 
   szenarien(brutto, stunden, q, nebenNetto, gesamt);
   ampel(gewinn, nstunden, brutto);
@@ -323,8 +323,8 @@ function szenarien(brutto, stunden, q, nebenNetto, gesamtAktuell){
       <td>${eur(n)}</td>
       <td>${eur(nebenNetto)}</td>
       <td><strong>${eur(g)}</strong></td>
-      <td style="color:${diff < -0.5 ? 'var(--mark)' : 'var(--ink-muted)'}">${diff >= -0.5 ? '—' : eur(diff)}</td>
-      <td>${zeit > 0 ? '+' + zeit.toLocaleString('de-DE') + ' Std/Wo' : '—'}</td>`;
+      <td style="color:${diff < -0.5 ? 'var(--mark)' : 'var(--ink-muted)'}">${diff >= -0.5 ? '0 €' : eur(diff)}</td>
+      <td>${zeit > 0 ? '+' + zeit.toLocaleString('de-DE') + ' Std/Wo' : '0 Std/Wo'}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -346,7 +346,7 @@ function ampel(gewinn, nstunden, brutto){
 
   if (zuVielStunden || mehrAlsJob) {
     box.classList.add('rot');
-    titel.innerHTML = '<span class="dot"></span>Kritisch — das kann als hauptberuflich gewertet werden';
+    titel.innerHTML = '<span class="dot"></span>Kritisch: das kann als hauptberuflich gewertet werden';
     text.textContent = zuVielStunden && mehrAlsJob
       ? 'Du liegst über 20 Stunden pro Woche und verdienst selbstständig mehr als im Hauptjob. Beide Faustregeln sprechen dafür, dass deine Kasse dich als hauptberuflich selbstständig einstuft. Kläre das aktiv mit deiner Krankenkasse, bevor sie von selbst darauf kommt.'
       : zuVielStunden
@@ -354,15 +354,15 @@ function ampel(gewinn, nstunden, brutto){
       : 'Dein Gewinn aus der Selbstständigkeit liegt über deinem Bruttogehalt aus dem Job. Damit gilt die Selbstständigkeit als prägend, auch bei wenigen Stunden. Kläre das mit deiner Krankenkasse.';
   } else if (knappStunden || ueberHalb) {
     box.classList.add('gelb');
-    titel.innerHTML = '<span class="dot"></span>Grenzbereich — im Blick behalten';
+    titel.innerHTML = '<span class="dot"></span>Grenzbereich: im Blick behalten';
     text.textContent = knappStunden && ueberHalb
       ? 'Du näherst dich der 20-Stunden-Grenze und liegst über der halben Bezugsgröße. Noch unkritisch, aber wenn beides weiter steigt, wird deine Kasse nachfragen. Dokumentiere deine Stunden.'
       : knappStunden
       ? 'Mit über 15 Stunden pro Woche näherst du dich der 20-Stunden-Grenze. Führ eine einfache Stundenaufstellung, damit du im Zweifel belegen kannst, dass du darunter liegst.'
-      : 'Dein Gewinn liegt über der halben Bezugsgröße. Solange du deutlich unter 20 Wochenstunden bleibst und im Job mehr verdienst, ist das in der Regel unproblematisch — aber behalt es im Auge.';
+      : 'Dein Gewinn liegt über der halben Bezugsgröße. Solange du deutlich unter 20 Wochenstunden bleibst und im Job mehr verdienst, ist das in der Regel unproblematisch, aber behalt es im Auge.';
   } else {
     box.classList.add('gruen');
-    titel.innerHTML = '<span class="dot"></span>Unkritisch — klar nebenberuflich';
+    titel.innerHTML = '<span class="dot"></span>Unkritisch: klar nebenberuflich';
     text.textContent = 'Du liegst unter 20 Wochenstunden, unter der halben Bezugsgröße und verdienst im Hauptjob mehr. Nach den üblichen Faustregeln der Krankenkassen ist das eindeutig eine nebenberufliche Selbstständigkeit.';
   }
 }
@@ -424,8 +424,8 @@ function baueDruckansicht(){
       <td class="r">${eur(b)}</td>
       <td class="r">${eur(n)}</td>
       <td class="r">${eur(g)}</td>
-      <td class="r">${diff >= -0.5 ? '—' : eur(diff)}</td>
-      <td class="r">${s < stunden ? '+' + (stunden - s).toLocaleString('de-DE') + ' Std/Wo' : '—'}</td>
+      <td class="r">${diff >= -0.5 ? '0 €' : eur(diff)}</td>
+      <td class="r">${s < stunden ? '+' + (stunden - s).toLocaleString('de-DE') + ' Std/Wo' : '0 Std/Wo'}</td>
     </tr>`;
   }).join('');
 
@@ -469,7 +469,7 @@ function baueDruckansicht(){
 
     <p class="fuss">
       Erstellt mit dem PhysioNebenbei-Gehaltsrechner. Die Netto-Werte der Szenarien sind mit der
-      aktuellen Abzugsquote hochgerechnet und daher eher vorsichtig — bei weniger Brutto sinkt der
+      aktuellen Abzugsquote hochgerechnet und daher eher vorsichtig, bei weniger Brutto sinkt der
       Steuersatz mit. Die Krankenkassen-Einschätzung beruht auf den üblichen Faustregeln und ist
       keine verbindliche Auskunft. Keine Steuer- oder Rechtsberatung.
     </p>`;
@@ -502,7 +502,7 @@ if (window.Daten && Daten.gespeichertAm()) {
   const z = Daten.zahlen(), f = Daten.finanzen();
   const satz = parseFloat(z.satz) || 0;
 
-  /* Erste Wahl: ein wirklich erfasster Monat. Sonst die Vorausplanung —
+  /* Erste Wahl: ein wirklich erfasster Monat. Sonst die Vorausplanung ,
      das Ziel ist der Betrag nach Ruecklage, hier zaehlt der davor. */
   let gewinn = 0, woher = '';
   if (f && f.monat && f.umsatz > 0) {
@@ -536,7 +536,7 @@ if (window.Daten && Daten.gespeichertAm()) {
   }
 }
 
-/* Der Ruecklagensatz bedeutet ueberall dasselbe — Aenderungen hier
+/* Der Ruecklagensatz bedeutet ueberall dasselbe, Aenderungen hier
    gelten deshalb auch in den anderen Rechnern. */
 if (window.Daten) {
   document.getElementById('satz').addEventListener('change', function(){

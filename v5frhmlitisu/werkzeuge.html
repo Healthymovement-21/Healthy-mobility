@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Werkzeuge — PhysioNebenbei</title><link rel="stylesheet" href="../physio-nebenbei/base.css">
+<title>Werkzeuge · PhysioNebenbei</title><link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
 <link rel="apple-touch-icon" href="../physio-nebenbei/apple-touch-icon.png">
@@ -44,7 +44,7 @@
   .speicherleiste.offen{ border-color:var(--accent); background:var(--accent-soft); }
   .speicherleiste .punkt{ width:8px; height:8px; border-radius:50%; background:var(--ink-faint); flex:none; }
   .speicherleiste.offen .punkt{ background:var(--accent); }
-  .speicherleiste .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
+  .speicherleiste .btn{ padding:8px 16px; font-size:14px; min-height:40px; border-radius:10px; margin-left:auto; }
 </style>
 </head>
 <body>
@@ -69,7 +69,7 @@
 
   <div class="speicherleiste" id="speicherleiste">
     <span class="punkt"></span>
-    <span id="speicher_text">–</span>
+    <span id="speicher_text"></span>
     <button class="btn" type="button" id="speicher_knopf" hidden>Meine Zahlen speichern</button>
   </div>
 
@@ -78,7 +78,7 @@
     <section class="sheet hero">
       <p class="eyebrow">Preis finden</p>
       <h1 class="title">Welcher Preis passt zu deiner Behandlung?</h1>
-      <p class="lede">Der Preis ist die eine Zahl, die du am Anfang festlegst und danach nur schwer wieder änderst. Hier bekommst du einen Richtwert, der zu deinem Aufwand passt. Entscheiden musst du selbst — was üblich ist, hängt auch von deiner Region und deinen Leistungen ab.</p>
+      <p class="lede">Der Preis ist die eine Zahl, die du am Anfang festlegst und danach nur schwer wieder änderst. Hier bekommst du einen Richtwert, der zu deinem Aufwand passt. Entscheiden musst du selbst. Was üblich ist, hängt auch von deiner Region und deinen Leistungen ab.</p>
     </section>
 
     <!-- ============ PREIS-KALKULATION ============ -->
@@ -133,11 +133,11 @@
         </div>
         <div class="calc-row">
           <label>Ein Termin belegt</label>
-          <span class="out" id="pk_out_termin">–</span>
+          <span class="out" id="pk_out_termin"></span>
         </div>
         <div class="calc-row result">
           <label class="result-label">Behandlungen im Monat</label>
-          <span class="out" id="pk_out_beh">–</span>
+          <span class="out" id="pk_out_beh"></span>
         </div>
       </div>
     </section>
@@ -148,48 +148,48 @@
 
       <div class="preis-ergebnis">
         <span class="pe-k">Etwa so viel pro Behandlung</span>
-        <span class="pe-n" id="pk_out_preis">–</span>
-        <p class="pe-satz" id="pk_out_satz">–</p>
+        <span class="pe-n" id="pk_out_preis"></span>
+        <p class="pe-satz" id="pk_out_satz"></p>
       </div>
-      <p class="micro" style="margin-top:14px">Der Wert dient als Orientierung. Deinen tatsächlichen Preis legst du selbst fest — was üblich ist, hängt auch von deiner Region und deinen Leistungen ab.</p>
+      <p class="micro" style="margin-top:14px">Der Wert dient als Orientierung. Deinen tatsächlichen Preis legst du selbst fest. Was üblich ist, hängt auch von deiner Region und deinen Leistungen ab.</p>
 
       <h3 style="margin-top:30px">So kommt der Preis zustande</h3>
       <div class="calc-card">
         <div class="calc-row">
           <label>Einnahmen im Monat</label>
-          <span class="out" id="pk_out_umsatz">–</span>
+          <span class="out" id="pk_out_umsatz"></span>
         </div>
         <div class="calc-row">
           <label>Fahrtkosten</label>
-          <span class="out" id="pk_out_fahrt">–</span>
+          <span class="out" id="pk_out_fahrt"></span>
         </div>
         <div class="calc-row">
           <label>Feste Ausgaben</label>
-          <span class="out" id="pk_out_fixmonat">–</span>
+          <span class="out" id="pk_out_fixmonat"></span>
         </div>
         <div class="calc-row">
           <label>Ergebnis vor Rücklage</label>
-          <span class="out" id="pk_out_vorruecklage">–</span>
+          <span class="out" id="pk_out_vorruecklage"></span>
         </div>
         <div class="calc-row">
           <label>Rücklage für Steuer</label>
-          <span class="out" id="pk_out_ruecklage">–</span>
+          <span class="out" id="pk_out_ruecklage"></span>
         </div>
         <div class="calc-row result">
           <label class="result-label">Bleibt dir</label>
-          <span class="out" id="pk_out_bleibt">–</span>
+          <span class="out" id="pk_out_bleibt"></span>
         </div>
       </div>
 
       <div class="kacheln zwei">
         <div class="kachel">
           <div class="k-titel">Zeitaufwand im Monat</div>
-          <div class="k-wert" id="pk_out_zeit">–</div>
+          <div class="k-wert" id="pk_out_zeit">·</div>
           <div class="k-unter">Behandlung und Fahrt zusammen</div>
         </div>
         <div class="kachel">
           <div class="k-titel">Das verdienst du je Stunde</div>
-          <div class="k-wert" id="pk_out_stunde">–</div>
+          <div class="k-wert" id="pk_out_stunde">·</div>
           <div class="k-unter">nach Ausgaben und Rücklage</div>
         </div>
       </div>
@@ -212,18 +212,18 @@
         </div>
         <div class="calc-row">
           <label>Einnahmen im Monat</label>
-          <span class="out" id="pk2_out_einnahmen">–</span>
+          <span class="out" id="pk2_out_einnahmen"></span>
         </div>
         <div class="calc-row">
           <label>Ergebnis vor Rücklage</label>
-          <span class="out" id="pk2_out_gewinn">–</span>
+          <span class="out" id="pk2_out_gewinn"></span>
         </div>
         <div class="calc-row result">
           <label class="result-label">Bleibt dir</label>
-          <span class="out" id="pk2_out_netto">–</span>
+          <span class="out" id="pk2_out_netto"></span>
         </div>
       </div>
-      <p class="micro" id="pk2_hinweis" style="margin-top:12px">–</p>
+      <p class="micro" id="pk2_hinweis" style="margin-top:12px"></p>
 
       <p class="hero-cta" style="margin-top:22px">
         <a class="btn" href="ziel-rechner.html">Rückwärts rechnen</a>
@@ -240,23 +240,23 @@
         <div class="calc-row"><label for="sr_material">Material / Verbrauchsmaterial / Jahr</label><input type="number" id="sr_material" value="150" step="10" min="0"></div>
         <div class="calc-row"><label for="sr_fortbildung">Fortbildung / Jahr</label><input type="number" id="sr_fortbildung" value="200" step="10" min="0"></div>
         <div class="calc-row"><label for="sr_sonstiges">Sonstiges / Jahr</label><input type="number" id="sr_sonstiges" value="0" step="10" min="0"></div>
-        <div class="calc-row"><label>Summe Betriebsausgaben</label><span class="out" id="sr_out_summe">–</span></div>
+        <div class="calc-row"><label>Summe Betriebsausgaben</label><span class="out" id="sr_out_summe"></span></div>
         <div class="calc-row"><label for="sr_einnahmen">Einnahmen im Jahr</label><input type="number" id="sr_einnahmen" value="6000" step="100" min="0"></div>
-        <div class="calc-row"><label>Gewinn (Einnahmen − Ausgaben)</label><span class="out" id="sr_out_gewinn">–</span></div>
+        <div class="calc-row"><label>Gewinn (Einnahmen − Ausgaben)</label><span class="out" id="sr_out_gewinn"></span></div>
         <div class="calc-row"><label for="sr_satz">Geschätzter Grenzsteuersatz</label><span class="field"><input type="number" id="sr_satz" value="35" step="1" min="0"><span class="unit">%</span></span></div>
         <div class="calc-row"><label for="sr_puffer">Sicherheitspuffer</label><span class="field"><input type="number" id="sr_puffer" value="5" step="1" min="0"><span class="unit">%</span></span></div>
-        <div class="calc-row"><label>Geschätzte Einkommensteuer</label><span class="out" id="sr_out_steuer">–</span></div>
-        <div class="calc-row result"><label class="result-label">Empfohlene Rücklage</label><span class="out" id="sr_out_ruecklage">–</span></div>
-        <div class="calc-row result"><label class="result-label">Netto nach Rücklage</label><span class="out" id="sr_out_netto">–</span></div>
+        <div class="calc-row"><label>Geschätzte Einkommensteuer</label><span class="out" id="sr_out_steuer"></span></div>
+        <div class="calc-row result"><label class="result-label">Empfohlene Rücklage</label><span class="out" id="sr_out_ruecklage"></span></div>
+        <div class="calc-row result"><label class="result-label">Netto nach Rücklage</label><span class="out" id="sr_out_netto"></span></div>
       </div>
-      <p class="micro" id="sr_hinweis" style="margin-top:12px">–</p>
+      <p class="micro" id="sr_hinweis" style="margin-top:12px"></p>
     </section>
 
     <!-- ============ EÜR ============ -->
     <section class="sheet wide">
       <p class="eyebrow">EÜR</p>
       <h2>Einnahmen-Überschuss-Rechnung</h2>
-      <p class="micro">Die vereinfachte Gewinnermittlung nach § 4 Abs. 3 EStG — ohne Bilanz, ohne doppelte Buchführung.</p>
+      <p class="micro">Die vereinfachte Gewinnermittlung nach § 4 Abs. 3 EStG, ohne Bilanz, ohne doppelte Buchführung.</p>
       <div class="tbl-wrap">
         <table class="data" id="euer">
           <thead>
@@ -266,14 +266,14 @@
           <tfoot>
             <tr>
               <td>Jahressumme</td>
-              <td class="calc" id="euer_sum_0">–</td>
-              <td class="calc" id="euer_sum_1">–</td>
-              <td class="calc" id="euer_sum_2">–</td>
-              <td class="calc" id="euer_sum_3">–</td>
-              <td class="calc" id="euer_sum_4">–</td>
-              <td class="calc" id="euer_sum_5">–</td>
-              <td class="calc" id="euer_sum_6">–</td>
-              <td class="calc" id="euer_sum_7">–</td>
+              <td class="calc" id="euer_sum_0"></td>
+              <td class="calc" id="euer_sum_1"></td>
+              <td class="calc" id="euer_sum_2"></td>
+              <td class="calc" id="euer_sum_3"></td>
+              <td class="calc" id="euer_sum_4"></td>
+              <td class="calc" id="euer_sum_5"></td>
+              <td class="calc" id="euer_sum_6"></td>
+              <td class="calc" id="euer_sum_7"></td>
             </tr>
           </tfoot>
         </table>
@@ -324,8 +324,8 @@
 
 <script src="daten.js"></script>
 <script>
-  const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '–';
-  const zahl0 = n => isFinite(n) ? n.toLocaleString('de-DE', {maximumFractionDigits:0}) : '–';
+  const eur = n => isFinite(n) ? n.toLocaleString('de-DE', {style:'currency', currency:'EUR'}) : '·';
+  const zahl0 = n => isFinite(n) ? n.toLocaleString('de-DE', {maximumFractionDigits:0}) : '·';
   const set = (id, text) => { const e = document.getElementById(id); if (e) e.textContent = text; };
 
   /* num() haelt jede Eingabe in dem Bereich, den das Feld erlaubt. Damit
@@ -351,7 +351,7 @@
      zusaetzlich anfallen und deshalb im Preis mitverdient sein muessen. */
 
   function stundenText(h){
-    if (!isFinite(h) || h < 0) return '–';
+    if (!isFinite(h) || h < 0) return '·';
     const gesamt = Math.round(h*60), st = Math.floor(gesamt/60), mi = gesamt%60;
     if (st === 0) return mi + ' Min.';
     if (mi === 0) return st + ' Std.';
@@ -381,14 +381,14 @@
     const b = preisBasis();
 
     set('pk_out_termin', stundenText(b.minutenJeTermin/60));
-    set('pk_out_beh', b.termine > 0 ? zahl0(b.termine) : '–');
-    set('pk_out_zeit', b.termine > 0 ? stundenText(b.zeitStunden) : '–');
+    set('pk_out_beh', b.termine > 0 ? zahl0(b.termine) : '·');
+    set('pk_out_zeit', b.termine > 0 ? stundenText(b.zeitStunden) : '·');
 
     const leer = ['pk_out_preis','pk_out_umsatz','pk_out_fahrt','pk_out_fixmonat',
                   'pk_out_vorruecklage','pk_out_ruecklage','pk_out_bleibt','pk_out_stunde'];
 
     if (b.termine <= 0 || b.satz >= 1){
-      leer.forEach(id => set(id, '–'));
+      leer.forEach(id => set(id, '·'));
       set('pk_out_satz', b.termine <= 0
         ? 'Mit dieser Zeit und Auslastung kommt kein einziger Termin zustande. Plan mehr Zeit ein oder kürze die Behandlungsdauer.'
         : 'Bei einer Rücklage von 100 Prozent bliebe nichts übrig. Setz den Satz niedriger.');
@@ -408,7 +408,7 @@
     /* Ein gerundeter Richtwert statt einer Zahl auf zwei Nachkommastellen:
        er haengt an Annahmen, die sich jeden Monat verschieben. */
     const richtwert = Math.max(Math.round(preis / 5) * 5, 0);
-    set('pk_out_preis', isFinite(preis) && preis > 0 ? 'ca. ' + zahl0(richtwert) + ' €' : '–');
+    set('pk_out_preis', isFinite(preis) && preis > 0 ? 'ca. ' + zahl0(richtwert) + ' €' : '·');
     set('pk_out_satz',
       'Damit bei ' + zahl0(b.termine) + ' Behandlungen im Monat rund ' + eur(b.ziel) +
       ' übrig bleiben, brauchst du rechnerisch ' + eur(preis) + '.');
@@ -459,7 +459,7 @@
 
     /* Bei einem Verlust gibt es nichts zurueckzulegen. Ohne diese Grenze
        kaeme eine negative Ruecklage heraus, was so aussieht, als bekaeme
-       man Geld zurueck — ob ein Verlust sich steuerlich auswirkt, haengt
+       man Geld zurueck, ob ein Verlust sich steuerlich auswirkt, haengt
        am uebrigen Einkommen und gehoert nicht in diese Faustformel. */
     const bemessung = Math.max(gewinn, 0);
     const steuer    = bemessung * satz;
@@ -475,7 +475,7 @@
     const hinweis = document.getElementById('sr_hinweis');
     if (hinweis){
       hinweis.textContent = gewinn < 0
-        ? 'Deine Ausgaben liegen über den Einnahmen. In dem Fall gibt es nichts zurückzulegen — ob sich der Verlust steuerlich auswirkt, klärst du mit deinem Steuerbüro.'
+        ? 'Deine Ausgaben liegen über den Einnahmen. In dem Fall gibt es nichts zurückzulegen. Ob sich der Verlust steuerlich auswirkt, klärst du mit deinem Steuerbüro.'
         : 'Faustformel, keine Steuerberechnung: der Satz ist eine Eingabe, keine hinterlegte Tabelle.';
     }
   }
@@ -487,7 +487,7 @@
       const tr = document.createElement('tr');
       tr.innerHTML = `<td>${m}</td>` +
         [0,1,2,3,4,5].map(c => `<td><input type="number" class="euer-in" data-row="${i}" data-col="${c}" value="0" step="10" min="0"></td>`).join('') +
-        `<td class="calc" id="euer_ausg_${i}">–</td><td class="calc" id="euer_gewinn_${i}">–</td>`;
+        `<td class="calc" id="euer_ausg_${i}"></td><td class="calc" id="euer_gewinn_${i}"></td>`;
       body.appendChild(tr);
     });
     body.addEventListener('input', calcEuer);
@@ -533,7 +533,7 @@
 
   /* ---------- Zuruecksetzen ----------
      Stellt die Felder auf die Ausgangswerte zurueck, die im HTML stehen.
-     Die gespeicherten Zahlen bleiben, bis der Nutzer wieder speichert —
+     Die gespeicherten Zahlen bleiben, bis der Nutzer wieder speichert ,
      geloescht wird hier bewusst nichts. */
   document.getElementById('reset').addEventListener('click', e => {
     e.preventDefault();
@@ -544,7 +544,7 @@
       el.value = start;
       /* Das normale Ereignis ausloesen, damit die Datenschicht und die
          Speicherleiste denselben Weg gehen wie bei einer Eingabe von Hand.
-         Danach steht in der Leiste "Ungespeicherte Aenderungen" — der
+         Danach steht in der Leiste "Ungespeicherte Aenderungen", der
          Nutzer entscheidet selbst, ob er das so speichern will. */
       el.dispatchEvent(new Event('change', {bubbles:true}));
     });
@@ -569,7 +569,7 @@
         d.toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}) + ' Uhr';
     }
     knopf.addEventListener('click', () => {
-      if (!Daten.speichern()) text.textContent = 'Speichern nicht möglich — im privaten Fenster geht das nicht.';
+      if (!Daten.speichern()) text.textContent = 'Speichern ist im privaten Fenster nicht möglich.';
       standZeichnen();
     });
     Daten.beiAenderung(standZeichnen);

@@ -156,6 +156,64 @@ strong{ font-weight:600; }
 .crumb a{ color:var(--ink-muted); text-decoration:none; border-bottom:1px solid var(--glass-edge); }
 .crumb a:hover{ color:var(--ink); border-color:var(--accent); }
 
+/* ---------- Kachelliste ----------
+   Startpunkte fuer Rechner und Werkzeuge: eine Gruppe ist ein Block
+   mit feinen Trennlinien, jede Zeile eine grosse Flaeche mit Titel,
+   einer Zeile Erklaerung und einem Pfeil. Gross genug, um sie auf dem
+   Handy sicher zu treffen, ruhig genug, um kein Kachelfeuerwerk zu
+   sein. */
+.gruppe{
+  font-family:var(--font-display);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  color:var(--ink-muted);
+  margin:34px 0 0;
+}
+.gruppe:first-of-type{ margin-top:4px; }
+
+.kachelliste{
+  list-style:none;
+  margin:12px 0 0;
+  padding:0;
+  background:var(--pure);
+  border:1px solid var(--glass-edge);
+  border-radius:14px;
+  overflow:hidden;
+}
+.kachelliste li + li{ border-top:1px solid var(--glass-edge); }
+.kachelliste a{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  min-height:70px;
+  padding:16px 18px;
+  color:var(--ink);
+  text-decoration:none;
+  transition:background .12s ease;
+}
+.kachelliste a:hover{ background:var(--glass-line); text-decoration:none; }
+.kachelliste a:focus-visible{ outline:2px solid var(--focus); outline-offset:-2px; }
+.kachelliste .k-text{ flex:1 1 auto; min-width:0; }
+.kachelliste b{
+  display:block;
+  font-family:var(--font-display);
+  font-size:17px;
+  font-weight:600;
+  letter-spacing:-.015em;
+  color:var(--ink);
+}
+.kachelliste span{
+  display:block;
+  font-size:14.5px;
+  line-height:1.45;
+  color:var(--ink-muted);
+  margin-top:3px;
+}
+.kachelliste .pfeil{ flex:none; color:var(--ink-faint); }
+.kachelliste a:hover .pfeil{ color:var(--accent); }
+
 /* ---------- Bereichs-Navigation ----------
    Feste Legende ueber allen Seiten des Kundenbereichs: Marke links,
    die vier Bereiche rechts. Gleiche Machart wie die Navigation der
@@ -337,35 +395,50 @@ p:last-child{ margin-bottom:0; }
 }
 
 /* ---------- Buttons ---------- */
+/* ---------- Knoepfe ----------
+   Ein Knopf ist die Hauptsache auf einer Seite und darf so aussehen:
+   voll gefuellt, ruhig gerundet, mit Hoehe, die man auf dem Handy
+   sicher trifft. Zwei Stufen, klar unterscheidbar: die Hauptaktion
+   gefuellt in Akzentfarbe, die Nebenaktion gefuellt in Grau. Kein
+   Verlauf, kein Glas, kein Schlagschatten -- die Wirkung kommt aus
+   Flaeche, Groesse und Kontrast. */
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap:10px;
+  min-height:52px;
   background:var(--accent);
   color:var(--accent-ink);
-  font-size:16px;
+  font-family:var(--font-display);
+  font-size:16.5px;
   font-weight:600;
-  letter-spacing:0;
+  letter-spacing:-.01em;
   text-decoration:none;
-  padding:15px 26px;
-  border-radius:8px;
+  padding:14px 28px;
+  border-radius:12px;
   border:1px solid transparent;
   cursor:pointer;
-  transition:background .15s ease, border-color .15s ease, color .15s ease;
+  transition:background .15s ease, border-color .15s ease, color .15s ease, transform .08s ease;
 }
 .btn:hover{ background:var(--accent-dark); text-decoration:none; }
-.btn:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+/* Kurzes Eindruecken beim Antippen: die einzige Bewegung im System. */
+.btn:active{ transform:scale(.985); }
+.btn:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; }
+
+/* Nebenaktion: gefuellt statt nur umrandet, damit sie als Knopf
+   erkennbar bleibt, sich aber der Hauptaktion klar unterordnet. */
 .btn.ghost{
-  background:transparent;
+  background:var(--glass-line);
   color:var(--ink);
-  border-color:var(--glass-edge);
+  border-color:transparent;
 }
 .btn.ghost:hover{
-  border-color:var(--accent);
-  color:var(--accent);
-  background:transparent;
+  background:var(--glass-edge);
+  color:var(--ink);
+  border-color:transparent;
 }
+
 /* .stark ist deckungsgleich mit dem Standard-Button: die dunklen
    Baender dieses Systems sind Tiefschwarz, kein Blauton, ein
    gefuellter blauer Button hebt sich davon klar ab. Der Alias bleibt
@@ -1271,6 +1344,7 @@ input[type=number][readonly]{
   background:transparent;
   border-color:transparent;
   color:var(--accent);
+  min-height:48px;
   padding-left:0;
   padding-right:0;
 }

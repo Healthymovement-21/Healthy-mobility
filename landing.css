@@ -94,7 +94,7 @@
   background:var(--accent);
 }
 .nav-kauf{ flex:none; }
-.nav .btn{ padding:11px 20px; font-size:14.5px; }
+.nav .btn{ padding:11px 20px; font-size:14.5px; min-height:44px; }
 
 .nav-burger{
   display:none;

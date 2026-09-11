@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Dashboard — PhysioNebenbei</title>
+<title>Dashboard · PhysioNebenbei</title>
 <meta name="theme-color" content="#FFFFFF">
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <link rel="manifest" href="app.webmanifest">
@@ -25,13 +25,11 @@
     font-family:var(--font-display); font-size:clamp(26px,7vw,34px); font-weight:600;
     letter-spacing:-.03em; color:var(--ink); margin:6px 0 0; line-height:1.2;
   }
-  .balken{ height:4px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:22px 0 0; }
+  .balken{ height:6px; border-radius:999px; background:var(--glass-line); overflow:hidden; margin:26px 0 0; }
   .balken > div{ height:100%; background:var(--accent); border-radius:999px; transition:width .35s ease; }
-  .naechster-zweck{ margin:18px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); max-width:52ch; }
+  .naechster-zweck{ margin:14px 0 0; font-size:16.5px; line-height:1.55; color:var(--ink-muted); max-width:52ch; }
 
-  .tun{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
-  .tun .btn{ padding:11px 20px; font-size:15px; }
-  .tun .btn.leise{ padding-left:0; padding-right:0; }
+  .tun{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-top:26px; }
 
   /* Die Zugangszeile: Text statt Karten, damit sie sich nicht wie eine
      zweite Startseite anfuehlt. */
@@ -61,22 +59,20 @@
 
     <section class="sheet hero">
       <h1 class="title">Dashboard</h1>
-      <p class="lede">Dein nächstes Kapitel — und oben rechts der Weg zu allem anderen.</p>
     </section>
 
     <!-- ============ DEINE ROADMAP ============ -->
     <section class="sheet">
       <h2 class="haupt-titel">Deine Roadmap</h2>
 
-      <p class="wo" id="f_wo">–</p>
-      <p class="naechster-name" id="f_titel">–</p>
+      <p class="wo" id="f_wo"></p>
+      <p class="naechster-name" id="f_titel"></p>
+      <p class="naechster-zweck" id="f_zweck"></p>
 
       <div class="balken"><div id="f_balken" style="width:0%"></div></div>
 
-      <p class="naechster-zweck" id="f_zweck">–</p>
-
       <p class="tun">
-        <a class="btn" href="#" id="f_weiter">–</a>
+        <a class="btn" href="#" id="f_weiter">Kapitel öffnen</a>
         <a class="btn leise" href="schritte.html">Roadmap ansehen</a>
       </p>
     </section>
@@ -129,7 +125,7 @@
     el('f_wo').textContent     = 'Kapitel ' + offen.nr + ' von ' + Fahrplan.anzahl + ' · ' + offen.schritt.abschnitt;
     el('f_titel').textContent  = offen.schritt.titel;
     el('f_zweck').textContent  = fertig === 0
-      ? 'Dein nächstes Kapitel ist Kapitel 1. Arbeite dich einfach von Kapitel zu Kapitel durch — alles andere findest du, wenn du es brauchst.'
+      ? 'Dein nächstes Kapitel ist Kapitel 1. Arbeite dich einfach von Kapitel zu Kapitel durch. Alles andere findest du, wenn du es brauchst.'
       : offen.schritt.zweck;
     el('f_weiter').textContent = fertig === 0 ? 'Kapitel 1 öffnen' : 'Weiter mit Kapitel ' + offen.nr;
     el('f_weiter').href        = 'fahrplan.html?kapitel=' + offen.nr;

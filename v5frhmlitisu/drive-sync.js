@@ -1,8 +1,8 @@
 /* ============================================================
-   PhysioNebenbei — freiwillige Google-Drive-Synchronisation
+   PhysioNebenbei, freiwillige Google-Drive-Synchronisation
 
    ╔══════════════════════════════════════════════════════════╗
-   ║  HIER DEINE CLIENT-ID EINTRAGEN — das ist die einzige     ║
+   ║  HIER DEINE CLIENT-ID EINTRAGEN, das ist die einzige     ║
    ║  Stelle im ganzen Produkt, die du dafuer anfassen musst.  ║
    ╚══════════════════════════════════════════════════════════╝
 
@@ -19,7 +19,7 @@
      4. Anmeldedaten → Anmeldedaten erstellen → OAuth-Client-ID,
         Anwendungstyp "Webanwendung"
      5. Unter "Autorisierte JavaScript-Quellen" genau diese Adresse
-        eintragen — nur Schema und Host, ohne Pfad und ohne Schraegstrich:
+        eintragen, nur Schema und Host, ohne Pfad und ohne Schraegstrich:
 
           https://healthymovement-21.github.io
 
@@ -30,7 +30,7 @@
 
    Solange das Feld leer ist, zeigt der Bereich einen verstaendlichen
    Hinweis statt eines toten Knopfes. Alles andere im Produkt
-   funktioniert unveraendert weiter — Drive ist ein Zusatz, kein
+   funktioniert unveraendert weiter, Drive ist ein Zusatz, kein
    Fundament, und ohne Verbindung geht nichts an Google.
    ============================================================ */
 
@@ -72,7 +72,7 @@ const DRIVE_CLIENT_ID = '';
     return new Promise((erfuellt, abgelehnt) => {
       /* Schon da? Dann nichts nachladen. Das kann auch der Fall sein,
          wenn eine andere Seite des Bereichs das Skript bereits geholt
-         hat — ein zweites Laden waere nur unnoetiger Verkehr. */
+         hat, ein zweites Laden waere nur unnoetiger Verkehr. */
       if (gisBereit()){ gisGeladen = true; return erfuellt(); }
 
       /* Laeuft der Ladevorgang schon, nicht ein zweites Tag anhaengen. */
@@ -101,7 +101,7 @@ const DRIVE_CLIENT_ID = '';
 
   /* Google laesst OAuth nur von einer echten Web-Adresse zu. Aus einer
      lokal geoeffneten Datei (file://) heraus geht es grundsaetzlich
-     nicht — das soll die Oberflaeche sagen koennen, statt den Nutzer
+     nicht, das soll die Oberflaeche sagen koennen, statt den Nutzer
      in eine Fehlermeldung von Google laufen zu lassen. */
   function herkunftTaugt(){
     return location.protocol === 'https:' ||
@@ -163,7 +163,7 @@ const DRIVE_CLIENT_ID = '';
 
   /* Ein Zugriffsrecht von Google gilt etwa eine Stunde. Laeuft es ab,
      antwortet Drive mit 401. Dann ist die Verbindung nicht kaputt,
-     sondern nur abgelaufen — das muss die Meldung unterscheiden. */
+     sondern nur abgelaufen, das muss die Meldung unterscheiden. */
   function abgelaufen(){
     token = null;
     return new Error('Die Anmeldung bei Google ist abgelaufen. Verbinde dich noch einmal.');
@@ -201,8 +201,8 @@ const DRIVE_CLIENT_ID = '';
     if (a.status === 401 || a.status === 403) throw abgelaufen();
     if (!a.ok) throw new Error('Drive antwortet nicht (' + a.status + ').');
 
-    /* Kommt statt JSON etwas anderes zurueck — etwa die Anmeldeseite
-       eines Netzwerks im Hotel oder in der Praxis —, soll das eine
+    /* Kommt statt JSON etwas anderes zurueck, etwa die Anmeldeseite
+       eines Netzwerks im Hotel oder in der Praxis ,, soll das eine
        verstaendliche Meldung geben und kein Absturz sein. */
     let j;
     try { j = await a.json(); }

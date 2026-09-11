@@ -1,5 +1,5 @@
 /* ============================================================
-   GOOGLE DRIVE — die einzige Stelle, die du ändern musst.
+   GOOGLE DRIVE, die einzige Stelle, die du ändern musst.
 
    Der ganze Kundenbereich hängt an dieser Datei. Trägst du unten
    etwas ein, zeigen ALLE Herunterladen-Buttons auf Google Drive.
@@ -43,7 +43,7 @@
    sondern nur anzeigt oder herunterlaedt.
 
    WICHTIG: Alles, was du hier freigibst, ist über den Link öffentlich
-   erreichbar — genauso wie der Kundenbereich selbst. Wer den Link
+   erreichbar, genauso wie der Kundenbereich selbst. Wer den Link
    weitergibt, gibt das Paket weiter. Das regelt § 5 der AGB.
    ============================================================ */
 
@@ -132,7 +132,7 @@ const DRIVE_DATEIEN = {
 
       if (ordner) {
         /* Nur der Ordner ist eingerichtet. Der ZIP-Button wuerde jetzt
-           dasselbe tun wie der Drive-Button daneben — den blenden wir
+           dasselbe tun wie der Drive-Button daneben, den blenden wir
            aus, statt zweimal denselben Weg anzubieten. */
         if (a.dataset.driveBeschriftung === 'nein') { a.hidden = true; return; }
 

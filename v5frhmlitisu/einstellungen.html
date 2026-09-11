@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Angaben und Sicherung — PhysioNebenbei</title>
+<title>Angaben und Sicherung · PhysioNebenbei</title>
 <link rel="stylesheet" href="../physio-nebenbei/base.css">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="app.webmanifest">
@@ -24,7 +24,7 @@
   }
   .stand .punkt{ display:none; }
   .stand.offen .punkt{ display:block; width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
-  .stand .btn{ padding:8px 16px; font-size:14px; margin-left:auto; }
+  .stand .btn{ padding:8px 16px; font-size:14px; min-height:40px; border-radius:10px; margin-left:auto; }
 
   .wahl{ display:grid; gap:12px; margin:16px 0 0; }
   .wahl label{
@@ -66,7 +66,7 @@
 
   <div class="stand" id="stand">
     <span class="punkt"></span>
-    <span id="stand_text">–</span>
+    <span id="stand_text"></span>
     <button class="btn" type="button" id="jetzt_speichern" hidden>Jetzt speichern</button>
   </div>
 
@@ -74,7 +74,7 @@
 
     <section class="sheet hero">
       <h1 class="title">Angaben und Sicherung</h1>
-      <p class="lede">Was du für Rechnungen und Verträge brauchst — und wie du deine Zahlen auf ein anderes Gerät bekommst. Wo deine Dateien liegen, steht unter <a href="dateien.html">Dateien</a>.</p>
+      <p class="lede">Was du für Rechnungen und Verträge brauchst und wie du deine Zahlen auf ein anderes Gerät bekommst. Wo deine Dateien liegen, steht unter <a href="dateien.html">Dateien</a>.</p>
     </section>
 
     <!-- ============ 7 · EINSTELLUNGEN ============ -->
@@ -115,10 +115,10 @@
         <a class="btn ghost" href="#" id="import_start">Daten importieren</a>
         <input type="file" id="import_datei" accept="application/json,.json" hidden>
       </p>
-      <p class="micro" id="export_hinweis" style="margin-top:10px">–</p>
+      <p class="micro" id="export_hinweis" style="margin-top:10px"></p>
 
       <div id="export_kasten" hidden style="margin-top:14px">
-        <label class="micro" for="export_feld">Kopier den Text und sichere ihn, wo du willst — in einer Notiz, einer E-Mail an dich selbst oder in deinem Drive. Zum Zurückholen fügst du ihn unten wieder ein.</label>
+        <label class="micro" for="export_feld">Kopier den Text und sichere ihn, wo du willst: in einer Notiz, einer E-Mail an dich selbst oder in deinem Drive. Zum Zurückholen fügst du ihn unten wieder ein.</label>
         <textarea id="export_feld" readonly rows="6" style="width:100%;margin-top:8px;border:1px solid var(--glass-edge);border-radius:8px;padding:12px;font-family:var(--font-mono);font-size:13px;background:var(--pure);color:var(--ink)"></textarea>
         <p class="hero-cta" style="margin-top:10px">
           <a class="btn ghost" href="#" id="kopieren">In die Zwischenablage</a>
@@ -174,7 +174,7 @@
     el('stand_text').textContent = t ? '✓ Lokal gespeichert: ' + t : 'Noch nichts gespeichert';
   }
   el('jetzt_speichern').addEventListener('click', () => {
-    if (!Daten.speichern()) el('stand_text').textContent = 'Speichern nicht möglich — im privaten Fenster geht das nicht.';
+    if (!Daten.speichern()) el('stand_text').textContent = 'Speichern ist im privaten Fenster nicht möglich.';
     standZeichnen();
   });
 
@@ -215,7 +215,7 @@
   el('kopieren').addEventListener('click', async e => {
     e.preventDefault();
     const ok = await Daten.inZwischenablage(mitTerminen());
-    ioMeldung(ok ? 'In die Zwischenablage kopiert.' : 'Kopieren ging nicht — markier den Text und kopier ihn von Hand.', !ok);
+    ioMeldung(ok ? 'In die Zwischenablage kopiert.' : 'Kopieren ging nicht. Markier den Text und kopier ihn von Hand.', !ok);
   });
 
   /* ---------- Import ---------- */

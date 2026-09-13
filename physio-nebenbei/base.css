@@ -156,6 +156,18 @@ strong{ font-weight:600; }
 .crumb a{ color:var(--ink-muted); text-decoration:none; border-bottom:1px solid var(--glass-edge); }
 .crumb a:hover{ color:var(--ink); border-color:var(--accent); }
 
+/* ---------- Doppeltipp-Zoom ----------
+   Auf dem iPhone vergroessert ein schneller Doppeltipp die Seite. Beim
+   Rechnen tippt man Ziffern schnell hintereinander, und dann meint man
+   die Ziffer, nicht den Zoom. "manipulation" schaltet genau diese
+   Doppeltipp-Erkennung ab; Scrollen und das Aufziehen mit zwei Fingern
+   bleiben unveraendert, die Seite laesst sich also weiterhin
+   vergroessern, wer das braucht. */
+a, button, input, select, textarea, label, summary,
+[role="button"], .zpad, .zpad-sheet{
+  touch-action:manipulation;
+}
+
 /* ---------- Kachelliste ----------
    Startpunkte fuer Rechner und Werkzeuge: eine Gruppe ist ein Block
    mit feinen Trennlinien, jede Zeile eine grosse Flaeche mit Titel,
@@ -1255,7 +1267,8 @@ input[type=number][readonly]{
   background:var(--input-bg);
   color:var(--ink);
   font-family:var(--font-sans);
-  font-size:15.5px;
+  /* Nicht unter 16px: darunter zoomt iOS beim Hineintippen. */
+  font-size:16px;
   padding:10px 12px;
 }
 .bh-feld input{ font-family:var(--font-mono); text-align:center; -moz-appearance:textfield; }

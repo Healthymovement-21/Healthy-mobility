@@ -54,11 +54,14 @@
     .posten-gitter{ grid-template-columns:2.4fr .7fr 1fr 1fr; }
   }
 
+  /* Doppeltipp-Zoom abschalten: beim Tippen von Ziffern meint man die
+     Ziffer, nicht den Zoom. Aufziehen mit zwei Fingern bleibt moeglich. */
+  a, button, input, select, textarea, label{ touch-action:manipulation; }
   label{ display:block; font-size:12.5px; color:var(--faint); margin-bottom:5px; }
   input, textarea, select{
     width:100%; border:1px solid var(--edge); border-radius:10px;
     background:var(--field); color:var(--ink);
-    font-family:var(--font); font-size:15.5px; padding:10px 12px;
+    font-family:var(--font); font-size:16px; padding:10px 12px;
   }
   input[type=number]{ font-family:var(--mono); text-align:right; }
   textarea{ resize:vertical; min-height:70px; }
